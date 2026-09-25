@@ -16,6 +16,10 @@ Engineering guardrails that keep AI coding agents on track.
 [`plugin.json`](./plugin.json) defines the plugin name, version, description,
 and Agent Plugins schema.
 
+For native Cursor plugin discovery, the same manifest is also available at
+[`.cursor-plugin/plugin.json`](./.cursor-plugin/plugin.json). Cursor requires
+this exact `.cursor-plugin/plugin.json` path for its native plugin format.
+
 ### Rules
 
 [`rules/`](./rules) contains Copilot instruction files:
