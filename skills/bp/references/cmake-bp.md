@@ -220,53 +220,23 @@ Why not globally via `CMAKE_CXX_FLAGS`:
 
 ### Warnings as errors
 
-Do not put `-Werror` / `/WX` into compile options by hand. Since CMake 3.24
-there is a native, compiler-agnostic switch:
-[`CMAKE_COMPILE_WARNING_AS_ERROR`](https://cmake.org/cmake/help/latest/variable/CMAKE_COMPILE_WARNING_AS_ERROR.html).
-It initializes the
-[`COMPILE_WARNING_AS_ERROR`](https://cmake.org/cmake/help/latest/prop_tgt/COMPILE_WARNING_AS_ERROR.html)
-property of every target created after it is set, and CMake picks the
-right flag for the compiler.
+Instead of hand-written `-Werror` / `/WX`, set
+[`CMAKE_COMPILE_WARNING_AS_ERROR`](https://cmake.org/cmake/help/latest/variable/CMAKE_COMPILE_WARNING_AS_ERROR.html)
+(CMake 3.24+) in `CMakeLists.txt`:
 
 ```cmake
-# CMakeLists.txt
-cmake_minimum_required(VERSION 3.24)
-project(my_project CXX)
-
-# Third-party in-tree deps (if any) are added BEFORE this line
-# or inside block() — the variable leaks like any other CMAKE_* default.
-
 set(CMAKE_COMPILE_WARNING_AS_ERROR ON)
-
-add_executable(my_app ...)
-target_link_libraries(my_app PRIVATE project_warnings)
 ```
 
-Why this is better than `-Werror` in `target_compile_options`:
+CMake picks the right flag per compiler, and anyone can relax it for one
+run with `cmake --compile-no-warning-as-error` — no edits to git-tracked
+files.
 
-- **Built-in escape hatch.** `cmake --compile-no-warning-as-error` makes
-  CMake ignore the property for the whole build tree. A developer trying
-  a newer compiler that emits fresh warnings is not blocked and does not
-  have to edit git-tracked files. With a hard-coded `-Werror` there is
-  no such switch.
-- **Policy stays policy.** "Warnings are errors" is still declared once in
-  `CMakeLists.txt`; the invocation only decides whether to *enforce* it
-  right now.
-- **No compiler branching** for this particular flag.
-
-Caveats:
-
-- `COMPILE_WARNING_AS_ERROR` is a plain target property, not an
-  `INTERFACE_*` one — linking the `project_warnings` INTERFACE target does
-  not propagate it. Set the variable (or the property per target), keep
-  the warning *list* in the INTERFACE target.
-- The variable is a directory-scoped `CMAKE_*` default: it leaks into
-  `add_subdirectory` / `FetchContent` deps created after it. Set it after
-  third-party subdirectories or wrap them in `block()` with
-  `set(CMAKE_COMPILE_WARNING_AS_ERROR OFF)`.
-- Do not toggle it through `cacheVariables` in presets — that
-  reintroduces the "policy scattered across presets" problem. Relaxing
-  it for one run is what `--compile-no-warning-as-error` is for.
+- It is not an `INTERFACE_*` property, so linking `project_warnings`
+  does not propagate it. Set the variable; keep the warning list in the
+  INTERFACE target.
+- Like other `CMAKE_*` defaults it leaks into `add_subdirectory` /
+  `FetchContent` deps — set it after them or wrap them in `block()`.
 
 ### Language standard
 
