@@ -144,6 +144,8 @@ Without touching the project code, the following should be possible:
 - Bump a dependency version — edit `conanfile`, not CMakeLists.
 - Build with a different set of features — preset with different
   `cacheVariables` for options the project already defines.
+- Try a newer compiler that emits new warnings without failing the
+  build — `cmake --compile-no-warning-as-error`.
 
 Requires editing CMakeLists / cmake modules:
 
@@ -180,10 +182,9 @@ add_library(project_warnings INTERFACE)
 
 if(MSVC)
   target_compile_options(project_warnings INTERFACE
-    /W4 /WX /permissive-)
+    /W4 /permissive-)
 elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
   target_compile_options(project_warnings INTERFACE
-    -Werror
     -Wall -Wextra -Wpedantic
     -Wconversion -Wsign-conversion
     -Wcast-qual -Wcast-align
@@ -216,6 +217,26 @@ Why not globally via `CMAKE_CXX_FLAGS`:
   warnings across compiler-presets leads to them drifting apart quickly.
 - An INTERFACE target gives explicit opt-in: tests or experimental targets
   can avoid linking to it if you need to temporarily relax warnings.
+
+### Warnings as errors
+
+Instead of hand-written `-Werror` / `/WX`, set
+[`CMAKE_COMPILE_WARNING_AS_ERROR`](https://cmake.org/cmake/help/latest/variable/CMAKE_COMPILE_WARNING_AS_ERROR.html)
+(CMake 3.24+) in `CMakeLists.txt`:
+
+```cmake
+set(CMAKE_COMPILE_WARNING_AS_ERROR ON)
+```
+
+CMake picks the right flag per compiler, and anyone can relax it for one
+run with `cmake --compile-no-warning-as-error` — no edits to git-tracked
+files.
+
+- It is not an `INTERFACE_*` property, so linking `project_warnings`
+  does not propagate it. Set the variable; keep the warning list in the
+  INTERFACE target.
+- Like other `CMAKE_*` defaults it leaks into `add_subdirectory` /
+  `FetchContent` deps — set it after them or wrap them in `block()`.
 
 ### Language standard
 
@@ -483,7 +504,8 @@ with a reasonable fallback via `$penv{X}`.
 
 If the same `-Werror` lives in `clang_native_dev`,
 `clang_native_release`, `gcc_dev`, `gcc_release` — sooner or later
-they will drift apart. Single source of truth: a module in CMakeLists.
+they will drift apart. Single source of truth: `CMAKE_COMPILE_WARNING_AS_ERROR`
+in CMakeLists (see "Warnings as errors").
 
 ### Old-style directory commands instead of targets
 
@@ -524,6 +546,8 @@ Project level (`CMakeLists.txt`):
 - [ ] `cmake_minimum_required` is set; the version is not ancient.
 - [ ] C++ standard is set in CMakeLists, not via flags.
 - [ ] Warnings are extracted into an INTERFACE target and applied explicitly.
+- [ ] Warnings-as-errors via `CMAKE_COMPILE_WARNING_AS_ERROR`, not a
+      hand-written `-Werror` / `/WX`.
 - [ ] `CMAKE_EXPORT_COMPILE_COMMANDS ON`.
 - [ ] Dependencies via `target_link_libraries` with explicit visibility.
 - [ ] Include paths via `target_include_directories`, not globally.
