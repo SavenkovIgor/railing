@@ -219,6 +219,20 @@ So, it should look like this:
 | `takeObj() -> T`                   | Moves out ownership; after the call `hasObj() == false`      |
 | `isFoo() -> bool`                  | `true` if present **and** the value satisfies property *Foo* |
 
+**View accessors must be ref-qualified.** A view returned from a temporary object
+dangles at the end of the full expression (`auto t = makeDocument().title();`,
+`for (char c : makeDocument().title())`). Overload the accessor on the object's value category:
+
+- `obj() const& -> view` — for lvalues, zero-cost as usual
+- `obj() && -> T` — for rvalues, move the member out and return an owning value
+
+This is the one deliberate exception to "no prefix means view": on a dying object an owning value
+is the only safe result, and moving costs nothing extra. If moving out makes no sense for the type,
+declare `obj() && = delete;` so the misuse fails at compile time.
+Plain-copy views (trivially-copyable small types) need no qualifiers.
+
+It does not fix every lifetime bug: `auto t = doc.title(); doc.setTitle("x");` still dangles.
+
 ```cpp
 class Document {
     std::string title_;                  // always exists
@@ -228,7 +242,10 @@ public:
     // --- title (always present) ---
 
     // Cheap access — returns string_view (no allocation)
-    string_view title() const { return title_; }
+    string_view title() const& { return title_; }
+
+    // Called on a temporary — moves the member out instead of returning a dangling view
+    std::string title() && { return std::move(title_); }
 
     // Owning copy of a non-trivial type — signals allocation cost
     std::string getTitle() const { return title_; }
@@ -245,7 +262,8 @@ public:
     bool hasMetadata() const { return metadata_.has_value(); }
 
     // Cheap access — returns optional ref so caller decides how to handle absence
-    const std::optional<Metadata>& metadata() const { return metadata_; }
+    const std::optional<Metadata>& metadata() const& { return metadata_; }
+    std::optional<Metadata> metadata() && { return std::move(metadata_); }
 
     // Owning copy of a non-trivial type
     Metadata getMetadata() const {
