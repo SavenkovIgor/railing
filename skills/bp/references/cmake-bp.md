@@ -472,7 +472,85 @@ work perfectly for INTERFACE-only fragments.
   so the question of leaks doesn't arise at all. Conan covers this
   for most cases.
 
+## Source tree mirrors the target graph
+
+Targets are the logical structure of the project; directories are the
+physical one. They must describe the same thing. A reader should be able
+to predict the list of targets from `tree`, and find any target's code
+without reading CMake. When the two diverge, every basic question —
+"which target is this file part of", "what rebuilds if I change it",
+"who is allowed to include this header" — requires reverse-engineering
+`CMakeLists.txt`.
+
+Rules:
+
+- **One target — one directory.** Each library or executable is defined
+  in its own directory's `CMakeLists.txt`, pulled in via
+  `add_subdirectory`. The directory name matches the target name
+  (modulo a namespace prefix like `myproj_`).
+- **A target's sources live under its directory.** No `../` paths in
+  `add_library` / `add_executable` / `target_sources`, and no sources
+  from other directories listed in the root `CMakeLists.txt`.
+- **A file belongs to exactly one target.** If two targets need the same
+  source, it is a third target — link it, don't compile it twice.
+- **Headers are reached through linking, not through paths.** Public
+  headers live in `<target_dir>/include/<target_name>/`, private ones
+  next to the sources. `target_include_directories(foo PUBLIC include)`
+  exposes only the public part, and `#include <foo/bar.h>` tells the
+  reader where the header comes from. Pointing
+  `target_include_directories` into another target's directory is a
+  hidden dependency that bypasses `target_link_libraries`.
+- **Subdirectories inside a target are only grouping.** Once a
+  subdirectory becomes a separate target, it gets its own
+  `CMakeLists.txt`.
+
+```plaintext
+CMakeLists.txt          # project(), options, add_subdirectory() only
+cmake/                  # modules, INTERFACE policy targets (warnings)
+libs/
+  core/                 # target: core
+    CMakeLists.txt
+    include/core/*.h    # public API
+    src/*.cpp, *.h      # implementation + private headers
+  net/                  # target: net, links core
+    CMakeLists.txt
+    include/net/*.h
+    src/*.cpp
+apps/
+  server/               # target: server, links net
+    CMakeLists.txt
+    main.cpp
+tests/                  # one test executable per file, see exceptions
+```
+
+Legitimate exceptions — the rule relaxes to "a directory holds one
+*kind* of target", created by a loop or a helper function:
+
+- `tests/`, `examples/`, `tools/` with many small homogeneous
+  executables. Pick one convention for tests — next to the target
+  (`libs/core/tests/`) or a mirrored top-level tree (`tests/core/`) —
+  and use it everywhere.
+- INTERFACE policy targets (`project_warnings`) in `cmake/`: they are
+  config, not code.
+- Generated sources, which live in the build directory.
+
 ## Anti-patterns
+
+### Target defined far from its sources
+
+```cmake
+# BAD: root CMakeLists.txt describes everything
+add_library(core src/core/a.cpp src/core/b.cpp)
+add_library(net  src/net/socket.cpp src/core/utils.cpp)  # shared file
+target_include_directories(net PRIVATE ${CMAKE_SOURCE_DIR}/src/core)
+
+# GOOD: each target in its own directory, sharing via linking
+add_subdirectory(libs/core)
+add_subdirectory(libs/net)   # target_link_libraries(net PUBLIC core)
+```
+
+The `net` → `core` dependency in the bad version is invisible:
+it exists only as an include path and a compiled-twice file.
 
 ### `CMAKE_CXX_FLAGS` in presets with everything in it
 
@@ -554,6 +632,15 @@ Project level (`CMakeLists.txt`):
 - [ ] LTO/sanitizers — per-target and conditional, not via a global flag.
 - [ ] If `add_subdirectory` is used for in-tree source deps — wrapped
       in `block()` to protect against `CMAKE_*` leaks.
+
+Source layout:
+
+- [ ] Each library/executable target is defined in its own directory,
+      named after the target (exceptions: `tests/`, `examples/`, `tools/`).
+- [ ] No `../` paths or foreign-directory sources in target definitions.
+- [ ] No source file is compiled into more than one target.
+- [ ] Public headers in `<target>/include/<target>/`; no
+      `target_include_directories` pointing into another target's tree.
 
 Invocation level (`CMakePresets.json`):
 
