@@ -534,6 +534,98 @@ Legitimate exceptions — the rule relaxes to "a directory holds one
   config, not code.
 - Generated sources, which live in the build directory.
 
+## Preprocessor definitions: scope and volatility
+
+A `-D` flag is part of the compile command of every translation unit
+that sees it. Change its value and every such TU is recompiled, and
+every compiler cache (ccache, sccache, remote caches) misses. A global
+define that changes on every commit — git hash, build number, build
+date — turns every build into a full rebuild and drops the CI cache hit
+rate to zero.
+
+The same applies to a header: moving the value from `-D` into
+`inline constexpr auto git_hash = "..."` in a header replaces a
+preprocessor macro with a language construct, but every includer still
+recompiles on every commit. What protects the cache is not the syntax
+but **how many TUs depend on the value**.
+
+Classify each definition by how often it changes and what it affects:
+
+| Kind                    | Examples                          | Where                                      |
+| ----------------------- | --------------------------------- | ------------------------------------------ |
+| Volatile build metadata | git hash, build number, version   | One generated `.cpp` in a dedicated target |
+| Stable feature flags    | `WITH_TLS`, `ENABLE_TRACING`      | Owning target, `PRIVATE` by default        |
+| ABI-affecting           | `_GLIBCXX_ASSERTIONS`, `NOMINMAX` | Toolchain / Conan profile, uniform         |
+
+### Volatile metadata: compilation firewall
+
+Declaration in a stable header, value in exactly one generated source.
+A new commit recompiles one file and relinks; nothing else changes.
+
+```cpp
+// libs/buildinfo/include/buildinfo/buildinfo.h — never changes
+namespace buildinfo {
+std::string_view version();
+std::string_view git_hash();
+}
+```
+
+```cmake
+# libs/buildinfo/CMakeLists.txt
+set(out ${CMAKE_CURRENT_BINARY_DIR}/buildinfo.cpp)
+add_custom_target(buildinfo_gen
+  COMMAND ${CMAKE_COMMAND}
+    -DIN=${CMAKE_CURRENT_SOURCE_DIR}/buildinfo.cpp.in
+    -DOUT=${out}
+    -DVERSION=${PROJECT_VERSION}
+    -P ${CMAKE_CURRENT_SOURCE_DIR}/GenBuildInfo.cmake
+  BYPRODUCTS ${out})
+
+add_library(buildinfo STATIC ${out})
+add_dependencies(buildinfo buildinfo_gen)
+target_include_directories(buildinfo PUBLIC include)
+```
+
+`GenBuildInfo.cmake` gets the hash via `execute_process(git rev-parse)`
+and writes the file via `configure_file`, which leaves the output
+untouched when the content is the same — no spurious rebuilds. Running
+at build time (not configure time) keeps the hash from going stale
+after a commit without re-running CMake.
+
+Avoid `__DATE__` / `__TIME__`: they make every build unique, which
+breaks both caching and reproducible builds. If a timestamp is needed,
+take it from `SOURCE_DATE_EPOCH` in the same generated source.
+
+### Stable flags: target scope, language over preprocessor
+
+- Scope to the target that needs the flag, with explicit visibility:
+  `PRIVATE` unless the flag changes the target's public headers.
+- Prefer a generated config header of the owning target with
+  `inline constexpr bool with_tls = ...;` and `if constexpr` over
+  `#ifdef`: both branches are type-checked, typos are compile errors,
+  and the flag is a named, scoped symbol instead of a global token.
+- Keep `#if` only where the disabled branch cannot compile at all
+  (missing platform headers or APIs).
+
+### Not per source file
+
+`set_source_files_properties(... COMPILE_DEFINITIONS ...)` looks like
+the tightest possible scope, but it is an ODR hazard: two TUs of one
+target that include the same header with an `inline` function or a
+class definition see different code under the same name. The linker
+silently picks one. The smallest safe scope for a definition that can
+reach a header is the target.
+
+### ABI-affecting definitions: the exception
+
+Definitions that change layouts or inline code in standard or system
+headers must be **identical** for everything linked into one binary,
+dependencies included. Scoping them per target causes ODR violations,
+not isolation. Set them in the toolchain file or Conan profile so that
+dependencies get them too, or project-wide if no prebuilt code is
+affected. These values are stable per build config, so they do not
+hurt caching.
+
 ## Anti-patterns
 
 ### Target defined far from its sources
@@ -641,6 +733,17 @@ Source layout:
 - [ ] No source file is compiled into more than one target.
 - [ ] Public headers in `<target>/include/<target>/`; no
       `target_include_directories` pointing into another target's tree.
+
+Preprocessor definitions:
+
+- [ ] No `add_definitions` / `add_compile_definitions` / `-D` in
+      `CMAKE_CXX_FLAGS` for project-specific values.
+- [ ] Git hash, build number, version string are not passed via `-D` or
+      a widely included header; they live in one generated `.cpp`.
+- [ ] No `__DATE__` / `__TIME__`.
+- [ ] No per-source-file `COMPILE_DEFINITIONS`.
+- [ ] ABI-affecting definitions are identical across the project and
+      its dependencies (toolchain file or Conan profile).
 
 Invocation level (`CMakePresets.json`):
 
