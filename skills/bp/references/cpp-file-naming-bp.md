@@ -2,11 +2,12 @@
 
 ## Naming
 
-Name every C++ file and directory in lowercase `snake_case`, using only
-`a-z`, `0-9`, and `_`, starting with a letter:
+Name every C++ file and directory in lowercase `snake_case`, starting with a
+letter. Use only `a-z`, `0-9`, and `_`; module partition filenames may also
+contain one hyphen as described below. File names follow:
 
 ```plaintext
-^[a-z][a-z0-9_]*\.(cpp|hpp|cppm|ipp)$
+^(?:[a-z][a-z0-9_]*\.(?:cpp|hpp|ipp)|[a-z][a-z0-9_]*(?:-[a-z][a-z0-9_]*)?\.cppm)$
 ```
 
 ```plaintext
