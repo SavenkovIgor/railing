@@ -496,7 +496,7 @@ Rules:
 - **Headers are reached through linking, not through paths.** Public
   headers live in `<target_dir>/include/<target_name>/`, private ones
   next to the sources. `target_include_directories(foo PUBLIC include)`
-  exposes only the public part, and `#include <foo/bar.h>` tells the
+  exposes only the public part, and `#include <foo/bar.hpp>` tells the
   reader where the header comes from. Pointing
   `target_include_directories` into another target's directory is a
   hidden dependency that bypasses `target_link_libraries`.
@@ -510,29 +510,162 @@ cmake/                  # modules, INTERFACE policy targets (warnings)
 libs/
   core/                 # target: core
     CMakeLists.txt
-    include/core/*.h    # public API
-    src/*.cpp, *.h      # implementation + private headers
+    include/core/*.hpp  # public API
+    src/*.cpp, *.hpp    # implementation + private headers + unit tests
+    tests/              # component tests of core, see "Test layout"
   net/                  # target: net, links core
     CMakeLists.txt
-    include/net/*.h
+    include/net/*.hpp
     src/*.cpp
 apps/
   server/               # target: server, links net
     CMakeLists.txt
     main.cpp
-tests/                  # one test executable per file, see exceptions
+tests/                  # tests spanning several targets
 ```
 
 Legitimate exceptions — the rule relaxes to "a directory holds one
 *kind* of target", created by a loop or a helper function:
 
-- `tests/`, `examples/`, `tools/` with many small homogeneous
-  executables. Pick one convention for tests — next to the target
-  (`libs/core/tests/`) or a mirrored top-level tree (`tests/core/`) —
-  and use it everywhere.
+- `examples/`, `tools/` with many small homogeneous executables.
+- Top-level `tests/` with tests that span several targets (see
+  "Test layout").
 - INTERFACE policy targets (`project_warnings`) in `cmake/`: they are
   config, not code.
 - Generated sources, which live in the build directory.
+
+## Test layout
+
+Tests live next to the code they test. Most languages that leave the
+choice open converge on this: Go enforces `foo_test.go` in the same
+package, Rust keeps unit tests in the same file, Google-style C++
+(Abseil, Chromium) puts `foo_test.cc` next to `foo.cc`. Separate test
+trees appear where the toolchain forces them (Maven classpath, .NET
+assemblies, Python tests run against the installed package). CMake
+forces nothing: a target contains exactly the files listed for it, and
+install works per target, so a test file next to a source file never
+ends up in the library.
+
+Why colocation is the default:
+
+- **Access to internals without breaking encapsulation.** A test in the
+  component's directory includes its private headers directly. A test
+  in a separate tree needs `target_include_directories` into another
+  target's sources — the hidden dependency described in "Source tree
+  mirrors the target graph".
+- **A missing test is visible.** `parser.cpp` without
+  `parser_test.cpp` next to it stands out in a listing and in review.
+- **No drift.** A mirrored `tests/` tree goes stale: a source file is
+  renamed or deleted, its test stays under the old path. A colocated
+  test moves with the code.
+- **One owner.** CODEOWNERS, reviewers, and history are shared by the
+  component and its tests.
+
+### Where a test goes
+
+The granularity is the **subject of the test** — what it makes
+assertions about — not every class it touches. A unit test may use
+collaborators; that does not make it an integration test.
+
+| Subject of the test                   | Location                                 | List                         |
+| ------------------------------------- | ---------------------------------------- | ---------------------------- |
+| One class / one source file           | `<stem>_test.cpp` next to `<stem>.cpp`   | `<target>_unit_tests`        |
+| Several classes of one target         | `<target_dir>/tests/<scenario>_test.cpp` | `<target>_integration_tests` |
+| Several targets together, or a binary | Top-level `tests/`                       | Its own target there         |
+
+The file name makes the first rule checkable: a `<stem>_test.cpp` next
+to sources must have a matching `<stem>.cpp` or `<stem>.hpp`. A test
+named after no file in its directory is in the wrong place.
+
+```plaintext
+libs/core/
+  CMakeLists.txt
+  include/core/parser.hpp
+  src/
+    parser.cpp
+    parser_test.cpp         # unit: subject is Parser
+    lexer.cpp
+    lexer_test.cpp          # unit: subject is Lexer
+  tests/
+    parse_pipeline_test.cpp # component: Lexer + Parser together
+tests/
+  request_roundtrip_test.cpp  # cross-target: core + net
+```
+
+### Two lists per component, runners chosen by the consumer
+
+Each component exposes its tests as two `OBJECT` libraries with no
+`main()` — one per kind. The list of test files lives in the
+component's own `CMakeLists.txt`: adding a test touches only the
+component, which matters when the component is a git submodule — the
+parent repository only moves the submodule commit.
+
+```cmake
+# libs/core/CMakeLists.txt
+add_library(core src/parser.cpp src/lexer.cpp)
+target_include_directories(core PUBLIC include)
+
+if(BUILD_TESTING)
+  add_library(core_unit_tests OBJECT
+    src/parser_test.cpp
+    src/lexer_test.cpp)
+  target_link_libraries(core_unit_tests PUBLIC core GTest::gtest)
+
+  add_library(core_integration_tests OBJECT
+    tests/parse_pipeline_test.cpp)
+  target_link_libraries(core_integration_tests PUBLIC core GTest::gtest)
+endif()
+```
+
+The consumer decides how to run them: one runner per component, one
+per kind across components, unit tests only under sanitizers,
+integration tests with longer timeouts. Separate lists make this a
+change in one place instead of sorting files out of a common pile.
+
+```cmake
+# parent CMakeLists.txt: one runner per kind
+include(GoogleTest)
+
+add_executable(unit_tests)
+target_link_libraries(unit_tests PRIVATE
+  core_unit_tests net_unit_tests GTest::gtest_main)
+gtest_discover_tests(unit_tests PROPERTIES LABELS unit)
+
+add_executable(integration_tests)
+target_link_libraries(integration_tests PRIVATE
+  core_integration_tests net_integration_tests GTest::gtest_main)
+gtest_discover_tests(integration_tests PROPERTIES LABELS integration)
+```
+
+`ctest -L unit` then runs only unit tests. One runner per kind (or per
+component) keeps the number of link steps low; one executable per test
+file means dozens of slow C++ links.
+
+### Pitfall: tests that silently disappear
+
+Test frameworks register tests through static initializers in files
+nothing else references. Both of the following build without errors
+and produce a runner with **zero** tests:
+
+- **`STATIC` test library.** The linker pulls an object file out of a
+  static archive only to resolve a referenced symbol; test files have
+  none, so they are dropped. Use `OBJECT`, or link the archive with
+  `$<LINK_LIBRARY:WHOLE_ARCHIVE,core_unit_tests>` (CMake 3.24+).
+- **`OBJECT` library linked transitively.** Its objects are added only
+  to the target that links it directly. Collecting test libraries in an
+  `INTERFACE` aggregator and linking that to the runner loses them all.
+  Link the test libraries to the runner directly.
+
+Guard against both: CI compares the number of discovered tests with the
+previous run, or at least fails on a runner that reports zero tests.
+
+Do not let the component add its tests to the parent's runner itself
+(`target_sources(unit_tests ...)` from the submodule, or a global
+property registry). It works, but the component then depends on the
+name of its consumer's target and cannot be reused elsewhere. One
+`target_link_libraries` line per component in the parent is the right
+price: adding a component touches the parent anyway (`add_subdirectory`),
+adding a test does not.
 
 ## Preprocessor definitions: scope and volatility
 
@@ -563,7 +696,7 @@ Declaration in a stable header, value in exactly one generated source.
 A new commit recompiles one file and relinks; nothing else changes.
 
 ```cpp
-// libs/buildinfo/include/buildinfo/buildinfo.h — never changes
+// libs/buildinfo/include/buildinfo/buildinfo.hpp — never changes
 namespace buildinfo {
 std::string_view version();
 std::string_view git_hash();
@@ -728,11 +861,25 @@ Project level (`CMakeLists.txt`):
 Source layout:
 
 - [ ] Each library/executable target is defined in its own directory,
-      named after the target (exceptions: `tests/`, `examples/`, `tools/`).
+      named after the target (exceptions: `examples/`, `tools/`, top-level `tests/`).
 - [ ] No `../` paths or foreign-directory sources in target definitions.
 - [ ] No source file is compiled into more than one target.
 - [ ] Public headers in `<target>/include/<target>/`; no
       `target_include_directories` pointing into another target's tree.
+
+Tests:
+
+- [ ] Unit tests are `<stem>_test.cpp` next to `<stem>.cpp`; tests of
+      several classes are in `<target_dir>/tests/`; cross-target tests
+      in top-level `tests/`. No mirrored test tree.
+- [ ] Each component exposes `<target>_unit_tests` and
+      `<target>_integration_tests` as `OBJECT` libraries without `main()`,
+      listed in the component's own `CMakeLists.txt`.
+- [ ] Test libraries are linked to runners directly (no `STATIC` without
+      `WHOLE_ARCHIVE`, no `INTERFACE` aggregator in between).
+- [ ] One runner per component or per kind, not per test file; tests
+      carry `unit` / `integration` labels.
+- [ ] CI fails on a runner that reports zero tests.
 
 Preprocessor definitions:
 
