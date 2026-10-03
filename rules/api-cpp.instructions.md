@@ -1,5 +1,5 @@
 ---
-applyTo: "**/*.{cpp,hpp,h,cc}"
+applyTo: "**/*.{cpp,hpp,cppm,ipp,h,cc}"
 ---
 
 # Code and API Design Guidelines
