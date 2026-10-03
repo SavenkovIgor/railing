@@ -15,16 +15,17 @@ text_tools/
   http_server.hpp
   http_server.cpp
   http_server_test.cpp     # tests: <stem>_test.cpp, singular
-  graph.cppm               # module `graph`
-  graph-node.cppm          # partition `graph:node`
+  graph.cppm               # module `Graph`
+  graph-node.cppm          # partition `Graph:Node`
 ```
 
 - A header, its source, and its test share the same stem.
 - The hyphen appears only in module partition files, where it stands for
   the colon of `module:partition`.
-- A module file is named after its module: `termgraph.graph_layout` →
-  `termgraph/graph_layout.cppm`. Module names follow the same
-  lowercase `snake_case` rule.
+- Module names are `CamelCase`, like the types they export. The file name
+  is the `snake_case` form of the module name (acronyms count as words):
+  `Graph.GraphLayout` → `graph/graph_layout.cppm`.
+- Two module names must not differ only by case.
 - No Windows reserved stems: `con`, `prn`, `aux`, `nul`, `com1`–`com9`,
   `lpt1`–`lpt9`.
 
@@ -50,14 +51,18 @@ text_tools/
 - Predictability. One convention for all files means the name can be
   guessed without opening the file. Choosing the style by content
   (CamelCase for classes, `snake_case` for functions) breaks that.
-- Underscore over hyphen. File names leak into include guards, target
-  names, and module names, where a hyphen is not a valid identifier
-  character.
-- `_test` over `_tests`. It is the more common suffix by a wide
-  margin, and it sorts the test next to the file under test.
-- Module names. Compilers name the compiled interface file after the
-  module, so module names that differ only by case collide in the build
-  directory.
+- Underscore over hyphen. File names leak into include guards and target
+  names, where a hyphen is not a valid identifier character.
+- `_test` over `_tests`. On GitHub, files named `_test` outnumber files
+  named `_tests` roughly four to one, and the suffix sorts the test next
+  to the file under test.
+- CamelCase module names. Unlike `#include`, `import Graph;` does not
+  name a file, so a module name does not have to follow the file name
+  rules. Composite project types should stand out in code, so modules are
+  named like the types they export. Only the file system needs `snake_case`.
+- Module names must not differ only by case. Compilers name the compiled
+  interface file after the module, so `Graph` and `graph` collide on
+  case-insensitive filesystems.
 
 ## Extensions
 
@@ -68,7 +73,7 @@ text_tools/
 | `.cppm`   | Anything importable: module interfaces and partitions |
 | `.ipp`    | Template definitions included at the end of a `.hpp` |
 
-Never use `.h`, `.C`, `.H`, `.c++`, or `.h++`.
+Never use `.h`, `.cc`, `.C`, `.H`, `.c++`, or `.h++`.
 
 ## Reasoning: extensions
 
@@ -78,12 +83,16 @@ Never use `.h`, `.C`, `.H`, `.c++`, or `.h++`.
   clang-format, GitHub syntax highlighting. `.hpp` has one meaning. A
   header that must compile as C is a C file and is outside this
   convention.
-- `.cppm` for importable units. Editing one rebuilds all importers.
+- `.cppm` for importable units. An importable unit is a file that starts
+  with `export module ...;`, such as a module interface or a partition, so
+  other files can `import` it. Editing one rebuilds all importers.
   That role should be visible in the file tree and in diffs, not only in
   `CMakeLists.txt`. The same argument justifies `.hpp` next to `.cpp`.
 - `.ipp` for template definitions. Such a file cannot be included or
   compiled on its own, so it must stay out of both the header and the
   source sets.
+- Never `.cc`. It is a second spelling of `.cpp`, and mixing the two in
+  one tree makes globs and tooling configs list both.
 - Never `.C` / `.H`. The meaning is carried by case, which
   case-insensitive filesystems discard.
 - Never `.c++` / `.h++`. `+` needs escaping in regex, make, and URLs.
