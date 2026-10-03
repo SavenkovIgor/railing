@@ -53,10 +53,16 @@ text_tools/
   (CamelCase for classes, `snake_case` for functions) breaks that.
 - Underscore over hyphen. File names leak into include guards and target
   names, where a hyphen is not a valid identifier character.
-- `_test` over `_tests`. On GitHub, `*_test.cpp` files outnumber
-  `*_tests.cpp` files roughly three to one (1.2M against 364k in code
-  search on 2026-10-03), and the suffix sorts the test next to the file
-  under test.
+- `_test` over `_tests`. A test file covers one unit, so its name reads
+  as "the test of `<stem>`", in the singular like the stem itself. Go
+  enforces the same `_test` suffix in its toolchain, and Abseil uses
+  it for C++. On GitHub, `*_test.cpp` files outnumber `*_tests.cpp`
+  files roughly three to one (1.2M against 364k in code search on
+  2026-10-03).
+- Suffix over prefix (`http_server_test.cpp`, not
+  `test_http_server.cpp`). The stem comes first, so a search by stem
+  finds the header, the source, and the test together, and a directory
+  listing shows them side by side.
 - CamelCase module names. Unlike `#include`, `import Graph;` does not
   name a file, so a module name does not have to follow the file name
   rules. Project-defined types should stand out in code, so name modules
