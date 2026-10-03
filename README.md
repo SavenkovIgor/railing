@@ -5,7 +5,6 @@ Engineering guardrails that keep AI coding agents on track.
 ## Contents
 
 ```text
-.
 ├── plugin.json
 ├── rules/
 └── skills/
@@ -19,10 +18,9 @@ and Agent Plugins schema.
 For native Cursor plugin discovery, the same manifest is also available at
 [`.cursor-plugin/plugin.json`](./.cursor-plugin/plugin.json). Cursor requires
 this exact `.cursor-plugin/plugin.json` path for its native plugin format.
+When it properly support `plugin.json` at root, this file will be removed
 
 ### Rules
-
-[`rules/`](./rules) contains Copilot instruction files:
 
 - [`global.instructions.md`](./rules/global.instructions.md) — general agent
   behavior and workflow guidance.
@@ -34,8 +32,6 @@ this exact `.cursor-plugin/plugin.json` path for its native plugin format.
   API development guidance.
 
 ### Skills
-
-[`skills/`](./skills) provides reusable task-specific instructions:
 
 - [`ai-artifacts-review`](./skills/ai-artifacts-review) — audit AI
   configuration artifacts.
