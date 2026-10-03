@@ -4,7 +4,7 @@
 
 Name every C++ file and directory in lowercase `snake_case`, starting with a
 letter. Use only `a-z`, `0-9`, and `_`; module partition filenames may also
-contain one hyphen as described below. File names follow:
+contain one hyphen as described below. A file name matches this pattern:
 
 ```plaintext
 ^(?:[a-z][a-z0-9_]*\.(?:cpp|hpp|ipp)|[a-z][a-z0-9_]*(?:-[a-z][a-z0-9_]*)?\.cppm)$
@@ -53,13 +53,15 @@ text_tools/
   (CamelCase for classes, `snake_case` for functions) breaks that.
 - Underscore over hyphen. File names leak into include guards and target
   names, where a hyphen is not a valid identifier character.
-- `_test` over `_tests`. On GitHub, files named `_test` outnumber files
-  named `_tests` roughly four to one, and the suffix sorts the test next
-  to the file under test.
+- `_test` over `_tests`. On GitHub, `*_test.cpp` files outnumber
+  `*_tests.cpp` files roughly three to one (1.2M against 364k in code
+  search on 2026-10-03), and the suffix sorts the test next to the file
+  under test.
 - CamelCase module names. Unlike `#include`, `import Graph;` does not
   name a file, so a module name does not have to follow the file name
-  rules. Composite project types should stand out in code, so modules are
-  named like the types they export. Only the file system needs `snake_case`.
+  rules. Project-defined types should stand out in code, so name modules
+  like the types they export. File names stay `snake_case` because file
+  systems treat case differently.
 - Module names must not differ only by case. Compilers name the compiled
   interface file after the module, so `Graph` and `graph` collide on
   case-insensitive filesystems.
@@ -92,7 +94,9 @@ Never use `.h`, `.cc`, `.C`, `.H`, `.c++`, or `.h++`.
   compiled on its own, so it must stay out of both the header and the
   source sets.
 - Never `.cc`. It is a second spelling of `.cpp`, and mixing the two in
-  one tree makes globs and tooling configs list both.
+  one tree makes globs and tooling configs list both. It also has no
+  matching header extension, so it does not form a pair like `.cpp` and
+  `.hpp`.
 - Never `.C` / `.H`. The meaning is carried by case, which
   case-insensitive filesystems discard.
 - Never `.c++` / `.h++`. `+` needs escaping in regex, make, and URLs.
@@ -101,6 +105,6 @@ Never use `.h`, `.cc`, `.C`, `.H`, `.c++`, or `.h++`.
 
 - The language or tool dictates the name: QML components start with an
   uppercase letter; `CMakeLists.txt`, `README.md`.
-- An existing codebase with one consistent convention keeps it. Report
-  only deviations from the project's own convention and case-only path
-  collisions.
+- An existing codebase with one consistent convention keeps it. When
+  reviewing, report only deviations from the project's own convention
+  and case-only path collisions.
