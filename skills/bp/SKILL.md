@@ -48,6 +48,7 @@ Choose only the references that match the file under review:
 | [chromium](references/chromium-bp.md)           | Chromium-style C++ files: `*.cc`, `*.cpp`, `*.h`, `*.hpp`                        |
 | [cicd](references/cicd-bp.md)                   | `.github/workflows/`, `.gitlab-ci.yml`, pipeline configs                         |
 | [cmake](references/cmake-bp.md)                 | `CMakeLists.txt`, `*.cmake` files; build configuration and dependency management |
+| [cpp-file-naming](references/cpp-file-naming-bp.md) | C++ file and directory names and extensions: `*.cpp`, `*.hpp`, `*.cppm`, `*.ipp`, `*.h`, `*.cc`, `*.C`, `*.H`, `*.c++`, `*.h++` |
 | [devops](references/devops-bp.md)               | `*.tf`, `ansible*.yml`, provisioning and configuration management files          |
 | [docker](references/docker-bp.md)               | `Dockerfile*`, `*.dockerfile`, `docker-compose*.yml`, `compose*.yml`             |
 | [docs](references/docs-bp.md)                   | Documentation `*.md` files (README, guides, wikis)                               |

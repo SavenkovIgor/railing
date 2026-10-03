@@ -1,6 +1,6 @@
 ---
 name: Global Coding Style
-applyTo: '**/*.{h,hpp,cc,cpp,py,js,ts}'
+applyTo: '**/*.{h,hpp,cc,cpp,cppm,ipp,py,js,ts}'
 ---
 
 ## Global Code Principles
