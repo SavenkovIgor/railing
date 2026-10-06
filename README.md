@@ -30,6 +30,10 @@ When it properly support `plugin.json` at root, this file will be removed
   development guidance.
 - [`api-python.instructions.md`](./rules/api-python.instructions.md) — Python
   API development guidance.
+- [`reports.instructions.md`](./rules/reports.instructions.md) — universal
+  requirements for agent-written reports in `reports/`.
+- [`reports-overview.instructions.md`](./rules/reports-overview.instructions.md)
+  — structure and checks for `*.overview.md` reports.
 
 ### Skills
 
@@ -44,6 +48,10 @@ When it properly support `plugin.json` at root, this file will be removed
 - [`migration-skill-factory`](./skills/migration-skill-factory) — create
   skills for codebase migrations.
 - [`reflect`](./skills/reflect) — propose context improvements after a task.
+- [`report-review`](./skills/report-review) — clean up a report and verify it
+  against the code.
+- [`report-write`](./skills/report-write) — write a technical report about
+  existing code into `reports/`.
 - [`tech-writing`](./skills/tech-writing) — write and review developer
   documentation.
 - [`to-issues`](./skills/to-issues) — convert plans and discussions into
