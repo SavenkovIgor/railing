@@ -12,7 +12,8 @@ Every rule is a pass/fail check; reviews cite rules by ID.
 ## File naming
 
 - N1 Path is `reports/YYYY-MM-DD-<slug>.<kind>.md`
-- N2 `<slug>` is lowercase kebab-case, 2-5 words naming the subject
+- N2 `<slug>` is usually the ticket ID as written in the tracker (`PROJ-1234`).
+  Without a ticket, use lowercase kebab-case, 2-5 words naming the subject
 - N3 `<kind>` is one of the profiles listed in the `report-write` skill
 
 ## Content

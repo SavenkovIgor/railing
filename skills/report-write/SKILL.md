@@ -21,7 +21,8 @@ If no profile matches the request, stop and ask. Do not invent a structure.
 
 1. Read the [core requirements](../../rules/reports.instructions.md) and the profile
 2. Collect the inputs the profile lists and read them fully
-3. Create `reports/YYYY-MM-DD-<slug>.<kind>.md` with the profile's sections as headings
+3. Create `reports/YYYY-MM-DD-<slug>.<kind>.md` with the profile's sections as headings.
+   `<slug>` is usually the ticket ID (N2)
 4. Fill each section. Link every statement about code (R1); mark inferences (R2)
 5. Check the formatting rules (`F*`) and fix violations
 6. Reply with the report path and offer `report-review`
