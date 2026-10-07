@@ -103,7 +103,7 @@ Any error-level finding is **blocking**. Any warning-level finding is **importan
 
 ## Severity Scale
 
-Every finding MUST include its emoji marker.
+Every finding in the chat report MUST include its emoji marker.
 Apply consistently in per-artifact findings, cross-artifact table,
 IDE validation results, and the prioritized fix list.
 
