@@ -87,13 +87,13 @@ Classify as:
 
 ## Phase 1: Repo Reconnaissance Checklist
 
-Search the repository for each artifact. Record each as ✅ present / ❌ absent / ❓ unclear.
-Do not assume. If a file is not found, mark ❌.
+Search the repository for each artifact. Record each as ✔ present / ✘ absent / ? unclear.
+Do not assume. If a file is not found, mark ✘.
 
 ### Testing
 
 - [ ] Test files exist (any `*test*`, `*spec*` file patterns)
-- [ ] Managed test data — check **either**: separate directory (`fixtures/`, `__snapshots__/`, `testdata/`, `test/data/`) **or** inline patterns (`toMatchInlineSnapshot(`, `syrupy` imports, `conftest.py` with fixture functions). Both count; absence of the directory alone is not sufficient evidence of ❌.
+- [ ] Managed test data — check **either**: separate directory (`fixtures/`, `__snapshots__/`, `testdata/`, `test/data/`) **or** inline patterns (`toMatchInlineSnapshot(`, `syrupy` imports, `conftest.py` with fixture functions). Both count; absence of the directory alone is not sufficient evidence of ✘.
 - [ ] Test coverage config (`.coveragerc`, `jest.config.*`, `pytest.ini`, `[tool.coverage]` in `pyproject.toml`)
 - [ ] E2E test directory (`e2e/`, `cypress/`, `playwright/`, `tests/e2e/`)
 - [ ] Flaky test handling config (pytest-rerunfailures, jest `--retries`, quarantine list)
@@ -141,7 +141,7 @@ Do not assume. If a file is not found, mark ❌.
 
 ## Phase 2: Targeted Questions
 
-Ask **only** for items that recon marked ❌ or ❓ **and** that have Δ ≥ 2.0 for the team's stratum.
+Ask **only** for items that recon marked ✘ or ? **and** that have Δ ≥ 2.0 for the team's stratum.
 Keep questions binary or single-choice. Do not ask open-ended questions.
 
 **Always ask (cannot be inferred from repo):**
@@ -178,14 +178,14 @@ Effort estimates are for an average team with no prior infrastructure; actual ef
 | 1  | PR/MR "passport" (goal + test notes + rollback plan) | +3.9  | 2–3        | **1.3–1.9**   | Incident mgmt, review quality                                 | —                |
 | 2  | Protected branches + PR size-guard                   | +3.5  | 3–4        | **0.9–1.2**   | Review quality, release stability                             | —                |
 | 3  | DRI mechanism for releases                           | +1.5  | 8–10       | **0.15–0.19** | Release predictability, incident mgmt                         | —                |
-| 4  | Onboarding / offboarding guide                       | +2.3  | 16–20      | **0.11–0.14** | Docs, alerting, incident mgmt, engagement                     | ✅ 4 dims        |
-| 5  | Centralized secrets (Vault / Secret Manager)         | +2.5  | 20–25      | **0.10–0.12** | Alerting, incidents, test trust, docs, release predictability | ✅ 5 dims        |
-| 6  | Managed test data (fixtures / snapshots)             | +2.0  | 24–30      | **0.07–0.08** | Test trust, incident mgmt, pipeline stability, review         | ✅ 4 dims        |
+| 4  | Onboarding / offboarding guide                       | +2.3  | 16–20      | **0.11–0.14** | Docs, alerting, incident mgmt, engagement                     | ✔ 4 dims        |
+| 5  | Centralized secrets (Vault / Secret Manager)         | +2.5  | 20–25      | **0.10–0.12** | Alerting, incidents, test trust, docs, release predictability | ✔ 5 dims        |
+| 6  | Managed test data (fixtures / snapshots)             | +2.0  | 24–30      | **0.07–0.08** | Test trust, incident mgmt, pipeline stability, review         | ✔ 4 dims        |
 | 7  | Living Engineering Handbook + ADR                    | +1.9  | 24         | **0.08**      | Documentation, engagement                                     | —                |
 | 8  | Burn-rate alerts + SLO thresholds                    | +2.8  | 40         | **0.07**      | Alerting quality, system resilience                           | —                |
 | 9  | Feature flags + rollback drills                      | +1.8  | 24–28      | **0.06–0.07** | Release predictability, change failure rate                   | —                |
-| 10 | Automated tests (unit + integration + E2E)           | +2.2  | varies     | varies        | Review, docs, incidents, alerting                             | ✅ 4 dims        |
-| 11 | Standardized CI/CD pipelines                         | +1.6  | 30         | **0.05**      | Alerting, docs, CI stability, release predictability          | ✅ 4 dims        |
+| 10 | Automated tests (unit + integration + E2E)           | +2.2  | varies     | varies        | Review, docs, incidents, alerting                             | ✔ 4 dims        |
+| 11 | Standardized CI/CD pipelines                         | +1.6  | 30         | **0.05**      | Alerting, docs, CI stability, release predictability          | ✔ 4 dims        |
 
 **ROI thresholds:** > 1.0 = instant payoff · > 0.3 = high priority · > 0.1 = medium · < 0.1 = long-term investment
 
@@ -211,7 +211,7 @@ Effort estimates are for an average team with no prior infrastructure; actual ef
 | Managed test data (fixtures/snapshots) | Incident management | **2.99** |       |
 | Burn-rate alerts + SLO thresholds      | Alerting quality    | **2.19** |       |
 
-> ⚠️ **Why so few significant effects at 11–50?** This is a statistical artifact, not a content finding. Score variance is lower in this stratum (teams have stabilized), so the difference between "has practice" and "doesn't" becomes harder to detect with this sample size. The practices still matter — the signal is just below the detection threshold.
+> **Why so few significant effects at 11–50?** This is a statistical artifact, not a content finding. Score variance is lower in this stratum (teams have stabilized), so the difference between "has practice" and "doesn't" becomes harder to detect with this sample size. The practices still matter — the signal is just below the detection threshold.
 
 **Large teams (51–150):** The research found only 1 significant correlation and 3 significant practices. Large teams have converged on similar practices; variance is minimal. Focus here shifts from *introducing* practices to *deepening* them: standards, mentoring, engineering culture.
 
@@ -247,11 +247,11 @@ Produce exactly this structure after recon + questions. No generic preambles.
 
 ### 2. Recon Summary
 
-List every checked artifact as ✅ / ❌ / ❓ grouped by category. Do not omit ❌ items — they are the input for the gap table.
+List every checked artifact as ✔ / ✘ / ? grouped by category. Do not omit ✘ items — they are the input for the gap table.
 
 ### 3. Practice Gap Table
 
-Only include practices that are **absent** (❌ from recon or "no" from questions) and have Δ ≥ 1.5 for this stratum. Sort by ROI descending.
+Only include practices that are **absent** (✘ from recon or "no" from questions) and have Δ ≥ 1.5 for this stratum. Sort by ROI descending.
 
 | Priority | Practice | How absence was detected | Δ | Effort (h)                             | ROI | Dimensions affected |
 |---                                             |---|---                                     |---  |---                  |
@@ -273,7 +273,7 @@ Only include practices that are **absent** (❌ from recon or "no" from question
 
 ### 5. Caveats
 
-- List assumptions made due to ❓ items
+- List assumptions made due to ? items
 - Flag any dimension already at ≥ 7.0 (diminishing returns apply)
 - Note if team size > 150 (data extrapolated)
 - Note role perception gap if relevant: in the research, developers consistently rate quality 0.6–0.9 points lower than team leads and CTOs on alerting, review, and engagement metrics. If the assessment came from a single role, actual gaps may differ.
@@ -287,7 +287,7 @@ A response from this agent is **acceptable** only if:
 - Team size stratum was established before any recommendation was made
 - Every recommendation names a specific practice (e.g. "add PR template with rollback field"), not a direction ("improve review quality")
 - Every recommendation includes Δ and ROI from the embedded database above
-- Recon artifacts are listed explicitly as ✅/❌ — not assumed from context
+- Recon artifacts are listed explicitly as ✔/✘ — not assumed from context
 - Observations from recon are separated from assumptions
 
 A response is **not acceptable** if:
