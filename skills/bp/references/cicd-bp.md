@@ -95,12 +95,12 @@ They can be refined and parallelized within a specific stage, but the general st
 
 ```mermaid
 flowchart LR
-    TRIGGER([🔔 Trigger])
-    LINT[🔍 Lint]
-    TEST[🧪 Test]
-    BUILD[📦 Build]
-    SCAN[🔒 Scan & Sign]
-    DELIVER[🚀 Deliver]
+    TRIGGER([Trigger])
+    LINT[Lint]
+    TEST[Test]
+    BUILD[Build]
+    SCAN[Scan & Sign]
+    DELIVER[Deliver]
 
     TRIGGER --> LINT
     LINT --> TEST
@@ -243,7 +243,7 @@ flowchart LR
     PUSH([Push to
 feature/*]) --> PAR
 
-    subgraph PAR ["⚡ In Parallel"]
+    subgraph PAR ["In Parallel"]
         direction TB
         L[Lint & Format]
         U[Unit Tests
@@ -286,7 +286,7 @@ flowchart LR
     MERGE([Merge to main /
 release/*]) --> FULL_CI
 
-    subgraph FULL_CI ["🔬 Full CI"]
+    subgraph FULL_CI ["Full CI"]
         direction LR
         UU[Unit Tests] & IT[Integration Tests] & SS[SAST + SCA]
     end
@@ -296,14 +296,14 @@ Publish Artifact]
     BUILD_ART --> STG[Deploy to Staging]
     STG --> HEAVY
 
-    subgraph HEAVY ["🧪 Heavy Checks"]
+    subgraph HEAVY ["Heavy Checks"]
         direction LR
         E2E[E2E Tests] & DAST2[DAST] & PERF[Performance]
     end
 
     HEAVY --> GATE{Release Gate}
-    GATE -- ✅ --> PROD_FLOW([→ Production pipeline])
-    GATE -- ❌ --> BLOCK([Block + notify])
+    GATE -- ✔ --> PROD_FLOW([→ Production pipeline])
+    GATE -- ✘ --> BLOCK([Block + notify])
 
     style FULL_CI fill:#dbeafe,stroke:#3b82f6
     style HEAVY fill:#dcfce7,stroke:#22c55e

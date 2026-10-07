@@ -36,7 +36,9 @@ Every rule is a pass/fail check; reviews cite rules by ID.
 - F2 Heading levels do not skip (`##` then `####` fails)
 - F3 Every code fence has a language tag; use `text` for plain output
 - F4 No `---` horizontal rules
-- F5 No emoji. Use `✔` and `✘` for status marks, `...` instead of `…`
+- F5 Avoid emoji in report documents. Chat responses may use emoji when their
+  required output format calls for them. Use `✔` and `✘` for status marks in
+  documents, and `...` instead of `…`
 - F6 Link text is not a copy of the URL or path
 - F7 At most one bold fragment per paragraph or list item; no bold in headings
 - F8 Code identifiers, file names, flags, and config keys are in inline code
