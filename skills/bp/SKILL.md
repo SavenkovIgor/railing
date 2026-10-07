@@ -1,6 +1,8 @@
 ---
 name: bp
-description: "Use this skill to check a file for varous best practices"
+description: >-
+  You should use this skill when checking or validating files against best-practice
+  references, including code, documentation, configuration, and skill files.
 argument-hint: "File path(s) to validate"
 user-invocable: true
 ---
@@ -51,13 +53,14 @@ Choose only the references that match the file under review:
 | [cpp-file-naming](references/cpp-file-naming-bp.md) | C++ file and directory names and extensions: `*.cpp`, `*.hpp`, `*.cppm`, `*.ipp`, `*.h`, `*.cc`, `*.C`, `*.H`, `*.c++`, `*.h++` |
 | [devops](references/devops-bp.md)               | `*.tf`, `ansible*.yml`, provisioning and configuration management files          |
 | [docker](references/docker-bp.md)               | `Dockerfile*`, `*.dockerfile`, `docker-compose*.yml`, `compose*.yml`             |
-| [docs](references/docs-bp.md)                   | Documentation `*.md` files (README, guides, wikis)                               |
-| [markdown](references/markdown-bp.md)           | Any `*.md` file                                                                  |
+| [docs](references/docs-bp.md)                   | Documentation `*.md` files (README, guides, wikis), except `reports/**/*.md`    |
+| [markdown](references/markdown-bp.md)           | Any `*.md` file, except `reports/**/*.md`                                        |
 | [python](references/python-bp.md)               | Any `*.py` file                                                                  |
 | [builds](references/reproducible-builds.md)     | Build scripts, lock files, CI configs                                            |
 | [skill](references/skill-bp.md)                 | `SKILL.md` files                                                                 |
 | [standards](references/standards-bp.md)         | Code files; or when explicit standards/RFC/OWASP/ISO check requested             |
-| [system-design](references/system-design-bp.md) | Architecture docs, design specs, any code file                                   |
+| [system-design](references/system-design-bp.md) | Architecture docs, design specs, any code file, except `reports/**/*.md`        |
+| [report-review](../report-review/SKILL.md)       | Report files matching `reports/**/*.md`                                          |
 
 A single file may match multiple references.
 
