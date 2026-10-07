@@ -23,7 +23,7 @@ Create a TODO list with these items:
 - Read all provided classes fully, without skipping any parts
 - Create empty `code_overview.md` at the project root
 - Explain class roles
-- Explain internal mechanisms (BE DETAILED — the most important part)
+- Explain internal mechanisms (BE DETAILED - the most important part)
 - Explain data flow between classes
 - Explain relationships (inheritance, composition, etc.)
 - Explain object lifecycle (long-lived? short-lived? creation/destruction ownership?)
@@ -49,11 +49,11 @@ For each class, check where applicable:
 Create the file at the project root with this structure:
 
 1. Terminology / Definitions
-2. Classes, Roles & Goals — what is the global goal and how the classes achieve it together
-3. Data Flow — how data flows between classes (DETAILED, human-readable)
-4. Relationships — inheritance, composition, dependency
-5. Lifecycle / Ownership — who creates, owns, and destroys each object
-6. Framework Patterns — findings from step 3 (omit if not applicable)
+2. Classes, Roles & Goals - what is the global goal and how the classes achieve it together
+3. Data Flow - how data flows between classes (DETAILED, human-readable)
+4. Relationships - inheritance, composition, dependency
+5. Lifecycle / Ownership - who creates, owns, and destroys each object
+6. Framework Patterns - findings from step 3 (omit if not applicable)
 
 ### 5. Validate output
 

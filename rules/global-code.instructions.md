@@ -7,7 +7,7 @@ applyTo: '**/*.{h,hpp,cc,cpp,cppm,ipp,py,js,ts}'
 
 - Readability and maintainability are primary concerns
 - Code should always be self-documenting first; comments explain *why*, not *what*
-- Prefer small, focused, pure functions — if a function needs a comment to explain what it does, consider splitting it
+- Prefer small, focused, pure functions - if a function needs a comment to explain what it does, consider splitting it
 - Follow single responsibility principle in classes and functions
 - Prefer explicit over implicit: make dependencies, side effects, and control flow visible at the call site
 - Prefer deterministic over stochastic: avoid randomness unless the feature requires it; when needed, make it explicit and seedable
@@ -34,7 +34,7 @@ Before implementing:
 
 **Minimum code that solves the problem. Nothing speculative.**
 
-Before writing any new code, walk the ladder in order — stop at the first step that works:
+Before writing any new code, walk the ladder in order - stop at the first step that works:
 
 1. Does this task actually need to exist? (YAGNI) → if not, skip it and say why
 2. Does the standard library solve it? → reach for stdlib before anything else
@@ -48,7 +48,7 @@ Additional constraints:
 - No abstractions for single-use code
 - No "flexibility" or "configurability" that wasn't requested
 - No error handling for impossible scenarios
-- Prefer deleting over adding: if removing code (a branch, a flag, a special case) solves the problem, do that instead of layering more on — within the code your change already touches (§3 still governs unrelated code)
+- Prefer deleting over adding: if removing code (a branch, a flag, a special case) solves the problem, do that instead of layering more on - within the code your change already touches (§3 still governs unrelated code)
 - If you write 200 lines and it could be 50, rewrite it
 
 Ask yourself: "Would a senior engineer say this is overcomplicated?" If yes, simplify

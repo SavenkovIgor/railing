@@ -129,7 +129,7 @@ Analyzes the code in context and produces a prioritized report of applicable pub
      - How to verify compliance after the fix (command, test, or manual check)
 
 6. Report what is already compliant.
-   - List standards that were checked and satisfied — gives confidence baseline.
+   - List standards that were checked and satisfied - gives confidence baseline.
 
 ## Branching Logic
 
@@ -140,7 +140,7 @@ Analyzes the code in context and produces a prioritized report of applicable pub
 
 - If the code is in a safety-critical domain (embedded, medical, aviation, automotive):
   - Escalate to MISRA, DO-178C, IEC 62443, or ISO 26262 as appropriate.
-  - Flag for human review — do not make compliance claims for these without expert sign-off.
+  - Flag for human review - do not make compliance claims for these without expert sign-off.
 
 - If context is limited (only a snippet, no imports visible):
   - Narrow to standards that can be evaluated from visible code only.

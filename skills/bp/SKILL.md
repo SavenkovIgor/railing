@@ -23,7 +23,7 @@ One or two sentences: overall verdict for this file against this reference.
 
 ### Findings
 For each issue found:
-- **[severity: blocking | important | style]** — [Rule or principle violated]
+- **[severity: blocking | important | style]** - [Rule or principle violated]
   - Location: [file:line, or "n/a"]
   - Found: [the problematic fragment or pattern]
   - Fix: [the corrected version or recommended action]
@@ -39,7 +39,7 @@ Numbered list of the 2–3 most important changes, in order of impact.
 
 ### 1. Inspect the target file
 
-Read each file passed as argument. Identify its type, purpose, and content domain — enough to know which references apply. Do **not** read the reference files.
+Read each file passed as argument. Identify its type, purpose, and content domain - enough to know which references apply. Do **not** read the reference files.
 
 ### 2. Select relevant references
 
@@ -68,9 +68,9 @@ A single file may match multiple references.
 
 For each selected reference, launch a sub-agent and pass it exactly three things:
 
-1. The target file — full path and content
-2. The reference file — full path of the matching `*-bp.md`
-3. The response format — the exact template defined in the "Response Format" section above
+1. The target file - full path and content
+2. The reference file - full path of the matching `*-bp.md`
+3. The response format - the exact template defined in the "Response Format" section above
 
 Instruct each sub-agent to: read the target file and the reference file, validate the file against every criterion in the reference, and return findings using the provided format. Sub-agents work in parallel.
 

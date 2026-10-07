@@ -11,7 +11,7 @@ For English, use American spelling and grammar.
 
 ### Link text must not duplicate the URL or path
 
-The text in `[...]` exists to give the reader meaningful context — it should never be a raw copy of the path in `(...)`.
+The text in `[...]` exists to give the reader meaningful context - it should never be a raw copy of the path in `(...)`.
 Use a descriptive label or, at minimum, just the filename.
 
 ✘ `[references/doc-validation.md](references/doc-validation.md)`

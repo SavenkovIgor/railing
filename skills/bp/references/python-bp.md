@@ -14,7 +14,7 @@
 - Preserve existing local variable type hints
 - Require type hints for all functions (arguments and return values)
 - If you have a family of related functions, you should consider joining them into a class
-- Use built-in types for type hints (`list`, `dict`, `tuple` instead of `List`, `Dict`, `Tuple` from `typing`) — since Python 3.9 built-ins support generics natively, so `typing` imports are redundant and add noise
+- Use built-in types for type hints (`list`, `dict`, `tuple` instead of `List`, `Dict`, `Tuple` from `typing`) - since Python 3.9 built-ins support generics natively, so `typing` imports are redundant and add noise
 
 ## Language core & Libraries
 

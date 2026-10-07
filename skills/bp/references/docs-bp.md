@@ -38,18 +38,18 @@ documentation's prose against it. Do not restate its rules here.
 
 Assess whether the documentation provides adequate coverage across these categories:
 
-1. Tutorials — Does it help developers learn and get started?
+1. Tutorials - Does it help developers learn and get started?
    - Are there step-by-step instructions for new contributors?
    - Do tutorials provide context and explain the "why" along with the "how"?
 
-2. How-to Guides — Does it address specific tasks and goals?
+2. How-to Guides - Does it address specific tasks and goals?
    - Are there clear instructions for common development tasks?
    - Are the guides focused on practical outcomes?
 
-3. Explanation — Does it provide understanding of concepts and architecture?
+3. Explanation - Does it provide understanding of concepts and architecture?
    - Is there documentation explaining the project's structure and design decisions?
    - Are relationships between components clearly explained?
 
-4. Reference — Does it provide technical specifications?
+4. Reference - Does it provide technical specifications?
    - Is API documentation clear and complete?
    - Are configuration options documented?

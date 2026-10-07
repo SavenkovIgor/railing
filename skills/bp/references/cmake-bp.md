@@ -10,7 +10,7 @@ A CMake project is configured at several levels. Each layer has its own
 responsibility. Mixing responsibilities is the main source of unreadable
 and unmaintainable build systems.
 
-### CMakeLists.txt — project description
+### CMakeLists.txt - project description
 
 Owner: project developer. In git, changes go through PRs.
 
@@ -19,22 +19,22 @@ policies apply (warnings, optimizations, sanitizers as an option), what
 internal dependencies it has. Code that must work identically for anyone
 who clones the repo.
 
-### CMakePresets.json — shared invocation recipes
+### CMakePresets.json - shared invocation recipes
 
 Owner: project developer. In git, changes go through PRs.
 
 Composable recipes that make sense for everyone: hidden building-block presets
 (`clang_compiler`, `release_build`), named compositions for standard build
-variants, CI presets. *How* to run the build — which compiler, which generator,
+variants, CI presets. *How* to run the build - which compiler, which generator,
 which build type, where to find dependencies on a specific system.
 
 Presets in this file can reference env vars as a contract with users
-(`$penv{SDK_ROOT}`). That's fine — it means: "you must have this
+(`$penv{SDK_ROOT}`). That's fine - it means: "you must have this
 variable, see the README". What must not appear here: hard-coded
 personal paths or machine-specific values. See the
 [CMake Presets reference](https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html).
 
-### CMakeUserPresets.json — personal local overrides
+### CMakeUserPresets.json - personal local overrides
 
 Owner: end user. In `.gitignore`, never committed.
 
@@ -45,11 +45,11 @@ Personal combinations not needed by others:
 - Personal IDE configurations.
 - Activating additional options that are disabled in shared presets.
 
-Can inherit from `CMakePresets.json` presets, but not the other way around —
+Can inherit from `CMakePresets.json` presets, but not the other way around -
 shared presets must not depend on personal ones.
 
-**Rule:** if something is needed by the team or CI — put it in
-`CMakePresets.json`. If only for you — put it in `CMakeUserPresets.json`.
+**Rule:** if something is needed by the team or CI - put it in
+`CMakePresets.json`. If only for you - put it in `CMakeUserPresets.json`.
 If personal paths leak into a shared preset, a new developer won't be
 able to configure the project without editing a git-tracked file. See the
 [CMake Presets reference](https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html).
@@ -106,12 +106,12 @@ profile for **dependencies** usually differs from the profile for **your code**.
 Most of the confusion in CMake configs comes from mixing two different
 things in one variable:
 
-- Policy (project policy) — a decision like "we are strict with
+- Policy (project policy) - a decision like "we are strict with
   warnings", "we use C++23", "we have RTTI disabled",
   "we don't use exceptions". Does not depend on who builds or where.
   This is part of **the project itself**.
 
-- Plumbing (build wiring) — specific paths, compiler names,
+- Plumbing (build wiring) - specific paths, compiler names,
   output directory locations, cache isolation flags. Depends on the
   machine, environment, and specific invocation.
 
@@ -121,7 +121,7 @@ Personal plumbing → `CMakeUserPresets.json`.
 
 If it's unclear which category a flag belongs to, ask yourself:
 "Would this decision change if I rebuilt the project tomorrow with the
-same compiler but in a different folder?" If yes — plumbing. If no — policy.
+same compiler but in a different folder?" If yes - plumbing. If no - policy.
 
 ## Reasoning: what should be possible without editing CMakeLists
 
@@ -132,20 +132,20 @@ committed build files (`CMakeLists.txt`, `CMakePresets.json`, and cmake modules)
 
 Without touching the project code, the following should be possible:
 
-- Add a new compiler for the same platform — new compiler-preset in
+- Add a new compiler for the same platform - new compiler-preset in
   `CMakeUserPresets.json`.
-- Switch Debug ↔ Release — choose a different preset.
-- Add a sanitizer build — a new preset inheriting the existing one
+- Switch Debug ↔ Release - choose a different preset.
+- Add a sanitizer build - a new preset inheriting the existing one
   and adding the needed flags via infrastructure the project already
   provides (interface target, option).
-- Adjust SDK paths for a new developer — their personal
+- Adjust SDK paths for a new developer - their personal
   `CMakeUserPresets.json` with env vars.
-- Add a new CI config — new preset in `CMakePresets.json`.
-- Bump a dependency version — edit `conanfile`, not CMakeLists.
-- Build with a different set of features — preset with different
+- Add a new CI config - new preset in `CMakePresets.json`.
+- Bump a dependency version - edit `conanfile`, not CMakeLists.
+- Build with a different set of features - preset with different
   `cacheVariables` for options the project already defines.
 - Try a newer compiler that emits new warnings without failing the
-  build — `cmake --compile-no-warning-as-error`.
+  build - `cmake --compile-no-warning-as-error`.
 
 Requires editing CMakeLists / cmake modules:
 
@@ -155,15 +155,15 @@ Requires editing CMakeLists / cmake modules:
 - Change the project's minimum C++ standard.
 - Change the set of warnings (this is policy).
 - Add a new optional feature flag (the option needs to be defined).
-- Change the install structure — what goes where.
+- Change the install structure - what goes where.
 
-If adding a new build config requires touching CMakeLists — that
+If adding a new build config requires touching CMakeLists - that
 is a signal that something is either in the wrong place or not
 parameterized. For example, warning flags hard-coded in CMakeLists for
 a specific compiler without conditional logic are a seam that will
 eventually require code edits when a new toolchain is added.
 
-**CMakePresets as a contract.** This is not just convenience — it is the
+**CMakePresets as a contract.** This is not just convenience - it is the
 interface between the project and tooling. IDEs (CLion, VS Code, Visual
 Studio) read `CMakePresets.json` and surface presets in their UI.
 CI scripts reference presets by name. When presets are meaningfully
@@ -213,7 +213,7 @@ Why not globally via `CMAKE_CXX_FLAGS`:
   `-Werror` on someone else's code is a classic way to get random CI
   failures after bumping a dependency that added a new deprecation warning.
 - `cacheVariables` in presets **does not compose**: when inheriting,
-  the last one to set a variable wins — no merging happens. Spreading
+  the last one to set a variable wins - no merging happens. Spreading
   warnings across compiler-presets leads to them drifting apart quickly.
 - An INTERFACE target gives explicit opt-in: tests or experimental targets
   can avoid linking to it if you need to temporarily relax warnings.
@@ -229,33 +229,33 @@ set(CMAKE_COMPILE_WARNING_AS_ERROR ON)
 ```
 
 CMake picks the right flag per compiler, and anyone can relax it for one
-run with `cmake --compile-no-warning-as-error` — no edits to git-tracked
+run with `cmake --compile-no-warning-as-error` - no edits to git-tracked
 files.
 
 - It is not an `INTERFACE_*` property, so linking `project_warnings`
   does not propagate it. Set the variable; keep the warning list in the
   INTERFACE target.
 - Like other `CMAKE_*` defaults it leaks into `add_subdirectory` /
-  `FetchContent` deps — set it after them or wrap them in `block()`.
+  `FetchContent` deps - set it after them or wrap them in `block()`.
 
 ### Language standard
 
 Set `CMAKE_CXX_STANDARD`, `CMAKE_CXX_STANDARD_REQUIRED ON`, and
 `CMAKE_CXX_EXTENSIONS OFF` in `CMakeLists.txt`. This is a project decision,
-not a per-run decision — everyone who builds the project should get the same
+not a per-run decision - everyone who builds the project should get the same
 language version regardless of the preset.
 
 ### `compile_commands.json` for clangd
 
 Set [`CMAKE_EXPORT_COMPILE_COMMANDS`](https://cmake.org/cmake/help/latest/variable/CMAKE_EXPORT_COMPILE_COMMANDS.html)
-to `ON` in `CMakeLists.txt` — needed always, not per-preset. clangd expects
+to `ON` in `CMakeLists.txt` - needed always, not per-preset. clangd expects
 this file; without it IDE integration does not work.
 
 ## Toolchain files: where they live and who writes them
 
 A toolchain file is a recipe for "how to use a specific compiler for
 a specific target platform". In most projects you don't need to write
-one by hand — it comes ready-made. Three sources, in descending order
+one by hand - it comes ready-made. Three sources, in descending order
 of frequency:
 
 ### 1. SDK / compiler vendor
@@ -265,7 +265,7 @@ inside its installation:
 
 - Android NDK:
   `$ANDROID_NDK/build/cmake/android.toolchain.cmake`
-- iOS via CMake — typically `ios.toolchain.cmake` from a
+- iOS via CMake - typically `ios.toolchain.cmake` from a
   community project or Apple's own.
 - Other cross-compilation SDKs ship a `<sdk>.toolchain.cmake` inside
   their installation directory.
@@ -288,7 +288,7 @@ the manager (profiles, manifest); it does not write the file itself.
 CMake accepts only one `CMAKE_TOOLCHAIN_FILE`. If you need to combine
 several (e.g. vendor toolchain + Conan toolchain), options include:
 
-- `tools.cmake.cmaketoolchain:user_toolchain` — the recommended
+- `tools.cmake.cmaketoolchain:user_toolchain` - the recommended
   Conan 2 approach ([documentation](https://docs.conan.io/2/reference/tools/cmake/cmaketoolchain.html#using-a-custom-toolchain-file)).
   A list of external toolchain files that Conan includes via `include()`
   as the first block inside its `conan_toolchain.cmake`.
@@ -301,10 +301,10 @@ several (e.g. vendor toolchain + Conan toolchain), options include:
   tools.cmake.cmaketoolchain:user_toolchain=["/path/to/vendor/toolchain.cmake"]
   ```
 
-- `CMAKE_PROJECT_TOP_LEVEL_INCLUDES` (CMake 3.24+) — a CMake-native
+- `CMAKE_PROJECT_TOP_LEVEL_INCLUDES` (CMake 3.24+) - a CMake-native
   mechanism for additional files included after the toolchain. Not
   Conan-specific.
-- Chain via `include()` in your own toolchain wrapper — a thin
+- Chain via `include()` in your own toolchain wrapper - a thin
   custom wrapper that includes the needed toolchains in sequence.
 
 In a typical setup (vendor toolchain + Conan), the canonical approach is
@@ -318,12 +318,12 @@ includes the vendor toolchain.
 When a project has a package manager and third-party dependencies,
 there are two possible ways to build them:
 
-1. Via the package manager — Conan resolves and builds
+1. Via the package manager - Conan resolves and builds
    deps before CMake even runs.
-2. Via CMake itself — `FetchContent_MakeAvailable()`,
+2. Via CMake itself - `FetchContent_MakeAvailable()`,
    `ExternalProject_Add()`, `add_subdirectory(third_party/...)`.
 
-If Conan is already in the project — all external dependencies go through it.
+If Conan is already in the project - all external dependencies go through it.
 No exceptions in normal cases.
 
 Why:
@@ -340,7 +340,7 @@ Why:
 - Versioning: Conan has a lockfile; builds are reproducible.
 - Diamond resolution: if dependencies A and B both pull in
   different versions of zlib, Conan resolves that. A mix of
-  conan+FetchContent does not — you end up with two zlиbs in one binary.
+  conan+FetchContent does not - you end up with two zlиbs in one binary.
 
 Typical workflow:
 
@@ -366,8 +366,8 @@ CMake:
 - Links via
   `target_link_libraries(my_app PRIVATE SomeLib::SomeLib)`.
 
-**From CMakeLists this looks like a standard find_package integration**
-— Conan is "invisible" to the project description itself. This is correct:
+**From CMakeLists this looks like a standard find_package integration** -
+Conan is "invisible" to the project description itself. This is correct:
 the project knows it needs `OpenSSL`, and does not know (and should not
 need to know) whether it came from the system, from Conan, or was built locally.
 
@@ -413,8 +413,8 @@ A sharp edge that is easy to miss. The `CMAKE_*` prefix does not mean
 `set(CMAKE_CXX_STANDARD 23)` in the root CMakeLists leaks into:
 
 - `add_subdirectory(third_party/foo)` → yes, it leaks. If `foo`
-  was written for C++17 and uses something removed or broken in C++23
-  — it will break.
+  was written for C++17 and uses something removed or broken in C++23 -
+  it will break.
 - `FetchContent_MakeAvailable(...)` → same, uses `add_subdirectory`
   internally.
 - `find_package(...)` for already-built libs → no leak; the library
@@ -464,11 +464,11 @@ work perfectly for INTERFACE-only fragments.
 
 **Pragmatic compromise:**
 
-- `set(CMAKE_CXX_STANDARD 23)` globally as a default for your own code
-  — convenient and readable.
+- `set(CMAKE_CXX_STANDARD 23)` globally as a default for your own code -
+  convenient and readable.
 - `block()` for cases where a dep needs something different and
   `add_subdirectory` can't be avoided.
-- First priority — **don't use `add_subdirectory` for third-party**,
+- First priority - **don't use `add_subdirectory` for third-party**,
   so the question of leaks doesn't arise at all. Conan covers this
   for most cases.
 
@@ -481,7 +481,7 @@ work perfectly for INTERFACE-only fragments.
 ```
 
 - Applies globally, catches warnings from third-party code.
-- Does not compose — if another preset also touches `CMAKE_CXX_FLAGS`,
+- Does not compose - if another preset also touches `CMAKE_CXX_FLAGS`,
   they overwrite each other.
 - Hides project policy in build configs where it is hard to find.
 
@@ -503,7 +503,7 @@ with a reasonable fallback via `$penv{X}`.
 ### Duplicating flags across presets
 
 If the same `-Werror` lives in `clang_native_dev`,
-`clang_native_release`, `gcc_dev`, `gcc_release` — sooner or later
+`clang_native_release`, `gcc_dev`, `gcc_release` - sooner or later
 they will drift apart. Single source of truth: `CMAKE_COMPILE_WARNING_AS_ERROR`
 in CMakeLists (see "Warnings as errors").
 
@@ -551,14 +551,14 @@ Project level (`CMakeLists.txt`):
 - [ ] `CMAKE_EXPORT_COMPILE_COMMANDS ON`.
 - [ ] Dependencies via `target_link_libraries` with explicit visibility.
 - [ ] Include paths via `target_include_directories`, not globally.
-- [ ] LTO/sanitizers — per-target and conditional, not via a global flag.
-- [ ] If `add_subdirectory` is used for in-tree source deps — wrapped
+- [ ] LTO/sanitizers - per-target and conditional, not via a global flag.
+- [ ] If `add_subdirectory` is used for in-tree source deps - wrapped
       in `block()` to protect against `CMAKE_*` leaks.
 
 Invocation level (`CMakePresets.json`):
 
 - [ ] `CMakeUserPresets.json` is in `.gitignore`.
-- [ ] `CMAKE_CXX_FLAGS` in presets — only thin toolchain-specific
+- [ ] `CMAKE_CXX_FLAGS` in presets - only thin toolchain-specific
       wiring (e.g. module cache path).
 - [ ] Dependency paths via env vars with documentation.
 - [ ] Cross-compilation via `CMAKE_TOOLCHAIN_FILE`, not by manually
@@ -588,6 +588,6 @@ be structured* lives in the project. Everything that describes *how the
 build is currently invoked* lives in the preset.
 
 When you read someone else's `CMakePresets.json` and see long lists of
-warning flags, sanitizer settings, and project include paths — that means
+warning flags, sanitizer settings, and project include paths - that means
 project policy has leaked into build invocation. The fix is to move it
 back into CMakeLists.

@@ -126,6 +126,7 @@ doing so improves clarity, and stay consistent within the document.
 - Use unambiguous dates such as `2026-08-19` or `August 19, 2026`.
 - Add alt text that describes what an image conveys.
 - Use `and`, not `&`, in English prose and headings.
+- Use a hyphen-minus `-`, not an em dash `—`.
 
 ## Adapt for Russian
 
