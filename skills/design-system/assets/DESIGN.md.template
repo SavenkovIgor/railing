@@ -72,7 +72,7 @@ All spacing and sizes are multiples of **8px**. Never use arbitrary pixel values
 
 | State | Visual Change |
 |-------|---------------|
-| Default | — |
+| Default | - |
 | Hover | border opacity ↑, bg opacity → 0.15; connected edges → opacity 0.8 |
 | Active / Selected | border → `--border-width-selected`; unrelated nodes → opacity 0.3 |
 | Disabled | opacity 0.4, pointer-events: none |
@@ -108,14 +108,14 @@ Define all tokens in `src/styles/tokens.css` (or equivalent). Raw literals must 
   --spacing-3: 24px;
   --spacing-4: 32px;
 
-  /* Colors — Base */
+  /* Colors - Base */
   --color-background: #121417;
   --color-surface: rgba(255, 255, 255, 0.05);
   --color-border: rgba(255, 255, 255, 0.1);
   --color-text-primary: rgba(255, 255, 255, 0.9);
   --color-text-secondary: #A0A0A0;
 
-  /* Colors — Semantic Types */
+  /* Colors - Semantic Types */
   /* --color-type-concept: #4CC9F0; */
 
   /* Shape */

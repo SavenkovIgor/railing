@@ -43,7 +43,7 @@ Run the profile's checks. Also check R1-R5 and R7.
 Cleanup: <N> edits (<rule IDs>)
 
 Findings:
-1. [wrong | missing | unverifiable | <rule ID>] <section> — <problem>
+1. [wrong | missing | unverifiable | <rule ID>] <section> - <problem>
    Evidence: <path#Lline>
    Fix: <proposed change>
 ```

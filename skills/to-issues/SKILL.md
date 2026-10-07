@@ -4,7 +4,7 @@ description: >-
     You should use this skill when: breaking down a plan into tasks,
     converting a discussion into actionable issues, splitting a proposal
     into tickets, creating issues from meeting notes or design decisions.
-    Works with any issue tracker — infers GitHub Issues, Jira, Linear,
+    Works with any issue tracker - infers GitHub Issues, Jira, Linear,
     GitLab, etc. from project context.
 ---
 
@@ -47,7 +47,7 @@ File each issue using the appropriate tool. Prefer batch APIs when available.
 See [output formats](references/output-formats.md) for the `gh` command and
 summary table format.
 
-### 5. Optional — Link Issues
+### 5. Optional - Link Issues
 
 If the tracker supports epics, milestones, or parent issues and a natural
 grouping exists, offer to link the created issues. Ask the user first; don't

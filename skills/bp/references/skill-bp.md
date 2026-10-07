@@ -28,19 +28,19 @@ Ideally skill should not have any more frontmatter fields due to compatibility w
 This is the strictest rule in this reference. Rationale:
 
 - The decision to load a skill is made solely from `description` (gradual context disclosure)
-- By the time the body is loaded into context, the skill has already been selected — trigger conditions are irrelevant
+- By the time the body is loaded into context, the skill has already been selected - trigger conditions are irrelevant
 - Any content that belongs in `## When to Use` already belongs in `description`
 - Including it wastes context tokens and creates maintenance drift between the two
 
-If trigger conditions are not fully expressed in `description`, fix `description` — do not add a body section.
+If trigger conditions are not fully expressed in `description`, fix `description` - do not add a body section.
 
 ## Description
 
 Anti-patterns:
 
-- "A helpful skill for..." — too vague, won't trigger on real queries
-- No trigger phrases — model cannot infer when to load
-- Longer than 1024 characters — will be truncated
+- "A helpful skill for..." - too vague, won't trigger on real queries
+- No trigger phrases - model cannot infer when to load
+- Longer than 1024 characters - will be truncated
 
 Patterns to follow:
 

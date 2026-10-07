@@ -51,8 +51,14 @@ doing so improves clarity, and stay consistent within the document.
 - Use numbered lists for sequences and bullets for unordered items.
 - Keep one main idea per paragraph and make headings self-contained.
 - Prefer active voice and present tense. Name the actor when it is known.
+  Passive voice is fine when the actor is irrelevant or the object matters
+  more, as in "The file is saved."
+- Use real verbs instead of nominalizations.
 - Address the reader directly when the language supports it. Avoid ambiguous
   uses of "we."
+- Keep sentences short, with one idea per sentence.
+- Be specific and avoid abstractions.
+- Cut filler, bureaucratic phrasing, and redundancy.
 - Remove excessive claims, hedges, unexplained jargon, idioms, and
   pre-announcements.
 - Use a conversational, friendly, respectful tone without slang or excessive
@@ -60,16 +66,67 @@ doing so improves clarity, and stay consistent within the document.
 - Avoid anthropomorphism and culture-specific references. Expand abbreviations
   on first use.
 
+### Prose style examples
+
+```text
+1. Remove bureaucratic and verbose phrases
+   ✘ "For the purpose of increasing the efficiency of the system, a process of
+       optimization is currently being conducted."
+   ✔ "We are optimizing the system."
+
+2. Prefer active voice over passive voice
+   ✘ "The configuration file was modified to enable logging."
+   ✔ "Modify the configuration file to enable logging."
+
+3. Replace noun-based verbs with actual verbs
+   ✘ "The execution of the installation can be performed by the administrator."
+   ✔ "The administrator installs the software."
+
+4. Be specific, avoid abstractions
+   ✘ "The system provides a wide range of options for the user."
+   ✔ "The system lets you export data to CSV, JSON, or XML."
+
+5. Keep sentences short and clear
+   ✘ "When the application encounters a situation in which the required
+       library is missing, it will, in accordance with the predefined logic,
+       generate an error message that informs the user about the problem."
+   ✔ "If the library is missing, the app shows an error."
+
+6. Cut filler and empty phrases
+   ✘ "It should be noted that the installation process will take some time."
+   ✔ "The installation takes several minutes."
+
+7. Use verbs to make instructions actionable
+   ✘ "The activation of the service is possible via the dashboard."
+   ✔ "Activate the service in the dashboard."
+
+8. Remove redundancy and duplication
+   ✘ "Each and every user must always follow the mandatory rules."
+   ✔ "Each user must follow the rules."
+
+9. Address the reader directly ("you")
+   ✘ "The feature can be used by the end user for configuration."
+   ✔ "You can configure this feature."
+
+10. Prefer present tense for clarity
+    ✘ "The system was designed to support multiple platforms."
+    ✔ "The system supports multiple platforms."
+```
+
 ## Format technical content
 
 - Use code font for filenames, symbols, flags, status codes, output,
   placeholders, and configuration keys.
-- Use bold only for UI elements and run-in headings. Use italics sparingly, and
-  reserve underlining for links.
+- Use bold only for UI elements and run-in headings. Bold draws the eye, so
+  emphasis scattered across a page defeats its purpose; remove it unless it
+  marks something the reader must not miss. Always remove bold lead-ins that
+  start every item of a list (`- **Term:** description`); they add noise,
+  not emphasis. Use italics sparingly, and reserve underlining for links.
 - Use descriptive link text instead of `click here` or a bare URL.
 - Use unambiguous dates such as `2026-08-19` or `August 19, 2026`.
 - Add alt text that describes what an image conveys.
 - Use `and`, not `&`, in English prose and headings.
+- Use a hyphen-minus `-`, not an em dash `—`.
 
 ## Adapt for Russian
 
