@@ -20,8 +20,6 @@ Output:
 - Prioritized fix list ordered by severity.
 - A summary of what is already correct.
 
----
-
 ## Check-ID Prefix Legend
 
 - `FM` — Frontmatter: YAML metadata fields at the top of the file
@@ -36,8 +34,6 @@ Output:
 1. `FM` → `SC` → `PA` (structural metadata first)
 2. `CT` → `ST` → `PN` (per-artifact content)
 3. `XA` (cross-artifact, only when full context is available)
-
----
 
 ## Procedure
 
@@ -105,8 +101,6 @@ Apply these CT checks to every artifact, regardless of type:
 Run `get_errors` on every reviewed file and include the results as-is in the report.
 Any error-level finding is **blocking**. Any warning-level finding is **important**.
 
----
-
 ## Severity Scale
 
 Every finding MUST include its emoji marker.
@@ -116,8 +110,6 @@ IDE validation results, and the prioritized fix list.
 - ❌ `blocking` — The artifact will not work correctly or will cause AI behavior errors
 - ⚠️ `important` — The artifact works but is undiscoverable, inconsistent, misleading or wasting token budget
 - ℹ️ `informational` — Style, convention, or minor quality improvement
-
----
 
 ## Output Format
 
@@ -154,8 +146,6 @@ Each item: priority, file, check-id, one-line description, concrete fix.
 
 List artifacts and checks that pass without issues. Gives a confidence baseline.
 
----
-
 ## Completion Criteria
 
 The review is done when ALL of the following are true:
@@ -164,8 +154,6 @@ The review is done when ALL of the following are true:
 - `get_errors` has been run on every reviewed file
 - The output contains all 6 required sections (Inventory, Findings, Cross-Artifact, IDE Validation, Fix List, Already Correct)
 - Every finding has a severity emoji, check-ID, and a concrete fix proposal
-
----
 
 ## Example Invocations
 
