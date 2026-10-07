@@ -28,7 +28,7 @@ class Buffer {
 public:
     Buffer(size_t size) : data(size) {}
 
-    // Fast access — precondition: index < size(), no bounds check
+    // Fast access - precondition: index < size(), no bounds check
     char& operator[](size_t index) {
         assert(index < data.size());
         return data[index];
@@ -39,7 +39,7 @@ public:
         return data[index];
     }
 
-    // Safe access — returns nullopt on out-of-range (char is trivially copyable, copy is fine)
+    // Safe access - returns nullopt on out-of-range (char is trivially copyable, copy is fine)
     std::optional<char> at(size_t index) const {
         if (index >= data.size())
             return std::nullopt;
@@ -149,7 +149,7 @@ class Document {
 - Avoid more than 4 arguments in a function
 - Using 2 or more identical argument types is allowed ONLY in well-known cases (e.g., `setSize(int width, int height)`)
   in all other cases, it is better to use type aliases or structs to group arguments together
-- Prefer `std::string_view` over `const std::string&` for read-only string arguments — it accepts `std::string`, string literals, and substrings without allocation
+- Prefer `std::string_view` over `const std::string&` for read-only string arguments - it accepts `std::string`, string literals, and substrings without allocation
 
 ```cpp
 // BAD: Too many arguments and confusing order
@@ -184,11 +184,11 @@ forcing an allocation or copy, while still allowing for an explicit owning copy 
 
 Lets assume that:
 
-**View** — is a zero-cost, read-only handle that does not own the data:
+**View** - is a zero-cost, read-only handle that does not own the data:
 
-- plain copy of a trivially-copyable small type (`sizeof(T) <= sizeof(void*)`) — cheaper than a reference
-- `std::string_view`, `std::span<T>` — non-owning slice of a sequence
-- `const T&` — reference to a complex object
+- plain copy of a trivially-copyable small type (`sizeof(T) <= sizeof(void*)`) - cheaper than a reference
+- `std::string_view`, `std::span<T>` - non-owning slice of a sequence
+- `const T&` - reference to a complex object
 
 The View examples are priority-ordered from preferable API to less preferable.
 The exact result depends on the type of the member and the expected usage patterns.
@@ -204,7 +204,7 @@ So, it should look like this:
 | Method            | Semantics                                           |
 |-------------------|-----------------------------------------------------|
 | `obj() -> view`   | Zero-cost read access; returns a view of the member |
-| `getObj() -> T`   | Explicit owning copy — signals allocation cost      |
+| `getObj() -> T`   | Explicit owning copy - signals allocation cost      |
 | `setObj(view)`    | Sets or replaces the value                          |
 | `isFoo() -> bool` | `true` if the value satisfies property *Foo*        |
 
@@ -214,7 +214,7 @@ So, it should look like this:
 |------------------------------------|--------------------------------------------------------------|
 | `hasObj() -> bool`                 | `true` if the value is present                               |
 | `obj() -> const std::optional<T>&` | View of the optional; caller decides how to handle absence   |
-| `getObj() -> T`                    | Explicit owning copy — signals allocation cost               |
+| `getObj() -> T`                    | Explicit owning copy - signals allocation cost               |
 | `setObj(view)`                     | Sets or replaces the value                                   |
 | `takeObj() -> T`                   | Moves out ownership; after the call `hasObj() == false`      |
 | `isFoo() -> bool`                  | `true` if present **and** the value satisfies property *Foo* |
@@ -227,10 +227,10 @@ class Document {
 public:
     // --- title (always present) ---
 
-    // Cheap access — returns string_view (no allocation)
+    // Cheap access - returns string_view (no allocation)
     string_view title() const { return title_; }
 
-    // Owning copy of a non-trivial type — signals allocation cost
+    // Owning copy of a non-trivial type - signals allocation cost
     std::string getTitle() const { return title_; }
 
     // Setter
@@ -241,10 +241,10 @@ public:
 
     // --- metadata (optional) ---
 
-    // Existence check — meaningful only for optional fields
+    // Existence check - meaningful only for optional fields
     bool hasMetadata() const { return metadata_.has_value(); }
 
-    // Cheap access — returns optional ref so caller decides how to handle absence
+    // Cheap access - returns optional ref so caller decides how to handle absence
     const std::optional<Metadata>& metadata() const { return metadata_; }
 
     // Owning copy of a non-trivial type
@@ -256,13 +256,13 @@ public:
     // Setter
     void setMetadata(const Metadata& m) { metadata_ = m; }
 
-    // Move out — caller takes ownership, field becomes empty
+    // Move out - caller takes ownership, field becomes empty
     Metadata takeMetadata() {
         assert(metadata_.has_value());  // Precondition: metadata must be present
         return std::exchange(metadata_, std::nullopt).value();
     }
 
-    // Property check — implies existence for optional fields
+    // Property check - implies existence for optional fields
     bool isReadOnly() const { return hasMetadata() && metadata_->readOnly; }
 };
 ```
