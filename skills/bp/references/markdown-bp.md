@@ -29,13 +29,19 @@ Reasoning: if everything is bold, then nothing is truly bold, and it stops guidi
 
 ## Symbols
 
-Some symbols can break monospaced formatting, so it is better to avoid them.
-Always replace:
+Emoji and some other symbols are not monospaced and can break alignment, so avoid them in documents (files).
+In chat responses, emoji are fine.
+
+In documents, always replace:
 
 - `✅` with `✔`
 - `❌` with `✘`
 - `…`  with `...`
 
+Do not apply these replacements to chat output formats that a document defines,
+such as severity markers in a review report.
+
 ## Horizontal Dividers
 
-Always remove the `---` separators - it is almost always a visual noise
+Avoid using `---` as a visual divider in almost all cases. Keep it only when
+required by a format, such as the delimiters around YAML frontmatter.
