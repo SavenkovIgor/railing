@@ -37,11 +37,11 @@ Artifacts that shape behavior globally or for specific file patterns
 
 **Columns:**
 
-- **Name / File** — display name or filename
-- **Path** — exact path as you know it (repo-relative or absolute); `injected` if embedded in system prompt with no file path
-- **Location** — see *Path Location Taxonomy* in Notes
-- **Scope / applyTo** — glob pattern, directory, or `global`
-- **Content in Context?** — `full` (text is in your context window) · `reference` (only path/name mentioned)
+- Name / File — display name or filename
+- Path — exact path as you know it (repo-relative or absolute); `injected` if embedded in system prompt with no file path
+- Location — see *Path Location Taxonomy* in Notes
+- Scope / applyTo — glob pattern, directory, or `global`
+- Content in Context? — `full` (text is in your context window) · `reference` (only path/name mentioned)
 
 ---
 
@@ -55,9 +55,9 @@ that are simple prompt expansions without conditional activation logic).
 
 **Columns:**
 
-- **Location** — see *Path Location Taxonomy* in Notes
-- **Invocation** — slash command name or attachment method
-- **Content in Context?** — `full` (text is in your context window) ·
+- Location — see *Path Location Taxonomy* in Notes
+- Invocation — slash command name or attachment method
+- Content in Context? — `full` (text is in your context window) ·
   `reference` (only path/name mentioned)
 
 ---
@@ -74,7 +74,7 @@ activation logic and/or persistent behavioral modifications.
 
 **Columns:**
 
-- **Location** — see *Path Location Taxonomy* in Notes
+- Location — see *Path Location Taxonomy* in Notes
 
 **Activation Trigger** — keyword / model-detected relevance/ file-pattern / manual-only / always-on
 **Active Now?** — yes (content loaded and influencing behavior) / no (available but dormant) / n/a (environment has no concept of passive activation) / unknown
@@ -91,9 +91,9 @@ External tool integrations — MCP servers, IDE extensions exposing tools, etc.
 
 **Columns:**
 
-- **Location** — see *Path Location Taxonomy* in Notes
-- **Tools Exposed** — list of tool names visible to you right now (truncate to first 5 + count if many)
-- **Status** — `connected` · `listed-only` · `unknown`
+- Location — see *Path Location Taxonomy* in Notes
+- Tools Exposed — list of tool names visible to you right now (truncate to first 5 + count if many)
+- Status — `connected` · `listed-only` · `unknown`
 
 ---
 
@@ -106,9 +106,9 @@ All tools available in this session — native, deferred, and MCP-provided.
 
 **Columns:**
 
-- **Source** — `built-in` · `deferred` · `mcp:<server-name>` · `extension:<name>`
-- **Category** — `file` · `terminal` · `search` · `web` · `browser` · `planning` · `memory` · `scheduling` · `ide` · `other`
-- **Availability** — `immediate` (callable right now) · `deferred` (requires fetch/activation first) · `unknown`
+- Source — `built-in` · `deferred` · `mcp:<server-name>` · `extension:<name>`
+- Category — `file` · `terminal` · `search` · `web` · `browser` · `planning` · `memory` · `scheduling` · `ide` · `other`
+- Availability — `immediate` (callable right now) · `deferred` (requires fetch/activation first) · `unknown`
 
 ---
 
@@ -122,9 +122,9 @@ state loaded into this session automatically.
 
 **Columns:**
 
-- **Location** — see *Path Location Taxonomy* in Notes
-- **Type** — `memory-index` · `memory-file` · `conversation-cache` · `settings` · `other`
-- **Content in Context?** — `full` · `reference` · `not loaded`
+- Location — see *Path Location Taxonomy* in Notes
+- Type — `memory-index` · `memory-file` · `conversation-cache` · `settings` · `other`
+- Content in Context? — `full` · `reference` · `not loaded`
 
 ---
 
@@ -139,7 +139,7 @@ git state, environment metadata, etc.
 
 **Columns:**
 
-- **Injected As** — `full-content` · `path-reference` · `metadata`
+- Injected As — `full-content` · `path-reference` · `metadata`
 
 ---
 
@@ -154,9 +154,9 @@ Tasks, run configurations, or build targets injected from workspace config
 
 **Columns:**
 
-- **Source File** — config file path
-- **Type / Group** — `build` · `test` · `run` · `lint` · `deploy` · `other`
-- **Content in Context?** — `full` · `reference`
+- Source File — config file path
+- Type / Group — `build` · `test` · `run` · `lint` · `deploy` · `other`
+- Content in Context? — `full` · `reference`
 
 ---
 

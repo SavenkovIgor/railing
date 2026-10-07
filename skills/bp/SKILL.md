@@ -68,9 +68,9 @@ A single file may match multiple references.
 
 For each selected reference, launch a sub-agent and pass it exactly three things:
 
-1. **The target file** — full path and content
-2. **The reference file** — full path of the matching `*-bp.md`
-3. **The response format** — the exact template defined in the "Response Format" section above
+1. The target file — full path and content
+2. The reference file — full path of the matching `*-bp.md`
+3. The response format — the exact template defined in the "Response Format" section above
 
 Instruct each sub-agent to: read the target file and the reference file, validate the file against every criterion in the reference, and return findings using the provided format. Sub-agents work in parallel.
 

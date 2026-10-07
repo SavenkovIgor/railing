@@ -92,12 +92,12 @@ Analyzes the code in context and produces a prioritized report of applicable pub
 
 ## Procedure
 
-1. **Inventory the code.**
+1. Inventory the code.
    - Read the files in context.
    - Detect: languages, frameworks, libraries, configuration formats, protocols, communication patterns, auth mechanisms, data formats.
    - List every detected technology as a candidate for standard mapping.
 
-2. **Map technologies to standards.**
+2. Map technologies to standards.
    - For each detected technology, consult the catalog above.
    - Select standards whose applicability trigger matches.
    - For each selected standard record:
@@ -106,7 +106,7 @@ Analyzes the code in context and produces a prioritized report of applicable pub
      - `scope`: which files or code sections are in scope
      - `priority`: blocking | important | informational
 
-3. **Assess compliance for each standard.**
+3. Assess compliance for each standard.
    - Read the code against the standard's key requirements.
    - Classify each requirement as:
      - `compliant`: code satisfies the requirement
@@ -115,12 +115,12 @@ Analyzes the code in context and produces a prioritized report of applicable pub
      - `not-applicable`: requirement does not apply to this code's scope
    - Record evidence: file, line or pattern that supports the classification.
 
-4. **Prioritize findings.**
+4. Prioritize findings.
    - `blocking`: standard violation that introduces security risk, data loss risk, or protocol incompatibility with external systems.
    - `important`: deviation from the standard that reduces interoperability, maintainability, or correctness.
    - `informational`: style or convention gap; low risk but worth tracking.
 
-5. **Build the checklist.**
+5. Build the checklist.
    - For each `violation` or `gap` with priority `blocking` or `important`:
      - Item title (one line)
      - Standard reference (name + URL)
@@ -128,7 +128,7 @@ Analyzes the code in context and produces a prioritized report of applicable pub
      - What the code does instead (with file/line if available)
      - How to verify compliance after the fix (command, test, or manual check)
 
-6. **Report what is already compliant.**
+6. Report what is already compliant.
    - List standards that were checked and satisfied — gives confidence baseline.
 
 ## Branching Logic

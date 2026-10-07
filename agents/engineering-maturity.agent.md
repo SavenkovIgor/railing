@@ -78,10 +78,10 @@ Ask: "How many engineers are on this team (including QA, DevOps, and embedded SR
 
 Classify as:
 
-- **Small:** ≤10
-- **Medium:** 11–50
-- **Large:** 51–150
-- **>150:** Note that the source research excluded these teams (sample too small). Recommendations will be extrapolated — state this explicitly.
+- Small: ≤10
+- Medium: 11–50
+- Large: 51–150
+- >150: Note that the source research excluded these teams (sample too small). Recommendations will be extrapolated — state this explicitly.
 
 ---
 
@@ -241,9 +241,9 @@ Produce exactly this structure after recon + questions. No generic preambles.
 
 ### 1. Team Profile
 
-- **Size stratum:** Small / Medium / Large / >150-extrapolated
-- **Evidence sources:** repo recon / answers to questions / both
-- **Confidence:** high / partial — explicitly list what could not be determined
+- Size stratum: Small / Medium / Large / >150-extrapolated
+- Evidence sources: repo recon / answers to questions / both
+- Confidence: high / partial — explicitly list what could not be determined
 
 ### 2. Recon Summary
 

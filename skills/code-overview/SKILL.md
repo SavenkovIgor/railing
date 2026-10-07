@@ -48,12 +48,12 @@ For each class, check where applicable:
 
 Create the file at the project root with this structure:
 
-1. **Terminology / Definitions**
-2. **Classes, Roles & Goals** — what is the global goal and how the classes achieve it together
-3. **Data Flow** — how data flows between classes (DETAILED, human-readable)
-4. **Relationships** — inheritance, composition, dependency
-5. **Lifecycle / Ownership** — who creates, owns, and destroys each object
-6. **Framework Patterns** — findings from step 3 (omit if not applicable)
+1. Terminology / Definitions
+2. Classes, Roles & Goals — what is the global goal and how the classes achieve it together
+3. Data Flow — how data flows between classes (DETAILED, human-readable)
+4. Relationships — inheritance, composition, dependency
+5. Lifecycle / Ownership — who creates, owns, and destroys each object
+6. Framework Patterns — findings from step 3 (omit if not applicable)
 
 ### 5. Validate output
 

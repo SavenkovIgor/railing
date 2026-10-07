@@ -75,10 +75,10 @@ Do not begin the audit unless all references listed are fully reviewed and acces
 Read **only** the reference files that match the artifact types under review.
 Do not read reference files for artifact types that are not in scope.
 
-- **Instructions** (`*.instructions.md`): read [references/instructions.md](references/instructions.md)
-- **Prompts** (`*.prompt.md`): read [references/prompts.md](references/prompts.md)
-- **Skills** (`SKILL.md`): read [references/skills.md](references/skills.md)
-- **Agents** (`*.agent.md`): read [references/agents.md](references/agents.md)
+- Instructions (`*.instructions.md`): read [references/instructions.md](references/instructions.md)
+- Prompts (`*.prompt.md`): read [references/prompts.md](references/prompts.md)
+- Skills (`SKILL.md`): read [references/skills.md](references/skills.md)
+- Agents (`*.agent.md`): read [references/agents.md](references/agents.md)
 
 #### 2a. Content checks (all artifact types)
 
