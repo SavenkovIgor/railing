@@ -1,6 +1,6 @@
 {
     "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
     "name": "railing",
-    "version": "7.5.1",
+    "version": "7.6.0",
     "description": "Engineering guardrails that keep AI coding agents on track."
 }
