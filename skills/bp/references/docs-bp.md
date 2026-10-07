@@ -31,47 +31,47 @@ Verify that the documentation is up to date and accurately reflects the current 
 ### Writing Style Rules
 
 1. Remove bureaucratic and verbose phrases
-   ❌ "For the purpose of increasing the efficiency of the system, a process of
+   ✘ "For the purpose of increasing the efficiency of the system, a process of
        optimization is currently being conducted."
-   ✅ "We are optimizing the system."
+   ✔ "We are optimizing the system."
 
 2. Prefer active voice over passive voice
-   ❌ "The configuration file was modified to enable logging."
-   ✅ "Modify the configuration file to enable logging."
+   ✘ "The configuration file was modified to enable logging."
+   ✔ "Modify the configuration file to enable logging."
 
 3. Replace noun-based verbs with actual verbs
-   ❌ "The execution of the installation can be performed by the administrator."
-   ✅ "The administrator installs the software."
+   ✘ "The execution of the installation can be performed by the administrator."
+   ✔ "The administrator installs the software."
 
 4. Be specific, avoid abstractions
-   ❌ "The system provides a wide range of options for the user."
-   ✅ "The system lets you export data to CSV, JSON, or XML."
+   ✘ "The system provides a wide range of options for the user."
+   ✔ "The system lets you export data to CSV, JSON, or XML."
 
 5. Keep sentences short and clear
-   ❌ "When the application encounters a situation in which the required
+   ✘ "When the application encounters a situation in which the required
        library is missing, it will, in accordance with the predefined logic,
        generate an error message that informs the user about the problem."
-   ✅ "If the library is missing, the app shows an error."
+   ✔ "If the library is missing, the app shows an error."
 
 6. Cut filler and empty phrases
-   ❌ "It should be noted that the installation process will take some time."
-   ✅ "The installation takes several minutes."
+   ✘ "It should be noted that the installation process will take some time."
+   ✔ "The installation takes several minutes."
 
 7. Use verbs to make instructions actionable
-   ❌ "The activation of the service is possible via the dashboard."
-   ✅ "Activate the service in the dashboard."
+   ✘ "The activation of the service is possible via the dashboard."
+   ✔ "Activate the service in the dashboard."
 
 8. Remove redundancy and duplication
-   ❌ "Each and every user must always follow the mandatory rules."
-   ✅ "Each user must follow the rules."
+   ✘ "Each and every user must always follow the mandatory rules."
+   ✔ "Each user must follow the rules."
 
 9. Address the reader directly ("you")
-   ❌ "The feature can be used by the end user for configuration."
-   ✅ "You can configure this feature."
+   ✘ "The feature can be used by the end user for configuration."
+   ✔ "You can configure this feature."
 
 10. Prefer present tense for clarity
-    ❌ "The system was designed to support multiple platforms."
-    ✅ "The system supports multiple platforms."
+    ✘ "The system was designed to support multiple platforms."
+    ✔ "The system supports multiple platforms."
 
 ### Documentation Categories (Diátaxis Framework)
 

@@ -4,7 +4,8 @@ Rules for writing well-formed, readable Markdown.
 
 ## Language
 
-Prefer American English spelling and grammar
+Write in the language of the document.
+For English, use American spelling and grammar.
 
 ## Links
 
