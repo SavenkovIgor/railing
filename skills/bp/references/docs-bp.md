@@ -22,56 +22,17 @@ Verify that the documentation is up to date and accurately reflects the current 
    - Is the documentation in proper, valid markdown format?
    - Is important information prioritized at the beginning?
    - Are headings used effectively to organize content and enable scanning?
-   - Is text highlighting (bold, italics, code formatting) used judiciously (around 10% of text)?
+   - Is text highlighting used with purpose and not scattered across the page (see the formatting rules in the [tech-writing skill](../../tech-writing/SKILL.md))?
    - Is styling consistent throughout the document and across related documents?
    - Do all file references use working markdown links?
    - Is all code naming formatted with inline `code` markdown?
    - Is terminology consistent throughout the document?
 
-### Writing Style Rules
+### Prose Style
 
-1. Remove bureaucratic and verbose phrases
-   ✘ "For the purpose of increasing the efficiency of the system, a process of
-       optimization is currently being conducted."
-   ✔ "We are optimizing the system."
-
-2. Prefer active voice over passive voice
-   ✘ "The configuration file was modified to enable logging."
-   ✔ "Modify the configuration file to enable logging."
-
-3. Replace noun-based verbs with actual verbs
-   ✘ "The execution of the installation can be performed by the administrator."
-   ✔ "The administrator installs the software."
-
-4. Be specific, avoid abstractions
-   ✘ "The system provides a wide range of options for the user."
-   ✔ "The system lets you export data to CSV, JSON, or XML."
-
-5. Keep sentences short and clear
-   ✘ "When the application encounters a situation in which the required
-       library is missing, it will, in accordance with the predefined logic,
-       generate an error message that informs the user about the problem."
-   ✔ "If the library is missing, the app shows an error."
-
-6. Cut filler and empty phrases
-   ✘ "It should be noted that the installation process will take some time."
-   ✔ "The installation takes several minutes."
-
-7. Use verbs to make instructions actionable
-   ✘ "The activation of the service is possible via the dashboard."
-   ✔ "Activate the service in the dashboard."
-
-8. Remove redundancy and duplication
-   ✘ "Each and every user must always follow the mandatory rules."
-   ✔ "Each user must follow the rules."
-
-9. Address the reader directly ("you")
-   ✘ "The feature can be used by the end user for configuration."
-   ✔ "You can configure this feature."
-
-10. Prefer present tense for clarity
-    ✘ "The system was designed to support multiple platforms."
-    ✔ "The system supports multiple platforms."
+Prose style rules live in one place: the
+[tech-writing skill](../../tech-writing/SKILL.md). Read it and check the
+documentation's prose against it. Do not restate its rules here.
 
 ### Documentation Categories (Diátaxis Framework)
 
