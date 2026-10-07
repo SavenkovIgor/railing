@@ -59,7 +59,7 @@ Choose only the references that match the file under review:
 | [builds](references/reproducible-builds.md)     | Build scripts, lock files, CI configs                                            |
 | [skill](references/skill-bp.md)                 | `SKILL.md` files                                                                 |
 | [standards](references/standards-bp.md)         | Code files; or when explicit standards/RFC/OWASP/ISO check requested             |
-| [system-design](references/system-design-bp.md) | Architecture docs, design specs, any code file, except `reports/**/*.md`        |
+| [system-design](references/system-design-bp.md) | Design specs and proposals describing a system to be built or changed           |
 | [report-review](../report-review/SKILL.md)       | Report files matching `reports/**/*.md`                                          |
 
 A single file may match multiple references.
