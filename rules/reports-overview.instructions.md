@@ -38,4 +38,4 @@ Use these `##` sections in this order:
 - O3 Every class in `Roles and goals` has a subsection or paragraph in `Internal mechanisms`
 - O4 Every long-lived object has a creator and an owner in `Lifecycle and ownership`
 - O5 Threads, processes, or IPC are stated explicitly when present
-- O6 The report is at most 100 lines, excluding code blocks
+- O6 The report is at most 250 lines, excluding code blocks
