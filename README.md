@@ -30,6 +30,8 @@ When it properly support `plugin.json` at root, this file will be removed
   development guidance.
 - [`api-python.instructions.md`](./rules/api-python.instructions.md) - Python
   API development guidance.
+- [`markdown.instructions.md`](./rules/markdown.instructions.md) - formatting
+  checks for all `*.md` files.
 - [`reports.instructions.md`](./rules/reports.instructions.md) - universal
   requirements for agent-written reports in `reports/`.
 - [`reports-overview.instructions.md`](./rules/reports-overview.instructions.md) -
