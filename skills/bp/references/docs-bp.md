@@ -8,25 +8,27 @@ Verify that the documentation is up to date and accurately reflects the current 
 ### Key Documentation Principles
 
 1. Clarity
-   - CL1 Does the documentation use plain language that's easy to understand?
-   - CL2 Are technical terms and acronyms properly defined or explained when first introduced?
-   - CL3 Is the documentation accessible to the target audience?
-   - CL4 Is the documentation grammatically correct?
+   - CL1 Use plain language that the target audience can understand.
+   - CL2 Define or explain each project-specific or domain-specific technical
+     term and acronym on first use.
+   - CL3 Use language, terminology, and detail appropriate for the target audience.
+   - CL4 Use grammatically correct language.
 
 2. Conciseness
-   - CN1 Does the documentation focus on necessary information without overwhelming details?
-   - CN2 Is each document focused on a specific topic or task?
-   - CN3 Are edge cases appropriately handled without dominating the main content?
+   - CN1 Omit details that do not affect the reader's decision or next action.
+   - CN2 Cover one specific topic or task in each document.
+   - CN3 Handle edge cases without letting them dominate the main content.
 
 3. Structure
-   - ST1 Is the documentation in proper, valid markdown format?
-   - ST2 Is important information prioritized at the beginning?
-   - ST3 Are headings used effectively to organize content and enable scanning?
-   - ST4 Is text highlighting used with purpose and not scattered across the page (see the formatting rules in the [tech-writing skill](../../tech-writing/SKILL.md))?
-   - ST5 Is styling consistent throughout the document and across related documents?
-   - ST6 Do all file references use working markdown links?
-   - ST7 Is all code naming formatted with inline `code` markdown?
-   - ST8 Is terminology consistent throughout the document?
+   - ST1 Use valid Markdown.
+   - ST2 Put important information at the beginning.
+   - ST3 Use headings to organize content and enable scanning.
+   - ST4 Use text highlighting with purpose and do not scatter it across the page;
+     follow the formatting rules in the [tech-writing skill](../../tech-writing/SKILL.md).
+   - ST5 Use consistent styling throughout the document and related documents.
+   - ST6 Use working Markdown links for all file references.
+   - ST7 Format all code names with inline `code` Markdown.
+   - ST8 Use terminology consistently throughout the document.
 
 ### Prose Style
 
@@ -38,18 +40,18 @@ documentation's prose against it. Do not restate its rules here.
 
 Assess whether the documentation provides adequate coverage across these categories:
 
-1. Tutorials - Does it help developers learn and get started?
-   - TU1 Are there step-by-step instructions for new contributors?
-   - TU2 Do tutorials provide context and explain the "why" along with the "how"?
+1. Tutorials - Help developers learn and get started.
+   - TU1 Provide step-by-step instructions for new contributors.
+   - TU2 Explain the context and why, as well as how.
 
-2. How-to Guides - Does it address specific tasks and goals?
-   - HT1 Are there clear instructions for common development tasks?
-   - HT2 Are the guides focused on practical outcomes?
+2. How-to Guides - Address specific tasks and goals.
+   - HT1 Provide clear instructions for common development tasks.
+   - HT2 Focus on practical outcomes.
 
-3. Explanation - Does it provide understanding of concepts and architecture?
-   - EX1 Is there documentation explaining the project's structure and design decisions?
-   - EX2 Are relationships between components clearly explained?
+3. Explanation - Provide understanding of concepts and architecture.
+   - EX1 Explain the project's structure and design decisions.
+   - EX2 Explain relationships between components.
 
-4. Reference - Does it provide technical specifications?
-   - RF1 Is API documentation clear and complete?
-   - RF2 Are configuration options documented?
+4. Reference - Provide technical specifications.
+   - RF1 Make API documentation clear and complete.
+   - RF2 Document configuration options.
