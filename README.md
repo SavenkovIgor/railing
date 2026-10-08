@@ -40,8 +40,6 @@ When it properly support `plugin.json` at root, this file will be removed
 - [`ai-artifacts-review`](./skills/ai-artifacts-review) - audit AI
   configuration artifacts.
 - [`bp`](./skills/bp) - validate files against best-practice references.
-- [`code-overview`](./skills/code-overview) - document code architecture and
-  data flow.
 - [`debug-context-artifacts`](./skills/debug-context-artifacts) - inspect the
   initial AI context state.
 - [`design-system`](./skills/design-system) - create or audit design systems.
@@ -51,7 +49,8 @@ When it properly support `plugin.json` at root, this file will be removed
 - [`report-review`](./skills/report-review) - clean up a report and verify it
   against the code.
 - [`report-write`](./skills/report-write) - write a technical report about
-  existing code into `reports/`.
+  existing code into `reports/`, including architecture and data-flow
+  overviews (kind `overview`).
 - [`tech-writing`](./skills/tech-writing) - write and review developer
   documentation.
 - [`to-issues`](./skills/to-issues) - convert plans and discussions into
