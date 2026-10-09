@@ -46,3 +46,4 @@ Rules for all Markdown files. Every rule is a pass/fail check; reviews cite rule
 
 - MD7 `---` appears on its own line only as the delimiter of YAML frontmatter.
   Why: a divider adds no meaning, and headings already split the document.
+  Fix a failure by deleting every other `---` line; do not replace it with another divider.
