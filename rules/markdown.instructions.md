@@ -36,18 +36,13 @@ Rules for all Markdown files. Every rule is a pass/fail check; reviews cite rule
 
 ## Symbols
 
-- MD6 Emoji and some other symbols are not monospaced and can break alignment, so avoid them in documents (files).
-  In chat responses, emoji are fine.
-
-  In documents, always replace:
-  - `✅` with `✔`
-  - `❌` with `✘`
-  - `…` with `...`
-
-  Do not apply these replacements to chat output formats that a document defines,
-  such as severity markers in a review report.
+- MD6 A document contains no emoji, no `✅`, `❌`, or `…`. Use `✔`, `✘`, and `...`.
+  The only emoji allowed are the markers of a chat output format that the same
+  document defines, such as severity markers in a review report.
+  Why: emoji are not monospaced and break alignment. Chat responses are not
+  documents, so emoji are fine there.
 
 ## Horizontal Dividers
 
-- MD7 Avoid using `---` as a visual divider in almost all cases. Keep it only when
-  required by a format, such as the delimiters around YAML frontmatter.
+- MD7 `---` appears on its own line only as the delimiter of YAML frontmatter.
+  Why: a divider adds no meaning, and headings already split the document.
