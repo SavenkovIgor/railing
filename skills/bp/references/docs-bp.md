@@ -3,6 +3,10 @@
 Evaluate documentation files for quality and effectiveness.
 Verify that the documentation is up to date and accurately reflects the current state of the code.
 
+The documentation must also pass every check in
+[markdown.instructions.md](../../../rules/markdown.instructions.md) and follow the
+[tech-writing skill](../../tech-writing/SKILL.md). Their rules are not restated here.
+
 ## Evaluation Framework
 
 ### Key Documentation Principles
@@ -20,16 +24,12 @@ Verify that the documentation is up to date and accurately reflects the current 
    - CN3 Handle edge cases without letting them dominate the main content.
 
 3. Structure
-   - ST1 Pass every check in
-     [markdown.instructions.md](../../../rules/markdown.instructions.md).
    - ST2 Put important information at the beginning.
    - ST3 Use headings to organize content and enable scanning.
    - ST4 Use text highlighting with purpose and do not scatter it across the page;
      follow the formatting rules in the [tech-writing skill](../../tech-writing/SKILL.md).
    - ST5 Use consistent styling throughout the document and related documents.
    - ST6 Use working Markdown links for all file references.
-   - ST7 Follow the code font rule under "Format technical content" in the
-     [tech-writing skill](../../tech-writing/SKILL.md).
    - ST8 Use terminology consistently throughout the document.
 
 ### Prose Style
