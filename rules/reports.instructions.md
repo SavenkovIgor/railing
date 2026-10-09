@@ -40,8 +40,7 @@ Every rule is a pass/fail check; reviews cite rules by ID.
   required output format calls for them. Use `✔` and `✘` for status marks in
   documents, and `...` instead of `…`
 - F6 Link text is not a copy of the URL or path
-- F7 Follow MD5 in [markdown.instructions.md](./markdown.instructions.md)
-- F8 Code identifiers, file names, flags, and config keys are in inline code
+- F7 Code identifiers, file names, flags, and config keys are in inline code
 
 ## Language
 
