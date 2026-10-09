@@ -29,12 +29,10 @@ Use a descriptive label or, at minimum, just the filename.
 
 ## Emphasis
 
-### MD5 Avoid bolding everything in a row
+### MD5 At most 3 bold fragments per document, with no exceptions
 
-Overusing bold text is an anti-pattern.
-Fix it by removing most bold formatting and keeping only truly important words or short phrases.
-
-Reasoning: if everything is bold, then nothing is truly bold, and it stops guiding attention effectively.
+Why: if everything is bold, nothing stands out, and bold stops guiding attention.
+Fix a failure by removing bold from all but the fragments the reader must not miss.
 
 ## Symbols
 
