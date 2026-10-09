@@ -29,12 +29,10 @@ Use a descriptive label or, at minimum, just the filename.
 
 ## Emphasis
 
-### MD5 Avoid bolding everything in a row
+### MD5 At most one bold fragment per paragraph or list item; no bold in headings
 
-Overusing bold text is an anti-pattern.
-Fix it by removing most bold formatting and keeping only truly important words or short phrases.
-
-Reasoning: if everything is bold, then nothing is truly bold, and it stops guiding attention effectively.
+Why: if everything is bold, nothing stands out, and bold stops guiding attention.
+Fix a failure by removing bold from all but the one fragment the reader must not miss.
 
 ## Symbols
 
