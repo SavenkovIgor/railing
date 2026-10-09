@@ -18,21 +18,21 @@ Rules for all Markdown files. Every rule is a pass/fail check; reviews cite rule
 
 ## Links
 
-### MD4 Link text must not duplicate the URL or path
+- MD4 Link text must not duplicate the URL or path.
+  Why: the text in `[...]` gives the reader meaningful context, so it should
+  never be a raw copy of the path in `(...)`. Use a descriptive label or, at
+  minimum, just the filename.
 
-The text in `[...]` exists to give the reader meaningful context - it should never be a raw copy of the path in `(...)`.
-Use a descriptive label or, at minimum, just the filename.
-
-✘ `[references/doc-validation.md](references/doc-validation.md)`
-✔ `[doc-validation.md](references/doc-validation.md)`
-✔ `[Documentation Validation](references/doc-validation.md)`
+  ✘ `[references/doc-validation.md](references/doc-validation.md)`
+  ✔ `[doc-validation.md](references/doc-validation.md)`
+  ✔ `[Documentation Validation](references/doc-validation.md)`
 
 ## Emphasis
 
-### MD5 At most 3 bold fragments per document, with no exceptions
-
-Why: if everything is bold, nothing stands out, and bold stops guiding attention.
-Fix a failure by removing bold from all but the fragments the reader must not miss.
+- MD5 At most 3 bold fragments per document, with no exceptions.
+  Why: if everything is bold, nothing stands out, and bold stops guiding
+  attention. Fix a failure by removing bold from all but the fragments the
+  reader must not miss.
 
 ## Symbols
 
