@@ -29,10 +29,10 @@ Use a descriptive label or, at minimum, just the filename.
 
 ## Emphasis
 
-### MD5 At most one bold fragment per paragraph; no bold in headings
+### MD5 At most 3 bold fragments per document, with no exceptions
 
 Why: if everything is bold, nothing stands out, and bold stops guiding attention.
-Fix a failure by removing bold from all but the one fragment the reader must not miss.
+Fix a failure by removing bold from all but the fragments the reader must not miss.
 
 ## Symbols
 
