@@ -32,7 +32,7 @@ serves the intended reader.
 
 Follow project-specific terminology and conventions first. Treat the Google
 guide as recommendations, not rigid rules. Depart from a recommendation when
-doing so improves clarity, and stay consistent in styling and terminology
+doing so improves clarity, and stay consistent in styling
 within the document and related documents.
 
 ## Write for the reader
@@ -137,7 +137,7 @@ Replace passive voice and nominalizations when the actor is known:
 
 These are guidelines, not absolute rules. Depart from a recommendation when
 doing so improves clarity for the intended audience. Keep the choice
-and terminology consistent throughout the document and be able to explain why.
+consistent throughout the document and be able to explain why.
 
 ## Example
 
