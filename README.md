@@ -52,8 +52,8 @@ flowchart TD
     BP --> DOCS
     BP --> RR
     RR --> REP
-    RW --> REP
     RW --> RO
+    RO --> REP
     DOCS --> TW
     DOCS --> MD
     REP --> TW

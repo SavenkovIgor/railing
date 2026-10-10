@@ -19,7 +19,7 @@ If no profile matches the request, stop and ask. Do not invent a structure.
 
 ## Procedure
 
-1. Read the [core requirements](/com.github.copilot/rules/reports.instructions.md) and the profile
+1. Read the profile; it requires the core report requirements
 2. Collect the inputs the profile lists and read them fully
 3. Create `reports/YYYY-MM-DD-<slug>.<kind>.md` with the profile's sections as headings.
    `<slug>` is usually the ticket ID (N2)
