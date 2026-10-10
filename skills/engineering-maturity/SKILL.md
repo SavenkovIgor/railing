@@ -105,7 +105,7 @@ Weeks 1–2 (ROI > 0.3 - do these first):
 
 Weeks 3–5 (ROI 0.1–0.3):
 
-- …
+- ...
 
 Weeks 6–8+ (ROI < 0.1 - infrastructure investment):
 
