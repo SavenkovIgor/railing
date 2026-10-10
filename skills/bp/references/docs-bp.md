@@ -21,11 +21,6 @@ The documentation must also pass every check in the files above. Their rules are
    - CN2 Cover one specific topic or task in each document.
    - CN3 Handle edge cases without letting them dominate the main content.
 
-3. Structure
-   - ST1 Use headings to organize content and enable scanning.
-   - ST2 Use consistent styling throughout the document and related documents.
-   - ST3 Use working Markdown links for all file references.
-
 ### Documentation Categories (Diátaxis Framework)
 
 Assess whether the documentation provides adequate coverage across these categories:

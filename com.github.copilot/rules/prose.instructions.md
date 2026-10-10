@@ -32,7 +32,8 @@ serves the intended reader.
 
 Follow project-specific terminology and conventions first. Treat the Google
 guide as recommendations, not rigid rules. Depart from a recommendation when
-doing so improves clarity, and stay consistent within the document.
+doing so improves clarity, and stay consistent in styling and terminology
+within the document and related documents.
 
 ## Write for the reader
 
@@ -40,7 +41,9 @@ doing so improves clarity, and stay consistent within the document.
 - Put conditions before instructions so readers can skip steps that do not
   apply.
 - Use numbered lists for sequences and bullets for unordered items.
-- Keep one main idea per paragraph and make headings self-contained.
+- Keep one main idea per paragraph.
+- Use headings to organize content and enable scanning. Make each heading
+  self-contained.
 - Prefer active voice and present tense. Name the actor when it is known.
   Passive voice is fine when the actor is irrelevant or the object matters
   more, as in "The file is saved."
@@ -133,7 +136,7 @@ Replace passive voice and nominalizations when the actor is known:
 
 These are guidelines, not absolute rules. Depart from a recommendation when
 doing so improves clarity for the intended audience. Keep the choice
-consistent throughout the document and be able to explain why.
+and terminology consistent throughout the document and be able to explain why.
 
 ## Example
 

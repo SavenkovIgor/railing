@@ -34,16 +34,19 @@ Rules for all Markdown files. Every rule is a pass/fail check; reviews cite rule
   ✘ `[markdown.instructions.md](../../com.github.copilot/rules/markdown.instructions.md)`
   ✔ `[markdown.instructions.md](/com.github.copilot/rules/markdown.instructions.md)`
 
+- MD5 Every link works: a path points to an existing file and an anchor points to an existing heading.
+  Why: a broken link sends the reader nowhere.
+
 ## Emphasis
 
-- MD5 At most 3 bold fragments per document, with no exceptions.
+- MD6 At most 3 bold fragments per document, with no exceptions.
   Why: if everything is bold, nothing stands out, and bold stops guiding
   attention. Fix a failure by removing bold from all but the fragments the
   reader must not miss.
 
 ## Symbols
 
-- MD6 A document contains no emoji, no `✅`, `❌`, or `…`. Use `✔`, `✘`, and `...`.
+- MD7 A document contains no emoji, no `✅`, `❌`, or `…`. Use `✔`, `✘`, and `...`.
   The only emoji allowed are the markers of a chat output format that the same
   document defines, such as severity markers in a review report.
   Why: emoji are not monospaced and break alignment. Chat responses are not
@@ -51,13 +54,13 @@ Rules for all Markdown files. Every rule is a pass/fail check; reviews cite rule
 
 ## Horizontal Dividers
 
-- MD7 `---` appears on its own line only as the delimiter of YAML frontmatter.
+- MD8 `---` appears on its own line only as the delimiter of YAML frontmatter.
   Why: a divider adds no meaning, and headings already split the document.
   Fix a failure by deleting every other `---` line; do not replace it with another divider.
 
 ## Globs
 
-- MD8 A run of two or more file extensions is written as one brace glob in one code span; separate `*.ext` spans in a row fail.
+- MD9 A run of two or more file extensions is written as one brace glob in one code span; separate `*.ext` spans in a row fail.
   Write each extension once, in its own case: `{c,C}` for two different extensions, never a case-folded form.
   Start the glob with `**/` only where it is matched against paths, such as an `applyTo` value; a plain list of extensions that names file kinds starts with `*.`.
   Why: one glob is shorter, shows the whole set at a glance, and can be compared with an `applyTo` value without reordering or retyping.
