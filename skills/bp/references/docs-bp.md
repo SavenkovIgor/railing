@@ -4,7 +4,7 @@ Evaluate documentation files for quality and effectiveness.
 Verify that the documentation is up to date and accurately reflects the current state of the code.
 
 The documentation must also pass every check in
-[markdown.instructions.md](../../../rules/markdown.instructions.md) and follow the
+[markdown.instructions.md](../../../com.github.copilot/rules/markdown.instructions.md) and follow the
 [tech-writing skill](../../tech-writing/SKILL.md). Their rules are not restated here.
 
 ## Evaluation Framework

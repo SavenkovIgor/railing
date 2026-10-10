@@ -9,7 +9,7 @@ argument-hint: "Optional: one or more file paths or names to review. If omitted,
 # AI Artifacts Review
 
 This skill also requires every check in
-[markdown.instructions.md](../../rules/markdown.instructions.md).
+[markdown.instructions.md](../../com.github.copilot/rules/markdown.instructions.md).
 
 ## What This Produces
 
