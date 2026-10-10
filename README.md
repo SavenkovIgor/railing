@@ -17,15 +17,8 @@ Engineering guardrails that keep AI coding agents on track.
 [`plugin.json`](./plugin.json) defines the plugin name, version, description,
 and Agent Plugins schema.
 
-For native Cursor plugin discovery, a manifest in Cursor's native format is also available at
-[`.cursor-plugin/plugin.json`](./.cursor-plugin/plugin.json). Cursor requires
-this exact `.cursor-plugin/plugin.json` path for its native plugin format.
-When it properly support `plugin.json` at root, this file will be removed.
-
 VS Code reads rules and agents only from the `com.github.copilot/` directory,
-while Cursor looks for them in the plugin root by default. The Cursor manifest
-therefore sets the `rules` and `agents` paths explicitly, so both clients use
-one copy of each file.
+so they live there.
 
 ### Rules
 
