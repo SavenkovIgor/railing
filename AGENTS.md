@@ -22,6 +22,12 @@ The files above form a hierarchy. A file that depends on another one applies it 
 
 Why: a copied or cited rule drifts from its source, and a reader who follows a link to one rule skips the rest of that file. An instruction attaches by `applyTo` on its own, while a skill runs only when invoked, so an instruction that depends on a skill depends on something that may not be loaded.
 
+## Where a duplicated rule stays
+
+When the same rule appears in an instruction file and in a skill, remove it from the skill by default and keep it in the instruction.
+
+Why: an instruction applies by default through `applyTo`, while a skill applies only when someone invokes it.
+
 ## Link paths
 
 A link path never contains a `..` segment. Write it by context:
