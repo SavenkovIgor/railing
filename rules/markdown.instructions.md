@@ -53,3 +53,14 @@ Rules for all Markdown files. Every rule is a pass/fail check; reviews cite rule
 - MD8 `---` appears on its own line only as the delimiter of YAML frontmatter.
   Why: a divider adds no meaning, and headings already split the document.
   Fix a failure by deleting every other `---` line; do not replace it with another divider.
+
+## Globs
+
+- MD9 A run of two or more file extensions is written as one brace glob in one code span; separate `*.ext` spans in a row fail.
+  Write each extension once, in its own case: `{c,C}` for two different extensions, never a case-folded form.
+  Start the glob with `**/` only where it is matched against paths, such as an `applyTo` value; a plain list of extensions that names file kinds starts with `*.`.
+  Why: one glob is shorter, shows the whole set at a glance, and can be compared with an `applyTo` value without reordering or retyping.
+
+  ✘ `*.cpp`, `*.hpp`, `*.cc`
+  ✔ `*.{cpp,hpp,cc}`
+  ✔ `**/*.{cpp,hpp,cc}` in an `applyTo` value
