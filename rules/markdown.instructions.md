@@ -27,6 +27,12 @@ Rules for all Markdown files. Every rule is a pass/fail check; reviews cite rule
   ✔ `[doc-validation.md](references/doc-validation.md)`
   ✔ `[Documentation Validation](references/doc-validation.md)`
 
+- MD8 Every link uses the syntax `[text](url)`; no bare URLs outside code spans and code fences.
+  Why: a bare URL gives the reader no context and renders inconsistently.
+
+  ✘ `See https://example.com/docs`
+  ✔ `See [the docs](https://example.com/docs)`
+
 ## Emphasis
 
 - MD5 At most 3 bold fragments per document, with no exceptions.
