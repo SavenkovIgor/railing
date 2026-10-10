@@ -15,8 +15,17 @@ Each file adds to the ones above it and does not restate them.
 
 ## How rule files refer to each other
 
+There are three kinds of dependencies. Each has its own place:
+
+- Inside a skill, between its own files: described by the skill standard, not by this guide.
+- Between instruction files: given by the nesting of `applyTo`, with no links.
+- Between different skills, or from a skill to an instruction file: listed in the `## DependsOn` section. Only this kind goes there.
+
+Rules for links:
+
 - An instruction file never links to another instruction file or to a skill. `applyTo` nesting already applies the files above it, and the editor does this on its own; rely on that behavior.
-- A skill links to every instruction file and skill it depends on, once, in a `## Depends on` section directly after the title. A skill applies each linked file as a whole.
+- A skill links to every instruction file and skill it depends on, once, in a `## DependsOn` section directly after the title. A skill applies each linked file as a whole.
+- A link in a routing table, where a skill picks one target by the input, is not a dependency and stays where it is.
 - Files must not form circular links: if A links to B, B must not link back to A, directly or through a chain of other files.
 - A file never copies, summarizes, or cites single rules of another file, neither by text nor by ID, and never links to it later in the document.
 
