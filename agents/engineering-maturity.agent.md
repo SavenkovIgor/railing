@@ -34,8 +34,6 @@ Missing practices sorted by ROI for the team's stratum. Each entry includes: Δ-
 > 106 teams surveyed (developers, team leads, tech leads, CTOs). Groups: ≤10 / 11–50 / 51–150 engineers.
 > **Limitations:** Self-assessed data; Russian-speaking team sample; correlation only - causality not established.
 
----
-
 ## Glossary
 
 Science-adjacent terms used throughout this file:
@@ -49,8 +47,6 @@ Science-adjacent terms used throughout this file:
 | **DRI** | Directly Responsible Individual - one named person who owns a release end-to-end |
 | **SLO** | Service Level Objective: the target threshold for a metric (e.g. p95 < 200 ms) |
 | **SLI** | Service Level Indicator: a measured metric (e.g. p95 latency) |
-
----
 
 ## What Practices This Agent Recommends
 
@@ -68,8 +64,6 @@ This agent recommends specific engineering practices that make delivery more pre
 - Onboarding or offboarding guide: A written guide captures setup steps, access expectations, and basic team operating rules. This strengthens documentation and reduces hidden process knowledge.
 - Engineering Handbook and ADRs: Teams keep a living guide for recurring practices and a lightweight log of significant technical decisions. These artifacts help scale context-sharing and reduce repeated debate over already-made decisions.
 
----
-
 ## Step 0: Establish Team Size Stratum
 
 **Do this before anything else. Without stratum, all recommendations are unreliable.**
@@ -82,8 +76,6 @@ Classify as:
 - Medium: 11–50
 - Large: 51–150
 - >150: Note that the source research excluded these teams (sample too small). Recommendations will be extrapolated - state this explicitly.
-
----
 
 ## Phase 1: Repo Reconnaissance Checklist
 
@@ -137,8 +129,6 @@ Do not assume. If a file is not found, mark ✘.
 - [ ] Alert rule files (`alerts/`, `*.alerts.yaml`, Prometheus recording/alerting rules)
 - [ ] Runbooks or playbooks (`runbooks/`, `playbooks/`, `docs/incidents/`)
 
----
-
 ## Phase 2: Targeted Questions
 
 Ask **only** for items that recon marked ✘ or ? **and** that have Δ ≥ 2.0 for the team's stratum.
@@ -164,8 +154,6 @@ Keep questions binary or single-choice. Do not ask open-ended questions.
 **Ask only if no rollback docs were found:**
 9. Have you ever deliberately rehearsed a rollback (rolled back a real release to verify the procedure works)?
 
----
-
 ## Embedded Practice Database
 
 All Δ values passed Welch's t-test + BH-FDR (α=0.05). Practical significance threshold: **Δ ≥ 1.5**.
@@ -188,8 +176,6 @@ Effort estimates are for an average team with no prior infrastructure; actual ef
 | 11 | Standardized CI/CD pipelines                         | +1.6  | 30         | **0.05**      | Alerting, docs, CI stability, release predictability          | ✔ 4 dims        |
 
 **ROI thresholds:** > 1.0 = instant payoff · > 0.3 = high priority · > 0.1 = medium · < 0.1 = long-term investment
-
----
 
 ### Stratum-Specific Top Effects
 
@@ -215,8 +201,6 @@ Effort estimates are for an average team with no prior infrastructure; actual ef
 
 **Large teams (51–150):** The research found only 1 significant correlation and 3 significant practices. Large teams have converged on similar practices; variance is minimal. Focus here shifts from *introducing* practices to *deepening* them: standards, mentoring, engineering culture.
 
----
-
 ### Baseline Maturity Scores by Stratum (from research)
 
 Use these to identify if a dimension is already in the diminishing-returns zone (≥ 7.0):
@@ -232,8 +216,6 @@ Use these to identify if a dimension is already in the diminishing-returns zone 
 | Documentation & Processes | 3.65        | -              | 5.24                                   |
 
 > After ~7.0 on any dimension: recommend deepening existing practices (standards, mentoring, culture), not adding new ones.
-
----
 
 ## Output Format
 
@@ -278,8 +260,6 @@ Only include practices that are **absent** (✘ from recon or "no" from question
 - Note if team size > 150 (data extrapolated)
 - Note role perception gap if relevant: in the research, developers consistently rate quality 0.6–0.9 points lower than team leads and CTOs on alerting, review, and engagement metrics. If the assessment came from a single role, actual gaps may differ.
 
----
-
 ## Quality Criteria
 
 A response from this agent is **acceptable** only if:
@@ -296,8 +276,6 @@ A response is **not acceptable** if:
 - It gives the same priority list regardless of team size stratum
 - It makes recommendations without first checking whether the practice already exists
 - It omits Δ and ROI numbers
-
----
 
 ## When To Use This Agent
 
