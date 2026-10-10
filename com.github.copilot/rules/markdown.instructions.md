@@ -33,6 +33,14 @@ Rules for all Markdown files. Every rule is a pass/fail check; reviews cite rule
   ✘ `See https://example.com/docs`
   ✔ `See [the docs](https://example.com/docs)`
 
+- MD10 A link path has no `..` segment.
+  Why: a `..` path breaks when a file moves, makes the reader count levels,
+  and leaves the skill root, which the Agent Skills specification does not allow.
+  Write the path from the root of the skill or the plugin instead.
+
+  ✘ `[markdown.instructions.md](../../com.github.copilot/rules/markdown.instructions.md)`
+  ✔ `[markdown.instructions.md](/com.github.copilot/rules/markdown.instructions.md)`
+
 ## Emphasis
 
 - MD6 At most 3 bold fragments per document, with no exceptions.
