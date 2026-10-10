@@ -8,7 +8,7 @@ Broadest scope first; each file adds to the ones above it and links instead of r
 - [tech-writing](./skills/tech-writing/SKILL.md) - how the text reads: wording, sentence and paragraph style, genre structure
 - [docs-bp.md](./skills/bp/references/docs-bp.md) - what a documentation set must cover; requires the two files above as a whole
 - [reports.instructions.md](./rules/reports.instructions.md) - extra checks for `reports/` only; drop a `F*` check once `MD*` covers it
-- [ai-artifacts-review](./skills/ai-artifacts-review/SKILL.md) - audit of AI artifacts; its markdown-form check (`XA06`) moves to `MD*`
+- [ai-artifacts-review](./skills/ai-artifacts-review/SKILL.md) - audit of AI artifacts
 
 ## How rule files refer to each other
 

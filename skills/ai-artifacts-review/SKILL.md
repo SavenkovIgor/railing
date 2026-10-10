@@ -95,7 +95,6 @@ Apply these CT checks to every artifact, regardless of type:
 - `XA02` **Instruction overlap** - Two instruction files must not define conflicting rules for the same file type and scope.
 - `XA03` **Skill/prompt duplication** - A skill and a prompt covering the same task must be consolidated; prefer the skill if the task is multi-step.
 - `XA04` **Extension correctness** - `.instructions.md` suffix is reserved for Copilot auto-loaded instruction files - no other file type should use it.
-- `XA06` **Markdown table alignment** - All Markdown tables must be properly aligned (header, separator, and row cell counts are consistent) across all rows and columns.
 
 ### 4. IDE validation via `get_errors`
 
