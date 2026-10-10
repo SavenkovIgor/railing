@@ -4,10 +4,10 @@
 
 Broadest scope first; each file adds to the ones above it and links instead of restating. Files must not form circular links: if A links to B, B must not link back to A, directly or through a chain of other files. Linking only to files above in this list guarantees it.
 
-- [markdown.instructions.md](./rules/markdown.instructions.md) - checks (`MD*`) on the form of any `*.md`
+- [markdown.instructions.md](./com.github.copilot/rules/markdown.instructions.md) - checks (`MD*`) on the form of any `*.md`
 - [tech-writing](./skills/tech-writing/SKILL.md) - how the text reads
 - [docs-bp.md](./skills/bp/references/docs-bp.md) - what a documentation set must cover; requires the two files above as a whole
-- [reports.instructions.md](./rules/reports.instructions.md) - extra checks for `reports/` only; drop a `F*` check once `MD*` covers it
+- [reports.instructions.md](./com.github.copilot/rules/reports.instructions.md) - extra checks for `reports/` only; drop a `F*` check once `MD*` covers it
 - [ai-artifacts-review](./skills/ai-artifacts-review/SKILL.md) - audit of AI artifacts
 
 ## How rule files refer to each other

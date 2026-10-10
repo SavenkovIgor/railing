@@ -54,7 +54,7 @@ Choose only the references that match the file under review:
 | [devops](references/devops-bp.md)               | `*.tf`, `ansible*.yml`, provisioning and configuration management files          |
 | [docker](references/docker-bp.md)               | `Dockerfile*`, `*.dockerfile`, `docker-compose*.yml`, `compose*.yml`             |
 | [docs](references/docs-bp.md)                   | Documentation `*.md` files (README, guides, wikis), except `reports/**/*.md`    |
-| [markdown](../../rules/markdown.instructions.md) | Any `*.md` file, except `reports/**/*.md`                                        |
+| [markdown](../../com.github.copilot/rules/markdown.instructions.md) | Any `*.md` file, except `reports/**/*.md`                                        |
 | [python](references/python-bp.md)               | Any `*.py` file                                                                  |
 | [builds](references/reproducible-builds.md)     | Build scripts, lock files, CI configs                                            |
 | [skill](references/skill-bp.md)                 | `SKILL.md` files                                                                 |
