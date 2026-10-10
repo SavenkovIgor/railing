@@ -26,8 +26,7 @@ The documentation must also pass every check in
 3. Structure
    - ST2 Put important information at the beginning.
    - ST3 Use headings to organize content and enable scanning.
-   - ST4 Use text highlighting with purpose and do not scatter it across the page;
-     follow the formatting rules in the [tech-writing skill](../../tech-writing/SKILL.md).
+   - ST4 Use text highlighting with purpose and do not scatter it across the page.
    - ST5 Use consistent styling throughout the document and related documents.
    - ST6 Use working Markdown links for all file references.
    - ST8 Use terminology consistently throughout the document.

@@ -14,6 +14,9 @@ user-invocable: true
 
 # Technical writing
 
+This skill also requires every check in
+[markdown.instructions.md](../../rules/markdown.instructions.md).
+
 Write and review developer-facing prose using a concise, project-aware approach
 based on the [Google developer documentation style guide](https://developers.google.com/style).
 These principles inform the writing; they do not require the result to be
@@ -117,11 +120,6 @@ doing so improves clarity, and stay consistent within the document.
 
 - Use code font for filenames, symbols, flags, status codes, output,
   placeholders, and configuration keys.
-- Limit bold as MD5 in
-  [markdown.instructions.md](../../rules/markdown.instructions.md) says; UI
-  elements and run-in headings are not exceptions. Do not start every item of a
-  list with a bold lead-in (`- **Term:** description`). Use italics sparingly,
-  and reserve underlining for links.
 - Use descriptive link text instead of `click here` or a bare URL.
 - Use unambiguous dates such as `2026-08-19` or `August 19, 2026`.
 - Add alt text that describes what an image conveys.
