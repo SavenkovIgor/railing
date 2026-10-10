@@ -1,7 +1,0 @@
-{
-    "name": "railing",
-    "version": "7.9.0",
-    "description": "Engineering guardrails that keep AI coding agents on track.",
-    "rules": "./com.github.copilot/rules/",
-    "agents": "./com.github.copilot/agents/"
-}
