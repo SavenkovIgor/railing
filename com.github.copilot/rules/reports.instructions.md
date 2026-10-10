@@ -24,7 +24,7 @@ Every rule is a pass/fail check; reviews cite rules by ID.
 - R3 Explain intent, contracts, and non-obvious behavior; do not retell code line by line
 - R4 A code block has at most 15 lines and only the lines the text discusses;
   for anything longer, link to the code
-- R5 One term per concept. Define domain terms in the `Terminology` section
+- R5 Define domain terms in the `Terminology` section
 - R6 No filler: no intro that restates the title, no closing summary that repeats
   sections, no "it is important to note", no unsupported adjectives
   (robust, seamless, powerful, efficient)

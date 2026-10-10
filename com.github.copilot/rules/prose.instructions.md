@@ -51,6 +51,7 @@ within the document and related documents.
 - Address the reader directly when the language supports it. Avoid ambiguous
   uses of "we."
 - Keep sentences short, with one idea per sentence.
+- Use one term per concept and keep it the same throughout the document.
 - Be specific and avoid abstractions.
 - Cut filler, bureaucratic phrasing, and redundancy.
 - Remove excessive claims, hedges, unexplained jargon, idioms, and
