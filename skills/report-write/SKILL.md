@@ -19,7 +19,7 @@ If no profile matches the request, stop and ask. Do not invent a structure.
 
 ## Procedure
 
-1. Read the profile; it requires the core report requirements
+1. Read the profile
 2. Collect the inputs the profile lists and read them fully
 3. Create the report in `reports/`, named as the core requirements say, with the
    profile's sections as headings

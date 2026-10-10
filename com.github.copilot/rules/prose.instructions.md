@@ -5,9 +5,6 @@ applyTo: '**/*.md'
 
 # Technical writing
 
-This file also requires every check in
-[markdown.instructions.md](/com.github.copilot/rules/markdown.instructions.md).
-
 Write and review developer-facing prose using a concise, project-aware approach
 based on the [Google developer documentation style guide](https://developers.google.com/style).
 These principles inform the writing; they do not require the result to be

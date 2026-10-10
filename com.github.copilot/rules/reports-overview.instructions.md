@@ -5,9 +5,6 @@ applyTo: 'reports/**/*.overview.md'
 
 # Overview report profile
 
-This file also requires every check in
-[reports.instructions.md](/com.github.copilot/rules/reports.instructions.md).
-
 Describes how a group of existing classes or modules works, to onboard onto it
 before changing it. Describe the code as it is; do not critique the design.
 

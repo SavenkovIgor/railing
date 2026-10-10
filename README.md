@@ -53,11 +53,7 @@ flowchart TD
     BP --> RR
     RR --> REP
     RW --> RO
-    RO --> REP
     DOCS --> PR
     DOCS --> MD
-    REP --> PR
-    REP --> MD
-    PR --> MD
     AAR --> MD
 ```

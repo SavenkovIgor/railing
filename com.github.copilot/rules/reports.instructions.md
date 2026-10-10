@@ -5,10 +5,6 @@ applyTo: 'reports/**/*.md'
 
 # Report requirements
 
-This file also requires every check in
-[markdown.instructions.md](/com.github.copilot/rules/markdown.instructions.md) and
-[prose.instructions.md](/com.github.copilot/rules/prose.instructions.md).
-
 Universal rules for agent-written technical reports in `reports/`.
 Each report kind adds its own structure in `reports-<kind>.instructions.md`.
 Every rule is a pass/fail check; reviews cite rules by ID.
