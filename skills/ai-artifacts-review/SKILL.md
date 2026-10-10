@@ -94,7 +94,7 @@ Apply these CT checks to every artifact, regardless of type:
 - `XA04` **Extension correctness** - `.instructions.md` suffix is reserved for Copilot auto-loaded instruction files - no other file type should use it.
 - `XA05` **Markdown link formatting** - Links in artifact documents should use Markdown link syntax `[description](url)` instead of bare URLs.
 - `XA06` **Markdown table alignment** - All Markdown tables must be properly aligned (header, separator, and row cell counts are consistent) across all rows and columns.
-- `XA07` **Bold overuse** - If a document uses bold (`**`) on more than 5 distinct words/phrases, suggest replacing some with inline code (`` ` ``) for technical terms, keeping bold only for critical warnings or key concepts.
+- `XA07` Bold overuse - Apply MD5 from [markdown.instructions.md](../../rules/markdown.instructions.md): at most 3 bold fragments per document. Suggest removing bold from the surplus fragments.
 
 ### 4. IDE validation via `get_errors`
 
