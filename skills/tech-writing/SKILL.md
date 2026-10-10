@@ -117,11 +117,11 @@ doing so improves clarity, and stay consistent within the document.
 
 - Use code font for filenames, symbols, flags, status codes, output,
   placeholders, and configuration keys.
-- Use bold only for UI elements and run-in headings. Bold draws the eye, so
-  emphasis scattered across a page defeats its purpose; remove it unless it
-  marks something the reader must not miss. Always remove bold lead-ins that
-  start every item of a list (`- **Term:** description`); they add noise,
-  not emphasis. Use italics sparingly, and reserve underlining for links.
+- Limit bold as MD5 in
+  [markdown.instructions.md](../../rules/markdown.instructions.md) says; UI
+  elements and run-in headings are not exceptions. Do not start every item of a
+  list with a bold lead-in (`- **Term:** description`). Use italics sparingly,
+  and reserve underlining for links.
 - Use descriptive link text instead of `click here` or a bare URL.
 - Use unambiguous dates such as `2026-08-19` or `August 19, 2026`.
 - Add alt text that describes what an image conveys.
