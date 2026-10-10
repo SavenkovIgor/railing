@@ -15,13 +15,13 @@ Help a team spend limited improvement effort where it matters most. Engineering 
 Do not give generic advice like "improve CI/CD". Name specific practices that fit the team and
 the project.
 
-**Phase 1 - Repo reconnaissance** (automated, no questions needed):
+Phase 1 - Repo reconnaissance (automated, no questions needed):
 Inspect the repository for specific artifacts. Each artifact is direct evidence that a practice exists or is absent.
 
-**Phase 2 - Targeted questions** (only for gaps recon couldn't resolve):
+Phase 2 - Targeted questions (only for gaps recon couldn't resolve):
 Short, closed questions. Not "how is your process?" but "does artifact X exist, yes or no?"
 
-**Output - Ranked gap list:**
+Output - Ranked gap list:
 Missing practices sorted by ROI for the team's stratum. Each entry includes: Δ-effect from research, effort estimate, ROI, affected maturity dimensions, and a one-line implementation hint.
 
 ## Step 0: Establish Team Size Stratum
@@ -46,10 +46,10 @@ Read [recon-checklist.md](references/recon-checklist.md) for the artifacts to se
 
 ## Phase 2: Targeted questions
 
-Ask **only** for items that recon marked ✘ or ? **and** that have Δ ≥ 2.0 for the team's stratum.
+Ask **only** for items that recon marked ✘ or ? and that have Δ ≥ 2.0 for the team's stratum.
 Keep questions binary or single-choice. Do not ask open-ended questions.
 
-**Always ask (cannot be inferred from repo):**
+Always ask (cannot be inferred from repo):
 
 1. How many engineers are on the team? *(if not yet established)*
 2. Does each release have a single named owner (DRI) who is responsible end-to-end?
@@ -57,16 +57,16 @@ Keep questions binary or single-choice. Do not ask open-ended questions.
 4. When a test fails in CI, does it block the merge, or can developers override and merge anyway?
 5. Are your CI/CD pipelines based on a shared template, or does each service maintain its own independently?
 
-**Ask only if no onboarding guide was found in recon:**
+Ask only if no onboarding guide was found in recon:
 6. Does a written onboarding guide exist outside the repo (Confluence, Notion, internal wiki)?
 
-**Ask only if no ADR directory was found:**
+Ask only if no ADR directory was found:
 7. Are significant technical decisions documented anywhere (ADRs, RFCs, decision logs - even informal)?
 
-**Ask only if no SLO/SLI files were found:**
+Ask only if no SLO/SLI files were found:
 8. Are SLIs and SLOs defined for any key user-facing flows (availability, latency)?
 
-**Ask only if no rollback docs were found:**
+Ask only if no rollback docs were found:
 9. Have you ever deliberately rehearsed a rollback (rolled back a real release to verify the procedure works)?
 
 ## Practice data
@@ -91,7 +91,7 @@ List every checked artifact as ✔ / ✘ / ? grouped by category. Do not omit �
 
 ### 3. Practice Gap Table
 
-Only include practices that are **absent** (✘ from recon or "no" from questions) and have Δ ≥ 1.5 for this stratum. Sort by ROI descending.
+Only include practices that are absent (✘ from recon or "no" from questions) and have Δ ≥ 1.5 for this stratum. Sort by ROI descending.
 
 | Priority | Practice | How absence was detected | Δ | Effort (h)                             | ROI | Dimensions affected |
 |---                                             |---|---                                     |---  |---                  |
@@ -99,15 +99,15 @@ Only include practices that are **absent** (✘ from recon or "no" from question
 
 ### 4. Implementation Order
 
-**Weeks 1–2 (ROI > 0.3 - do these first):**
+Weeks 1–2 (ROI > 0.3 - do these first):
 
 - `<practice name>: <one-line implementation hint>`
 
-**Weeks 3–5 (ROI 0.1–0.3):**
+Weeks 3–5 (ROI 0.1–0.3):
 
 - …
 
-**Weeks 6–8+ (ROI < 0.1 - infrastructure investment):**
+Weeks 6–8+ (ROI < 0.1 - infrastructure investment):
 
 - …
 
@@ -120,7 +120,7 @@ Only include practices that are **absent** (✘ from recon or "no" from question
 
 ## Quality Criteria
 
-A response from this skill is **acceptable** only if:
+A response from this skill is acceptable only if:
 
 - Team size stratum was established before any recommendation was made
 - Every recommendation names a specific practice (e.g. "add PR template with rollback field"), not a direction ("improve review quality")
@@ -128,7 +128,7 @@ A response from this skill is **acceptable** only if:
 - Recon artifacts are listed explicitly as ✔/✘ - not assumed from context
 - Observations from recon are separated from assumptions
 
-A response is **not acceptable** if:
+A response is not acceptable if:
 
 - It recommends "improve CI/CD" without specifying which practice is missing and why
 - It gives the same priority list regardless of team size stratum
