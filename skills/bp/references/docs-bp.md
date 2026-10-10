@@ -22,11 +22,9 @@ The documentation must also pass every check in the files above. Their rules are
    - CN3 Handle edge cases without letting them dominate the main content.
 
 3. Structure
-   - ST1 Put important information at the beginning.
-   - ST2 Use headings to organize content and enable scanning.
-   - ST3 Use consistent styling throughout the document and related documents.
-   - ST4 Use working Markdown links for all file references.
-   - ST5 Use terminology consistently throughout the document.
+   - ST1 Use headings to organize content and enable scanning.
+   - ST2 Use consistent styling throughout the document and related documents.
+   - ST3 Use working Markdown links for all file references.
 
 ### Documentation Categories (Diátaxis Framework)
 
