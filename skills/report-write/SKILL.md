@@ -21,10 +21,11 @@ If no profile matches the request, stop and ask. Do not invent a structure.
 
 1. Read the profile; it requires the core report requirements
 2. Collect the inputs the profile lists and read them fully
-3. Create `reports/YYYY-MM-DD-<slug>.<kind>.md` with the profile's sections as headings.
-   `<slug>` is usually the ticket ID (N2)
-4. Fill each section. Link every statement about code (R1); mark inferences (R2)
-5. Check the formatting rules (`F*`) and fix violations
+3. Create the report in `reports/`, named as the core requirements say, with the
+   profile's sections as headings
+4. Fill each section as the core requirements say: link every statement about
+   code and mark inferences
+5. Check the formatting rules of the core requirements and fix violations
 6. Reply with the report path and offer `report-review`
 
 Do not verify your own claims beyond the links. `report-review` checks them in

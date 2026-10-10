@@ -10,12 +10,13 @@ description: >-
 
 Input: a report path. Take the kind from the `.<kind>.md` suffix and read the
 [core requirements](/com.github.copilot/rules/reports.instructions.md) and the matching
-`../../com.github.copilot/rules/reports-<kind>.instructions.md`. If the kind is unknown, apply the core
+`/com.github.copilot/rules/reports-<kind>.instructions.md`. If the kind is unknown, apply the core
 only and say so.
 
 ## 1. Clean up: edit in place
 
-- Fix every `F*`, `L*`, and R6 (filler) violation directly in the file
+- Fix every formatting, language, and filler violation of the core requirements
+  directly in the file
 - Do not change facts, link targets, or code. If a fix needs a fact change,
   report it as a finding instead
 
@@ -35,7 +36,7 @@ Subagent instructions:
 
 ## 3. Profile checks: report only
 
-Run the profile's checks. Also check R1-R5 and R7.
+Run the profile's checks. Also check the content rules of the core requirements.
 
 ## Reply format
 
