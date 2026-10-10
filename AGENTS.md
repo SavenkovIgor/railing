@@ -2,25 +2,25 @@
 
 ## Where markdown rules live
 
-Broadest scope first; each file adds to the ones above it and links instead of restating. Files must not form circular links: if A links to B, B must not link back to A, directly or through a chain of other files. Linking only to files above in this list guarantees it.
+Instruction files for markdown nest by `applyTo`: the scope of each file equals or lies inside the scope of the file above it. Broadest scope first:
 
-- [markdown.instructions.md](/com.github.copilot/rules/markdown.instructions.md) - checks (`MD*`) on the form of any `*.md`
-- [prose.instructions.md](/com.github.copilot/rules/prose.instructions.md) - how the text reads
-- [docs-bp.md](/skills/bp/references/docs-bp.md) - what a documentation set must cover; requires the two files above as a whole
-- [reports.instructions.md](/com.github.copilot/rules/reports.instructions.md) - extra checks for `reports/` only; drop a `F*` check once `MD*` covers it
-- `reports-<kind>.instructions.md` (in the same directory) - structure of one report kind; requires the file above as a whole
-- [ai-artifacts-review](/skills/ai-artifacts-review/SKILL.md) - audit of AI artifacts
+- [markdown.instructions.md](/com.github.copilot/rules/markdown.instructions.md) - `**/*.md`; checks (`MD*`) on the form of any markdown file
+- [prose.instructions.md](/com.github.copilot/rules/prose.instructions.md) - `**/*.md`; how the text reads
+- [reports.instructions.md](/com.github.copilot/rules/reports.instructions.md) - `reports/**/*.md`; extra checks for `reports/` only; drop a `F*` check once `MD*` covers it
+- `reports-<kind>.instructions.md` (in the same directory) - `reports/**/*.<kind>.md`; structure of one report kind
+
+Nesting is a required property of this list. A new instruction file for markdown goes below the narrowest file whose scope contains its own. A file whose scope is not inside the scope of the file above it breaks the hierarchy.
+
+Each file adds to the ones above it and does not restate them.
 
 ## How rule files refer to each other
 
-The files above form a hierarchy. A file that depends on another one applies it as a whole.
-
-- A file links to each file it depends on once, in its first paragraph after the title: "This file also requires every check in [file]".
+- An instruction file never links to another instruction file or to a skill. `applyTo` nesting already applies the files above it, and the editor does this on its own; rely on that behavior.
+- A skill links to every instruction file and skill it depends on, once, in a `## Depends on` section directly after the title. A skill applies each linked file as a whole.
+- Files must not form circular links: if A links to B, B must not link back to A, directly or through a chain of other files.
 - A file never copies, summarizes, or cites single rules of another file, neither by text nor by ID, and never links to it later in the document.
-- A file links only to files above it in the list, as the rule against circular links requires.
-- An instruction file (`com.github.copilot/rules/`) links only to other instruction files, never to a skill. A skill may link to skills and to instruction files.
 
-Why: a copied or cited rule drifts from its source, and a reader who follows a link to one rule skips the rest of that file. An instruction attaches by `applyTo` on its own, while a skill runs only when invoked, so an instruction that depends on a skill depends on something that may not be loaded.
+Why: a copied or cited rule drifts from its source, and a reader who follows a link to one rule skips the rest of that file. An instruction attaches by `applyTo` on its own, while a skill runs only when invoked, so an instruction that depends on a skill depends on something that may not be loaded. A skill can run before the file it works on is in the context, so `applyTo` has not attached anything yet; a link is the lesser evil there.
 
 ## Where a duplicated rule stays
 
