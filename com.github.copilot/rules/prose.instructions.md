@@ -54,6 +54,8 @@ within the document and related documents.
 - Use one term per concept and keep it the same throughout the document.
 - Be specific and avoid abstractions.
 - Cut filler, bureaucratic phrasing, and redundancy.
+- Do not open with an intro that restates the title or close with a summary
+  that repeats the sections.
 - Remove excessive claims, hedges, unexplained jargon, idioms, and
   pre-announcements.
 - Use a conversational, friendly, respectful tone without slang or excessive

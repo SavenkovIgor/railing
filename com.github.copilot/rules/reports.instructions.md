@@ -25,15 +25,7 @@ Every rule is a pass/fail check; reviews cite rules by ID.
 - R4 A code block has at most 15 lines and only the lines the text discusses;
   for anything longer, link to the code
 - R5 Define domain terms in the `Terminology` section
-- R6 No filler: no intro that restates the title, no closing summary that repeats
-  sections, no "it is important to note", no unsupported adjectives
-  (robust, seamless, powerful, efficient)
-- R7 No recommendations or design critique unless the profile asks for them
-
-## Formatting
-
-- F1 Exactly one `#` heading, on the first line
-- F2 Heading levels do not skip (`##` then `####` fails)
+- R6 No recommendations or design critique unless the profile asks for them
 
 ## Language
 

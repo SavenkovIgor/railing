@@ -8,6 +8,8 @@ description: >-
     GitLab, etc. from project context.
 ---
 
+# To issues
+
 Decompose the preceding plan, discussion, or proposal into discrete, actionable
 issues and file them in the project's issue tracker.
 

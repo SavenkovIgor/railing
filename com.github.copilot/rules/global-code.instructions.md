@@ -3,7 +3,7 @@ name: Global Coding Style
 applyTo: '**/*.{h,hpp,cc,cpp,cppm,ipp,py,js,ts}'
 ---
 
-## Global Code Principles
+# Global code principles
 
 - Readability and maintainability are primary concerns
 - Code should always be self-documenting first; comments explain *why*, not *what*
