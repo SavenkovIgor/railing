@@ -39,14 +39,19 @@ Which rule and skill files depend on which. A solid arrow means "links to". A da
 
 ```mermaid
 flowchart TD
-    BP["skill: bp"]
-    RR["skill: report-review"]
-    RW["skill: report-write"]
-    AAR["skill: ai-artifacts-review"]
-    REP["instruction: reports"]
-    RO["instruction: reports-overview"]
-    PR["instruction: prose"]
-    MD["instruction: markdown"]
+    subgraph SK["Skills"]
+        BP["skill: bp"]
+        RR["skill: report-review"]
+        RW["skill: report-write"]
+        AAR["skill: ai-artifacts-review"]
+    end
+
+    subgraph IN["Instructions"]
+        REP["instruction: reports"]
+        RO["instruction: reports-overview"]
+        PR["instruction: prose"]
+        MD["instruction: markdown"]
+    end
 
     BP --> RR
     BP --> PR
