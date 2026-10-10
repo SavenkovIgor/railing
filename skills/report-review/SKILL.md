@@ -9,8 +9,8 @@ description: >-
 # Report review
 
 Input: a report path. Take the kind from the `.<kind>.md` suffix and read the
-[core requirements](../../rules/reports.instructions.md) and the matching
-`../../rules/reports-<kind>.instructions.md`. If the kind is unknown, apply the core
+[core requirements](../../com.github.copilot/rules/reports.instructions.md) and the matching
+`../../com.github.copilot/rules/reports-<kind>.instructions.md`. If the kind is unknown, apply the core
 only and say so.
 
 ## 1. Clean up: edit in place

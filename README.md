@@ -6,7 +6,9 @@ Engineering guardrails that keep AI coding agents on track.
 
 ```text
 ├── plugin.json
-├── rules/
+├── com.github.copilot/
+│   ├── agents/
+│   └── rules/
 └── skills/
 ```
 
@@ -15,27 +17,43 @@ Engineering guardrails that keep AI coding agents on track.
 [`plugin.json`](./plugin.json) defines the plugin name, version, description,
 and Agent Plugins schema.
 
-For native Cursor plugin discovery, the same manifest is also available at
+For native Cursor plugin discovery, a manifest in Cursor's native format is also available at
 [`.cursor-plugin/plugin.json`](./.cursor-plugin/plugin.json). Cursor requires
 this exact `.cursor-plugin/plugin.json` path for its native plugin format.
-When it properly support `plugin.json` at root, this file will be removed
+When it properly support `plugin.json` at root, this file will be removed.
+
+VS Code reads rules and agents only from the `com.github.copilot/` directory,
+while Cursor looks for them in the plugin root by default. The Cursor manifest
+therefore sets the `rules` and `agents` paths explicitly, so both clients use
+one copy of each file.
 
 ### Rules
 
-- [`global.instructions.md`](./rules/global.instructions.md) - general agent
+- [`global.instructions.md`](./com.github.copilot/rules/global.instructions.md) - general agent
   behavior and workflow guidance.
-- [`global-code.instructions.md`](./rules/global-code.instructions.md) - shared
+- [`global-code.instructions.md`](./com.github.copilot/rules/global-code.instructions.md) - shared
   coding principles for C++, Python, JavaScript, and TypeScript.
-- [`api-cpp.instructions.md`](./rules/api-cpp.instructions.md) - C++ API
+- [`api-cpp.instructions.md`](./com.github.copilot/rules/api-cpp.instructions.md) - C++ API
   development guidance.
-- [`api-python.instructions.md`](./rules/api-python.instructions.md) - Python
+- [`api-python.instructions.md`](./com.github.copilot/rules/api-python.instructions.md) - Python
   API development guidance.
-- [`markdown.instructions.md`](./rules/markdown.instructions.md) - formatting
+- [`markdown.instructions.md`](./com.github.copilot/rules/markdown.instructions.md) - formatting
   checks for all `*.md` files.
-- [`reports.instructions.md`](./rules/reports.instructions.md) - universal
+- [`reports.instructions.md`](./com.github.copilot/rules/reports.instructions.md) - universal
   requirements for agent-written reports in `reports/`.
-- [`reports-overview.instructions.md`](./rules/reports-overview.instructions.md) -
+- [`reports-overview.instructions.md`](./com.github.copilot/rules/reports-overview.instructions.md) -
   structure and checks for `*.overview.md` reports.
+
+### Agents
+
+- [`engineering-maturity`](./com.github.copilot/agents/engineering-maturity.agent.md) -
+  engineering maturity advisor.
+- [`gilfoyle`](./com.github.copilot/agents/gilfoyle.agent.md) - blunt code
+  review and analysis.
+- [`report-reviewer`](./com.github.copilot/agents/report-reviewer.agent.md) -
+  review reports against the code.
+- [`report-writer`](./com.github.copilot/agents/report-writer.agent.md) - write
+  technical reports about existing code.
 
 ### Skills
 

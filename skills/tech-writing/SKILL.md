@@ -15,7 +15,7 @@ user-invocable: true
 # Technical writing
 
 This skill also requires every check in
-[markdown.instructions.md](../../rules/markdown.instructions.md).
+[markdown.instructions.md](../../com.github.copilot/rules/markdown.instructions.md).
 
 Write and review developer-facing prose using a concise, project-aware approach
 based on the [Google developer documentation style guide](https://developers.google.com/style).
