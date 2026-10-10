@@ -1,24 +1,41 @@
 # Agent guide for this repository
 
-## Where markdown rules live
+## Scopes of markdown instructions
 
-Broadest scope first; each file adds to the ones above it and links instead of restating. Files must not form circular links: if A links to B, B must not link back to A, directly or through a chain of other files. Linking only to files above in this list guarantees it.
+Instruction files for markdown nest by `applyTo`: the scope of each file equals or lies inside the scope of the file above it. The files do not depend on each other. Broadest scope first:
 
-- [markdown.instructions.md](/com.github.copilot/rules/markdown.instructions.md) - checks (`MD*`) on the form of any `*.md`
-- [tech-writing](/skills/tech-writing/SKILL.md) - how the text reads
-- [docs-bp.md](/skills/bp/references/docs-bp.md) - what a documentation set must cover; requires the two files above as a whole
-- [reports.instructions.md](/com.github.copilot/rules/reports.instructions.md) - extra checks for `reports/` only; drop a `F*` check once `MD*` covers it
-- [ai-artifacts-review](/skills/ai-artifacts-review/SKILL.md) - audit of AI artifacts
+- [markdown.instructions.md](/com.github.copilot/rules/markdown.instructions.md) - `**/*.md`; checks (`MD*`) on the form of any markdown file
+- [prose.instructions.md](/com.github.copilot/rules/prose.instructions.md) - `**/*.md`; how the text reads
+- [reports.instructions.md](/com.github.copilot/rules/reports.instructions.md) - `reports/**/*.md`; extra checks for `reports/` only; drop a `F*` check once `MD*` covers it
+- `reports-<kind>.instructions.md` (in the same directory) - `reports/**/*.<kind>.md`; structure of one report kind
+
+Nesting is a required property of this list. A new instruction file for markdown goes below the narrowest file whose scope contains its own. A file whose scope is not inside the scope of the file above it breaks the nesting.
+
+Files do not restate rules of files whose scope contains theirs.
 
 ## How rule files refer to each other
 
-The files above form a hierarchy. A file that depends on another one applies it as a whole.
+There are three kinds of dependencies. Each has its own place:
 
-- A file links to each file it depends on once, in its first paragraph after the title: "This file also requires every check in [file]".
+- Inside a skill, between its own files: described by the skill standard, not by this guide.
+- Between instruction files: given by the nesting of `applyTo`, with no links.
+- Between different skills, or from a skill to an instruction file: listed in the `## DependsOn` section. Only this kind goes there.
+
+Rules for links:
+
+- An instruction file never links to another instruction file or to a skill. `applyTo` nesting already applies the files above it, and the editor does this on its own; rely on that behavior.
+- A skill links to every instruction file and skill it depends on, once, in a `## DependsOn` section directly after the title. A skill applies each linked file as a whole.
+- A link in a routing table, where a skill picks one target by the input, is not a dependency and stays where it is.
+- Files must not form circular links: if A links to B, B must not link back to A, directly or through a chain of other files.
 - A file never copies, summarizes, or cites single rules of another file, neither by text nor by ID, and never links to it later in the document.
-- A file links only to files above it in the list, as the rule against circular links requires.
 
-Why: a copied or cited rule drifts from its source, and a reader who follows a link to one rule skips the rest of that file.
+Why: a copied or cited rule drifts from its source, and a reader who follows a link to one rule skips the rest of that file. An instruction attaches by `applyTo` on its own, while a skill runs only when invoked, so an instruction that depends on a skill depends on something that may not be loaded. A skill can run before the file it works on is in the context, so `applyTo` has not attached anything yet; a link is the lesser evil there.
+
+## Where a duplicated rule stays
+
+When the same rule appears in an instruction file and in a skill, remove it from the skill by default and keep it in the instruction.
+
+Why: an instruction applies by default through `applyTo`, while a skill applies only when someone invokes it.
 
 ## Link paths
 
@@ -29,8 +46,8 @@ A link path never contains a `..` segment. Write it by context:
   ✘ `[docs-bp.md](./references/docs-bp.md)`
 - A link from a skill to another skill or to a plugin file starts at the plugin root, with a leading `/`.
   Such a skill works only inside this plugin; it is not standalone.
-  ✔ `[tech-writing](/skills/tech-writing/SKILL.md)`
-  ✘ `[tech-writing](../../tech-writing/SKILL.md)`
+  ✔ `[report-review](/skills/report-review/SKILL.md)`
+  ✘ `[report-review](../../report-review/SKILL.md)`
 - A link in a plugin-level file (`AGENTS.md`, `README.md`, `com.github.copilot/`) starts at the plugin root, with a leading `/`.
   ✔ `[plugin.json](/plugin.json)`
   ✘ `[plugin.json](./plugin.json)`

@@ -6,7 +6,7 @@ applyTo: 'reports/**/*.overview.md'
 # Overview report profile
 
 Describes how a group of existing classes or modules works, to onboard onto it
-before changing it. Describe the code as it is; do not critique the design (R7).
+before changing it. Describe the code as it is; do not critique the design.
 
 ## Input
 
