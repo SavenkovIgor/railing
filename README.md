@@ -35,7 +35,7 @@ Engineering guardrails that keep AI coding agents on track.
 
 ## File links
 
-Which rule and skill files link to which. An arrow means "links to".
+Which rule and skill files depend on which. A solid arrow means "links to". A dashed arrow means that the `applyTo` scope of the file lies inside the scope of the target, so both attach together.
 
 ```mermaid
 flowchart TD
@@ -56,4 +56,7 @@ flowchart TD
     DOCS --> PR
     DOCS --> MD
     AAR --> MD
+    RO -.-> REP
+    REP -.-> PR
+    PR -.-> MD
 ```
