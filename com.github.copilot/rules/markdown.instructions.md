@@ -73,5 +73,6 @@ Rules for all Markdown files. Every rule is a pass/fail check; reviews cite rule
 
 - MD10 Exactly one `#` heading, on the first line after the YAML frontmatter, or on the first line if there is none.
   Why: one title names the document, and a reader or tool finds it in a fixed place.
-- MD11 Heading levels do not skip: `##` is followed by `###`, never by `####`.
+- MD11 A heading level increases by at most one: `##` may be followed by `###`,
+  but not by `####`.
   Why: a skipped level breaks the outline that readers and tools build from headings.
