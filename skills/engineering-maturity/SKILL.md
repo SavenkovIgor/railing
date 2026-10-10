@@ -1,7 +1,7 @@
 ---
 name: engineering-maturity
 description: >-
-    You should use this skill when a team asks which engineering practices are missing and in
+    You SHOULD use this skill when a team asks which engineering practices are missing and in
     what order to adopt them (maturity assessment, practice gap analysis, "what should we
     improve first?"). Do not use it for bug fixes, code review, or architecture decisions.
 ---
