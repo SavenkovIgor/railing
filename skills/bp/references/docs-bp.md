@@ -14,7 +14,7 @@ The documentation must also pass every check in the files above. Their rules are
 ### Key Documentation Principles
 
 1. Clarity
-   - CL3 Use language, terminology, and detail appropriate for the target audience.
+   - CL1 Use language, terminology, and detail appropriate for the target audience.
 
 2. Conciseness
    - CN1 Omit details that do not affect the reader's decision or next action.
@@ -22,11 +22,11 @@ The documentation must also pass every check in the files above. Their rules are
    - CN3 Handle edge cases without letting them dominate the main content.
 
 3. Structure
-   - ST2 Put important information at the beginning.
-   - ST3 Use headings to organize content and enable scanning.
-   - ST5 Use consistent styling throughout the document and related documents.
-   - ST6 Use working Markdown links for all file references.
-   - ST8 Use terminology consistently throughout the document.
+   - ST1 Put important information at the beginning.
+   - ST2 Use headings to organize content and enable scanning.
+   - ST3 Use consistent styling throughout the document and related documents.
+   - ST4 Use working Markdown links for all file references.
+   - ST5 Use terminology consistently throughout the document.
 
 ### Documentation Categories (Diátaxis Framework)
 
