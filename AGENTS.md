@@ -6,6 +6,16 @@ Broadest scope first; each file adds to the ones above it and links instead of r
 
 - [markdown.instructions.md](./rules/markdown.instructions.md) - checks (`MD*`) on the form of any `*.md`: syntax, fences, headings, links, emphasis, symbols
 - [tech-writing](./skills/tech-writing/SKILL.md) - how the text reads: wording, sentence and paragraph style, genre structure
-- [docs-bp.md](./skills/bp/references/docs-bp.md) - what a documentation set must cover; cites `MD*` and `tech-writing`, restates neither
+- [docs-bp.md](./skills/bp/references/docs-bp.md) - what a documentation set must cover; requires the two files above as a whole
 - [reports.instructions.md](./rules/reports.instructions.md) - extra checks for `reports/` only; drop a `F*` check once `MD*` covers it
-- [ai-artifacts-review](./skills/ai-artifacts-review/SKILL.md) - audit of AI artifacts; its markdown-form checks (`XA05` to `XA07`) move to `MD*`
+- [ai-artifacts-review](./skills/ai-artifacts-review/SKILL.md) - audit of AI artifacts; its markdown-form checks (`XA05` and `XA06`) move to `MD*`
+
+## How rule files refer to each other
+
+The files above form a hierarchy. A file that depends on another one applies it as a whole.
+
+- A file links to each file it depends on once, in its first paragraph after the title: "This file also requires every check in [file]".
+- A file never copies, summarizes, or cites single rules of another file, neither by text nor by ID, and never links to it later in the document.
+- A file links only to files above it in the list, as the rule against circular links requires.
+
+Why: a copied or cited rule drifts from its source, and a reader who follows a link to one rule skips the rest of that file.
