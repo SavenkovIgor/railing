@@ -14,7 +14,6 @@ Rules for all Markdown files. Every rule is a pass/fail check; reviews cite rule
 ## Language
 
 - MD2 Write in the language of the document.
-- MD3 For English, use American spelling and grammar.
 
 ## Links
 
