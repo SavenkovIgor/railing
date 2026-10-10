@@ -18,36 +18,32 @@ Rules for all Markdown files. Every rule is a pass/fail check; reviews cite rule
 
 ## Links
 
-### MD4 Link text must not duplicate the URL or path
+- MD4 Link text must not duplicate the URL or path.
+  Why: the text in `[...]` gives the reader meaningful context, so it should
+  never be a raw copy of the path in `(...)`. Use a descriptive label or, at
+  minimum, just the filename.
 
-The text in `[...]` exists to give the reader meaningful context - it should never be a raw copy of the path in `(...)`.
-Use a descriptive label or, at minimum, just the filename.
-
-✘ `[references/doc-validation.md](references/doc-validation.md)`
-✔ `[doc-validation.md](references/doc-validation.md)`
-✔ `[Documentation Validation](references/doc-validation.md)`
+  ✘ `[references/doc-validation.md](references/doc-validation.md)`
+  ✔ `[doc-validation.md](references/doc-validation.md)`
+  ✔ `[Documentation Validation](references/doc-validation.md)`
 
 ## Emphasis
 
-### MD5 At most 3 bold fragments per document, with no exceptions
-
-Why: if everything is bold, nothing stands out, and bold stops guiding attention.
-Fix a failure by removing bold from all but the fragments the reader must not miss.
+- MD5 At most 3 bold fragments per document, with no exceptions.
+  Why: if everything is bold, nothing stands out, and bold stops guiding
+  attention. Fix a failure by removing bold from all but the fragments the
+  reader must not miss.
 
 ## Symbols
 
-- MD6 Emoji and some other symbols are not monospaced and can break alignment, so avoid them in documents (files).
-  In chat responses, emoji are fine.
-
-  In documents, always replace:
-  - `✅` with `✔`
-  - `❌` with `✘`
-  - `…` with `...`
-
-  Do not apply these replacements to chat output formats that a document defines,
-  such as severity markers in a review report.
+- MD6 A document contains no emoji, no `✅`, `❌`, or `…`. Use `✔`, `✘`, and `...`.
+  The only emoji allowed are the markers of a chat output format that the same
+  document defines, such as severity markers in a review report.
+  Why: emoji are not monospaced and break alignment. Chat responses are not
+  documents, so emoji are fine there.
 
 ## Horizontal Dividers
 
-- MD7 Avoid using `---` as a visual divider in almost all cases. Keep it only when
-  required by a format, such as the delimiters around YAML frontmatter.
+- MD7 `---` appears on its own line only as the delimiter of YAML frontmatter.
+  Why: a divider adds no meaning, and headings already split the document.
+  Fix a failure by deleting every other `---` line; do not replace it with another divider.
