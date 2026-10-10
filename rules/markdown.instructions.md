@@ -27,7 +27,7 @@ Rules for all Markdown files. Every rule is a pass/fail check; reviews cite rule
   ✔ `[doc-validation.md](references/doc-validation.md)`
   ✔ `[Documentation Validation](references/doc-validation.md)`
 
-- MD8 Every link uses the syntax `[text](url)`; no bare URLs outside code spans and code fences.
+- MD5 Every link uses the syntax `[text](url)`; no bare URLs outside code spans and code fences.
   Why: a bare URL gives the reader no context and renders inconsistently.
 
   ✘ `See https://example.com/docs`
@@ -35,14 +35,14 @@ Rules for all Markdown files. Every rule is a pass/fail check; reviews cite rule
 
 ## Emphasis
 
-- MD5 At most 3 bold fragments per document, with no exceptions.
+- MD6 At most 3 bold fragments per document, with no exceptions.
   Why: if everything is bold, nothing stands out, and bold stops guiding
   attention. Fix a failure by removing bold from all but the fragments the
   reader must not miss.
 
 ## Symbols
 
-- MD6 A document contains no emoji, no `✅`, `❌`, or `…`. Use `✔`, `✘`, and `...`.
+- MD7 A document contains no emoji, no `✅`, `❌`, or `…`. Use `✔`, `✘`, and `...`.
   The only emoji allowed are the markers of a chat output format that the same
   document defines, such as severity markers in a review report.
   Why: emoji are not monospaced and break alignment. Chat responses are not
@@ -50,6 +50,6 @@ Rules for all Markdown files. Every rule is a pass/fail check; reviews cite rule
 
 ## Horizontal Dividers
 
-- MD7 `---` appears on its own line only as the delimiter of YAML frontmatter.
+- MD8 `---` appears on its own line only as the delimiter of YAML frontmatter.
   Why: a divider adds no meaning, and headings already split the document.
   Fix a failure by deleting every other `---` line; do not replace it with another divider.
