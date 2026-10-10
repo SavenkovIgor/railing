@@ -11,10 +11,6 @@ Rules for all Markdown files. Every rule is a pass/fail check; reviews cite rule
 
 - MD1 Every code fence has a language tag; use `text` for plain output
 
-## Language
-
-- MD2 Write in the language of the document.
-
 ## Links
 
 - MD4 Link text must not duplicate the URL or path.
