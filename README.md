@@ -8,10 +8,7 @@ Engineering guardrails that keep AI coding agents on track.
 ├── plugin.json                                  plugin name, version, description, Agent Plugins schema
 ├── com.github.copilot/                          the only directory where VS Code reads rules and agents
 │   ├── agents/
-│   │   ├── engineering-maturity.agent.md        engineering maturity advisor
-│   │   ├── gilfoyle.agent.md                    blunt code review and analysis
-│   │   ├── report-reviewer.agent.md             review reports against the code
-│   │   └── report-writer.agent.md               write technical reports about existing code
+│   │   └── gilfoyle.agent.md                    blunt code review and analysis
 │   └── rules/
 │       ├── global.instructions.md               general agent behavior and workflow guidance
 │       ├── global-code.instructions.md          shared coding principles for C++, Python, JavaScript, TypeScript
@@ -26,6 +23,7 @@ Engineering guardrails that keep AI coding agents on track.
     ├── bp/                                      validate files against best-practice references
     ├── debug-context-artifacts/                 inspect the initial AI context state
     ├── design-system/                           create or audit design systems
+    ├── engineering-maturity/                    rank missing engineering practices by return on effort
     ├── migration-skill-factory/                 create skills for codebase migrations
     ├── reflect/                                 propose context improvements after a task
     ├── report-review/                           clean up a report and verify it against the code
