@@ -47,6 +47,8 @@ Every rule is a pass/fail check; reviews cite rules by ID.
 - L1 Write in the language of the request (Russian or English).
   Keep code identifiers and established English technical terms as is
 - L2 English: American spelling
+- L3 Russian: name the actor and use a verb, not a nominalization:
+  `сервис обрабатывает запрос`, not `производится обработка запроса`
 
 For prose style beyond these checks, follow
 [tech-writing](/skills/tech-writing/SKILL.md).
