@@ -4,12 +4,13 @@ Engineering guardrails that keep AI coding agents on track.
 
 ## Contents
 
-```text
-├── plugin.json
-├── com.github.copilot/
-│   ├── agents/
-│   └── rules/
-└── skills/
+```mermaid
+treeView-beta
+    plugin.json
+    com.github.copilot/
+        agents/
+        rules/
+    skills/
 ```
 
 ### Plugin manifest
