@@ -18,8 +18,9 @@ The files above form a hierarchy. A file that depends on another one applies it 
 - A file links to each file it depends on once, in its first paragraph after the title: "This file also requires every check in [file]".
 - A file never copies, summarizes, or cites single rules of another file, neither by text nor by ID, and never links to it later in the document.
 - A file links only to files above it in the list, as the rule against circular links requires.
+- An instruction file (`com.github.copilot/rules/`) links only to other instruction files, never to a skill. A skill may link to skills and to instruction files.
 
-Why: a copied or cited rule drifts from its source, and a reader who follows a link to one rule skips the rest of that file.
+Why: a copied or cited rule drifts from its source, and a reader who follows a link to one rule skips the rest of that file. An instruction attaches by `applyTo` on its own, while a skill runs only when invoked, so an instruction that depends on a skill depends on something that may not be loaded.
 
 ## Link paths
 
