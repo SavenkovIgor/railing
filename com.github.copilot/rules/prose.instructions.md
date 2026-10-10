@@ -32,7 +32,8 @@ serves the intended reader.
 
 Follow project-specific terminology and conventions first. Treat the Google
 guide as recommendations, not rigid rules. Depart from a recommendation when
-doing so improves clarity, and stay consistent within the document.
+doing so improves clarity, and stay consistent in styling
+within the document and related documents.
 
 ## Write for the reader
 
@@ -40,7 +41,9 @@ doing so improves clarity, and stay consistent within the document.
 - Put conditions before instructions so readers can skip steps that do not
   apply.
 - Use numbered lists for sequences and bullets for unordered items.
-- Keep one main idea per paragraph and make headings self-contained.
+- Keep one main idea per paragraph.
+- Use headings to organize content and enable scanning. Make each heading
+  self-contained.
 - Prefer active voice and present tense. Name the actor when it is known.
   Passive voice is fine when the actor is irrelevant or the object matters
   more, as in "The file is saved."
@@ -48,6 +51,7 @@ doing so improves clarity, and stay consistent within the document.
 - Address the reader directly when the language supports it. Avoid ambiguous
   uses of "we."
 - Keep sentences short, with one idea per sentence.
+- Use one term per concept and keep it the same throughout the document.
 - Be specific and avoid abstractions.
 - Cut filler, bureaucratic phrasing, and redundancy.
 - Remove excessive claims, hedges, unexplained jargon, idioms, and
@@ -113,6 +117,11 @@ doing so improves clarity, and stay consistent within the document.
 - Add alt text that describes what an image conveys.
 - Use `and`, not `&`, in English prose and headings.
 - Use a hyphen-minus `-`, not an em dash `—`.
+
+## Choose the language
+
+- Write in the language of the document.
+- Use American spelling and grammar in English.
 
 ## Adapt for Russian
 

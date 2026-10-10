@@ -11,14 +11,9 @@ Rules for all Markdown files. Every rule is a pass/fail check; reviews cite rule
 
 - MD1 Every code fence has a language tag; use `text` for plain output
 
-## Language
-
-- MD2 Write in the language of the document.
-- MD3 For English, use American spelling and grammar.
-
 ## Links
 
-- MD4 Link text must not duplicate the URL or path.
+- MD2 Link text must not duplicate the URL or path.
   Why: the text in `[...]` gives the reader meaningful context, so it should
   never be a raw copy of the path in `(...)`. Use a descriptive label or, at
   minimum, just the filename.
@@ -27,17 +22,20 @@ Rules for all Markdown files. Every rule is a pass/fail check; reviews cite rule
   ✔ `[doc-validation.md](references/doc-validation.md)`
   ✔ `[Documentation Validation](references/doc-validation.md)`
 
-- MD5 Every link uses the syntax `[text](url)`; no bare URLs outside code spans and code fences.
+- MD3 Every link uses the syntax `[text](url)`; no bare URLs outside code spans and code fences.
   Why: a bare URL gives the reader no context and renders inconsistently.
 
   ✘ `See https://example.com/docs`
   ✔ `See [the docs](https://example.com/docs)`
 
-- MD10 Prefer a link path written from the root of the repository, with a leading `/`, over a path with `..` segments. A `..` path is allowed; this is a preference, not a hard rule.
+- MD4 Prefer a link path written from the root of the repository, with a leading `/`, over a path with `..` segments. A `..` path is allowed; this is a preference, not a hard rule.
   Why: a root-based path survives a file move and needs no level counting.
 
   ✘ `[markdown.instructions.md](../../com.github.copilot/rules/markdown.instructions.md)`
   ✔ `[markdown.instructions.md](/com.github.copilot/rules/markdown.instructions.md)`
+
+- MD5 Every link works: a path points to an existing file and an anchor points to an existing heading.
+  Why: a broken link sends the reader nowhere.
 
 ## Emphasis
 
