@@ -18,6 +18,7 @@ Engineering guardrails that keep AI coding agents on track.
 │       ├── api-cpp.instructions.md              C++ API development guidance
 │       ├── api-python.instructions.md           Python API development guidance
 │       ├── markdown.instructions.md             formatting checks for all *.md files
+│       ├── prose.instructions.md                how developer-facing prose reads, in all *.md files
 │       ├── reports.instructions.md              universal requirements for agent-written reports in reports/
 │       └── reports-overview.instructions.md     structure and checks for *.overview.md reports
 └── skills/
@@ -29,7 +30,6 @@ Engineering guardrails that keep AI coding agents on track.
     ├── reflect/                                 propose context improvements after a task
     ├── report-review/                           clean up a report and verify it against the code
     ├── report-write/                            write a technical report about existing code into reports/
-    ├── tech-writing/                            write and review developer documentation
     └── to-issues/                               convert plans and discussions into tracker issues
 ```
 
@@ -45,7 +45,7 @@ flowchart TD
     DOCS["bp/references/docs-bp.md"]
     REP["reports.instructions.md"]
     RO["reports-overview.instructions.md"]
-    TW["tech-writing/SKILL.md"]
+    PR["prose.instructions.md"]
     AAR["ai-artifacts-review/SKILL.md"]
     MD["markdown.instructions.md"]
 
@@ -54,9 +54,10 @@ flowchart TD
     RR --> REP
     RW --> RO
     RO --> REP
-    DOCS --> TW
+    DOCS --> PR
     DOCS --> MD
-    REP --> TW
-    TW --> MD
+    REP --> PR
+    REP --> MD
+    PR --> MD
     AAR --> MD
 ```

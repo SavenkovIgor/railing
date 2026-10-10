@@ -1,20 +1,11 @@
 ---
-name: tech-writing
-description: >-
-  Use this skill when writing or reviewing technical documentation or
-  developer-facing prose, especially README files, API documentation, runbooks,
-  and release notes. Use the structural guidance for ADRs, design docs, PR
-  descriptions, and commit messages. Also use it when the user asks to rewrite
-  or tighten technical text, or explicitly mentions Google style. Do not use it
-  for general conversational answers unless the user asks for a documentation-
-  style rewrite.
-argument-hint: "Text to write or review, plus its intended audience and genre"
-user-invocable: true
+name: Technical Writing
+applyTo: '**/*.md'
 ---
 
 # Technical writing
 
-This skill also requires every check in
+This file also requires every check in
 [markdown.instructions.md](/com.github.copilot/rules/markdown.instructions.md).
 
 Write and review developer-facing prose using a concise, project-aware approach
@@ -26,7 +17,7 @@ serves the intended reader.
 ## Editorial hierarchy
 
 1. Follow project-specific terminology and conventions.
-2. Use the principles in this skill when project guidance is silent.
+2. Use the principles in this file when project guidance is silent.
 3. Use third-party references only when the first two sources do not answer the
    question.
 
@@ -38,7 +29,7 @@ serves the intended reader.
 - Apply structural guidance only to ADRs, design docs, RFCs, PR descriptions,
   commit messages, and technical articles. Preserve the argument, trade-offs,
   and appropriate voice these genres need.
-- Do not apply this skill to conversational answers, brainstorming, opinion
+- Do not apply these rules to conversational answers, brainstorming, opinion
   pieces, or a user-requested voice unless the user asks for a documentation-
   style rewrite.
 
@@ -135,18 +126,6 @@ impersonal construction, such as `Чтобы удалить документ, н
 
 Replace passive voice and nominalizations when the actor is known:
 `производится обработка запроса` becomes `сервис обрабатывает запрос`.
-
-## Rewrite or review
-
-1. Identify the genre and choose the scope tier. State the tier if it is not
-   obvious.
-2. Fix ordering: answer first, then context; conditions before instructions.
-3. Correct list structure, paragraph boundaries, voice, and terminology.
-4. Fix technical formatting, links, dates, and image descriptions.
-5. Read the result for a natural, helpful tone.
-
-When reviewing existing text, show the proposed change and name the principle
-behind it. This teaches the author how to apply the improvement next time.
 
 ## Break the rules deliberately
 

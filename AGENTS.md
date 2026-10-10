@@ -5,7 +5,7 @@
 Broadest scope first; each file adds to the ones above it and links instead of restating. Files must not form circular links: if A links to B, B must not link back to A, directly or through a chain of other files. Linking only to files above in this list guarantees it.
 
 - [markdown.instructions.md](/com.github.copilot/rules/markdown.instructions.md) - checks (`MD*`) on the form of any `*.md`
-- [tech-writing](/skills/tech-writing/SKILL.md) - how the text reads
+- [prose.instructions.md](/com.github.copilot/rules/prose.instructions.md) - how the text reads
 - [docs-bp.md](/skills/bp/references/docs-bp.md) - what a documentation set must cover; requires the two files above as a whole
 - [reports.instructions.md](/com.github.copilot/rules/reports.instructions.md) - extra checks for `reports/` only; drop a `F*` check once `MD*` covers it
 - `reports-<kind>.instructions.md` (in the same directory) - structure of one report kind; requires the file above as a whole
@@ -37,8 +37,8 @@ A link path never contains a `..` segment. Write it by context:
   ✘ `[docs-bp.md](./references/docs-bp.md)`
 - A link from a skill to another skill or to a plugin file starts at the plugin root, with a leading `/`.
   Such a skill works only inside this plugin; it is not standalone.
-  ✔ `[tech-writing](/skills/tech-writing/SKILL.md)`
-  ✘ `[tech-writing](../../tech-writing/SKILL.md)`
+  ✔ `[report-review](/skills/report-review/SKILL.md)`
+  ✘ `[report-review](../../report-review/SKILL.md)`
 - A link in a plugin-level file (`AGENTS.md`, `README.md`, `com.github.copilot/`) starts at the plugin root, with a leading `/`.
   ✔ `[plugin.json](/plugin.json)`
   ✘ `[plugin.json](./plugin.json)`

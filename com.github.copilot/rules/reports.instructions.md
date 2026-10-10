@@ -5,6 +5,10 @@ applyTo: 'reports/**/*.md'
 
 # Report requirements
 
+This file also requires every check in
+[markdown.instructions.md](/com.github.copilot/rules/markdown.instructions.md) and
+[prose.instructions.md](/com.github.copilot/rules/prose.instructions.md).
+
 Universal rules for agent-written technical reports in `reports/`.
 Each report kind adds its own structure in `reports-<kind>.instructions.md`.
 Every rule is a pass/fail check; reviews cite rules by ID.
@@ -49,6 +53,3 @@ Every rule is a pass/fail check; reviews cite rules by ID.
 - L2 English: American spelling
 - L3 Russian: name the actor and use a verb, not a nominalization:
   `сервис обрабатывает запрос`, not `производится обработка запроса`
-
-For prose style beyond these checks, follow
-[tech-writing](/skills/tech-writing/SKILL.md).
