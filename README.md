@@ -32,3 +32,31 @@ Engineering guardrails that keep AI coding agents on track.
     ├── tech-writing/                            write and review developer documentation
     └── to-issues/                               convert plans and discussions into tracker issues
 ```
+
+## File links
+
+Which rule and skill files link to which. An arrow means "links to".
+
+```mermaid
+flowchart TD
+    BP["bp/SKILL.md"]
+    RR["report-review/SKILL.md"]
+    RW["report-write/SKILL.md"]
+    DOCS["bp/references/docs-bp.md"]
+    REP["reports.instructions.md"]
+    RO["reports-overview.instructions.md"]
+    TW["tech-writing/SKILL.md"]
+    AAR["ai-artifacts-review/SKILL.md"]
+    MD["markdown.instructions.md"]
+
+    BP --> DOCS
+    BP --> RR
+    RR --> REP
+    RW --> REP
+    RW --> RO
+    DOCS --> TW
+    DOCS --> MD
+    REP --> TW
+    TW --> MD
+    AAR --> MD
+```
