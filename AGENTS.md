@@ -19,3 +19,9 @@ The files above form a hierarchy. A file that depends on another one applies it 
 - A file links only to files above it in the list, as the rule against circular links requires.
 
 Why: a copied or cited rule drifts from its source, and a reader who follows a link to one rule skips the rest of that file.
+
+## Pull request workflow
+
+In every pull request to this repository, the first commit contains only the version bump in both plugin files: [plugin.json](./plugin.json) and [.cursor-plugin/plugin.json](./.cursor-plugin/plugin.json). Both files must carry the same new version. Make all other changes in later commits.
+
+Why: the bump then does not depend on the rest of the change, and a reviewer sees the new version at once.
