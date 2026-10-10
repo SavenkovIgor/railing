@@ -35,7 +35,7 @@ Engineering guardrails that keep AI coding agents on track.
 
 ## File links
 
-Which skills depend on which instructions and skills. An arrow means "links to". Instructions do not depend on each other; the frames show the `applyTo` scope in which each attaches.
+Which rule and skill files depend on which. A solid arrow means "links to". A dashed arrow means that the `applyTo` scope of the file lies inside the scope of the target, so both attach together.
 
 ```mermaid
 flowchart TD
@@ -43,17 +43,10 @@ flowchart TD
     RR["skill: report-review"]
     RW["skill: report-write"]
     AAR["skill: ai-artifacts-review"]
-
-    subgraph MDS["applyTo: **/*.md"]
-        PR["instruction: prose"]
-        MD["instruction: markdown"]
-        subgraph REPS["applyTo: reports/**/*.md"]
-            REP["instruction: reports"]
-            subgraph ROS["applyTo: reports/**/*.overview.md"]
-                RO["instruction: reports-overview"]
-            end
-        end
-    end
+    REP["instruction: reports"]
+    RO["instruction: reports-overview"]
+    PR["instruction: prose"]
+    MD["instruction: markdown"]
 
     BP --> RR
     BP --> PR
@@ -61,4 +54,6 @@ flowchart TD
     RR --> REP
     RW --> RO
     AAR --> MD
+    RO -.-> REP
+    REP -.-> PR
 ```
