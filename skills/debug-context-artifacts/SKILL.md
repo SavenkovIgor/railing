@@ -17,14 +17,10 @@ Produce a structured snapshot of every AI artifact visible in your context at th
 The goal is to understand the **init state** of this chat session - what was loaded automatically
 before the user typed anything.
 
----
-
 ## Output Format
 
 Print the following tables. If a category has no entries, still print the table header with
 a single row saying `- none detected -`.
-
----
 
 ### Instructions & Rules
 
@@ -43,8 +39,6 @@ Artifacts that shape behavior globally or for specific file patterns
 - Scope / applyTo - glob pattern, directory, or `global`
 - Content in Context? - `full` (text is in your context window) · `reference` (only path/name mentioned)
 
----
-
 ### Commands & Prompts
 
 User-invocable prompt templates (`.prompt.md`, slash commands
@@ -59,8 +53,6 @@ that are simple prompt expansions without conditional activation logic).
 - Invocation - slash command name or attachment method
 - Content in Context? - `full` (text is in your context window) ·
   `reference` (only path/name mentioned)
-
----
 
 ### Skills
 
@@ -80,8 +72,6 @@ activation logic and/or persistent behavioral modifications.
 **Active Now?** - yes (content loaded and influencing behavior) / no (available but dormant) / n/a (environment has no concept of passive activation) / unknown
 **Content in Context?** - full / reference / not loaded
 
----
-
 ### MCP Servers & Extensions
 
 External tool integrations - MCP servers, IDE extensions exposing tools, etc.
@@ -95,8 +85,6 @@ External tool integrations - MCP servers, IDE extensions exposing tools, etc.
 - Tools Exposed - list of tool names visible to you right now (truncate to first 5 + count if many)
 - Status - `connected` · `listed-only` · `unknown`
 
----
-
 ### Tools & Capabilities
 
 All tools available in this session - native, deferred, and MCP-provided.
@@ -109,8 +97,6 @@ All tools available in this session - native, deferred, and MCP-provided.
 - Source - `built-in` · `deferred` · `mcp:<server-name>` · `extension:<name>`
 - Category - `file` · `terminal` · `search` · `web` · `browser` · `planning` · `memory` · `scheduling` · `ide` · `other`
 - Availability - `immediate` (callable right now) · `deferred` (requires fetch/activation first) · `unknown`
-
----
 
 ### Persistent State & Memory
 
@@ -126,8 +112,6 @@ state loaded into this session automatically.
 - Type - `memory-index` · `memory-file` · `conversation-cache` · `settings` · `other`
 - Content in Context? - `full` · `reference` · `not loaded`
 
----
-
 ### IDE & Workspace Context (if applicable)
 
 Open files, active editor selection, terminal output, problems panel,
@@ -140,8 +124,6 @@ git state, environment metadata, etc.
 **Columns:**
 
 - Injected As - `full-content` · `path-reference` · `metadata`
-
----
 
 ### Workspace Task Definitions (if applicable)
 
@@ -158,8 +140,6 @@ Tasks, run configurations, or build targets injected from workspace config
 - Type / Group - `build` · `test` · `run` · `lint` · `deploy` · `other`
 - Content in Context? - `full` · `reference`
 
----
-
 ### Environment & Isolation
 
 Runtime environment details: platform, shell, working directory,
@@ -174,8 +154,6 @@ isolation model (worktrees, sandboxes, containers), permission mode.
 | 5 | Permission Mode   | ... (e.g. `auto-allow`, `prompt-per-tool`, `unknown`) |
 | 6 | Git Branch        | ...                                                   |
 | 7 | Git Status        | ...                                                   |
-
----
 
 ## Notes
 

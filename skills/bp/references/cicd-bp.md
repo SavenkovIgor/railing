@@ -77,8 +77,6 @@ with high probability of failure early in the pipeline
 - Deployment version is visible in monitoring (Grafana annotations, Datadog deployment markers).
 - Notification routing - feature branch failures notify only the PR author; `main`/`release` failures notify the entire team.
 
----
-
 ### Default Pipeline and Its Modifications
 
 Here's an approximate schema of stages that can be in a CI/CD pipeline.
@@ -222,8 +220,6 @@ registry.io/myapp:pr-247          # PR preview
 
 Version in URL - for REST. For GraphQL and gRPC - other mechanisms (field deprecation, backward-compatible schema evolution).
 
----
-
 ## Feature Branch vs Release Branch Pipeline
 
 ### Design Principles
@@ -324,8 +320,6 @@ Include:
 ### "Silent CI" Rule
 
 Feature branch pipeline shouldn't make noise in shared channels. Failure notifications - only to PR author. Release branch pipeline - notifies the entire team, because it's a blocker for everyone.
-
----
 
 ## Resources for Further Learning
 
