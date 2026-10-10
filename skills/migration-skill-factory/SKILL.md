@@ -80,7 +80,7 @@ Use this skill when at least one is true:
 5. Generate one migration skill per migration unit.
    - Ask the user where to place the new skill (e.g., `.copilot/skills/` or `.github/skills/`) before creating any files.
    - Create folder `<chosen-path>/<unit-name>/`.
-   - Start from [migration skill template](./assets/migration-skill-template.md).
+   - Start from [migration skill template](assets/migration-skill-template.md).
    - Create SKILL.md with:
      - precise trigger description (keywords from old API and new API)
      - compatibility and applicability section
@@ -183,4 +183,4 @@ When invoked, return:
 
 ## Asset Reference
 
-- Child skill template: [migration skill template](./assets/migration-skill-template.md)
+- Child skill template: [migration skill template](assets/migration-skill-template.md)

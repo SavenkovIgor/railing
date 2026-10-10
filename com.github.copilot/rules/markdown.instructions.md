@@ -33,6 +33,12 @@ Rules for all Markdown files. Every rule is a pass/fail check; reviews cite rule
   ✘ `See https://example.com/docs`
   ✔ `See [the docs](https://example.com/docs)`
 
+- MD10 Prefer a link path written from the root of the repository, with a leading `/`, over a path with `..` segments. A `..` path is allowed; this is a preference, not a hard rule.
+  Why: a root-based path survives a file move and needs no level counting.
+
+  ✘ `[markdown.instructions.md](../../com.github.copilot/rules/markdown.instructions.md)`
+  ✔ `[markdown.instructions.md](/com.github.copilot/rules/markdown.instructions.md)`
+
 ## Emphasis
 
 - MD6 At most 3 bold fragments per document, with no exceptions.

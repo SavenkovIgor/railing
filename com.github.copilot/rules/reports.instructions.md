@@ -51,4 +51,4 @@ Every rule is a pass/fail check; reviews cite rules by ID.
   `сервис обрабатывает запрос`, not `производится обработка запроса`
 
 For prose style beyond these checks, follow
-[tech-writing](../../skills/tech-writing/SKILL.md).
+[tech-writing](/skills/tech-writing/SKILL.md).

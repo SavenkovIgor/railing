@@ -4,8 +4,8 @@ Evaluate documentation files for quality and effectiveness.
 Verify that the documentation is up to date and accurately reflects the current state of the code.
 
 The documentation must also pass every check in
-[markdown.instructions.md](../../../com.github.copilot/rules/markdown.instructions.md) and follow the
-[tech-writing skill](../../tech-writing/SKILL.md). Their rules are not restated here.
+[markdown.instructions.md](/com.github.copilot/rules/markdown.instructions.md) and follow the
+[tech-writing skill](/skills/tech-writing/SKILL.md). Their rules are not restated here.
 
 ## Evaluation Framework
 
@@ -34,7 +34,7 @@ The documentation must also pass every check in
 ### Prose Style
 
 Prose style rules live in one place: the
-[tech-writing skill](../../tech-writing/SKILL.md). Read it and check the
+[tech-writing skill](/skills/tech-writing/SKILL.md). Read it and check the
 documentation's prose against it. Do not restate its rules here.
 
 ### Documentation Categories (Diátaxis Framework)

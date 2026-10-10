@@ -25,7 +25,7 @@ description: >-
    - All states: default, hover, active, disabled, loading, error
    - Variants keyed by semantic role, not appearance
 4. Document interactions - transitions, animation durations, zoom/scale behavior
-5. Write `DESIGN.md` using the [template](./assets/DESIGN.md.template) at project root or `docs/`.
+5. Write `DESIGN.md` using the [template](assets/DESIGN.md.template) at project root or `docs/`.
 6. Define design tokens - create a token file (`tokens.css`, Tailwind, or JS) replacing all raw values with names.
 7. Validate the draft - trace every value in `DESIGN.md` to code or design decision. Flag assumptions.
 
@@ -53,7 +53,7 @@ description: >-
 
 ## Best Practices Reference
 
-See [Design System Best Practices](./references/best-practices.md) for foundational principles to apply when creating or reviewing any design system.
+See [Design System Best Practices](references/best-practices.md) for foundational principles to apply when creating or reviewing any design system.
 
 ## Output Checklist
 

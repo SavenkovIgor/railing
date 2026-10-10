@@ -54,13 +54,13 @@ Choose only the references that match the file under review:
 | [devops](references/devops-bp.md)               | `*.tf`, `ansible*.yml`, provisioning and configuration management files          |
 | [docker](references/docker-bp.md)               | `Dockerfile*`, `*.dockerfile`, `docker-compose*.yml`, `compose*.yml`             |
 | [docs](references/docs-bp.md)                   | Documentation `*.md` files (README, guides, wikis), except `reports/**/*.md`    |
-| [markdown](../../com.github.copilot/rules/markdown.instructions.md) | Any `*.md` file, except `reports/**/*.md`                                        |
+| [markdown](/com.github.copilot/rules/markdown.instructions.md) | Any `*.md` file, except `reports/**/*.md`                                        |
 | [python](references/python-bp.md)               | Any `*.py` file                                                                  |
 | [builds](references/reproducible-builds.md)     | Build scripts, lock files, CI configs                                            |
 | [skill](references/skill-bp.md)                 | `SKILL.md` files                                                                 |
 | [standards](references/standards-bp.md)         | Code files; or when explicit standards/RFC/OWASP/ISO check requested             |
 | [system-design](references/system-design-bp.md) | Design specs and proposals describing a system to be built or changed           |
-| [report-review](../report-review/SKILL.md)       | Report files matching `reports/**/*.md`                                          |
+| [report-review](/skills/report-review/SKILL.md)       | Report files matching `reports/**/*.md`                                          |
 
 A single file may match multiple references.
 

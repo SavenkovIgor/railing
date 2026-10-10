@@ -4,11 +4,11 @@
 
 Broadest scope first; each file adds to the ones above it and links instead of restating. Files must not form circular links: if A links to B, B must not link back to A, directly or through a chain of other files. Linking only to files above in this list guarantees it.
 
-- [markdown.instructions.md](./com.github.copilot/rules/markdown.instructions.md) - checks (`MD*`) on the form of any `*.md`
-- [tech-writing](./skills/tech-writing/SKILL.md) - how the text reads
-- [docs-bp.md](./skills/bp/references/docs-bp.md) - what a documentation set must cover; requires the two files above as a whole
-- [reports.instructions.md](./com.github.copilot/rules/reports.instructions.md) - extra checks for `reports/` only; drop a `F*` check once `MD*` covers it
-- [ai-artifacts-review](./skills/ai-artifacts-review/SKILL.md) - audit of AI artifacts
+- [markdown.instructions.md](/com.github.copilot/rules/markdown.instructions.md) - checks (`MD*`) on the form of any `*.md`
+- [tech-writing](/skills/tech-writing/SKILL.md) - how the text reads
+- [docs-bp.md](/skills/bp/references/docs-bp.md) - what a documentation set must cover; requires the two files above as a whole
+- [reports.instructions.md](/com.github.copilot/rules/reports.instructions.md) - extra checks for `reports/` only; drop a `F*` check once `MD*` covers it
+- [ai-artifacts-review](/skills/ai-artifacts-review/SKILL.md) - audit of AI artifacts
 
 ## How rule files refer to each other
 
@@ -20,8 +20,28 @@ The files above form a hierarchy. A file that depends on another one applies it 
 
 Why: a copied or cited rule drifts from its source, and a reader who follows a link to one rule skips the rest of that file.
 
+## Link paths
+
+A link path never contains a `..` segment. Write it by context:
+
+- A link inside a skill to a file of the same skill starts at the skill root, with no `./`.
+  ✔ `[docs-bp.md](references/docs-bp.md)`
+  ✘ `[docs-bp.md](./references/docs-bp.md)`
+- A link from a skill to another skill or to a plugin file starts at the plugin root, with a leading `/`.
+  Such a skill works only inside this plugin; it is not standalone.
+  ✔ `[tech-writing](/skills/tech-writing/SKILL.md)`
+  ✘ `[tech-writing](../../tech-writing/SKILL.md)`
+- A link in a plugin-level file (`AGENTS.md`, `README.md`, `com.github.copilot/`) starts at the plugin root, with a leading `/`.
+  ✔ `[plugin.json](/plugin.json)`
+  ✘ `[plugin.json](./plugin.json)`
+- A path in a manifest or `mcp.json` starts with `./` from the plugin root, as the Agent Plugins specification requires.
+  ✔ `./skills/`
+  ✘ `skills/`
+
+Why: a root-based path survives a file move and needs no level counting. A leading `/` resolves from the repository root on GitHub and from the workspace root in VS Code; how each agent reads it is not specified and not yet verified.
+
 ## Pull request workflow
 
-In every pull request to this repository, the first commit contains only the version bump in [plugin.json](./plugin.json). Make all other changes in later commits.
+In every pull request to this repository, the first commit contains only the version bump in [plugin.json](/plugin.json). Make all other changes in later commits.
 
 Why: the bump then does not depend on the rest of the change, and a reviewer sees the new version at once.
