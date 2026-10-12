@@ -11,76 +11,51 @@ Sources, read them before validating:
 - [Tasks appendix](https://code.visualstudio.com/docs/reference/tasks-appendix)
 - [Variables reference](https://code.visualstudio.com/docs/reference/variables-reference)
 
-## Rule 1: Give every task an icon that matches its purpose
+## Rule 1: Give every task a matching icon and a consistent color
 
-Problem: Tasks without icons are hard to tell apart in the Run Task list and the terminal tabs.
-Solution: Set `icon.id` to a codicon that names the action, not the tool.
-Reasoning: The icon is the fastest visual cue; a mismatched one misleads.
+Problem: Tasks without icons are hard to tell apart; random colors carry no meaning.
+Solution: Set `icon.id` (codicon) by purpose and `icon.color` by task kind, one scheme
+for the whole file. `icon.color` accepts only the eight `terminal.ansi*` names.
+A compound task takes the icon and color of its main kind.
+Reasoning: The icon is the fastest cue in the Run Task list and terminal tabs.
 Example:
 
-| Purpose        | `icon.id`        |
-|---             |---               |
-| build          | `tools`          |
-| package        | `package`        |
-| test           | `beaker`         |
-| run            | `play`           |
-| watch          | `eye`            |
-| lint, format   | `checklist`      |
-| clean          | `trash`          |
-| install, setup | `cloud-download` |
-| docs           | `book`           |
+| Kind           | `icon.id`        | `icon.color`           |
+|---             |---               |---                     |
+| build          | `tools`          | `terminal.ansiBlue`    |
+| test           | `beaker`         | `terminal.ansiGreen`   |
+| run, watch     | `play`, `eye`    | `terminal.ansiCyan`    |
+| lint, format   | `checklist`      | `terminal.ansiYellow`  |
+| clean          | `trash`          | `terminal.ansiRed`     |
+| install, setup | `cloud-download` | `terminal.ansiMagenta` |
 
-## Rule 2: Use icon colors by one fixed scheme
+## Rule 2: Mark exactly one default task per group
 
-Problem: Random colors carry no meaning and differ from task to task.
-Solution: Map a color to a task kind once and apply it to every task of that kind.
-`icon.color` accepts only the eight `terminal.ansi*` names.
-Reasoning: A reader learns the scheme once and reads the whole list at a glance.
-Example: build `terminal.ansiBlue`, test `terminal.ansiGreen`, lint and format
-`terminal.ansiYellow`, clean `terminal.ansiRed`, run and watch `terminal.ansiCyan`,
-setup `terminal.ansiMagenta`. A compound task takes the color of its main kind.
+Problem: Without a default, `Run Build Task` and `Run Test Task` show a picker; several
+defaults bring the picker back.
+Solution: If the file has build tasks, one has `"group": { "kind": "build", "isDefault": true }`.
+Do the same with `kind: "test"` if it has test tasks.
+Avoid: `inputs` in a default task. It runs often, and a prompt on each run is friction.
 
-## Rule 3: Mark one default task per group
-
-Problem: Without a default, `Run Build Task` and `Run Test Task` show a picker every time.
-Solution: If the file has build tasks, exactly one has `group.isDefault: true` with
-`kind: "build"`. If it has test tasks, exactly one has `kind: "test"` with `isDefault: true`.
-Reasoning: Default tasks bind to the hotkeys; several defaults bring the picker back.
-Avoid: A default task with `inputs`. It runs often, so a prompt on each run is friction.
-Example:
-
-```json
-"group": { "kind": "build", "isDefault": true }
-```
-
-## Rule 4: Use `label` and `detail` consistently
+## Rule 3: Use `label` and `detail` consistently
 
 Problem: Labels mix `Build App`, `build-app`, and `buildApp`; some tasks have a `detail`
-and some do not. The Run Task list looks random.
+and some do not.
 Solution:
 
-- `label`: pick one naming style (CamelCase, kebab-case, Title Case) and use it in every
-  label
+- `label`: pick one naming style (CamelCase, kebab-case, Title Case) for every label
 - `detail`: either every task has one or none does; the text is free plain text
 
-Reasoning: Uniform names are predictable to type in the picker and to reference from
-`dependsOn` and `preLaunchTask`.
+Reasoning: Uniform names are predictable to type and to reference from `dependsOn`
+and `preLaunchTask`.
 
-## Rule 5: Fold near-duplicate tasks into inputs
+## Rule 4: Fold near-duplicate tasks into inputs
 
 Problem: Tasks that differ by one argument (configuration, target, test filter) multiply.
-Solution: Replace the copies with one task and `${input:id}`. Types: `promptString`,
-`pickString`, `command`.
-Reasoning: One task is one place to fix. Inputs cannot be nested.
-Avoid: Inputs in tasks that Rule 3 makes default, and in tasks that other tasks depend on.
-
-## Rule 6: Describe `pickString` options with label and value
-
-Problem: Raw option strings show cryptic values in the dropdown.
-Solution: An option is a string or an object with `label` and `value`; the dropdown
-shows `label: value`. Every input has `description`. Set `default` and make it one of
-the option `value` entries, not a label.
-Reasoning: A default keeps the common case to one keypress.
+Solution: Replace the copies with one task and `${input:id}` (`promptString`, `pickString`,
+`command`; nesting is not supported). Every input has `description`.
+A `pickString` option is a string or an object with `label` and `value`; the dropdown
+shows `label: value`. Set `default` to one of the option values, not a label.
 Example:
 
 ```json
@@ -96,103 +71,84 @@ Example:
 }
 ```
 
-## Rule 7: Keep one key order in every task
+## Rule 5: Keep one key order in every task
 
 Problem: Random key order makes diffs noisy and tasks hard to scan.
-Solution: Order keys as follows and omit the ones a task does not use:
-`label`, `detail`, `hide`, `icon`, `group`, `type`, `command`, `args`, `dependsOn`,
-`dependsOrder`, `isBackground`, platform blocks (`windows`, `linux`, `osx`), `options`
-(with `shell`), `presentation`, `problemMatcher`, `runOptions`.
+Solution: Order keys as follows and omit the unused ones: `label`, `detail`, `hide`, `icon`,
+`group`, `type`, `command`, `args`, `dependsOn`, `dependsOrder`, `isBackground`, platform
+blocks (`windows`, `linux`, `osx`), `options` (with `shell`), `presentation`,
+`problemMatcher`, `runOptions`.
 Reasoning: Identity and visibility come first, then what runs, then how it looks.
 
-## Rule 8: Hoist repeated fields to the top level
+## Rule 6: Hoist repeated fields to the top level
 
 Problem: The same `presentation`, `problemMatcher`, `options`, or `type` repeated in every
 task drifts apart.
-Solution: Set these once at the top level. A task overrides a property by defining it
-with a different value. Keep `version` first.
-Reasoning: Task properties override global ones, so only the exceptions stay in tasks.
-Avoid: A global `problemMatcher` that most tasks do not need. Tasks that never print
-problems set `"problemMatcher": []`.
+Solution: Set these once at the top level after `version`; a task overrides a property by
+defining it with a different value. Tasks that never print problems set
+`"problemMatcher": []`.
+Avoid: A global `problemMatcher` that most tasks do not need.
 
-## Rule 9: Hide tasks that nobody runs directly
+## Rule 7: Hide helper tasks and compose them with `dependsOn`
 
-Problem: Helper tasks clutter the Run Task list.
+Problem: Helper tasks clutter the Run Task list; "build, then test" in one shell line
+duplicates both tasks.
 Solution: Set `hide: true` on every task that is only a dependency or a prelaunch task.
-Reasoning: Hidden tasks stay usable through `dependsOn` and `preLaunchTask`.
+Keep build and test as separate hidden tasks and add a compound task with `dependsOn`.
+Set `dependsOrder: "sequence"` when order matters; the default is parallel and the order
+is not recursive.
 Avoid: Hiding a default task.
 
-## Rule 10: Compose with `dependsOn`
+## Rule 8: Set `presentation` on purpose
 
-Problem: A task that does "build, then test" in one shell line duplicates both tasks.
-Solution: Keep build and test as separate hidden tasks. Add a compound task with
-`dependsOn` listing both. Set `dependsOrder: "sequence"` when order matters;
-the default is parallel, and the order is not recursive.
-Reasoning: Each step stays reusable and keeps its own problem matcher.
-
-## Rule 11: Set `presentation` on purpose
-
-Problem: Default presentation reveals and reuses the terminal the same way for all tasks.
+Problem: Default presentation treats every task the same.
 Solution: Choose the properties by task kind:
 
-| Kind               | `presentation`                                            |
-|---                 |---                                                        |
-| build              | `reveal: "silent"`, `revealProblems: "onProblem"`         |
-| test, run          | `reveal: "always"`, `panel: "dedicated"`, `clear: true`   |
-| watch, background  | `reveal: "never"`, `panel: "dedicated"`                   |
-| short helper       | `reveal: "never"`, `close: true`                          |
+| Kind              | `presentation`                                          |
+|---                |---                                                      |
+| build             | `reveal: "silent"`, `revealProblems: "onProblem"`       |
+| test, run         | `reveal: "always"`, `panel: "dedicated"`, `clear: true` |
+| watch, background | `reveal: "never"`, `panel: "dedicated"`                 |
+| short helper      | `reveal: "never"`, `close: true`                        |
 
-Reasoning: `silent` keeps the terminal hidden unless the task exits nonzero or a matcher
-reports an error; `revealProblems` opens the Problems panel when a problem is found.
+Reasoning: `silent` brings the panel up only if the output is not scanned for problems;
+`revealProblems` opens the Problems panel only when there is something to show.
 
-## Rule 12: Make cross-platform tasks work on every platform
-
-Problem: A `command` that works on one OS breaks the file for the rest of the team.
-Solution: Choose per task:
-
-- Same command everywhere: one `command`
-- Different command: a base `command` and an override in `windows`, `linux`, or `osx`
-- Different shell setup for a whole platform: a platform block at the top level
-
-Prefer `type: "process"` with `args` when no shell feature (pipe, `&&`, glob) is needed;
-there is no shell to differ and no quoting to get wrong.
-Reasoning: Platform properties override task and global ones for that platform only.
-
-## Rule 13: Write paths from the workspace root with `${/}`
+## Rule 9: Write paths from the workspace root with `${/}`
 
 Problem: Absolute paths, `~`, and hard-coded `/` or `\` fail on other machines.
-Solution: Start every path with `${workspaceFolder}`, separate with `${/}`
-(shorthand for `${pathSeparator}`). Use `${workspaceFolder}`, not the deprecated
-`${workspaceRoot}`.
+Solution: Start every path with `${workspaceFolder}` (not the deprecated
+`${workspaceRoot}`) and separate with `${/}`, the shorthand for `${pathSeparator}`.
 Example: `"${workspaceFolder}${/}scripts${/}build.sh"`
-Avoid: Using `${/}` where the shell on Windows is bash. It expands to `\`, which bash
-reads as an escape; use `/` there.
+Avoid: `${/}` where the Windows shell is bash. It expands to `\`, which bash reads as an
+escape; use `/` there.
 
-## Rule 14: Use platform variables only in platform blocks
+## Rule 10: Override commands and variables per platform
 
-Problem: `${env:USERPROFILE}` on Linux and `${env:HOME}` on Windows resolve to nothing.
-Solution: In a cross-platform file, put variables that exist on one OS only inside that
-OS block.
-Reasoning: `options.env` values are visible to the started process only; they are not
-substituted into `command` or `args`. Read an existing variable with `${env:NAME}`.
+Problem: A `command` or variable that exists on one OS breaks the file for the rest.
+Solution: One `command` if it works everywhere; otherwise a base `command` with an
+override in `windows`, `linux`, or `osx`. In a cross-platform file, keep variables that
+exist on one OS (`${env:USERPROFILE}`, `${env:HOME}`) inside that OS block.
+Prefer `type: "process"` with `args` when no shell feature (pipe, `&&`, glob) is needed:
+no shell differs and no quoting can go wrong.
+Reasoning: Platform properties override task and global ones for that platform only.
+`options.env` values reach the started process only; they are not substituted into
+`command` or `args`.
 
-## Rule 15: Fix the shell per platform in the file
+## Rule 11: Fix the shell per platform in the file
 
 Problem: The shell comes from the user's terminal profile, so the same task behaves
 differently on each machine.
-Solution: Set `options.shell` in `tasks.json` (top level, overridden in platform
-blocks), not in user settings or `terminal.integrated.automationProfile.*`.
-Pick one shell per platform and use it in every task.
-Reasoning: The file carries its own contract and works without per-user setup.
-Avoid: `bash` as the Windows shell unless the repo documents Git Bash as a prerequisite;
-plain `bash` on Windows can resolve to WSL. A task also runs in a non-login,
-non-interactive shell, so it must not rely on `.bashrc` or `nvm` setup.
+Solution: Set `options.shell` in `tasks.json` (top level, overridden in platform blocks),
+not in user settings or `terminal.integrated.automationProfile.*`. Use one shell per
+platform in every task.
+Avoid: `bash` as the Windows shell unless the README lists Git Bash as a prerequisite;
+plain `bash` can resolve to WSL. Tasks run in a non-login, non-interactive shell, so they
+must not rely on `.bashrc` or `nvm` setup.
 Example:
 
 ```json
-"options": {
-    "shell": { "executable": "bash", "args": ["-c"] }
-},
+"options": { "shell": { "executable": "bash", "args": ["-c"] } },
 "windows": {
     "options": {
         "shell": { "executable": "powershell.exe", "args": ["-NoProfile", "-Command"] }
@@ -200,43 +156,55 @@ Example:
 }
 ```
 
-## Rule 16: Keep tasks thin
+## Rule 12: Keep tasks thin and repository-only
 
-Problem: Long command lines, pipes, and conditionals in JSON are untestable and hard to
-escape.
-Solution: A task runs one existing script or tool with arguments. Logic lives in
-scripts the repo already has and that run outside VS Code too.
-Reasoning: `tasks.json` is a launcher, not a build system.
+Problem: Long command lines in JSON are untestable and hard to escape; a task that needs
+files or tools outside the repo works on one machine.
+Solution: A task runs one existing script or tool with arguments. Logic lives in scripts
+that also run outside VS Code. Reference only files under `${workspaceFolder}` and tools
+the README lists as prerequisites.
+Reasoning: `tasks.json` is a launcher, not a build system, and everyone who opens it must
+be able to run it.
 
-## Rule 17: Depend on the repository only
+## Rule 13: Give problem-producing tasks a working matcher and keep the file clean
 
-Problem: A task that calls a script outside the repo, or a tool that is not documented,
-works on one machine.
-Solution: Reference only files under `${workspaceFolder}` and tools that the README lists
-as prerequisites. Use `${userHome}` or absolute paths only for locations
-that exist on every machine.
-Reasoning: Everyone who opens the file must be able to run the task.
-
-## Rule 18: Give problem-producing tasks a working problem matcher
-
-Problem: Build and lint output without a matcher gives no Problems panel entries; a wrong
-pattern gives false ones.
+Problem: Build output without a matcher fills no Problems panel; a wrong pattern fills it
+with false entries; editor warnings mean VS Code ignores a property.
 Solution: Use a built-in matcher (`$gcc`, `$tsc`, `$eslint-stylish`) or a custom `pattern`
-that is tested against real output. Set `fileLocation` so paths resolve against
-`${workspaceFolder}`. A background task needs a `background` block with
-`beginsPattern` and `endsPattern` and `isBackground: true`.
-Reasoning: A background task without a matcher never reports that it finished.
+tested against real output, with `fileLocation` resolving against `${workspaceFolder}`.
+A background task needs `isBackground: true` and a `background` block with
+`beginsPattern` and `endsPattern`; without it the task never reports that it finished.
+The file has no IDE problems and no deprecated properties (`isShellCommand`,
+`showOutput`, `echoCommand`, `suppressTaskName`, `isBuildCommand`, `isTestCommand`).
 
-## Rule 19: Keep the file free of IDE problems
-
-Problem: Warnings from the editor point to ignored or invalid properties.
-Solution: Open the file and clear the Problems panel for it. Remove deprecated
-properties (`isShellCommand`, `showOutput`, `echoCommand`, `suppressTaskName`,
-`isBuildCommand`, `isTestCommand`).
-Reasoning: Schema warnings usually mean VS Code silently ignores the property.
-
-## Rule 20: Do not start tasks automatically
+## Rule 14: Do not start tasks automatically
 
 Problem: `runOptions.runOn: "folderOpen"` runs a command as soon as the folder opens.
-Solution: Avoid it. If the task is a real need, document it and keep it side-effect free.
-Reasoning: A task that starts on open runs repository code before the contributor reads it.
+Solution: Avoid it. If a task needs it, document it and keep it free of side effects.
+Reasoning: The task runs repository code before the contributor reads it.
+
+## Cross-platform strategies
+
+Problem: Tasks run on the contributor's OS, shell, and tools. One command line rarely
+works on Windows, Linux, and macOS alike.
+Solution: Pick one strategy for the repository, list its prerequisites in the README,
+and apply it to every task. Mixing strategies needs the prerequisites of all of them.
+
+| Strategy                 | Prerequisites             | Use when                             |
+|---                       |---                        |---                                   |
+| Dev container            | Docker, Dev Containers    | the project builds on Linux only     |
+| Git Bash and Python (uv) | Git for Windows, uv       | tasks need real logic on every OS    |
+| Command per platform     | the toolchain only        | tasks are one-line calls to a tool   |
+| Cross-platform tool      | that tool                 | one tool (npm, cargo, cmake) does it |
+
+- Dev container: define `.devcontainer/devcontainer.json`; tasks run in a Linux container,
+  so there are no `windows` or `osx` blocks. Costs: Docker everywhere, slower bind mounts
+  on Windows and macOS, no native tools.
+- Git Bash and Python (uv): bash comes from Git for Windows on Windows and from the OS
+  elsewhere; logic lives in Python scripts started with `uv run script.py`, not in
+  `.sh` and `.cmd` pairs. Set the shell per Rule 11 and write paths with `/` (Rule 9).
+  Costs: two tools on Windows; point to the Git binary so `bash` does not resolve to WSL.
+- Command per platform: Rule 10, usually `scripts/test.sh` next to `scripts/test.cmd`.
+  Costs: every script exists twice and drifts; keep each a thin call to the same tool.
+- Cross-platform tool: `type: "process"` with `args`, such as `npm run build`; no shell and
+  no per-OS blocks. Costs: the tool must behave the same everywhere.
