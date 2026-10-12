@@ -53,14 +53,18 @@ Example:
 "group": { "kind": "build", "isDefault": true }
 ```
 
-## Rule 4: Apply `detail` and naming conventions consistently
+## Rule 4: Use `label` and `detail` consistently
 
-Problem: Some tasks have a `detail` and some do not; labels mix `Build App`, `build-app`,
-and `buildApp`. The Run Task list looks random.
-Solution: Either every task has a `detail` or none does. Write all `detail` entries in one
-form, for example a short sentence that starts with a verb. Pick one label convention
-(CamelCase, kebab-case, Title Case) and use it for every label.
-Reasoning: Uniform text and names are scannable and predictable to type in the picker.
+Problem: Labels mix `Build App`, `build-app`, and `buildApp`; some tasks have a `detail`
+and some do not. The Run Task list looks random.
+Solution:
+
+- `label`: pick one naming style (CamelCase, kebab-case, Title Case) and use it in every
+  label
+- `detail`: either every task has one or none does; the text is free plain text
+
+Reasoning: Uniform names are predictable to type in the picker and to reference from
+`dependsOn` and `preLaunchTask`.
 
 ## Rule 5: Fold near-duplicate tasks into inputs
 
