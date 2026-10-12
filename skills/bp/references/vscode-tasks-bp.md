@@ -142,8 +142,8 @@ Solution: Choose the properties by task kind:
 | watch, background  | `reveal: "never"`, `panel: "dedicated"`                   |
 | short helper       | `reveal: "never"`, `close: true`                          |
 
-Reasoning: `silent` brings the panel up only if the output is not scanned for problems,
-and `revealProblems` opens the Problems panel only when there is something to show.
+Reasoning: `silent` keeps the terminal hidden unless the task exits nonzero or a matcher
+reports an error; `revealProblems` opens the Problems panel when a problem is found.
 
 ## Rule 12: Make cross-platform tasks work on every platform
 
