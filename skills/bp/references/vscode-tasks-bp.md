@@ -240,3 +240,51 @@ Reasoning: Schema warnings usually mean VS Code silently ignores the property.
 Problem: `runOptions.runOn: "folderOpen"` runs a command as soon as the folder opens.
 Solution: Avoid it. If the task is a real need, document it and keep it side-effect free.
 Reasoning: A task that starts on open runs repository code before the contributor reads it.
+
+## Cross-platform strategies
+
+Problem: Tasks run on the contributor's OS, shell, and installed tools. One command line
+rarely works on Windows, Linux, and macOS alike.
+Solution: Pick one strategy for the repository, document its prerequisites in the README,
+and apply it to every task. Do not mix strategies in one file.
+Reasoning: A mixed file needs the prerequisites of every strategy and breaks in
+unexpected places.
+
+| Strategy                  | Prerequisites               | Use when                                |
+|---                        |---                          |---                                      |
+| Dev container             | Docker, Dev Containers      | the project builds on Linux only        |
+| Git Bash and Python (uv)  | Git for Windows, uv         | tasks need real logic on every OS       |
+| Command per platform      | none beyond the toolchain   | tasks are one-line calls to a tool      |
+| Cross-platform tool       | that tool                   | one tool (npm, cargo, cmake) does it    |
+
+### Dev container
+
+- Define the environment in `.devcontainer/devcontainer.json`; the tasks then run inside
+  the Linux container, so one shell and one set of paths is enough
+- No `windows` or `osx` blocks, no `${/}` workarounds
+- Costs: Docker on every machine, slower file access on Windows and macOS bind mounts,
+  no native Windows or macOS tools
+
+### Git Bash and Python with uv
+
+- Windows uses the bash from Git for Windows, Linux and macOS use their own bash; tasks
+  call bash scripts that stay trivial or call `uv run script.py`
+- Logic lives in Python scripts, not in `.sh` and `.cmd` pairs; uv installs the pinned
+  Python and dependencies, so scripts need no manual setup
+- Set the bash executable per platform in `options.shell` (Rule 15) and write paths
+  with `/`, not `${/}` (Rule 13)
+- Costs: two tools to install on Windows; plain `bash` may resolve to WSL, so point to
+  the Git for Windows binary
+
+### Command per platform
+
+- One `command` plus overrides in `windows`, `linux`, or `osx` (Rule 12), usually
+  `scripts/test.sh` next to `scripts/test.cmd`
+- Costs: every script exists twice and drifts apart; keep each one a thin call to the
+  same tool
+
+### Cross-platform tool
+
+- `type: "process"` with the tool and `args`, such as `npm run build` or
+  `cmake --build`; no shell, no per-OS blocks
+- Costs: the tool must be installed and behave the same on all platforms
