@@ -59,6 +59,7 @@ Choose only the references that match the file under review:
 | [skill](references/skill-bp.md)                 | `SKILL.md` files                                                                 |
 | [standards](references/standards-bp.md)         | Code files; or when explicit standards/RFC/OWASP/ISO check requested             |
 | [system-design](references/system-design-bp.md) | Design specs and proposals describing a system to be built or changed           |
+| [vscode-tasks](references/vscode-tasks-bp.md)   | `.vscode/tasks.json`, `*.code-workspace` files with a `tasks` section            |
 | [report-review](/skills/report-review/SKILL.md)       | Report files matching `reports/**/*.md`                                          |
 
 A single file may match multiple references.
