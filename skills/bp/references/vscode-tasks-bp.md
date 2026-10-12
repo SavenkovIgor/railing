@@ -53,13 +53,14 @@ Example:
 "group": { "kind": "build", "isDefault": true }
 ```
 
-## Rule 4: Use `detail`, not `description`, for task text
+## Rule 4: Apply `detail` and naming conventions consistently
 
-Problem: A task has no `description` property; only `inputs` have one.
-Solution: Write `detail` for tasks (shown in the Run Task Quick Pick) and `description`
-for inputs (required there). Write every `detail` in the same form, for example one
-short sentence without a trailing period, starting with a verb.
-Reasoning: Unknown properties are ignored silently, so a wrong key hides the text.
+Problem: Some tasks have a `detail` and some do not; labels mix `Build App`, `build-app`,
+and `buildApp`. The Run Task list looks random.
+Solution: Either every task has a `detail` or none does. Write all `detail` entries in one
+form, for example a short sentence that starts with a verb. Pick one label convention
+(CamelCase, kebab-case, Title Case) and use it for every label.
+Reasoning: Uniform text and names are scannable and predictable to type in the picker.
 
 ## Rule 5: Fold near-duplicate tasks into inputs
 
@@ -109,9 +110,6 @@ with a different value. Keep `version` first.
 Reasoning: Task properties override global ones, so only the exceptions stay in tasks.
 Avoid: A global `problemMatcher` that most tasks do not need. Tasks that never print
 problems set `"problemMatcher": []`.
-Note: The appendix says a file contains either a global `problemMatcher` or `tasks`.
-The VS Code source (`taskConfiguration.ts`) applies the global matcher to every task that
-has none, so it works next to `tasks`; recheck after VS Code updates.
 
 ## Rule 9: Hide tasks that nobody runs directly
 
@@ -143,7 +141,7 @@ Solution: Choose the properties by task kind:
 Reasoning: `silent` brings the panel up only if the output is not scanned for problems,
 and `revealProblems` opens the Problems panel only when there is something to show.
 
-## Rule 12: Make cross-platform tasks genuinely cross-platform
+## Rule 12: Make cross-platform tasks work on every platform
 
 Problem: A `command` that works on one OS breaks the file for the rest of the team.
 Solution: Choose per task:
@@ -169,7 +167,8 @@ reads as an escape; use `/` there.
 ## Rule 14: Use platform variables only in platform blocks
 
 Problem: `${env:USERPROFILE}` on Linux and `${env:HOME}` on Windows resolve to nothing.
-Solution: Put variables that exist on one OS only inside that OS block.
+Solution: In a cross-platform file, put variables that exist on one OS only inside that
+OS block.
 Reasoning: `options.env` values are visible to the started process only; they are not
 substituted into `command` or `args`. Read an existing variable with `${env:NAME}`.
 
@@ -236,4 +235,4 @@ Reasoning: Schema warnings usually mean VS Code silently ignores the property.
 
 Problem: `runOptions.runOn: "folderOpen"` runs a command as soon as the folder opens.
 Solution: Avoid it. If the task is a real need, document it and keep it side-effect free.
-Reasoning: Silent execution on open is a supply-chain risk and surprises contributors.
+Reasoning: A task that starts on open runs repository code before the contributor reads it.
