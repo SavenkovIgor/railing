@@ -31,7 +31,7 @@ Artifacts that shape behavior globally or for specific file patterns
 |---|-------------|------|----------|-----------------|---------------------|
 | 1 | …           | …    | …        | …               | full / reference    |
 
-**Columns:**
+Columns:
 
 - Name / File - display name or filename
 - Path - exact path as you know it (repo-relative or absolute); `injected` if embedded in system prompt with no file path
@@ -47,7 +47,7 @@ that are simple prompt expansions without conditional activation logic).
 | # | Name / File | Path | Location | Invocation | Content in Context? |
 |---|-------------|------|----------|------------|---------------------|
 
-**Columns:**
+Columns:
 
 - Location - see *Path Location Taxonomy* in Notes
 - Invocation - slash command name or attachment method
@@ -64,13 +64,13 @@ activation logic and/or persistent behavioral modifications.
 | # | Skill Name | Path | Location | Activation Trigger | Active Now? | Content in Context? |
 |---|------------|------|----------|--------------------|-------------|---------------------|
 
-**Columns:**
+Columns:
 
 - Location - see *Path Location Taxonomy* in Notes
 
-**Activation Trigger** - keyword / model-detected relevance/ file-pattern / manual-only / always-on
-**Active Now?** - yes (content loaded and influencing behavior) / no (available but dormant) / n/a (environment has no concept of passive activation) / unknown
-**Content in Context?** - full / reference / not loaded
+Activation Trigger - keyword / model-detected relevance/ file-pattern / manual-only / always-on
+Active Now? - yes (content loaded and influencing behavior) / no (available but dormant) / n/a (environment has no concept of passive activation) / unknown
+Content in Context? - full / reference / not loaded
 
 ### MCP Servers & Extensions
 
@@ -79,7 +79,7 @@ External tool integrations - MCP servers, IDE extensions exposing tools, etc.
 | # | Server / Extension Name | Config Path | Location | Tools Exposed | Status |
 |---|-------------------------|-------------|----------|---------------|--------|
 
-**Columns:**
+Columns:
 
 - Location - see *Path Location Taxonomy* in Notes
 - Tools Exposed - list of tool names visible to you right now (truncate to first 5 + count if many)
@@ -92,7 +92,7 @@ All tools available in this session - native, deferred, and MCP-provided.
 | # | Tool Name | Source | Category | Availability |
 |---|-----------|--------|----------|--------------|
 
-**Columns:**
+Columns:
 
 - Source - `built-in` · `deferred` · `mcp:<server-name>` · `extension:<name>`
 - Category - `file` · `terminal` · `search` · `web` · `browser` · `planning` · `memory` · `scheduling` · `ide` · `other`
@@ -106,7 +106,7 @@ state loaded into this session automatically.
 | # | Item | Path / Location | Location | Type | Content in Context? |
 |---|------|-----------------|----------|------|---------------------|
 
-**Columns:**
+Columns:
 
 - Location - see *Path Location Taxonomy* in Notes
 - Type - `memory-index` · `memory-file` · `conversation-cache` · `settings` · `other`
@@ -121,7 +121,7 @@ git state, environment metadata, etc.
 | # | Context Item | Value / Path | Injected As |
 |---|--------------|--------------|-------------|
 
-**Columns:**
+Columns:
 
 - Injected As - `full-content` · `path-reference` · `metadata`
 
@@ -134,7 +134,7 @@ Tasks, run configurations, or build targets injected from workspace config
 | # | Task Name | Source File | Type / Group | Content in Context? |
 |---|-----------|-------------|--------------|---------------------|
 
-**Columns:**
+Columns:
 
 - Source File - config file path
 - Type / Group - `build` · `test` · `run` · `lint` · `deploy` · `other`
@@ -170,7 +170,7 @@ isolation model (worktrees, sandboxes, containers), permission mode.
 
 ### Path Location Taxonomy
 
-Used in the **Location** column of any table with a file path. Pick the *most specific* matching value:
+Used in the Location column of any table with a file path. Pick the *most specific* matching value:
 
 | Value        | Meaning                                                   | Typical paths                                          |
 |--------------|-----------------------------------------------------------|--------------------------------------------------------|
