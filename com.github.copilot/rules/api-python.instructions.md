@@ -96,16 +96,15 @@ class Vector3:
 ### Error Handling and Return Types
 
 In Python, prefer using exceptions for error conditions as they are part of the language design.
-Use `Optional[T]` when a function may legitimately return `None`.
+Use `T | None` when a function may legitimately return `None`.
 Use custom exception types to provide specific error information.
-Consider using `Union` types or `dataclasses` for complex return types.
+Consider using union types (`A | B`) or `dataclasses` for complex return types.
 
 ```python
-from typing import Optional, Union
 from dataclasses import dataclass
 
 # For functions that may return nothing legitimately
-def find_user(user_id: int) -> Optional[User]:
+def find_user(user_id: int) -> User | None:
     """Returns user or None if not found."""
     return database.get_user(user_id)
 
@@ -130,7 +129,7 @@ def get_user(user_id: int) -> User:
 class ProcessResult:
     success: bool
     message: str
-    data: Optional[dict] = None
+    data: dict | None = None
 ```
 
 ### Naming Conventions
@@ -285,7 +284,7 @@ def move_file(source: Path, destination: Path, *, overwrite: bool = False):
 - Support both synchronous and asynchronous patterns when appropriate
 
 ```python
-from typing import Optional, Iterator
+from collections.abc import Iterator
 from contextlib import contextmanager
 
 # BAD: Incomplete API with unclear destructive operations
@@ -313,7 +312,7 @@ class UserManager:
         pass
 
     # Read
-    def user(self, user_id: int) -> Optional[User]:
+    def user(self, user_id: int) -> User | None:
         pass
 
     def users(self) -> list[User]:
@@ -402,7 +401,7 @@ class FileHandler:
     # def create_file(self, path: Path) -> File:  # raises FileError
 
     @property
-    def current_file(self) -> Optional[Path]:
+    def current_file(self) -> Path | None:
         return self._current_file
 ```
 
@@ -441,7 +440,7 @@ config.set_config_value("ui", "theme", "dark")
 from typing import ClassVar
 
 class ConfigManager:
-    _instance: ClassVar[Optional['ConfigManager']] = None
+    _instance: ClassVar['ConfigManager | None'] = None
 
     def __init__(self, config_dir: Path = Path("/etc/myapp")):
         self._config_dir = config_dir
@@ -495,7 +494,7 @@ ConfigManager.instance().theme = "dark"
 - [ ] Implements `__enter__` and `__exit__` for context managers when appropriate
 - [ ] Uses `@property` and `@setter` decorators instead of getter/setter methods
 - [ ] Follows duck typing principles when appropriate
-- [ ] Uses type hints from `typing` module consistently
+- [ ] Uses built-in generics (`list[int]`) and `T | None` for type hints; imports from `typing` only for constructs built-ins do not cover (`TypedDict`, `ClassVar`), or for projects that target Python older than 3.9 (3.10 for `|`)
 - [ ] Implements appropriate comparison operators (`__eq__`, `__lt__`, etc.) when needed
 - [ ] Uses `dataclasses` or `NamedTuple` for data containers
 - [ ] Follows PEP 8 naming conventions strictly
