@@ -1,13 +1,7 @@
 # Documentation Validation
 
-## DependsOn
-
-- [markdown.instructions.md](/com.github.copilot/rules/markdown.instructions.md)
-- [prose.instructions.md](/com.github.copilot/rules/prose.instructions.md)
-
 Evaluate documentation files for quality and effectiveness.
 Verify that the documentation is up to date and accurately reflects the current state of the code.
-The documentation must also pass every check in the files above. Their rules are not restated here.
 
 ## Evaluation Framework
 

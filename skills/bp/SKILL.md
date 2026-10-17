@@ -9,6 +9,11 @@ user-invocable: true
 
 # Best Practices Validation
 
+## DependsOn
+
+- [markdown.instructions.md](/com.github.copilot/rules/markdown.instructions.md) (docs.md)
+- [prose.instructions.md](/com.github.copilot/rules/prose.instructions.md) (docs.md)
+
 Validate given file(s) against best practice references using parallel sub-agents.
 
 ## Response Format
