@@ -1,6 +1,8 @@
-# Best Practices: C++ Project File Naming
+# C++ best practices
 
-## Naming
+## File naming
+
+### Naming
 
 Name every C++ file and directory in lowercase `snake_case`, starting with a
 letter. Use only `a-z`, `0-9`, and `_`; module partition filenames may also
@@ -29,7 +31,7 @@ text_tools/
 - No Windows reserved stems: `con`, `prn`, `aux`, `nul`, `com1`–`com9`,
   `lpt1`–`lpt9`.
 
-## Reasoning: naming
+### Reasoning: naming
 
 - Case-insensitive filesystems. NTFS and APFS ignore case by default,
   ext4 does not. Uppercase letters make three failures possible:
@@ -66,7 +68,7 @@ text_tools/
   interface file after the module, so `Graph` and `graph` collide on
   case-insensitive filesystems.
 
-## Extensions
+### Extensions
 
 | Extension | Use for |
 | --------- | ------- |
@@ -77,7 +79,7 @@ text_tools/
 
 Never use `.h`, `.cc`, `.C`, `.H`, `.c++`, or `.h++`.
 
-## Reasoning: extensions
+### Reasoning: extensions
 
 - Never `.h`. It is the C header extension, and C and C++ are
   different languages. A `.h` file does not say which one it contains, so
@@ -101,7 +103,7 @@ Never use `.h`, `.cc`, `.C`, `.H`, `.c++`, or `.h++`.
   case-insensitive filesystems discard.
 - Never `.c++` / `.h++`. `+` needs escaping in regex, make, and URLs.
 
-## Exceptions
+### Exceptions
 
 - The language or tool dictates the name: QML components start with an
   uppercase letter; `CMakeLists.txt`, `README.md`.
