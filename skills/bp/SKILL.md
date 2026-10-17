@@ -48,7 +48,7 @@ Choose only the references that match the file under review:
 | Reference                                                    | When it applies                                                                         |
 |---                                                           |---                                                                                      |
 | [chromium](references/chromium.md)                           | Chromium-style C++ files: `*.{cc,cpp,h,hpp}`                                            |
-| [cicd](references/cicd.md)                                   | `.github/workflows/`, `.gitlab-ci.yml`, pipeline configs                                |
+| [cicd](references/cicd.md)                                   | `.github/workflows/`, `.gitlab-ci.yml`, pipeline configs, build scripts, lock files     |
 | [cmake](references/cmake.md)                                 | `CMakeLists.txt`, `*.cmake` files; build configuration and dependency management        |
 | [cpp-file-naming](references/cpp-file-naming.md)             | C++ file and directory names and extensions: `*.{cpp,hpp,cppm,ipp,h,cc,C,H,c++,h++}`    |
 | [devops](references/devops.md)                               | `*.tf`, `ansible*.yml`, provisioning and configuration management files                 |
@@ -56,7 +56,6 @@ Choose only the references that match the file under review:
 | [docs](references/docs.md)                                   | Documentation `*.md` files (README, guides, wikis), except `reports/**/*.md`            |
 | [engineering-standards](references/engineering-standards.md) | Only when published standards (RFC, OWASP, ISO, style guides) are relevant or requested |
 | [python](references/python.md)                               | Any `*.py` file                                                                         |
-| [reproducible-builds](references/reproducible-builds.md)     | Build scripts, lock files, CI configs                                                   |
 | [skill](references/skill.md)                                 | `SKILL.md` files                                                                        |
 | [system-design](references/system-design.md)                 | Design specs and proposals describing a system to be built or changed                   |
 | [vscode-tasks](references/vscode-tasks.md)                   | `.vscode/tasks.json`, `*.code-workspace` files with a `tasks` section                   |
