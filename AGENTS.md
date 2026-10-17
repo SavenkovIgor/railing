@@ -72,6 +72,12 @@ An edit to any `SKILL.md`, to a markdown file inside a skill directory, or to th
 
 Why: the editor attaches these files by `applyTo`, but an agent that edits through a shell or a sub-agent may not have them in context, and a failure found in review costs a round trip.
 
+## Phrasing of requirements
+
+State each requirement positively: say what to do. Add a prohibition ("not here, not there") only when LLMs make that mistake in practice, and name the mistake.
+
+Why: a prohibition for an error that never happens costs tokens and clutters the context of both the model and the human reader. Break the rule when a mistake is costly and likely enough to justify the extra line.
+
 ## Pull request workflow
 
 In every pull request to this repository, the first commit contains only the version bump in [plugin.json](/plugin.json). Make all other changes in later commits.
@@ -80,15 +86,12 @@ Why: the bump then does not depend on the rest of the change, and a reviewer see
 
 ## Closing issues from a pull request
 
-When the user gives a GitHub issue as the source of the task, the pull request description must name that issue in a closing line. Put the line on its own, outside any list or quote:
+Only when the user gives a GitHub issue in the conversation, the pull request description names that issue in a closing line. Put the line on its own, outside any list or quote:
 
 ```text
 Closes #123
 ```
 
-- Write one closing line for each issue: `Closes #1` and `Closes #2` on separate lines. A line such as `Closes #1, #2` closes only `#1`.
-- For an issue in another repository, write `Closes owner/repo#123`.
-- Do not put the closing keyword in the pull request title. GitHub reads closing keywords in the description and in commit messages, not in the title.
-- If the user gives no issue, do not invent one.
+For several issues, write one closing line per issue, each with its own keyword.
 
-Why: GitHub closes an issue on its own only when the pull request merges into the default branch and a closing keyword links the two. The branch name has no effect, and a missing line leaves the issue open.
+Why: GitHub closes an issue on its own only when the pull request merges into the default branch and a closing keyword in the description links the two.
