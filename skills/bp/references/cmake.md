@@ -87,7 +87,7 @@ Owner: project developer for dependency manifest
 end user for build profile (`~/.conan2/profiles/*`) on their machine or CI.
 
 A separate world that describes dependencies and how to build them. The
-profile for **dependencies** usually differs from the profile for **your code**.
+profile for dependencies usually differs from the profile for your code.
 
 ## Rule of thumb: what goes where
 
@@ -109,7 +109,7 @@ things in one variable:
 - Policy (project policy) - a decision like "we are strict with
   warnings", "we use C++23", "we have RTTI disabled",
   "we don't use exceptions". Does not depend on who builds or where.
-  This is part of **the project itself**.
+  This is part of the project itself.
 
 - Plumbing (build wiring) - specific paths, compiler names,
   output directory locations, cache isolation flags. Depends on the
@@ -163,7 +163,7 @@ parameterized. For example, warning flags hard-coded in CMakeLists for
 a specific compiler without conditional logic are a seam that will
 eventually require code edits when a new toolchain is added.
 
-**CMakePresets as a contract.** This is not just convenience - it is the
+CMakePresets as a contract. This is not just convenience - it is the
 interface between the project and tooling. IDEs (CLion, VS Code, Visual
 Studio) read `CMakePresets.json` and surface presets in their UI.
 CI scripts reference presets by name. When presets are meaningfully
@@ -208,7 +208,7 @@ target_link_libraries(my_app PRIVATE project_warnings)
 
 Why not globally via `CMAKE_CXX_FLAGS`:
 
-- `CMAKE_CXX_FLAGS` applies to **everything** compiled in the build tree,
+- `CMAKE_CXX_FLAGS` applies to everything compiled in the build tree,
   including third-party code that Conan or `add_subdirectory` may build.
   `-Werror` on someone else's code is a classic way to get random CI
   failures after bumping a dependency that added a new deprecation warning.
@@ -366,7 +366,7 @@ CMake:
 - Links via
   `target_link_libraries(my_app PRIVATE SomeLib::SomeLib)`.
 
-**From CMakeLists this looks like a standard find_package integration** -
+From CMakeLists this looks like a standard find_package integration -
 Conan is "invisible" to the project description itself. This is correct:
 the project knows it needs `OpenSSL`, and does not know (and should not
 need to know) whether it came from the system, from Conan, or was built locally.
@@ -379,9 +379,9 @@ Exceptions where FetchContent is justified:
   into your binary. Though `tool_requires` in Conan 2 handles this too.
 - The project has no package manager at all.
 
-**Conan profiles for deps vs. your code:**
+Conan profiles for deps vs. your code:
 
-The build profile for dependencies is **not** the profile for your code.
+The build profile for dependencies is not the profile for your code.
 Dependencies are typically built:
 
 - Without `-Werror` (third-party code, third-party deprecation warnings).
@@ -408,7 +408,7 @@ Dependencies live in the build directory, built by Conan, found via
 
 A sharp edge that is easy to miss. The `CMAKE_*` prefix does not mean
 "private CMake system variable". Most `CMAKE_*` variables are
-**directory-scoped defaults** that are inherited by nested CMakeLists.
+directory-scoped defaults that are inherited by nested CMakeLists.
 
 `set(CMAKE_CXX_STANDARD 23)` in the root CMakeLists leaks into:
 
@@ -427,7 +427,7 @@ A sharp edge that is easy to miss. The `CMAKE_*` prefix does not mean
 So leaks are real for in-tree source deps. This is one more argument for
 "dependencies via Conan, not via `add_subdirectory`".
 
-**Also leaks in the same way:** `CMAKE_CXX_FLAGS`, `CMAKE_CXX_EXTENSIONS`,
+Also leaks in the same way: `CMAKE_CXX_FLAGS`, `CMAKE_CXX_EXTENSIONS`,
 `CMAKE_POSITION_INDEPENDENT_CODE`,
 `CMAKE_INTERPROCEDURAL_OPTIMIZATION`, and most compiler defaults.
 
@@ -455,14 +455,14 @@ add_library(my_lib ...)
 target_compile_features(my_lib PUBLIC cxx_std_23)
 ```
 
-`cxx_std_23` is a **minimum** requirement, not a forced value. Consumers
+`cxx_std_23` is a minimum requirement, not a forced value. Consumers
 via PUBLIC get "I need a compiler with at least C++23", but the specific
 standard can be raised higher.
 
 This is cleaner but requires discipline on every target and doesn't
 work perfectly for INTERFACE-only fragments.
 
-**Pragmatic compromise:**
+Pragmatic compromise:
 
 - `set(CMAKE_CXX_STANDARD 23)` globally as a default for your own code -
   convenient and readable.
