@@ -1,6 +1,6 @@
 ---
 name: reflect
-description: "You SHOULD use this skill after completing a task to reflect on the conversation and propose 2–3 improvements to AI context files that would improve speed or quality next time."
+description: "You should use this skill after completing a task to reflect on the conversation and propose 2–3 improvements to AI context files that would improve speed or quality next time."
 user-invocable: true
 ---
 
