@@ -3,7 +3,7 @@
 ## About This Guide
 
 This guide is not tool documentation or a collection of ready-made configs.
-It's about **CI/CD pipeline design principles**: why they're structured this way,
+It's about CI/CD pipeline design principles: why they're structured this way,
 how to adapt verification depth to context, and how to avoid security theater instead of real protection.
 
 Audience: developers, DevOps engineers, tech leads - anyone who designs or improves pipelines.
@@ -162,13 +162,13 @@ DORA (DevOps Research and Assessment) - four metrics measuring engineering deliv
 - MTTR (Mean Time To Restore) - average recovery time after incident (`sum(restore_time) / incidents`)
 - Change Failure Rate - fraction of deployments leading to incident/rollback (`failures / total_deployments`)
 
-> **How to use:** DORA metrics are not competitive comparison - it's diagnostics. Low Deployment Frequency with high Lead Time indicates large change batches → need to break them down. High Change Failure Rate with high frequency → need stricter gate before prod.
+> How to use: DORA metrics are not competitive comparison - it's diagnostics. Low Deployment Frequency with high Lead Time indicates large change batches → need to break them down. High Change Failure Rate with high frequency → need stricter gate before prod.
 
 ### Versioning Best Practices
 
 #### Semantic Versioning (SemVer) - for libraries, SDKs, CLIs, Marketplace Apps
 
-```plaintext
+```text
 MAJOR.MINOR.PATCH[-pre_release][+build_metadata]
   1  .  4  .  2  -  rc.1      + git.a3f9c12
 ```
@@ -180,7 +180,7 @@ MAJOR.MINOR.PATCH[-pre_release][+build_metadata]
 | `PATCH`        | Bug fix, compatibility maintained                 |
 | `-pre_release` | `alpha`, `beta`, `rc.1` - unstable version        |
 
-**In CI:** git tag `v1.4.2` → pipeline trigger → version extracted from tag automatically.
+In CI: git tag `v1.4.2` → pipeline trigger → version extracted from tag automatically.
 
 ```bash
 # Example: version from git tag
@@ -190,7 +190,7 @@ VERSION=${VERSION#v}                         # → 1.4.2
 
 #### Calendar Versioning (CalVer) - for services, OS, data pipelines
 
-```plaintext
+```text
 YYYY.MM.DD[-build_number]
 2026.05.15-42
 ```
@@ -201,18 +201,18 @@ Suitable when "version" is less important than release date (Ubuntu, Grafana, pi
 
 Never deploy `:latest` to production.
 
-```plaintext
+```text
 registry.io/myapp:1.4.2           # SemVer tag - for prod
 registry.io/myapp:1.4.2-rc.1      # Release candidate - for staging
 registry.io/myapp:main-a3f9c12    # Branch + short SHA - for dev/preview
 registry.io/myapp:pr-247          # PR preview
 ```
 
-**Rule:** image deployed in prod must be **immutable** - the same tag cannot be rebuilt with different content. Tag = promise, not pointer.
+Rule: image deployed in prod must be **immutable** - the same tag cannot be rebuilt with different content. Tag = promise, not pointer.
 
 #### API Versioning
 
-```plaintext
+```text
 /api/v1/users    ← stable, don't break
 /api/v2/users    ← new contract
 /api/beta/users  ← experimental, no guarantees
@@ -241,15 +241,15 @@ Snowflake - a build that works only on one machine due to undocumented environme
 
 ### Design Principles
 
-Main question: **"What do we need to know at this stage, and how expensive is it to find out later?"**
+Main question: "What do we need to know at this stage, and how expensive is it to find out later?"
 
-Feature branch - experimental space. Developer should get fast feedback on code quality. Pipeline here serves as a **developer tool**, not an organizational control point. Therefore: only fast checks (< 10 min), high parallelism, no deployments to long-lived environments.
+Feature branch - experimental space. Developer should get fast feedback on code quality. Pipeline here serves as a developer tool, not an organizational control point. Therefore: only fast checks (< 10 min), high parallelism, no deployments to long-lived environments.
 
 Release branch (or `main` after merge) - **trust point**. Code passed review and will be delivered to users. Here everything expensive to run on every commit is appropriate: full test suites, staging deployments, security scanning of running service, approvals.
 
 ### Feature Branch Pipeline (with PR)
 
-**Goal: fast feedback to developer.** Should complete in 5–15 minutes.
+Goal: fast feedback to developer. Should complete in 5–15 minutes.
 
 ```mermaid
 flowchart LR
@@ -273,7 +273,7 @@ feature/*]) --> PAR
     style PREV fill:#fef9c3,stroke:#eab308
 ```
 
-**Include:**
+Include:
 
 - Lint, format check (fail fast on style)
 - Unit tests + coverage gate
@@ -281,18 +281,18 @@ feature/*]) --> PAR
 - Build/compile - ensure code compiles
 - Deploy Preview (Vercel, Netlify, ephemeral namespace) - only if visual verification needed
 
-**Don't Include:**
+Don't Include:
 
 - Integration and E2E tests - they're slow; if needed, trigger by label (`/run-e2e` in comment)
 - DAST - doesn't make sense without stable deployed environment
 - Performance tests
 - Deploy to long-lived staging
 
-**Why:** feature branch can be created and deleted dozens of times a day. Heavy checks here create noise, slow development, and waste resources.
+Why: feature branch can be created and deleted dozens of times a day. Heavy checks here create noise, slow development, and waste resources.
 
 ### Release Branch Pipeline (merge to `main` or `release/*`)
 
-**Goal: controlled, verified delivery.** Speed is secondary to confidence.
+Goal: controlled, verified delivery. Speed is secondary to confidence.
 
 ```mermaid
 flowchart LR
@@ -332,7 +332,7 @@ Include:
 - E2E tests, DAST, performance tests against deployed staging
 - Release Gate - automatic (quality/security score) or manual
 
-**Key difference:** at this stage a **versioned artifact** is created. This exact artifact is deployed to production - not rebuilt code, but the same binary/image that passed all staging checks.
+Key difference: at this stage a **versioned artifact** is created. This exact artifact is deployed to production - not rebuilt code, but the same binary/image that passed all staging checks.
 
 ### "Silent CI" Rule
 

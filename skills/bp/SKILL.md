@@ -20,7 +20,7 @@ Validate given file(s) against best practice references using parallel sub-agent
 
 All sub-agents must return their findings in this structure:
 
-```plaintext
+```text
 ## [Reference Name] Validation
 
 ### Summary
