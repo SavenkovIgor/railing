@@ -66,6 +66,12 @@ Check that a link works by looking at the file system inside the repository: the
 
 Why: a link check is a quick look, not a project. A script grows a list of exceptions and costs more to maintain than the broken links it finds.
 
+## Editing skills
+
+An edit to any `SKILL.md`, or to a markdown file inside a skill directory, requires a check of the edited file against [markdown.instructions.md](/com.github.copilot/rules/markdown.instructions.md) and [prose.instructions.md](/com.github.copilot/rules/prose.instructions.md), each as a whole. Do this before the commit, and fix every failure in the same pull request.
+
+Why: the editor attaches these files by `applyTo`, but an agent that edits through a shell or a sub-agent may not have them in context, and a failure found in review costs a round trip.
+
 ## Pull request workflow
 
 In every pull request to this repository, the first commit contains only the version bump in [plugin.json](/plugin.json). Make all other changes in later commits.
