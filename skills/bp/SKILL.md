@@ -70,13 +70,14 @@ A single file may match multiple references.
 
 ### 3. Spawn one sub-agent per reference
 
-For each selected reference, launch a sub-agent and pass it exactly three things:
+For each selected reference, launch a sub-agent and pass it exactly four things:
 
 1. The target file - full path and content
 2. The reference file - full path of the file linked in the table above
 3. The response format - the exact template defined in the "Response Format" section above
+4. The dependency files - full paths of the files in "DependsOn" whose parenthetical names this reference; none if no entry names it
 
-Instruct each sub-agent to: read the target file and the reference file, validate the file against every criterion in the reference, and return findings using the provided format. Sub-agents work in parallel.
+Instruct each sub-agent to: read the target file, the reference file, and the dependency files, validate the file against every criterion in the reference and in the dependency files as a whole, and return findings using the provided format. Sub-agents work in parallel.
 
 ### 4. Aggregate and report
 
