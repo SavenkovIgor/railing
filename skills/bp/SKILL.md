@@ -81,6 +81,6 @@ Collect all sub-agent responses. The final report keeps the structure of the "Re
 - Findings: list in order of severity (blocking first). If multiple sub-agents flag the same issue, merge it into one entry with the highest severity among them. Replace the single reference name with a `References:` line that names every reference that reported the issue.
 - Summary: one or two sentences covering all references applied to the file.
 - Compliant: checks that every applicable reference reports as satisfied.
-- Priority Actions: the 2–3 most important changes across all references.
+- Priority Actions: the 2-3 most important changes across all references.
 
 The run is done when every selected reference has a returned response and every finding from those responses is either listed or merged into a listed entry. If a sub-agent returned no response, re-run it before reporting.
