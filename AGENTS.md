@@ -57,6 +57,15 @@ A link path never contains a `..` segment. Write it by context:
 
 Why: a root-based path survives a file move and needs no level counting. A leading `/` resolves from the repository root on GitHub and from the workspace root in VS Code; how each agent reads it is not specified and not yet verified.
 
+## Checking links
+
+Check that a link works by looking at the file system inside the repository: the target file exists at the written path, and an anchor matches a heading in that file. Do this by hand, with file listing and reading tools.
+
+- Do not write a script, a tool, or a CI step for it.
+- Do not check external URLs; assume they work.
+
+Why: a link check is a quick look, not a project. A script grows a list of exceptions and costs more to maintain than the broken links it finds.
+
 ## Pull request workflow
 
 In every pull request to this repository, the first commit contains only the version bump in [plugin.json](/plugin.json). Make all other changes in later commits.
