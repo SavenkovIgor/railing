@@ -32,9 +32,9 @@ create issues. Fall back to asking the user which tool to use if none is detecte
 
 ### 2. Extract Issues from Context
 
-For each distinct unit of work extract: **Title** (one action sentence),
-**Body** (context, acceptance criteria, links), **Labels** (bug/feat/chore),
-**Size** (flag if large enough for sub-tasks). Each issue must be independently
+For each distinct unit of work extract: Title (one action sentence),
+Body (context, acceptance criteria, links), Labels (bug/feat/chore),
+Size (flag if large enough for sub-tasks). Each issue must be independently
 completable; one concern per issue; preserve nuance from the discussion.
 
 ### 3. Confirm Before Filing

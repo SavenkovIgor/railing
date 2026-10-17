@@ -53,9 +53,9 @@ public:
 
 ### Principle of Least Astonishment
 
-- **Review all function names, class names, and API endpoints** - try to guess
+- Review all function names, class names, and API endpoints - try to guess
   developer expectations and validate those names against them
-- **Ensure error messages provide clear guidance** for developers using your APIs
+- Ensure error messages provide clear guidance for developers using your APIs
 - Use expected operators and patterns for each programming language
 - Follow standard library patterns and naming conventions for new types
 - Make custom classes behave like built-in types
@@ -118,7 +118,7 @@ public:
 - Function names should be consistent within their context (class, namespace, etc.)
 - Well known abbreviations should be camelCased like `setHtml` not capitalized like `setHTML`
 - For member accessors, use no prefix for cheap/view read access (e.g., `size()`, `title()`)
-- Reserve `get` prefix for explicit owning copies of non-trivial members (e.g., `getTitle()`), as defined in **Member Accessor Naming**
+- Reserve `get` prefix for explicit owning copies of non-trivial members (e.g., `getTitle()`), as defined in Member Accessor Naming
 - If it is a method, avoid repeating the class name in the method name
 - Same rules is applies to arguments and it's types - try to avoid repeating arg type in it's name if it is obvious
 
@@ -184,7 +184,7 @@ forcing an allocation or copy, while still allowing for an explicit owning copy 
 
 Lets assume that:
 
-**View** - is a zero-cost, read-only handle that does not own the data:
+View - is a zero-cost, read-only handle that does not own the data:
 
 - plain copy of a trivially-copyable small type (`sizeof(T) <= sizeof(void*)`) - cheaper than a reference
 - `std::string_view`, `std::span<T>` - non-owning slice of a sequence
@@ -199,7 +199,7 @@ So, it should look like this:
 - `std::vector<T>` -> `std::span<T>`
 - `complex objects` -> `const T&`
 
-**Rules for always-present member** (`T` always exists):
+Rules for always-present member (`T` always exists):
 
 | Method            | Semantics                                           |
 |-------------------|-----------------------------------------------------|
@@ -208,7 +208,7 @@ So, it should look like this:
 | `setObj(view)`    | Sets or replaces the value                          |
 | `isFoo() -> bool` | `true` if the value satisfies property *Foo*        |
 
-**Rules for optional member** (`std::optional<T>`, may be absent):
+Rules for optional member (`std::optional<T>`, may be absent):
 
 | Method                             | Semantics                                                    |
 |------------------------------------|--------------------------------------------------------------|

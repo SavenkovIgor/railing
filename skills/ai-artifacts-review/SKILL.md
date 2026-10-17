@@ -34,7 +34,7 @@ Output:
 - `PN` - Persona: agent identity and behavioral consistency
 - `XA` - Cross-Artifact: consistency between multiple artifacts
 
-**Check execution order:** Apply checks in this sequence to reduce conflicts:
+Check execution order: Apply checks in this sequence to reduce conflicts:
 1. `FM` → `SC` → `PA` (structural metadata first)
 2. `CT` → `ST` → `PN` (per-artifact content)
 3. `XA` (cross-artifact, only when full context is available)
@@ -52,14 +52,14 @@ Do not begin the audit unless all references listed are fully reviewed and acces
 
 ### 1. Enumerate artifacts to review
 
-**Scenario A - Specific files passed as arguments:**
+Scenario A - Specific files passed as arguments:
 
 1. Restrict the review to exactly those files.
 2. Skip the full-repo scan entirely.
 3. Skip cross-artifact checks (XA*) unless explicitly requested, since they require full context.
 4. Read each specified file fully, including its frontmatter block.
 
-**Scenario B - No files passed:**
+Scenario B - No files passed:
 
 1. Collect all files matching:
    - `.copilot/instructions/**/*.instructions.md`
@@ -88,14 +88,14 @@ Do not read reference files for artifact types that are not in scope.
 
 Apply these CT checks to every artifact, regardless of type:
 
-- `CT01` **Rationale section** - If the artifact contains non-obvious design decisions, constraints that differ from common defaults, or rules whose purpose is unclear from context, it SHOULD include a `## Rationale` (or `### Why`) section explaining those choices. Flag absence as `informational`.
+- `CT01` Rationale section - If the artifact contains non-obvious design decisions, constraints that differ from common defaults, or rules whose purpose is unclear from context, it SHOULD include a `## Rationale` (or `### Why`) section explaining those choices. Flag absence as `informational`.
 
 ### 3. Check cross-artifact consistency
 
-- `XA01` **Path convention alignment** - Skills that generate new artifacts must output to paths consistent with the repo's own artifact layout.
-- `XA02` **Instruction overlap** - Two instruction files must not define conflicting rules for the same file type and scope.
-- `XA03` **Skill/prompt duplication** - A skill and a prompt covering the same task must be consolidated; prefer the skill if the task is multi-step.
-- `XA04` **Extension correctness** - `.instructions.md` suffix is reserved for Copilot auto-loaded instruction files - no other file type should use it.
+- `XA01` Path convention alignment - Skills that generate new artifacts must output to paths consistent with the repo's own artifact layout.
+- `XA02` Instruction overlap - Two instruction files must not define conflicting rules for the same file type and scope.
+- `XA03` Skill/prompt duplication - A skill and a prompt covering the same task must be consolidated; prefer the skill if the task is multi-step.
+- `XA04` Extension correctness - `.instructions.md` suffix is reserved for Copilot auto-loaded instruction files - no other file type should use it.
 
 ### 4. IDE validation via `get_errors`
 

@@ -21,7 +21,7 @@ applyTo: '**/*.{h,hpp,cc,cpp,cppm,ipp,py,js,ts}'
 
 ## 1. Think Before Coding
 
-**Don't assume. Don't hide confusion. Surface tradeoffs.**
+Don't assume. Don't hide confusion. Surface tradeoffs.
 
 Before implementing:
 - State your assumptions explicitly. If uncertain, ask
@@ -32,7 +32,7 @@ Before implementing:
 
 ## 2. Simplicity First
 
-**Minimum code that solves the problem. Nothing speculative.**
+Minimum code that solves the problem. Nothing speculative.
 
 Before writing any new code, walk the ladder in order - stop at the first step that works:
 
@@ -55,7 +55,7 @@ Ask yourself: "Would a senior engineer say this is overcomplicated?" If yes, sim
 
 ## 3. Surgical Changes, Engineering Proposals
 
-**Touch only what you must. Clean up only your own mess. Propose improvements when necessary.**
+Touch only what you must. Clean up only your own mess. Propose improvements when necessary.
 
 When editing existing code:
 - Don't "improve" adjacent code, comments, or formatting. But highlight it if below standards
@@ -71,7 +71,7 @@ The test: Every changed line should trace directly to the user's request
 
 ## 4. Goal-Driven Execution
 
-**Define success criteria. Loop until verified.**
+Define success criteria. Loop until verified.
 
 Transform tasks into verifiable goals:
 - "Add validation" → "Write tests for invalid inputs, then make them pass"
