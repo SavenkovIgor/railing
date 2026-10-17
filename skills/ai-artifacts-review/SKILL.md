@@ -1,7 +1,7 @@
 ---
 name: ai-artifacts-review
 description: >-
-  You SHOULD use this skill when asked to audit, review, or improve AI configuration files (instructions, prompts, skills, or agents) - covers frontmatter completeness, scope correctness, structure, and cross-artifact consistency.
+  You should use this skill when asked to audit, review, or improve AI configuration files (instructions, prompts, skills, or agents) - covers frontmatter completeness, scope correctness, structure, and cross-artifact consistency.
 user-invocable: true
 argument-hint: "Optional: one or more file paths or names to review. If omitted, all AI artifacts in the repo are reviewed."
 ---
