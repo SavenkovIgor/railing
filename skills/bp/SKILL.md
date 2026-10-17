@@ -45,22 +45,22 @@ Read each file passed as argument. Identify its type, purpose, and content domai
 
 Choose only the references that match the file under review:
 
-| Reference                                           | When it applies                                                                      |
-|---                                                  |---                                                                                   |
-| [chromium](references/chromium-bp.md)               | Chromium-style C++ files: `*.{cc,cpp,h,hpp}`                                         |
-| [cicd](references/cicd-bp.md)                       | `.github/workflows/`, `.gitlab-ci.yml`, pipeline configs                             |
-| [cmake](references/cmake-bp.md)                     | `CMakeLists.txt`, `*.cmake` files; build configuration and dependency management     |
-| [cpp-file-naming](references/cpp-file-naming-bp.md) | C++ file and directory names and extensions: `*.{cpp,hpp,cppm,ipp,h,cc,C,H,c++,h++}` |
-| [devops](references/devops-bp.md)                   | `*.tf`, `ansible*.yml`, provisioning and configuration management files              |
-| [docker](references/docker-bp.md)                   | `Dockerfile*`, `*.dockerfile`, `docker-compose*.yml`, `compose*.yml`                 |
-| [docs](references/docs-bp.md)                       | Documentation `*.md` files (README, guides, wikis), except `reports/**/*.md`         |
-| [python](references/python-bp.md)                   | Any `*.py` file                                                                      |
-| [builds](references/reproducible-builds.md)         | Build scripts, lock files, CI configs                                                |
-| [skill](references/skill-bp.md)                     | `SKILL.md` files                                                                     |
-| [standards](references/standards-bp.md)             | Code files; or when explicit standards/RFC/OWASP/ISO check requested                 |
-| [system-design](references/system-design-bp.md)     | Design specs and proposals describing a system to be built or changed                |
-| [vscode-tasks](references/vscode-tasks-bp.md)       | `.vscode/tasks.json`, `*.code-workspace` files with a `tasks` section                |
-| [report-review](/skills/report-review/SKILL.md)     | Report files matching `reports/**/*.md`                                              |
+| Reference                                                | When it applies                                                                      |
+|---                                                       |---                                                                                   |
+| [chromium](references/chromium.md)                       | Chromium-style C++ files: `*.{cc,cpp,h,hpp}`                                         |
+| [cicd](references/cicd.md)                               | `.github/workflows/`, `.gitlab-ci.yml`, pipeline configs                             |
+| [cmake](references/cmake.md)                             | `CMakeLists.txt`, `*.cmake` files; build configuration and dependency management     |
+| [cpp-file-naming](references/cpp-file-naming.md)         | C++ file and directory names and extensions: `*.{cpp,hpp,cppm,ipp,h,cc,C,H,c++,h++}` |
+| [devops](references/devops.md)                           | `*.tf`, `ansible*.yml`, provisioning and configuration management files              |
+| [docker](references/docker.md)                           | `Dockerfile*`, `*.dockerfile`, `docker-compose*.yml`, `compose*.yml`                 |
+| [docs](references/docs.md)                               | Documentation `*.md` files (README, guides, wikis), except `reports/**/*.md`         |
+| [python](references/python.md)                           | Any `*.py` file                                                                      |
+| [reproducible-builds](references/reproducible-builds.md) | Build scripts, lock files, CI configs                                                |
+| [skill](references/skill.md)                             | `SKILL.md` files                                                                     |
+| [standards](references/standards.md)                     | Code files; or when explicit standards/RFC/OWASP/ISO check requested                 |
+| [system-design](references/system-design.md)             | Design specs and proposals describing a system to be built or changed                |
+| [vscode-tasks](references/vscode-tasks.md)               | `.vscode/tasks.json`, `*.code-workspace` files with a `tasks` section                |
+| [report-review](/skills/report-review/SKILL.md)          | Report files matching `reports/**/*.md`                                              |
 
 A single file may match multiple references.
 
@@ -69,7 +69,7 @@ A single file may match multiple references.
 For each selected reference, launch a sub-agent and pass it exactly three things:
 
 1. The target file - full path and content
-2. The reference file - full path of the matching `*-bp.md`
+2. The reference file - full path of the file linked in the table above
 3. The response format - the exact template defined in the "Response Format" section above
 
 Instruct each sub-agent to: read the target file and the reference file, validate the file against every criterion in the reference, and return findings using the provided format. Sub-agents work in parallel.

@@ -42,8 +42,8 @@ Why: an instruction applies by default through `applyTo`, while a skill applies 
 A link path never contains a `..` segment. Write it by context:
 
 - A link inside a skill to a file of the same skill starts at the skill root, with no `./`.
-  ✔ `[docs-bp.md](references/docs-bp.md)`
-  ✘ `[docs-bp.md](./references/docs-bp.md)`
+  ✔ `[docs.md](references/docs.md)`
+  ✘ `[docs.md](./references/docs.md)`
 - A link from a skill to another skill or to a plugin file starts at the plugin root, with a leading `/`.
   Such a skill works only inside this plugin; it is not standalone.
   ✔ `[report-review](/skills/report-review/SKILL.md)`
