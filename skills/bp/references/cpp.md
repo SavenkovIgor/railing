@@ -31,7 +31,7 @@ text_tools/
 - No Windows reserved stems: `con`, `prn`, `aux`, `nul`, `com1`–`com9`,
   `lpt1`–`lpt9`.
 
-Reasoning:
+Why:
 
 - Case-insensitive filesystems. NTFS and APFS ignore case by default,
   ext4 does not. Uppercase letters make three failures possible:
@@ -79,7 +79,7 @@ Reasoning:
 
 Never use `.h`, `.cc`, `.C`, `.H`, `.c++`, or `.h++`.
 
-Reasoning:
+Why:
 
 - Never `.h`. It is the C header extension, and C and C++ are
   different languages. A `.h` file does not say which one it contains, so
