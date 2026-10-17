@@ -77,3 +77,18 @@ Why: the editor attaches these files by `applyTo`, but an agent that edits throu
 In every pull request to this repository, the first commit contains only the version bump in [plugin.json](/plugin.json). Make all other changes in later commits.
 
 Why: the bump then does not depend on the rest of the change, and a reviewer sees the new version at once.
+
+## Closing issues from a pull request
+
+When the user gives a GitHub issue as the source of the task, the pull request description must name that issue in a closing line. Put the line on its own, outside any list or quote:
+
+```text
+Closes #123
+```
+
+- Write one closing line for each issue: `Closes #1` and `Closes #2` on separate lines. A line such as `Closes #1, #2` closes only `#1`.
+- For an issue in another repository, write `Closes owner/repo#123`.
+- Do not put the closing keyword in the pull request title. GitHub reads closing keywords in the description and in commit messages, not in the title.
+- If the user gives no issue, do not invent one.
+
+Why: GitHub closes an issue on its own only when the pull request merges into the default branch and a closing keyword links the two. The branch name has no effect, and a missing line leaves the issue open.
