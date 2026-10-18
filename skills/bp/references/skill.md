@@ -7,12 +7,17 @@ First read the best practice docs:
 
 - Line width - 100 characters
 - Avoid long paragraphs; use lists, tables, and formatting to break up content
-- `SKILL.md` under 50 lines is great; more than 250 is unmanageable and MUST be compressed/split/cut down
 - The skill should only include content that truly requires model reasoning or understanding.
 - Use relative paths (`./scripts/foo.sh`) for all skill resources
 - Move supporting material to `references/` or `assets/` if needed
-- When `SKILL.md` exceeds 250 lines, extract reusable content into `references/` or `assets/`
-- If something could be done with script, prefer the script and place it in `scripts/`
+- `SKILL.md` under 50 lines is great; more than 250 lines is unmanageable and MUST be
+  compressed, cut down, or split by moving content to `references/` or `assets/`
+- Move a step to `scripts/` only when the environment that runs it is known; this is rare,
+  since a skill cannot assume a runtime or tools
+- A script replaces its step in `SKILL.md` and does not duplicate it
+- Default script format: Python with inline script metadata (PEP 723), a `# /// script` comment
+  block that declares `requires-python` and `dependencies`, run by `uv run`; this is a default,
+  not the best choice for every project
 - Do NOT put periods at the end of bullet list items (items starting with `-`)
 
 ## Frontmatter
