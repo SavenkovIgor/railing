@@ -8,7 +8,6 @@ description: >-
   or more than half of the context window is used when a token counter is visible,
   to reflect on the conversation and propose 2-3 improvements to AI context files
   that would improve speed or quality next time
-user-invocable: true
 ---
 
 # Reflect

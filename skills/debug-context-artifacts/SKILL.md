@@ -5,7 +5,6 @@ description: >-
   it when the user explicitly runs it by name. It snapshots the AI context
   init state (instructions, commands, skills, MCP servers, and tools loaded
   into the session before the user typed anything) for debugging purposes.
-user-invocable: true
 ---
 
 # Debug: AI Context Artifacts - Init State Snapshot

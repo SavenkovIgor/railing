@@ -4,7 +4,6 @@ description: >-
   You should use this skill when checking or validating files against best-practice
   references, including code, documentation, configuration, and skill files.
 argument-hint: "File path(s) to validate"
-user-invocable: true
 ---
 
 # Best Practices Validation
