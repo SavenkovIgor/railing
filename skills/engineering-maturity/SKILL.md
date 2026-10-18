@@ -8,23 +8,13 @@ description: >-
 
 # Engineering maturity
 
-## Goal
+Help a team spend limited improvement effort where it matters most: name the specific missing
+practices that fit this team's size and project, ranked by the fastest return on that effort.
+Do not give generic advice like "improve CI/CD".
 
-Help a team spend limited improvement effort where it matters most. Engineering teams have dozens of practices they *could* adopt - the goal is to surface only the ones that have a measurable effect on maturity for *this* team's size, ranked by the fastest return on that effort.
+## Procedure
 
-Do not give generic advice like "improve CI/CD". Name specific practices that fit the team and
-the project.
-
-Phase 1 - Repo reconnaissance (automated, no questions needed):
-Inspect the repository for specific artifacts. Each artifact is direct evidence that a practice exists or is absent.
-
-Phase 2 - Targeted questions (only for gaps recon couldn't resolve):
-Short, closed questions. Not "how is your process?" but "does artifact X exist, yes or no?"
-
-Output - Ranked gap list:
-Missing practices sorted by ROI for the team's stratum. Each entry includes: Δ-effect from research, effort estimate, ROI, affected maturity dimensions, and a one-line implementation hint.
-
-## Step 0: Establish Team Size Stratum
+### Step 0: Establish Team Size Stratum
 
 **Do this before anything else. Without stratum, all recommendations are unreliable.**
 
@@ -37,14 +27,14 @@ Classify as:
 - Large: 51–150
 - >150: Note that the source research excluded these teams (sample too small). Recommendations will be extrapolated - state this explicitly.
 
-## Phase 1: Repo reconnaissance
+### Phase 1: Repo reconnaissance
 
 Search the repository for each artifact. Record each as ✔ present / ✘ absent / ? unclear.
 Do not assume. If a file is not found, mark ✘.
 
 Read [recon-checklist.md](references/recon-checklist.md) for the artifacts to search for.
 
-## Phase 2: Targeted questions
+### Phase 2: Targeted questions
 
 Ask **only** for items that recon marked ✘ or ? and that have Δ ≥ 2.0 for the team's stratum.
 Keep questions binary or single-choice. Do not ask open-ended questions.

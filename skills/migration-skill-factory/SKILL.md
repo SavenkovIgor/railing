@@ -9,18 +9,9 @@ argument-hint: "What changed, versions, and repo scope"
 
 # Migration Skill Factory
 
-## What This Produces
+Create a set of migration skills from a version or API update, one skill per change type.
 
-This meta-skill creates a set of migration skills from a version or API update.
-
-Output:
-- A normalized change list between old and new behavior.
-- A migration plan with priorities and risk tags.
-- One concrete migration skill per change type.
-- Compatibility classification for each generated skill.
-- Verification checklist for each generated migration skill.
-
-## Required Inputs
+## Inputs
 
 - Subject of migration: language/API/product and target versions.
 - Source of truth links or files:
@@ -153,7 +144,7 @@ Generated migration skills are complete only if all are true:
 - Validation commands and expected outcomes are explicit.
 - Safety limits and manual-review cases are documented.
 
-## Output Contract
+## Output Format
 
 When invoked, return:
 1. Change inventory (normalized).

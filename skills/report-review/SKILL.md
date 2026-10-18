@@ -8,23 +8,29 @@ description: >-
 
 # Report review
 
+Clean up a report in `reports/` and check its claims against the code.
+
 ## DependsOn
 
 - [reports.instructions.md](/com.github.copilot/rules/reports.instructions.md)
 
-Input: a report path. Take the kind from the `.<kind>.md` suffix and read the
+## Inputs
+
+A report path. Take the kind from the `.<kind>.md` suffix and read the
 core requirements and the matching
 `/com.github.copilot/rules/reports-<kind>.instructions.md`. If the kind is unknown, apply the core
 only and say so.
 
-## 1. Clean up: edit in place
+## Procedure
+
+### 1. Clean up: edit in place
 
 - Fix every formatting, language, and filler violation of the core requirements
   directly in the file
 - Do not change facts, link targets, or code. If a fix needs a fact change,
   report it as a finding instead
 
-## 2. Verify against code: report only
+### 2. Verify against code: report only
 
 Run this step in a subagent. Pass it only the report path and the instructions
 below, not this conversation, so it does not inherit the author's assumptions.
@@ -38,11 +44,11 @@ Subagent instructions:
 - Return each claim as: report location, claim, verdict
   (`confirmed`, `wrong`, `unverifiable`), evidence link
 
-## 3. Profile checks: report only
+### 3. Profile checks: report only
 
 Run the profile's checks. Also check the content rules of the core requirements.
 
-## Reply format
+## Output Format
 
 ```text
 Cleanup: <N> edits (<rule IDs>)

@@ -9,6 +9,8 @@ description: >-
 
 # Report write
 
+Write a technical report about existing code into `reports/`, following the profile for its kind.
+
 ## Pick the profile
 
 | Kind | Request | Profile |
