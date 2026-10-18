@@ -12,6 +12,13 @@ First read the best practice docs:
 - Move supporting material to `references/` or `assets/` if needed
 - `SKILL.md` under 50 lines is great; more than 250 lines is unmanageable and MUST be
   compressed, cut down, or split by moving content to `references/` or `assets/`
+- Move the rules of one use case to its own file in `references/` only when all of these hold:
+  - `SKILL.md` exceeds 250 lines
+  - the use case is separate, so most runs do not need its rules
+  - the rules of that use case take more than 30% of `SKILL.md`
+- Rules of a use case that take a few paragraphs stay in `SKILL.md`: a separate file adds
+  indirection and saves nothing
+- State next to each link to a file in `references/` when to read it
 - Do NOT put periods at the end of bullet list items (items starting with `-`)
 
 ## Scripts
