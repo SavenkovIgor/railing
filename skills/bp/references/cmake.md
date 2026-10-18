@@ -477,30 +477,30 @@ Pragmatic compromise:
 Targets are the logical structure of the project; directories are the
 physical one. They must describe the same thing. A reader should be able
 to predict the list of targets from `tree`, and find any target's code
-without reading CMake. When the two diverge, every basic question —
+without reading CMake. When the two diverge, every basic question -
 "which target is this file part of", "what rebuilds if I change it",
-"who is allowed to include this header" — requires reverse-engineering
+"who is allowed to include this header" - requires reverse-engineering
 `CMakeLists.txt`.
 
 Rules:
 
-- **One target — one directory.** Each library or executable is defined
+- One target - one directory. Each library or executable is defined
   in its own directory's `CMakeLists.txt`, pulled in via
   `add_subdirectory`. The directory name matches the target name
   (modulo a namespace prefix like `myproj_`).
-- **A target's sources live under its directory.** No `../` paths in
+- A target's sources live under its directory. No `../` paths in
   `add_library` / `add_executable` / `target_sources`, and no sources
   from other directories listed in the root `CMakeLists.txt`.
-- **A file belongs to exactly one target.** If two targets need the same
-  source, it is a third target — link it, don't compile it twice.
-- **Headers are reached through linking, not through paths.** Public
+- A file belongs to exactly one target. If two targets need the same
+  source, it is a third target - link it, don't compile it twice.
+- Headers are reached through linking, not through paths. Public
   headers live in `<target_dir>/include/<target_name>/`, private ones
   next to the sources. `target_include_directories(foo PUBLIC include)`
   exposes only the public part, and `#include <foo/bar.hpp>` tells the
   reader where the header comes from. Pointing
   `target_include_directories` into another target's directory is a
   hidden dependency that bypasses `target_link_libraries`.
-- **Subdirectories inside a target are only grouping.** Once a
+- Subdirectories inside a target are only grouping. Once a
   subdirectory becomes a separate target, it gets its own
   `CMakeLists.txt`.
 
@@ -524,7 +524,7 @@ apps/
 tests/                  # tests spanning several targets
 ```
 
-Legitimate exceptions — the rule relaxes to "a directory holds one
+Legitimate exceptions - the rule relaxes to "a directory holds one
 *kind* of target", created by a loop or a helper function:
 
 - `examples/`, `tools/` with many small homogeneous executables.
@@ -548,23 +548,23 @@ ends up in the library.
 
 Why colocation is the default:
 
-- **Access to internals without breaking encapsulation.** A test in the
+- Access to internals without breaking encapsulation. A test in the
   component's directory includes its private headers directly. A test
   in a separate tree needs `target_include_directories` into another
-  target's sources — the hidden dependency described in "Source tree
+  target's sources - the hidden dependency described in "Source tree
   mirrors the target graph".
-- **A missing test is visible.** `parser.cpp` without
+- A missing test is visible. `parser.cpp` without
   `parser_test.cpp` next to it stands out in a listing and in review.
-- **No drift.** A mirrored `tests/` tree goes stale: a source file is
+- No drift. A mirrored `tests/` tree goes stale: a source file is
   renamed or deleted, its test stays under the old path. A colocated
   test moves with the code.
-- **One owner.** CODEOWNERS, reviewers, and history are shared by the
+- One owner. CODEOWNERS, reviewers, and history are shared by the
   component and its tests.
 
 ### Where a test goes
 
-The granularity is the **subject of the test** — what it makes
-assertions about — not every class it touches. A unit test may use
+The granularity is the subject of the test - what it makes
+assertions about - not every class it touches. A unit test may use
 collaborators; that does not make it an integration test.
 
 | Subject of the test                   | Location                                 | List                         |
@@ -595,9 +595,9 @@ tests/
 ### Two lists per component, runners chosen by the consumer
 
 Each component exposes its tests as two `OBJECT` libraries with no
-`main()` — one per kind. The list of test files lives in the
+`main()` - one per kind. The list of test files lives in the
 component's own `CMakeLists.txt`: adding a test touches only the
-component, which matters when the component is a git submodule — the
+component, which matters when the component is a git submodule - the
 parent repository only moves the submodule commit.
 
 ```cmake
@@ -645,13 +645,13 @@ file means dozens of slow C++ links.
 
 Test frameworks register tests through static initializers in files
 nothing else references. Both of the following build without errors
-and produce a runner with **zero** tests:
+and produce a runner with zero tests:
 
-- **`STATIC` test library.** The linker pulls an object file out of a
+- `STATIC` test library. The linker pulls an object file out of a
   static archive only to resolve a referenced symbol; test files have
   none, so they are dropped. Use `OBJECT`, or link the archive with
   `$<LINK_LIBRARY:WHOLE_ARCHIVE,core_unit_tests>` (CMake 3.24+).
-- **`OBJECT` library linked transitively.** Its objects are added only
+- `OBJECT` library linked transitively. Its objects are added only
   to the target that links it directly. Collecting test libraries in an
   `INTERFACE` aggregator and linking that to the runner loses them all.
   Link the test libraries to the runner directly.
@@ -672,15 +672,15 @@ adding a test does not.
 A `-D` flag is part of the compile command of every translation unit
 that sees it. Change its value and every such TU is recompiled, and
 every compiler cache (ccache, sccache, remote caches) misses. A global
-define that changes on every commit — git hash, build number, build
-date — turns every build into a full rebuild and drops the CI cache hit
+define that changes on every commit - git hash, build number, build
+date - turns every build into a full rebuild and drops the CI cache hit
 rate to zero.
 
 The same applies to a header: moving the value from `-D` into
 `inline constexpr auto git_hash = "..."` in a header replaces a
 preprocessor macro with a language construct, but every includer still
 recompiles on every commit. What protects the cache is not the syntax
-but **how many TUs depend on the value**.
+but how many TUs depend on the value.
 
 Classify each definition by how often it changes and what it affects:
 
@@ -696,7 +696,7 @@ Declaration in a stable header, value in exactly one generated source.
 A new commit recompiles one file and relinks; nothing else changes.
 
 ```cpp
-// libs/buildinfo/include/buildinfo/buildinfo.hpp — never changes
+// libs/buildinfo/include/buildinfo/buildinfo.hpp - never changes
 namespace buildinfo {
 std::string_view version();
 std::string_view git_hash();
@@ -721,7 +721,7 @@ target_include_directories(buildinfo PUBLIC include)
 
 `GenBuildInfo.cmake` gets the hash via `execute_process(git rev-parse)`
 and writes the file via `configure_file`, which leaves the output
-untouched when the content is the same — no spurious rebuilds. Running
+untouched when the content is the same - no spurious rebuilds. Running
 at build time (not configure time) keeps the hash from going stale
 after a commit without re-running CMake.
 
@@ -752,7 +752,7 @@ reach a header is the target.
 ### ABI-affecting definitions: the exception
 
 Definitions that change layouts or inline code in standard or system
-headers must be **identical** for everything linked into one binary,
+headers must be identical for everything linked into one binary,
 dependencies included. Scoping them per target causes ODR violations,
 not isolation. Set them in the toolchain file or Conan profile so that
 dependencies get them too, or project-wide if no prebuilt code is
