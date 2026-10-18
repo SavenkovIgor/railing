@@ -36,6 +36,29 @@ If found, propose how to trim or generalize that context.
   unlikely to be broadly useful across similar tasks
 - What context instructions could instead be expressed as a validation code or with project validation tool to replace
   context pollution with strict algorithmic checks
+- Whether the run showed one of the context failure modes below
+
+## Context management
+
+A larger context window does not make an agent more reliable. The more tokens the window holds,
+the less reliably the model uses any of them, because attention is a finite budget. Treat the
+context as a resource to spend, and check the conversation for the four failure modes below.
+Each fix works by removing information, so propose it as a rule that keeps the window lean.
+
+| Failure mode | Symptom in the conversation | Fix | Candidate artifact change |
+|--------------|-----------------------------|-----|---------------------------|
+| Poisoning | A wrong conclusion was saved, then treated as fact | Validate | Require a real check, such as a test or a command, before a conclusion goes into notes or memory |
+| Distraction | A long history made the agent repeat old actions | Compact | Move long-lived state into files and pull it in on demand; summarize old steps |
+| Confusion | Too many tools or docs made the agent choose wrongly | Curate | Give each skill or agent only the tools its job needs; load the rest on request |
+| Clash | The window holds two versions of the same fact | Prune | Delete the superseded version, or restart the window from the corrected state |
+
+Notes for the proposals:
+
+- Compaction is lossy, and a summary of a summary drifts; prefer files over repeated summaries
+- Prefer a fresh window with a restated current state over patching a poisoned one
+- Tool definitions cost context even when unused, so also check the MCP and tool configuration
+- Large tool results, such as file dumps, test output, and schema dumps, usually fill the window;
+  propose narrower reads, filters, or output limits
 
 
 And yes, you can propose new items in this prompt itself if you think it is necessary
