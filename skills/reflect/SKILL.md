@@ -3,7 +3,9 @@ name: reflect
 description: >-
   You should use this skill when:
   a task is completed,
-  a session has used more than half of its context window,
+  a session is long: its context was compacted, it made dozens of tool calls,
+  the agent started repeating earlier steps,
+  or more than half of the context window is used when a token counter is visible,
   to reflect on the conversation and propose 2-3 improvements to AI context files
   that would improve speed or quality next time
 user-invocable: true
