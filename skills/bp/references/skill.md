@@ -12,13 +12,16 @@ First read the best practice docs:
 - Move supporting material to `references/` or `assets/` if needed
 - `SKILL.md` under 50 lines is great; more than 250 lines is unmanageable and MUST be
   compressed, cut down, or split by moving content to `references/` or `assets/`
+- Do NOT put periods at the end of bullet list items (items starting with `-`)
+
+## Scripts
+
 - Move a step to `scripts/` only when the environment that runs it is known; this is rare,
   since a skill cannot assume a runtime or tools
 - A script replaces its step in `SKILL.md` and does not duplicate it
 - Default script format: Python with inline script metadata (PEP 723), a `# /// script` comment
   block that declares `requires-python` and `dependencies`, run by `uv run`; this is a default,
   not the best choice for every project
-- Do NOT put periods at the end of bullet list items (items starting with `-`)
 
 ## Frontmatter
 
