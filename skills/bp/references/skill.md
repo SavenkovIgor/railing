@@ -7,7 +7,7 @@ First read the best practice docs:
 
 - Line width - 100 characters
 - Avoid long paragraphs; use lists, tables, and formatting to break up content
-- The skill should only include content that truly requires model reasoning or understanding.
+- The skill should only include content that truly requires model reasoning or understanding
 - Use paths from the skill root without `./` (`scripts/foo.sh`) for all skill resources
 - Move supporting material to `references/` or `assets/` if needed
 - Move a template longer than 10 lines to `assets/` and link it from `SKILL.md`
@@ -47,11 +47,13 @@ Add no other fields (such as `user-invocable`): vendors support them unevenly an
 This is the strictest rule in this reference. Rationale:
 
 - The decision to load a skill is made solely from `description` (gradual context disclosure)
-- By the time the body is loaded into context, the skill has already been selected - trigger conditions are irrelevant
+- By the time the body is loaded into context, the skill has already been selected - trigger
+  conditions are irrelevant
 - Any content that belongs in `## When to Use` already belongs in `description`
 - Including it wastes context tokens and creates maintenance drift between the two
 
-If trigger conditions are not fully expressed in `description`, fix `description` - do not add a body section.
+If trigger conditions are not fully expressed in `description`, fix `description` - do not add
+a body section.
 
 Structure of the body, in this order:
 
@@ -75,7 +77,8 @@ Patterns to follow:
 
 - Keep it short and actionable: it is shown in skill lists and used for matching,
   not for documentation
-- description should start with phrase `You should use this skill when...` followed by specific trigger conditions
+- description should start with phrase `You should use this skill when...` followed by specific
+  trigger conditions
 - Prefer this frontmatter formatting for description:
 
 ```markdown
