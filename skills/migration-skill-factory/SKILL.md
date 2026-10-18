@@ -1,10 +1,9 @@
 ---
 name: migration-skill-factory
 description: >-
-  You should use this skill when: a language, framework, SDK, or product version was
-  upgraded; API signatures, semantics, defaults, deprecations, or behavior changed;
-  you need repeatable codebase-wide refactoring instructions to migrate old usage;
-  you want migration work split into focused skills instead of one large prompt.
+  You should use this skill when: a language, framework, or SDK version was upgraded,
+  an API changed or was deprecated, old usage must be refactored across a codebase,
+  or migration work should be split into focused skills.
 argument-hint: "What changed, versions, and repo scope"
 ---
 
