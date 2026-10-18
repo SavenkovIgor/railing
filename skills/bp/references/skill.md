@@ -55,6 +55,8 @@ Anti-patterns:
 
 Patterns to follow:
 
+- Keep it short and actionable: it is shown in skill lists and used for matching,
+  not for documentation
 - description should start with phrase `You should use this skill when...` followed by specific trigger conditions
 - Prefer this frontmatter formatting for description:
 
