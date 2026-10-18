@@ -1,8 +1,7 @@
 ---
 name: migration-skill-factory
 description: "You should use this skill if API/language versions changed and you need skills to migrate old usage across a codebase."
-argument-hint: "What changed (old -> new), version range, and target repo scope"
-user-invocable: true
+argument-hint: "What changed, versions, and repo scope"
 ---
 
 # Migration Skill Factory

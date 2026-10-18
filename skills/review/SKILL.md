@@ -5,8 +5,7 @@ description: >-
     asked to review a file, uncommitted changes, or the current branch,
     asked whether a change is safe to merge,
     asked to check that a change does what its description says
-argument-hint: "A file path, or the word uncommitted or branch."
-user-invocable: true
+argument-hint: "File path, uncommitted, or branch"
 ---
 
 # Review
