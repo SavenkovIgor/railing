@@ -53,7 +53,15 @@ This is the strictest rule in this reference. Rationale:
 
 If trigger conditions are not fully expressed in `description`, fix `description` - do not add a body section.
 
-Define the structure of the output if a person or another tool reads it in a fixed form.
+Structure of the body, in this order:
+
+- The first paragraph after the title states the goal in one or two sentences
+- `## DependsOn`, if the skill depends on other files
+- `## Inputs` (optional): what the skill needs from the user or the context, when listing it
+  makes the run simpler
+- `## Procedure`: the steps, if the skill has steps
+- `## Output Format`: the structure of the output; define it if a person or another tool reads
+  it in a fixed form
 
 ## Description
 
