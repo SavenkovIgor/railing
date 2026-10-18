@@ -2,6 +2,13 @@
 
 Engineering guardrails that keep AI coding agents on track.
 
+## VS Code first
+
+The plugin follows the [Agent Plugins](https://agent-plugins.org) standard where it can, but the
+standard is not yet adopted by other vendors. Rules and agents live in `com.github.copilot/`,
+the only directory VS Code reads them from, so the plugin is VS Code first. Skills are plain
+`SKILL.md` files and travel to other agents more easily than rules do.
+
 ## Contents
 
 ```text
@@ -28,6 +35,7 @@ Engineering guardrails that keep AI coding agents on track.
     ├── reflect/                                 propose context improvements after a task
     ├── report-review/                           clean up a report and verify it against the code
     ├── report-write/                            write a technical report about existing code into reports/
+    ├── review/                                  review a change against its intent, report only
     └── to-issues/                               convert plans and discussions into tracker issues
 ```
 
@@ -42,6 +50,7 @@ flowchart TD
         RR["skill: report-review"]
         RW["skill: report-write"]
         AAR["skill: ai-artifacts-review"]
+        RV["skill: review"]
     end
 
     subgraph IN["Instructions"]
@@ -52,6 +61,7 @@ flowchart TD
     end
 
     BP --> RR
+    RV --> BP
     BP --> PR
     BP --> MD
     RR --> REP
