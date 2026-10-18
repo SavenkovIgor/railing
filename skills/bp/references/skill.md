@@ -19,7 +19,9 @@ First read the best practice docs:
 - `name` must match the folder name exactly (case-sensitive, lowercase-alphanumeric + hyphens)
 - `description` must be present, and brief
 
-Ideally skill should not have any more frontmatter fields due to compatibility with various loaders and marketplaces.
+`argument-hint` is allowed when the skill accepts arguments; at most 7 words.
+
+Add no other fields (such as `user-invocable`): vendors support them unevenly and they add little.
 
 ## Body Structure
 
