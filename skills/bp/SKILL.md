@@ -57,6 +57,7 @@ Choose only the references that match the file under review:
 | [docker](references/docker.md)                               | `Dockerfile*`, `*.dockerfile`, `docker-compose*.yml`, `compose*.yml`                    |
 | [docs](references/docs.md)                                   | Documentation `*.md` files (README, guides, wikis), except `reports/**/*.md`            |
 | [engineering-standards](references/engineering-standards.md) | Only when published standards (RFC, OWASP, ISO, style guides) are relevant or requested |
+| [instructions](references/instructions.md)                   | `*.instructions.md` files                                                               |
 | [python](references/python.md)                               | Any `*.py` file                                                                         |
 | [skill](references/skill.md)                                 | `SKILL.md` files                                                                        |
 | [system-design](references/system-design.md)                 | Design specs and proposals describing a system to be built or changed                   |
