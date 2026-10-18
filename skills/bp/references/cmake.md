@@ -146,6 +146,8 @@ Without touching the project code, the following should be possible:
   `cacheVariables` for options the project already defines.
 - Try a newer compiler that emits new warnings without failing the
   build - `cmake --compile-no-warning-as-error`.
+- Enable a compiler cache - `CMAKE_CXX_COMPILER_LAUNCHER` in a preset
+  (see "Compiler cache: a preset setting").
 
 Requires editing CMakeLists / cmake modules:
 
@@ -244,6 +246,10 @@ Set `CMAKE_CXX_STANDARD`, `CMAKE_CXX_STANDARD_REQUIRED ON`, and
 `CMAKE_CXX_EXTENSIONS OFF` in `CMakeLists.txt`. This is a project decision,
 not a per-run decision - everyone who builds the project should get the same
 language version regardless of the preset.
+
+A library that other projects consume through `find_package` also needs
+`target_compile_features(<lib> PUBLIC cxx_std_NN)`: `CMAKE_CXX_STANDARD`
+does not reach the exported package (see "Target-based alternative").
 
 ### `compile_commands.json` for clangd
 
@@ -459,20 +465,501 @@ target_compile_features(my_lib PUBLIC cxx_std_23)
 via PUBLIC get "I need a compiler with at least C++23", but the specific
 standard can be raised higher.
 
-This is cleaner but requires discipline on every target and doesn't
-work perfectly for INTERFACE-only fragments.
+It also works on INTERFACE libraries:
+`target_compile_features(my_iface INTERFACE cxx_std_23)`.
+
+`CMAKE_CXX_STANDARD` only initializes the `CXX_STANDARD` property of
+targets in this build. It is not a usage requirement, so
+`install(EXPORT)` does not record it. A consumer of the installed package
+compiles with its own default standard: with GCC 13 that is C++17, and a
+public header that uses C++20 fails to compile there. A requirement set
+with `target_compile_features(... PUBLIC ...)` is exported as
+`INTERFACE_COMPILE_FEATURES` and reaches every consumer.
 
 Pragmatic compromise:
 
 - `set(CMAKE_CXX_STANDARD 23)` globally as a default for your own code -
   convenient and readable.
+- `target_compile_features(<lib> PUBLIC cxx_std_23)` on every library
+  that is installed or exported, in addition to the global default.
 - `block()` for cases where a dep needs something different and
   `add_subdirectory` can't be avoided.
 - First priority - **don't use `add_subdirectory` for third-party**,
   so the question of leaks doesn't arise at all. Conan covers this
   for most cases.
 
+## Source tree mirrors the target graph
+
+Targets are the logical structure of the project; directories are the
+physical one. They must describe the same thing. A reader should be able
+to predict the list of targets from `tree`, and find any target's code
+without reading CMake. When the two diverge, every basic question -
+"which target is this file part of", "what rebuilds if I change it",
+"who is allowed to include this header" - requires reverse-engineering
+`CMakeLists.txt`.
+
+Rules:
+
+- One target - one directory. Each library or executable is defined
+  in its own directory's `CMakeLists.txt`, pulled in via
+  `add_subdirectory`. The directory name matches the target name
+  (modulo a namespace prefix like `myproj_`).
+- A target's sources live under its directory. No `../` paths in
+  `add_library` / `add_executable` / `target_sources`, and no sources
+  from other directories listed in the root `CMakeLists.txt`.
+- A file belongs to exactly one target. If two targets need the same
+  source, it is a third target - link it, don't compile it twice.
+- Headers are reached through linking, not through paths. Public
+  headers live in `<target_dir>/include/<target_name>/`, private ones
+  next to the sources. Declare the public ones as a header file set
+  (CMake 3.23+):
+  `target_sources(foo PUBLIC FILE_SET HEADERS BASE_DIRS include FILES ...)`.
+  The file set adds `include` to the include path of `foo` and its
+  consumers, and `install(TARGETS foo FILE_SET HEADERS)` installs exactly
+  these files. `#include <foo/bar.hpp>` tells the reader where the
+  header comes from. Pointing
+  `target_include_directories` into another target's directory is a
+  hidden dependency that bypasses `target_link_libraries`.
+- Subdirectories inside a target are only grouping. Once a
+  subdirectory becomes a separate target, it gets its own
+  `CMakeLists.txt`.
+
+```plaintext
+CMakeLists.txt          # project(), options, add_subdirectory() only
+cmake/                  # modules, INTERFACE policy targets (warnings)
+libs/
+  core/                 # target: core
+    CMakeLists.txt
+    include/core/*.hpp  # public API
+    src/*.cpp, *.hpp    # implementation + private headers + unit tests
+    tests/              # component tests of core, see "Test layout"
+  net/                  # target: net, links core
+    CMakeLists.txt
+    include/net/*.hpp
+    src/*.cpp
+apps/
+  server/               # target: server, links net
+    CMakeLists.txt
+    main.cpp
+tests/                  # tests spanning several targets
+```
+
+Legitimate exceptions - the rule relaxes to "a directory holds one
+*kind* of target", created by a loop or a helper function:
+
+- `examples/`, `tools/` with many small homogeneous executables.
+- Top-level `tests/` with tests that span several targets (see
+  "Test layout").
+- INTERFACE policy targets (`project_warnings`) in `cmake/`: they are
+  config, not code.
+- Generated sources, which live in the build directory.
+
+## Test layout
+
+Tests live next to the code they test. Most languages that leave the
+choice open converge on this: Go enforces `foo_test.go` in the same
+package, Rust keeps unit tests in the same file, Google-style C++
+(Abseil, Chromium) puts `foo_test.cc` next to `foo.cc`. Separate test
+trees appear where the toolchain forces them (Maven classpath, .NET
+assemblies, Python tests run against the installed package). CMake
+forces nothing: a target contains exactly the files listed for it, and
+install works per target, so a test file next to a source file never
+ends up in the library.
+
+Why colocation is the default:
+
+- Access to internals without breaking encapsulation. A test in the
+  component's directory includes its private headers directly. A test
+  in a separate tree needs `target_include_directories` into another
+  target's sources - the hidden dependency described in "Source tree
+  mirrors the target graph".
+- A missing test is visible. `parser.cpp` without
+  `parser_test.cpp` next to it stands out in a listing and in review.
+- No drift. A mirrored `tests/` tree goes stale: a source file is
+  renamed or deleted, its test stays under the old path. A colocated
+  test moves with the code.
+- One owner. CODEOWNERS, reviewers, and history are shared by the
+  component and its tests.
+
+### Where a test goes
+
+The granularity is the subject of the test - what it makes
+assertions about - not every class it touches. A unit test may use
+collaborators; that does not make it an integration test.
+
+| Subject of the test                   | Location                                 | List                         |
+| ------------------------------------- | ---------------------------------------- | ---------------------------- |
+| One class / one source file           | `<stem>_test.cpp` next to `<stem>.cpp`   | `<target>_unit_tests`        |
+| Several classes of one target         | `<target_dir>/tests/<scenario>_test.cpp` | `<target>_integration_tests` |
+| Several targets together, or a binary | Top-level `tests/`                       | Its own target there         |
+
+The file name makes the first rule checkable: a `<stem>_test.cpp` next
+to sources must have a matching `<stem>.cpp` or `<stem>.hpp`. A test
+named after no file in its directory is in the wrong place.
+
+```plaintext
+libs/core/
+  CMakeLists.txt
+  include/core/parser.hpp
+  src/
+    parser.cpp
+    parser_test.cpp         # unit: subject is Parser
+    lexer.cpp
+    lexer_test.cpp          # unit: subject is Lexer
+  tests/
+    parse_pipeline_test.cpp # component: Lexer + Parser together
+tests/
+  request_roundtrip_test.cpp  # cross-target: core + net
+```
+
+### Two lists per component, runners chosen by the consumer
+
+Each component exposes its tests as two `OBJECT` libraries with no
+`main()` - one per kind. The list of test files lives in the
+component's own `CMakeLists.txt`: adding a test touches only the
+component, which matters when the component is a git submodule - the
+parent repository only moves the submodule commit.
+
+```cmake
+# libs/core/CMakeLists.txt
+add_library(core src/parser.cpp src/lexer.cpp)
+target_sources(core PUBLIC
+  FILE_SET HEADERS BASE_DIRS include FILES include/core/parser.hpp)
+
+if(BUILD_TESTING)
+  add_library(core_unit_tests OBJECT
+    src/parser_test.cpp
+    src/lexer_test.cpp)
+  target_link_libraries(core_unit_tests PUBLIC core GTest::gtest)
+
+  add_library(core_integration_tests OBJECT
+    tests/parse_pipeline_test.cpp)
+  target_link_libraries(core_integration_tests PUBLIC core GTest::gtest)
+endif()
+```
+
+The consumer decides how to run them: one runner per component, one
+per kind across components, unit tests only under sanitizers,
+integration tests with longer timeouts. Separate lists make this a
+change in one place instead of sorting files out of a common pile.
+
+```cmake
+# parent CMakeLists.txt: one runner per kind
+include(GoogleTest)
+
+add_executable(unit_tests)
+target_link_libraries(unit_tests PRIVATE
+  core_unit_tests net_unit_tests GTest::gtest_main)
+gtest_discover_tests(unit_tests PROPERTIES LABELS unit)
+
+add_executable(integration_tests)
+target_link_libraries(integration_tests PRIVATE
+  core_integration_tests net_integration_tests GTest::gtest_main)
+gtest_discover_tests(integration_tests PROPERTIES LABELS integration)
+```
+
+`ctest -L unit` then runs only unit tests. One runner per kind (or per
+component) keeps the number of link steps low; one executable per test
+file means dozens of slow C++ links.
+
+### Pitfall: tests that silently disappear
+
+Test frameworks register tests through static initializers in files
+nothing else references. Both of the following build without errors
+and produce a runner with zero tests:
+
+- `STATIC` test library. The linker pulls an object file out of a
+  static archive only to resolve a referenced symbol; test files have
+  none, so they are dropped. Use `OBJECT`, or link the archive with
+  `$<LINK_LIBRARY:WHOLE_ARCHIVE,core_unit_tests>` (CMake 3.24+).
+- `OBJECT` library linked transitively. Its objects are added only
+  to the target that links it directly. Collecting test libraries in an
+  `INTERFACE` aggregator and linking that to the runner loses them all.
+  Link the test libraries to the runner directly, or use the helper
+  below.
+
+Guard against both: CI compares the number of discovered tests with the
+previous run, or at least fails on a runner that reports zero tests.
+
+### Transitive test sets: `source_set()`
+
+GN has `source_set`: a set of object files that reaches every final
+binary through any chain of dependencies. An `OBJECT` library is the
+same set without the transitive part. Adding the objects to the
+library's own interface sources makes it transitive:
+
+```cmake
+# cmake/SourceSet.cmake
+function(source_set name)
+  add_library(${name} OBJECT ${ARGN})
+  target_sources(${name} INTERFACE $<TARGET_OBJECTS:${name}>)
+endfunction()
+```
+
+With `source_set(core_unit_tests ...)`, test sets can be collected
+through an `INTERFACE` aggregator or a chain of other test sets, and a
+set reachable by two paths is linked once.
+
+Use `source_set()` only for targets that nothing links except a final
+binary: the `<target>_unit_tests` and `<target>_integration_tests`
+sets. CMake has no notion of a `SHARED` library as a boundary for
+interface sources. If a `source_set()` target sits below a `SHARED`
+library, its objects go into the shared library and again into every
+binary that links it: two copies of the code and of every global, and no
+link error. With `-fvisibility=hidden`, the usual setting for shared
+libraries, each copy then works with its own state. Make shared test
+helpers (fixtures, mocks) `STATIC` libraries instead.
+
+### Test sets belong to the component
+
+Do not let the component add its tests to the parent's runner itself
+(`target_sources(unit_tests ...)` from the submodule, or a global
+property registry). It works, but the component then depends on the
+name of its consumer's target and cannot be reused elsewhere. One
+`target_link_libraries` line per component in the parent is the right
+price: adding a component touches the parent anyway (`add_subdirectory`),
+adding a test does not.
+
+## Installable libraries
+
+A library that another project consumes through `find_package` carries
+its usage requirements in the exported package. Everything the consumer
+needs has to be a usage requirement of the target: include paths, compile
+features, link dependencies. Directory-scoped settings and
+`CMAKE_CXX_STANDARD` stay behind in the build tree.
+
+```cmake
+include(GNUInstallDirs)
+include(CMakePackageConfigHelpers)
+
+add_library(image src/image.cpp)
+add_library(Imaging::image ALIAS image)
+target_compile_features(image PUBLIC cxx_std_20)
+target_sources(image PUBLIC
+  FILE_SET HEADERS
+  BASE_DIRS include
+  FILES include/image/image.hpp)
+
+install(TARGETS image EXPORT ImagingTargets FILE_SET HEADERS)
+install(EXPORT ImagingTargets
+  NAMESPACE Imaging::
+  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Imaging)
+write_basic_package_version_file(ImagingConfigVersion.cmake
+  COMPATIBILITY SameMajorVersion)
+# plus ImagingConfig.cmake that includes ImagingTargets.cmake,
+# installed next to it together with ImagingConfigVersion.cmake
+```
+
+The consumer:
+
+```cmake
+find_package(Imaging 1.0 CONFIG REQUIRED)
+target_link_libraries(viewer PRIVATE Imaging::image)
+```
+
+- Header file set over `target_include_directories`. A plain include
+  path into the source tree makes `install(EXPORT)` fail; the
+  workaround is a pair of `$<BUILD_INTERFACE:...>` and
+  `$<INSTALL_INTERFACE:...>` expressions plus a separate
+  `install(DIRECTORY)`. A `FILE_SET HEADERS` gives the right path in
+  both trees and installs exactly the declared headers.
+- Namespace and `ALIAS`. The installed target is `Imaging::image`;
+  `add_library(Imaging::image ALIAS image)` gives in-tree consumers the
+  same name, so moving a consumer between the build tree and an installed
+  package changes no `target_link_libraries` line. A name with `::`
+  that does not resolve to a target is an error at generate time, while
+  a plain name silently turns into a `-limage` linker flag.
+- `CONFIG` mode in `find_package` for packages that ship a CMake config.
+  Without it, CMake first looks for a `FindImaging.cmake` module.
+- Verify with a separate consumer project. Install into a staging prefix
+  (`cmake --install build --prefix stage`), then configure a small
+  project with `-DCMAKE_PREFIX_PATH=stage` that links the package. This
+  catches requirements that exist only in the build tree: a missing
+  compile feature, an include path into the sources, an undeclared
+  dependency.
+- CPS (Common Package Specification) metadata is an addition, not a
+  replacement. `install(PACKAGE_INFO <name> EXPORT <export>)` (CMake
+  4.3+) writes a JSON description that tools other than CMake can read;
+  keep the CMake config files for consumers that do not read CPS yet.
+
+## C++20 modules
+
+Module interface units go into a file set of type `CXX_MODULES`. CMake
+scans these sources during the build and orders compilation so that each
+built module interface (BMI) exists before the units that import it.
+
+```cmake
+add_library(graph)
+target_compile_features(graph PUBLIC cxx_std_20)
+target_sources(graph PUBLIC
+  FILE_SET CXX_MODULES
+  FILES src/graph.cppm src/graph-node.cppm)
+```
+
+Requirements (CMake 3.28+): the Ninja generators with `ninja` 1.11+ or
+Visual Studio 2022+, and Clang 16+, GCC 14+, or MSVC toolset 14.34+.
+Header units are not supported.
+
+- `PUBLIC` file set for modules that consumers import, `PRIVATE` for
+  internal ones. Import a `PRIVATE` module only from implementation units
+  (`module M;`), not from a module interface: a consumer of the interface
+  would need the private module too. CMake rejects this, except with the
+  Visual Studio generators, which do not diagnose it.
+- Implementation units declare `module M;`. `module M:part;` declares an
+  internal partition, which must be in the `CXX_MODULES` file set.
+- Installing: `install(TARGETS)` needs an explicit `DESTINATION` for the
+  `CXX_MODULES` file set, and `install(EXPORT)` needs
+  `CXX_MODULES_DIRECTORY`; without it, consumers cannot import the
+  modules. The Visual Studio generators do not support exporting modules.
+- A C++20 project that does not use modules yet: put
+  `set(CMAKE_CXX_SCAN_FOR_MODULES 0)` near the top of the top-level
+  `CMakeLists.txt`, not in the cache. Otherwise every source is scanned,
+  and scanned sources are excluded from unity builds.
+
+### `import std`
+
+CMake 4.5 (a release candidate on 2026-10-18) makes `import std`
+available in every target with C++20 or newer and module scanning
+enabled. Up to CMake 4.4 it required the
+`CMAKE_EXPERIMENTAL_CXX_IMPORT_STD` gate, `CXX_MODULE_STD ON` on each
+target, and C++23.
+
+- Toolchains: Clang 18.1.2+ with libc++ or libstdc++, MSVC toolset
+  14.36+, GCC 15+ (GCC 16+ on macOS). Only the Ninja generators support
+  it.
+- `CMAKE_CXX_STDLIB_MODULES_JSON` (CMake 4.5+) points CMake at the
+  standard library module metadata instead of asking the compiler. The
+  path depends on the machine, so it belongs in the toolchain file or a
+  preset.
+
+## Preprocessor definitions: scope and volatility
+
+A `-D` flag is part of the compile command of every translation unit
+that sees it. Change its value and every such TU is recompiled, and
+every compiler cache (ccache, sccache, remote caches) misses. A global
+define that changes on every commit - git hash, build number, build
+date - turns every build into a full rebuild and drops the CI cache hit
+rate to zero.
+
+The same applies to a header: moving the value from `-D` into
+`inline constexpr auto git_hash = "..."` in a header replaces a
+preprocessor macro with a language construct, but every includer still
+recompiles on every commit. What protects the cache is not the syntax
+but how many TUs depend on the value.
+
+Classify each definition by how often it changes and what it affects:
+
+| Kind                    | Examples                          | Where                                      |
+| ----------------------- | --------------------------------- | ------------------------------------------ |
+| Volatile build metadata | git hash, build number, version   | One generated `.cpp` in a dedicated target |
+| Stable feature flags    | `WITH_TLS`, `ENABLE_TRACING`      | Owning target, `PRIVATE` by default        |
+| ABI-affecting           | `_GLIBCXX_ASSERTIONS`, `NOMINMAX` | Toolchain / Conan profile, uniform         |
+
+### Volatile metadata: compilation firewall
+
+Declaration in a stable header, value in exactly one generated source.
+A new commit recompiles one file and relinks; nothing else changes.
+
+```cpp
+// libs/buildinfo/include/buildinfo/buildinfo.hpp - never changes
+namespace buildinfo {
+std::string_view version();
+std::string_view git_hash();
+}
+```
+
+```cmake
+# libs/buildinfo/CMakeLists.txt
+set(out ${CMAKE_CURRENT_BINARY_DIR}/buildinfo.cpp)
+add_custom_target(buildinfo_gen
+  COMMAND ${CMAKE_COMMAND}
+    -DIN=${CMAKE_CURRENT_SOURCE_DIR}/buildinfo.cpp.in
+    -DOUT=${out}
+    -DVERSION=${PROJECT_VERSION}
+    -P ${CMAKE_CURRENT_SOURCE_DIR}/GenBuildInfo.cmake
+  BYPRODUCTS ${out})
+
+add_library(buildinfo STATIC ${out})
+add_dependencies(buildinfo buildinfo_gen)
+target_include_directories(buildinfo PUBLIC include)
+```
+
+`GenBuildInfo.cmake` gets the hash via `execute_process(git rev-parse)`
+and writes the file via `configure_file`, which leaves the output
+untouched when the content is the same - no spurious rebuilds. Running
+at build time (not configure time) keeps the hash from going stale
+after a commit without re-running CMake.
+
+Avoid `__DATE__` / `__TIME__`: they make every build unique, which
+breaks both caching and reproducible builds. If a timestamp is needed,
+take it from `SOURCE_DATE_EPOCH` in the same generated source.
+
+### Stable flags: target scope, language over preprocessor
+
+- Scope to the target that needs the flag, with explicit visibility:
+  `PRIVATE` unless the flag changes the target's public headers.
+- Prefer a generated config header of the owning target with
+  `inline constexpr bool with_tls = ...;` and `if constexpr` over
+  `#ifdef`: both branches are type-checked, typos are compile errors,
+  and the flag is a named, scoped symbol instead of a global token.
+- Keep `#if` only where the disabled branch cannot compile at all
+  (missing platform headers or APIs).
+
+### Not per source file
+
+`set_source_files_properties(... COMPILE_DEFINITIONS ...)` looks like
+the tightest possible scope, but it is an ODR hazard: two TUs of one
+target that include the same header with an `inline` function or a
+class definition see different code under the same name. The linker
+silently picks one. The smallest safe scope for a definition that can
+reach a header is the target.
+
+### ABI-affecting definitions: the exception
+
+Definitions that change layouts or inline code in standard or system
+headers must be identical for everything linked into one binary,
+dependencies included. Scoping them per target causes ODR violations,
+not isolation. Set them in the toolchain file or Conan profile so that
+dependencies get them too, or project-wide if no prebuilt code is
+affected. These values are stable per build config, so they do not
+hurt caching.
+
+### Compiler cache: a preset setting
+
+The rules above keep compile commands stable; a compiler cache turns that
+into reused results. Which cache to use, and whether to use one at all,
+depends on the machine and the CI, so it is plumbing: set it in a preset,
+not in `CMakeLists.txt`.
+
+```json
+"cacheVariables": {
+  "CMAKE_C_COMPILER_LAUNCHER": "sccache",
+  "CMAKE_CXX_COMPILER_LAUNCHER": "sccache"
+}
+```
+
+Put it in a shared CI preset or in `CMakeUserPresets.json`. To check the
+hit rate, delete the build directory, keep the cache, rebuild, and read
+`sccache --show-stats` (or `ccache -s`). A low hit rate on an unchanged
+tree points at a volatile compile command, such as a global define.
+
 ## Anti-patterns
+
+### Target defined far from its sources
+
+```cmake
+# BAD: root CMakeLists.txt describes everything
+add_library(core src/core/a.cpp src/core/b.cpp)
+add_library(net  src/net/socket.cpp src/core/utils.cpp)  # shared file
+target_include_directories(net PRIVATE ${CMAKE_SOURCE_DIR}/src/core)
+
+# GOOD: each target in its own directory, sharing via linking
+add_subdirectory(libs/core)
+add_subdirectory(libs/net)   # target_link_libraries(net PUBLIC core)
+```
+
+The `net` → `core` dependency in the bad version is invisible:
+it exists only as an include path and a compiled-twice file.
 
 ### `CMAKE_CXX_FLAGS` in presets with everything in it
 
@@ -521,6 +1008,11 @@ target_compile_definitions(my_lib PRIVATE FEATURE_X=1)
 
 With explicit visibility (`PRIVATE`/`PUBLIC`/`INTERFACE`).
 
+CMake 4.5 reports these commands with the `CMD_NON_TARGET_DIRECTIVE`
+diagnostic: `-Wnon-target-directive` on the command line, or
+`"warnings": { "nonTargetDirective": true }` in a configure preset
+(schema version 13).
+
 ### Specifying compilers without a toolchain file for cross-compilation
 
 ```json
@@ -545,15 +1037,68 @@ Project level (`CMakeLists.txt`):
 
 - [ ] `cmake_minimum_required` is set; the version is not ancient.
 - [ ] C++ standard is set in CMakeLists, not via flags.
+- [ ] Every installed or exported library declares
+      `target_compile_features(<lib> PUBLIC cxx_std_NN)`.
 - [ ] Warnings are extracted into an INTERFACE target and applied explicitly.
 - [ ] Warnings-as-errors via `CMAKE_COMPILE_WARNING_AS_ERROR`, not a
       hand-written `-Werror` / `/WX`.
 - [ ] `CMAKE_EXPORT_COMPILE_COMMANDS ON`.
 - [ ] Dependencies via `target_link_libraries` with explicit visibility.
-- [ ] Include paths via `target_include_directories`, not globally.
+- [ ] Public headers via `FILE_SET HEADERS`; other include paths via
+      `target_include_directories`, never directory-wide.
 - [ ] LTO/sanitizers - per-target and conditional, not via a global flag.
 - [ ] If `add_subdirectory` is used for in-tree source deps - wrapped
       in `block()` to protect against `CMAKE_*` leaks.
+
+Source layout:
+
+- [ ] Each library/executable target is defined in its own directory,
+      named after the target (exceptions: `examples/`, `tools/`, top-level `tests/`).
+- [ ] No `../` paths or foreign-directory sources in target definitions.
+- [ ] No source file is compiled into more than one target.
+- [ ] Public headers in `<target>/include/<target>/`; no
+      `target_include_directories` pointing into another target's tree.
+
+Tests:
+
+- [ ] Unit tests are `<stem>_test.cpp` next to `<stem>.cpp`; tests of
+      several classes are in `<target_dir>/tests/`; cross-target tests
+      in top-level `tests/`. No mirrored test tree.
+- [ ] Each component exposes `<target>_unit_tests` and
+      `<target>_integration_tests` as `OBJECT` libraries without `main()`,
+      listed in the component's own `CMakeLists.txt`.
+- [ ] Test libraries reach runners directly or through `source_set()`
+      (no `STATIC` without `WHOLE_ARCHIVE`, no plain `OBJECT` behind an
+      `INTERFACE` aggregator).
+- [ ] `source_set()` only for test sets; shared test helpers are `STATIC`.
+- [ ] One runner per component or per kind, not per test file; tests
+      carry `unit` / `integration` labels.
+- [ ] CI fails on a runner that reports zero tests.
+
+Preprocessor definitions:
+
+- [ ] No `add_definitions` / `add_compile_definitions` / `-D` in
+      `CMAKE_CXX_FLAGS` for project-specific values.
+- [ ] Git hash, build number, version string are not passed via `-D` or
+      a widely included header; they live in one generated `.cpp`.
+- [ ] No `__DATE__` / `__TIME__`.
+- [ ] No per-source-file `COMPILE_DEFINITIONS`.
+- [ ] ABI-affecting definitions are identical across the project and
+      its dependencies (toolchain file or Conan profile).
+
+Installable libraries:
+
+- [ ] Installed targets have a namespace (`Pkg::target`) and an `ALIAS`
+      with the same name for in-tree consumers.
+- [ ] Headers are installed through `install(TARGETS ... FILE_SET HEADERS)`.
+- [ ] A separate consumer project builds against a staging install.
+
+C++20 modules:
+
+- [ ] Module interface units are in a `CXX_MODULES` file set; `PRIVATE`
+      modules are imported only from implementation units.
+- [ ] A C++20 project without modules sets
+      `CMAKE_CXX_SCAN_FOR_MODULES 0` in the top-level `CMakeLists.txt`.
 
 Invocation level (`CMakePresets.json`):
 
@@ -565,6 +1110,8 @@ Invocation level (`CMakePresets.json`):
       specifying compilers.
 - [ ] Composition via `inherits`, no copy-paste between presets.
 - [ ] `binaryDir` is unique per preset.
+- [ ] Compiler cache via `CMAKE_<LANG>_COMPILER_LAUNCHER` in a preset,
+      not in `CMakeLists.txt`.
 - [ ] No personal paths in shared presets; everything via env vars
       or UserPresets.
 
