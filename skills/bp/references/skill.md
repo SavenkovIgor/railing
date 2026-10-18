@@ -53,6 +53,8 @@ This is the strictest rule in this reference. Rationale:
 
 If trigger conditions are not fully expressed in `description`, fix `description` - do not add a body section.
 
+Define the structure of the output if a person or another tool reads it in a fixed form.
+
 ## Description
 
 Anti-patterns:
