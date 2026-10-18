@@ -79,7 +79,7 @@ Scenario B - No files passed:
 Read **only** the reference files that match the artifact types under review.
 Do not read reference files for artifact types that are not in scope.
 
-- Instructions (`*.instructions.md`): read [references/instructions.md](references/instructions.md)
+- Instructions (`*.instructions.md`): no checks here, use the [bp](/skills/bp/SKILL.md) skill
 - Prompts (`*.prompt.md`): read [references/prompts.md](references/prompts.md)
 - Skills (`SKILL.md`): no checks here, use the [bp](/skills/bp/SKILL.md) skill
 - Agents (`*.agent.md`): read [references/agents.md](references/agents.md)
