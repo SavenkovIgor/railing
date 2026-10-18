@@ -8,6 +8,8 @@ description: >-
 
 # Design System Skill
 
+Create, audit, or update a project's `DESIGN.md` and keep the UI code consistent with it.
+
 ## Procedure
 
 ### Mode: Create `DESIGN.md`
@@ -55,7 +57,7 @@ description: >-
 
 See [Design System Best Practices](references/best-practices.md) for foundational principles to apply when creating or reviewing any design system.
 
-## Output Checklist
+## Output Format
 
 - [ ] `DESIGN.md` placed at project root or `docs/`
 - [ ] All foundations documented: spacing, color roles, typography, radius, shadows
