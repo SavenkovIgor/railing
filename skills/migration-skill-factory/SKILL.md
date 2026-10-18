@@ -1,6 +1,10 @@
 ---
 name: migration-skill-factory
-description: "You should use this skill if API/language versions changed and you need skills to migrate old usage across a codebase."
+description: >-
+  You should use this skill when: a language, framework, SDK, or product version was
+  upgraded; API signatures, semantics, defaults, deprecations, or behavior changed;
+  you need repeatable codebase-wide refactoring instructions to migrate old usage;
+  you want migration work split into focused skills instead of one large prompt.
 argument-hint: "What changed, versions, and repo scope"
 ---
 
@@ -15,15 +19,7 @@ Output:
 - A migration plan with priorities and risk tags.
 - One concrete migration skill per change type.
 - Compatibility classification for each generated skill.
-- Verification checklist for each generated migration skill. #changes
-
-## When to Use
-
-Use this skill when at least one is true:
-- A language, framework, SDK, or product version was upgraded.
-- API signatures, semantics, defaults, deprecations, or behavior changed.
-- You need repeatable codebase-wide refactoring instructions.
-- You want migration work split into focused skills instead of one large prompt.
+- Verification checklist for each generated migration skill.
 
 ## Required Inputs
 
@@ -166,8 +162,8 @@ When invoked, return:
 3. For each generated skill:
    - name
    - trigger description
-  - compatibility_mode and applicability statement
-  - safety_label and justification
+   - compatibility_mode and applicability statement
+   - safety_label and justification
    - detection plan
    - replacement plan
    - validation plan
