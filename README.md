@@ -26,7 +26,6 @@ the only directory VS Code reads them from, so the plugin is VS Code first. Skil
 │       ├── reports.instructions.md              universal requirements for agent-written reports in reports/
 │       └── reports-overview.instructions.md     structure and checks for *.overview.md reports
 └── skills/
-    ├── ai-artifacts-review/                     audit AI configuration artifacts
     ├── bp/                                      validate files against best-practice references
     ├── debug-context-artifacts/                 inspect the initial AI context state
     ├── design-system/                           create or audit design systems
@@ -49,7 +48,6 @@ flowchart TD
         BP["skill: bp"]
         RR["skill: report-review"]
         RW["skill: report-write"]
-        AAR["skill: ai-artifacts-review"]
         RV["skill: review"]
     end
 
@@ -66,7 +64,6 @@ flowchart TD
     BP --> MD
     RR --> REP
     RW --> RO
-    AAR --> MD
     RO -.-> REP
     REP -.-> PR
     REP -.-> MD
