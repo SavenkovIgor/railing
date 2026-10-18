@@ -10,11 +10,11 @@ argument-hint: "File path, uncommitted, or branch"
 
 # Review
 
+Review a file or a change against its intent. Report only; do not edit files.
+
 ## DependsOn
 
 - [bp](/skills/bp/SKILL.md)
-
-Review a file or a change against its intent. Report only; do not edit files.
 
 ## Procedure
 
@@ -45,7 +45,7 @@ Review a file or a change against its intent. Report only; do not edit files.
   make reachable
 - Do not list what is correct
 
-## Reply format
+## Output Format
 
 ```text
 Verdict: merge | fix first | block
