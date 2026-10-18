@@ -8,7 +8,7 @@ First read the best practice docs:
 - Line width - 100 characters
 - Avoid long paragraphs; use lists, tables, and formatting to break up content
 - The skill should only include content that truly requires model reasoning or understanding.
-- Use relative paths (`./scripts/foo.sh`) for all skill resources
+- Use paths from the skill root without `./` (`scripts/foo.sh`) for all skill resources
 - Move supporting material to `references/` or `assets/` if needed
 - `SKILL.md` under 50 lines is great; more than 250 lines is unmanageable and MUST be
   compressed, cut down, or split by moving content to `references/` or `assets/`
