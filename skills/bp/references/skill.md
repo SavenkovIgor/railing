@@ -22,15 +22,6 @@ First read the best practice docs:
 - State next to each link to a file in `references/` when to read it
 - Do NOT put periods at the end of bullet list items (items starting with `-`)
 
-## Scripts
-
-- Move a step to `scripts/` only when the environment that runs it is known; this is rare,
-  since a skill cannot assume a runtime or tools
-- A script replaces its step in `SKILL.md` and does not duplicate it
-- Default script format: Python with inline script metadata (PEP 723), a `# /// script` comment
-  block that declares `requires-python` and `dependencies`, run by `uv run`; this is a default,
-  not the best choice for every project
-
 ## Frontmatter
 
 - `name` must match the folder name exactly (case-sensitive, lowercase-alphanumeric + hyphens)
@@ -40,32 +31,7 @@ First read the best practice docs:
 
 Add no other fields (such as `user-invocable`): vendors support them unevenly and they add little.
 
-## Body Structure
-
-**NEVER include a `## When to Use` section (or equivalent).**
-
-This is the strictest rule in this reference. Rationale:
-
-- The decision to load a skill is made solely from `description` (gradual context disclosure)
-- By the time the body is loaded into context, the skill has already been selected - trigger
-  conditions are irrelevant
-- Any content that belongs in `## When to Use` already belongs in `description`
-- Including it wastes context tokens and creates maintenance drift between the two
-
-If trigger conditions are not fully expressed in `description`, fix `description` - do not add
-a body section.
-
-Structure of the body, in this order:
-
-- The first paragraph after the title states the goal in one or two sentences
-- `## DependsOn`, if the skill depends on other files
-- `## Inputs` (optional): what the skill needs from the user or the context, when listing it
-  makes the run simpler
-- `## Procedure`: the steps, if the skill has steps
-- `## Output Format`: the structure of the output; define it if a person or another tool reads
-  it in a fixed form
-
-## Description
+### Description
 
 Anti-patterns:
 
@@ -89,3 +55,37 @@ description: >-
 ```
 
 It should be formatted with `>-\n` to preserve newlines and keep 100 column width
+
+## Body Structure
+
+Structure of the body, in this order:
+
+- The first paragraph after the title states the goal in one or two sentences
+- `## DependsOn`, if the skill depends on other files
+- `## Inputs` (optional): what the skill needs from the user or the context, when listing it
+  makes the run simpler
+- `## Procedure`: the steps, if the skill has steps
+- `## Output Format`: the structure of the output; define it if a person or another tool reads
+  it in a fixed form
+
+**NEVER include a `## When to Use` section (or equivalent).**
+
+Why:
+
+- The decision to load a skill is made solely from `description` (gradual context disclosure)
+- By the time the body is loaded into context, the skill has already been selected - trigger
+  conditions are irrelevant
+- Any content that belongs in `## When to Use` already belongs in `description`
+- Including it wastes context tokens and creates maintenance drift between the two
+
+If trigger conditions are not fully expressed in `description`, fix `description` - do not add
+a body section.
+
+## Scripts
+
+- Move a step to `scripts/` only when the environment that runs it is known; this is rare,
+  since a skill cannot assume a runtime or tools
+- A script replaces its step in `SKILL.md` and does not duplicate it
+- Default script format: Python with inline script metadata (PEP 723), a `# /// script` comment
+  block that declares `requires-python` and `dependencies`, run by `uv run`; this is a default,
+  not the best choice for every project
