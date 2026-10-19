@@ -497,6 +497,20 @@ auto config = ConfigManager();
 config.setTheme("dark");
 ```
 
+## Compile-time constants
+
+Let the compiler deduce the element type and size when the deduced type is the one you need:
+
+```cpp
+// BAD: size is counted by hand and can drift from the elements
+constexpr std::array<int, 3> values = {1, 2, 3};
+
+// GOOD: type and size are deduced
+constexpr auto values = std::array{1, 2, 3};
+```
+
+When the needed type differs from the deduced one (e.g. `uint8_t` from integer literals), keep the explicit `std::array<T, N>`: casting every element to enable deduction defeats the purpose of brevity.
+
 ## Code organization
 
 - Code should be modular (and testability is a good proxy for modularity)

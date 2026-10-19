@@ -8,6 +8,7 @@ applyTo: '**/*.{h,hpp,cc,cpp,cppm,ipp,py,js,ts}'
 - Readability and maintainability are primary concerns
 - Code should always be self-documenting first; comments explain *why*, not *what*
 - Prefer small, focused, pure functions - if a function needs a comment to explain what it does, consider splitting it
+  - A check function verifies one condition on the inputs it owns and nothing out of its scope, so checks compose into a sequence of validators (e.g. when constructing a validated type) without repeating each other
 - Follow single responsibility principle in classes and functions
 - Prefer explicit over implicit: make dependencies, side effects, and control flow visible at the call site
 - Prefer deterministic over stochastic: avoid randomness unless the feature requires it; when needed, make it explicit and seedable
@@ -17,6 +18,7 @@ applyTo: '**/*.{h,hpp,cc,cpp,cppm,ipp,py,js,ts}'
 - Prefer idempotent operations: running the same operation multiple times should produce the same result as running it once
   - *Deviate when:* intentional side-effectful operations (financial transactions, hardware I/O)
 - Fail fast: detect and surface errors as close to their source as possible
+- Write bitmasks as binary literals with digit separators (`0b0111'0000` in C++, `0b0111_0000` in Python), not hex, when the bit layout matters
 - Never cut corners on: input validation at trust boundaries, error handling that prevents data loss, security measures, accessibility basics, or anything explicitly requested
 
 ## 1. Think Before Coding
@@ -77,6 +79,8 @@ Transform tasks into verifiable goals:
 - "Add validation" → "Write tests for invalid inputs, then make them pass"
 - "Fix the bug" → "Write a test that reproduces it, then make it pass"
 - "Refactor X" → "Ensure tests pass before and after"
+
+Expected values in tests come from literals or an independent implementation, never from the code under test. A test that recomputes the result with the same formula mirrors the implementation and cannot fail
 
 For multi-step tasks, state a brief plan:
 ```text
