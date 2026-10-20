@@ -10,7 +10,8 @@ argument-hint: "File path, uncommitted, or branch"
 
 # Review
 
-Review a file or a change against its intent. Report only; do not edit files.
+Review a file or a change against its intent, then run the local review skills of the user and
+the project on the same target. Report only; do not edit files.
 
 ## DependsOn
 
@@ -34,7 +35,19 @@ Review a file or a change against its intent. Report only; do not edit files.
      unrelated edits, unrequested abstractions, and unrequested options
    - Tests: a behavior change comes with a test that fails before it and passes after it
    - Safety: public behavior changes, data loss, unvalidated input at trust boundaries, security
-5. Run `bp` on the changed files only when the user asks for a standards check, and append its
+5. Run the local review skills after your own pass, so one report covers general and
+   project-specific rules
+   - Find them in the skills list of the current context and in the skill directories of the
+     project and the user: `.claude/skills`, `.github/skills`, `.agents/skills` and their `~/`
+     counterparts
+   - Take a skill when its name or description says it reviews code or changes and its scope
+     covers the target
+   - Skip `review` itself, and skip any skill that invokes `review`: it would loop
+   - Invoke each one with the same target and intent, and tell it to report only
+   - Merge its findings into yours: drop a duplicate and keep the higher severity. Prefix each
+     finding from a local skill with its name
+   - If a skill fails or cannot be loaded, list it under `Not checked`. Do not retry it
+6. Run `bp` on the changed files only when the user asks for a standards check, and append its
    report as a separate section
 
 ## Findings
@@ -50,9 +63,10 @@ Review a file or a change against its intent. Report only; do not edit files.
 ```text
 Verdict: merge | fix first | block
 Intent: <one line>
+Local reviews: <skill names that ran> | none found
 
 Findings:
-1. [blocking | important | minor] <path>:<line> - <problem>
+1. [blocking | important | minor] [<local skill, if any>] <path>:<line> - <problem>
    Scenario: <input or state> -> <wrong result>
    Fix: <proposed change>
 
