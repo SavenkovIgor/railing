@@ -25,9 +25,29 @@ Design distributed systems to be observable:
 
 Generate a trace ID at the request edge and propagate it through downstream services.
 
+### Durability class
+
+The design must state, or let the reader infer, whether the system is disposable or durable.
+Rate four factors:
+
+- Consequences: the harm if the system fails.
+- Replacement cost: the time to rebuild the system from scratch.
+- Dependencies: the people and other systems that rely on it.
+- Maintenance cost: the effort to keep it running over time.
+
+A system is disposable only when all four factors are low. Otherwise it is durable.
+When the factors are unclear, treat the system as durable.
+
+Check for:
+
+- No stated or inferable durability class (important)
+- A durable system whose design omits the checks under Operational Requirements (important)
+- A disposable system whose design adds rollback, SLOs, or multi-environment release machinery (style)
+- Isolation claimed as the reason a system is disposable (no customer data, no inbound calls from production systems) without a mechanism that enforces it (important)
+
 ### Operational Requirements
 
-For relevant designs, check:
+For durable systems, check:
 
 - Release model: How changes reach users, how to roll them back, and whether versions remain compatible during deployment.
 - Availability and recovery: Availability targets, critical failure points, and RTO/RPO where relevant.
