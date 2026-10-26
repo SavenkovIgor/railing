@@ -794,6 +794,16 @@ definitions, and required packages. A CMake config file describes the same
 as code, for example a `find_dependency(ZLIB)` call, and only CMake can run
 it.
 
+```cmake
+install(TARGETS zwrap EXPORT zwrap)
+install(PACKAGE_INFO zwrap EXPORT zwrap)   # install tree
+export(PACKAGE_INFO zwrap EXPORT zwrap)    # build tree
+```
+
+If `zwrap` links `zlib-ng::zlib`, the CPS file records `zlib-ng` in a
+`requires` entry. A consumer calls `find_package(zwrap REQUIRED)` and links
+`zwrap::zwrap`; it does not mention `zlib-ng`, and CMake still finds it.
+
 - `find_package()` (4.3+) searches for and imports CPS packages the same
   way as CMake configs. The consumer's `CMakeLists.txt` does not change.
 - `export(PACKAGE_INFO <name> EXPORT <export>)` writes the CPS file into
@@ -1037,6 +1047,14 @@ hit rate, delete the build directory, keep the cache, rebuild, and read
 tree points at a volatile compile command, such as a global define.
 Record the hit rate together with the build timings, see "Build time:
 measure, then optimize".
+
+The compile command contains the absolute paths of the source and build
+directories, so a CI job that checks out into a different directory each
+time misses the cache of the previous job. Give the checkout a fixed path
+(GitLab runners do this with `GIT_CLONE_PATH`), or set the cache's base
+directory (`base_dir` in ccache). Share the cache between runners, for
+example through a Redis backend for sccache, so that a new runner starts
+warm.
 
 ## Build time: measure, then optimize
 
@@ -1296,9 +1314,11 @@ The generator is plumbing, so choose it in a preset, never in
 - The FASTBuild generator (4.2+) adds parallel and distributed builds with
   caching and little setup: set `CMAKE_FASTBUILD_CACHE_PATH` (or the
   `FASTBUILD_CACHE_PATH` environment variable) and build with
-  `cmake --build <dir> -- -cache`. It is not in the list of generators
-  that scan C++ modules, so a project that uses modules stays on Ninja.
-  Instrumentation works with it.
+  `cmake --build <dir> -- -cache`; FASTBuild's own `-dist` flag turns on
+  distribution, and the target properties `FASTBUILD_CACHING` and
+  `FASTBUILD_DISTRIBUTION` opt a single target out. It is not in the list
+  of generators that scan C++ modules, so a project that uses modules stays
+  on Ninja. Instrumentation works with it.
 - Remote execution (a compiler wrapper such as Rex CC with a BuildGrid and
   BuildBox cluster, or a hosted remote execution service) needs a fleet.
   On two laptops the scheduling and cache overhead dominates and the build
