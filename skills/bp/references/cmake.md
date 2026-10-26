@@ -148,6 +148,10 @@ Without touching the project code, the following should be possible:
   build - `cmake --compile-no-warning-as-error`.
 - Enable a compiler cache - `CMAKE_CXX_COMPILER_LAUNCHER` in a preset
   (see "Compiler cache: a preset setting").
+- Collect build timings - a query and a callback script written by the CI
+  wrapper or by the developer (see "Build time: measure, then optimize").
+- Try another generator or a distributed build - a different `generator`
+  in a preset (see "Scaling beyond one machine").
 
 Requires editing CMakeLists / cmake modules:
 
@@ -781,6 +785,61 @@ target_link_libraries(viewer PRIVATE Imaging::image)
   replacement. `install(PACKAGE_INFO <name> EXPORT <export>)` (CMake
   4.3+) writes a JSON description that tools other than CMake can read;
   keep the CMake config files for consumers that do not read CPS yet.
+  See "CPS" below.
+
+### CPS
+
+CPS describes a binary library as data: headers, libraries, compile
+definitions, and required packages. A CMake config file describes the same
+as code, for example a `find_dependency(ZLIB)` call, and only CMake can run
+it.
+
+- `find_package(Imaging REQUIRED)` finds a CPS file the same way as a CMake
+  config. The consumer's `CMakeLists.txt` does not change.
+- `export(PACKAGE_INFO ...)` writes the CPS file into the build tree, for
+  consumers that use your build directory without installing. Use
+  `install(PACKAGE_INFO ...)` for the install tree; the two files can
+  differ.
+- Dependencies of a package are data (a `requires` entry), so a runtime a
+  library needs, such as the Fortran runtime for a BLAS built from Fortran,
+  travels with the package instead of being rediscovered by the consumer.
+- Package managers (Conan, Spack) already generate CPS for the packages they
+  provide. For a project that does not ship CPS yet, the packager's file is
+  the source.
+- A CPS file is machine-readable, so an audit script can check it. A script
+  that rejects warning flags in the usage requirements of a package is
+  trivial for JSON and hard for CMake code.
+- CMake config files keep working. Ship both until the consumers you care
+  about read CPS.
+
+### SBOM
+
+A software bill of materials lists what a binary is built from: packages,
+versions, relationships. It is experimental in CMake 4.3: check the
+install command and the experimental gate against the manual of your
+version. It is generated at install time from the target graph, in SPDX
+format, next to each installed export. Enabling it can also be done from
+the command line, with no change in `CMakeLists.txt`.
+
+- The build system knows what the installed artifacts contain. A test
+  framework linked only into test executables does not appear in the list,
+  while a tool that works from the installed file list cannot tell.
+  Keep test dependencies out of the exported targets so the list stays
+  accurate.
+- Dependencies reach the SBOM through `find_package`. Their names, versions,
+  and, with CPS, licenses are carried along. License data is not added to
+  CMake config files and will not be, so a dependency that ships only a
+  CMake config has no license in the SBOM.
+- A typical use for open-source projects is the license question ("did I
+  link a GPL library statically"), more than the CVE question.
+- The SBOM is data about one build. CMake does not scan for vulnerabilities
+  and does not look at releases already shipped. Generate the SBOM in CI as
+  a byproduct of the install step, store it next to the release artifact,
+  and run the CVE scan in a separate job against the stored files, so old
+  releases can be scanned again when a new CVE appears.
+- The package identity ("which CVE entry applies to this zlib") is not
+  solved by CMake. If you need package URLs, enrich the SBOM after
+  generation.
 
 ## C++20 modules
 
@@ -811,6 +870,19 @@ Header units are not supported.
   `CXX_MODULES` file set, and `install(EXPORT)` needs
   `CXX_MODULES_DIRECTORY`; without it, consumers cannot import the
   modules. The Visual Studio generators do not support exporting modules.
+- The toolchain must provide the module scanner. GCC, MSVC, and Clang
+  report dependencies through a compiler option, except that Clang uses a
+  separate `clang-scan-deps` program. Installations that move it (some
+  packagers) make CMake fail to scan with an unhelpful message. Point
+  `CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS` at it in the toolchain file or a
+  preset. Apple Clang may lack module support; if scanning or compiling fails there, use an LLVM Clang.
+- Modules turn compilation into a scheduling problem: a module interface
+  must be built before every unit that imports it, so a module with many
+  importers becomes the long pole of the build. Keep interfaces small, move
+  definitions into implementation units, and check the trace (see "Build
+  time: measure, then optimize") for modules that block the build.
+- Macros still need `#include`; header units are not supported, so a
+  project that moves to `import` keeps a thin macro header.
 - A C++20 project that does not use modules yet: put
   `set(CMAKE_CXX_SCAN_FOR_MODULES 0)` near the top of the top-level
   `CMakeLists.txt`, not in the cache. Otherwise every source is scanned,
@@ -942,6 +1014,156 @@ Put it in a shared CI preset or in `CMakeUserPresets.json`. To check the
 hit rate, delete the build directory, keep the cache, rebuild, and read
 `sccache --show-stats` (or `ccache -s`). A low hit rate on an unchanged
 tree points at a volatile compile command, such as a global define.
+Record the hit rate together with the build timings, see "Build time:
+measure, then optimize".
+
+## Build time: measure, then optimize
+
+A build is a graph, and its duration is set by the longest chain through
+it, not by the sum of the steps. Guessing which step to fix usually hits the
+wrong one: typical findings are one dependency (a test framework) that
+everything waits for, tests that run serially, and an `install` step that
+takes longer than the build. Collect timings first.
+
+CMake instrumentation records every command it runs during configure,
+generate, build, test, and install. The interface is young: check names and
+the experimental status against `cmake-instrumentation(7)` for the CMake
+version you use before relying on a detail below.
+
+### What instrumentation collects
+
+- Each command (compile, link, custom command, test, install step) writes a
+  small JSON snippet: start time, duration, role, command line, input and
+  output files, output size, CPU load average and host memory before and
+  after.
+- A query says what to collect: hooks (when indexing runs: after generate,
+  before or after build, after test, after install, or manually), options
+  (for example a trace file or system information), and callbacks.
+  Declare it with `cmake_instrumentation()` in `CMakeLists.txt` or as a
+  query JSON file outside the project.
+- Indexing collates the snippets into one index file, runs the callbacks
+  with it, and CMake then deletes the consumed snippets, so stale data does
+  not pile up.
+- The trace option produces a Google Trace Event file. Open it in Perfetto
+  or `chrome://tracing` to see which target blocked which.
+- At configure time the data also carries the target of each snippet, the
+  build configuration, and custom values such as chosen cache variables.
+
+### Where each piece lives
+
+Follow the policy and plumbing split: what to collect and where to send it
+depends on the machine and the CI, so it is plumbing.
+
+- The callback script is code. It lives in the repository (`tools/` or
+  `cmake/`) and goes through review.
+- Switch collection on per environment: in a CI job, or by a developer for
+  their own machine. A query file written by the CI wrapper before
+  configure needs no edit to a committed build file.
+- Do not make a project-level callback upload anything. A callback declared
+  in `CMakeLists.txt` runs arbitrary commands on every build of every
+  developer. Let it at most write a local summary into the build directory.
+- Collecting from developer machines (for example to find out whether five
+  minute links are everyone's problem or one laptop) needs the team's
+  agreement. Tag each record with preset, compiler, linker, core count, and
+  compiler cache state; without tags, laptop and CI numbers mix into noise.
+
+### Wiring it into CI
+
+1. Before configure, the CI job writes a query: hooks after build, after
+   test, and after install, the trace option, and a callback.
+2. The build runs from a named preset, so a record can be compared with the
+   previous record of the same preset.
+3. The callback reads the index file and builds a summary: total time per
+   role (compile, link, test, install), the slowest N commands, and the
+   slowest tests. It writes the summary to the job report and uploads the
+   index and the trace as artifacts.
+4. CI compares the totals with the last successful run of the main branch
+   and reports regressions. Compare relatively (a percentage over the
+   baseline), not against a fixed number, and discard runs where the CPU
+   load recorded in the snippets shows a busy runner.
+5. Keep the history in one table keyed by commit and preset.
+
+Start with step 3 and the uploaded trace. Add the regression check after a
+few weeks of data, when you know how noisy your runners are.
+
+A build served from a compiler cache measures the cache, not the compiler.
+Record the hit rate (see "Compiler cache: a preset setting") next to the
+timings and compare only builds with a similar rate.
+
+### Acting on the data
+
+| What the data shows                           | Lever                                                                                                  |
+| --------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| One target is a long pole, others wait for it | Get it prebuilt from the package manager; `CMAKE_OPTIMIZE_DEPENDENCIES` (3.31+)                       |
+| `install` takes minutes                       | Stripping and RPATH rewriting run at install time: `cmake --install --parallel` (3.31+)               |
+| Tests run one after another                   | `ctest --parallel`; use `RESOURCE_LOCK` only for tests that really conflict                            |
+| Link time dominates                           | A faster linker (lld, mold) as preset plumbing; compare two presets in one trace                       |
+| Compile time dominates, cache misses          | A volatile compile command, see "Preprocessor definitions: scope and volatility"                       |
+| Configure time dominates                      | See "Configure time"                                                                                   |
+
+`CMAKE_OPTIMIZE_DEPENDENCIES` (or the `OPTIMIZE_DEPENDENCIES` target
+property) lets a target compile its objects without waiting for the static
+and object libraries it links to be built. It helps where the trace shows
+one library blocking the compilation of its dependents. It changes build
+order only for these library types and does not change the result.
+
+## Configure time
+
+Configure runs on every change of a `CMakeLists.txt` or `*.cmake` file,
+including adding one source file to one target, and it re-runs for the whole
+project. CMake cannot skip parts of it: generator expressions are evaluated
+over the whole target graph, and a change anywhere is visible everywhere.
+The cost is paid by every developer on every edit, so keep configure cheap
+and repeatable.
+
+- Profile it before changing anything:
+  `cmake --profiling-format=google-trace --profiling-output=configure.json`
+  and open the file in Perfetto.
+- Put expensive probing behind a cache variable: `execute_process` that
+  inspects the machine, `try_compile`, SDK discovery. CMake already caches
+  `try_compile` and platform checks; custom code does not get this for free.
+- Keep the network out of configure. A toolchain file or provider that
+  queries a package manager on every run (some do) costs time on every
+  edit; report it upstream and ask for the result to be cached.
+- Keep the build tree between CI runs on a dedicated agent. A clean tree
+  repeats compiler detection and feature checks every time.
+- Do not look for a way to reconfigure "only the changed target". Remove
+  work from configure instead.
+
+### Debugging CMake code
+
+- `cmake --debugger --debugger-pipe <path>` (3.27+) starts CMake as a
+  Debug Adapter Protocol server. VS Code, CLion, and any editor with a DAP
+  client can set breakpoints, step through CMake code, and inspect
+  variables. A failed configure in a supporting IDE offers the call stack.
+- `--trace-expand` on a big project writes gigabytes. Narrow it with
+  `--trace-source=<file>`, or use the debugger.
+- Never expose the debug port to a network: the debugger runs any CMake
+  code the client sends.
+
+## Scaling beyond one machine
+
+Order of effort: first stable compile commands and a compiler cache (see
+"Compiler cache: a preset setting"), then measurement, then distribution.
+Distribution without the first two spends hardware on rebuilding what a
+cache would give for free.
+
+The generator is plumbing, so choose it in a preset, never in
+`CMakeLists.txt`.
+
+- Ninja is the default for local and CI builds. It is also the only
+  generator that supports C++20 modules and `import std`.
+- The FASTBuild generator (recent CMake releases) adds parallel and
+  distributed builds with caching and little setup. It cannot build C++20
+  modules or Fortran today, because it has no equivalent of Ninja's dynamic
+  dependencies. A project that uses modules stays on Ninja.
+- Remote execution (a compiler wrapper such as Rex CC with a BuildGrid and
+  BuildBox cluster, or a hosted remote execution service) needs a fleet.
+  On two laptops the scheduling and cache overhead dominates and the build
+  gets slower than a local one. Decide by trial on the real project with the
+  instrumentation from this document, not by the vendor's numbers.
+- CMake itself does not distribute and will not: it describes the build and
+  hands it to a generator. Do not plan around a "CMake server".
 
 ## Anti-patterns
 
@@ -1092,6 +1314,22 @@ Installable libraries:
       with the same name for in-tree consumers.
 - [ ] Headers are installed through `install(TARGETS ... FILE_SET HEADERS)`.
 - [ ] A separate consumer project builds against a staging install.
+- [ ] CPS is installed next to the CMake config with `install(PACKAGE_INFO)`.
+- [ ] If an SBOM is generated: test-only dependencies are not in exported
+      targets, and the SBOM is stored with the release artifact.
+
+Build and configure time:
+
+- [ ] The CI job records instrumentation data (index and trace) as an
+      artifact, tagged with the preset and the compiler cache hit rate.
+- [ ] A project-level instrumentation callback does not upload anything;
+      uploads happen only in CI or by a developer's own choice.
+- [ ] Regressions are checked against the last main-branch run as a
+      percentage, not against a fixed number.
+- [ ] Tests run with `ctest --parallel`; `cmake --install --parallel` is
+      used when install shows up in the trace.
+- [ ] Expensive configure-time probing is behind cache variables, and
+      configure does not use the network.
 
 C++20 modules:
 
@@ -1099,6 +1337,9 @@ C++20 modules:
       modules are imported only from implementation units.
 - [ ] A C++20 project without modules sets
       `CMAKE_CXX_SCAN_FOR_MODULES 0` in the top-level `CMakeLists.txt`.
+- [ ] A Clang toolchain sets `CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS` when
+      `clang-scan-deps` is not next to the compiler.
+- [ ] Generator is chosen in a preset; a project with modules uses Ninja.
 
 Invocation level (`CMakePresets.json`):
 
