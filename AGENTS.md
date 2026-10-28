@@ -39,23 +39,14 @@ Why: an instruction applies by default through `applyTo`, while a skill applies 
 
 ## Link paths
 
-A link path never contains a `..` segment. Write it by context:
+Two cases are specific to this plugin:
 
-- A link inside a skill to a file of the same skill starts at the skill root, with no `./`.
-  ✔ `[docs.md](references/docs.md)`
-  ✘ `[docs.md](./references/docs.md)`
-- A link from a skill to another skill or to a plugin file starts at the plugin root, with a leading `/`.
-  Such a skill works only inside this plugin; it is not standalone.
-  ✔ `[report-review](/skills/report-review/SKILL.md)`
-  ✘ `[report-review](../../report-review/SKILL.md)`
-- A link in a plugin-level file (`AGENTS.md`, `README.md`, `com.github.copilot/`) starts at the plugin root, with a leading `/`.
-  ✔ `[plugin.json](/plugin.json)`
-  ✘ `[plugin.json](./plugin.json)`
+- A skill that links to another skill or to a plugin file with a leading `/` works only inside this plugin; it is not standalone.
 - A path in a manifest or `mcp.json` starts with `./` from the plugin root, as the Agent Plugins specification requires.
   ✔ `./skills/`
   ✘ `skills/`
 
-Why: a root-based path survives a file move and needs no level counting. A leading `/` resolves from the repository root on GitHub and from the workspace root in VS Code; how each agent reads it is not specified and not yet verified.
+Why: a leading `/` resolves from the repository root on GitHub and from the workspace root in VS Code; how each agent reads it is not specified and not yet verified.
 
 ## Checking links
 
