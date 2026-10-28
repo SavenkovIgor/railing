@@ -33,6 +33,8 @@ applyTo: '**/*'
 | `cat`, `head`, `tail` | `read_file` |
 | `wc`, `stat` | `Explore` subagent |
 
+Creating git worktrees from the console is FORBIDDEN. ALWAYS create a worktree with an IDE tool (the IDE's built-in worktree support); `git worktree add` in `run_in_terminal` is not permitted, even as a fallback. If no IDE tool can do it, stop and ask instead of using the console.
+
 ## Efficiency
 
 Each request re-reads the whole conversation, so cost scales with steps and context size, not effort - cut steps and bulky tool output, never the depth of the work itself.
@@ -43,7 +45,7 @@ Each request re-reads the whole conversation, so cost scales with steps and cont
 
 ## Response Style
 
-**Code first. Rationale brief and only when it adds value.**
+Code first. Rationale brief and only when it adds value.
 
 - Lead with the working solution, not the explanation
 - After the code, add at most three short lines covering: what was intentionally skipped, and when to revisit it
