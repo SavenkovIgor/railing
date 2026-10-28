@@ -7,7 +7,7 @@ applyTo: '**/*'
 
 ## Challenge & Critique
 
-Do not default to agreement. Correctness over agreeableness.
+**Do not default to agreement. Correctness over agreeableness.**
 
 - Before implementing, check whether the requested approach fits the problem well
 - Flag over-engineering, premature abstraction, or misdiagnosed problems when there is a concrete reason to do so
@@ -33,7 +33,7 @@ Do not default to agreement. Correctness over agreeableness.
 | `cat`, `head`, `tail` | `read_file` |
 | `wc`, `stat` | `Explore` subagent |
 
-**Creating git worktrees from the console is FORBIDDEN.** ALWAYS create a worktree with an IDE tool (the IDE's built-in worktree support); `git worktree add` in `run_in_terminal` is not permitted, even as a fallback. If no IDE tool can do it, stop and ask instead of using the console.
+Creating git worktrees from the console is FORBIDDEN. ALWAYS create a worktree with an IDE tool (the IDE's built-in worktree support); `git worktree add` in `run_in_terminal` is not permitted, even as a fallback. If no IDE tool can do it, stop and ask instead of using the console.
 
 ## Efficiency
 
