@@ -9,22 +9,9 @@ standard is not yet adopted by other vendors. Rules and agents live in `com.gith
 the only directory VS Code reads them from, so the plugin is VS Code first. Skills are plain
 `SKILL.md` files and travel to other agents more easily than rules do.
 
-## Install in VS Code
-
-Select a link to open VS Code. VS Code asks for confirmation before it changes anything.
-
-- [Install the plugin](vscode://chat-plugin/install?source=SavenkovIgor/railing&plugin=railing) adds the marketplace and installs `railing`.
-- [Add the marketplace only](vscode://chat-plugin/add-marketplace?ref=SavenkovIgor/railing) lets you browse the plugin in the Agent Customizations editor without installing it.
-
-To use VS Code Insiders, replace `vscode://` with `vscode-insiders://`. The links need VS Code 1.144 or later.
-
-To add the marketplace in settings instead, add the repository to `chat.plugins.marketplaces`:
-
-```json
-{
-    "chat.plugins.marketplaces": ["SavenkovIgor/railing"]
-}
-```
+To install railing plugin into VS Code use this link:
+`vscode://chat-plugin/install?source=SavenkovIgor/railing&plugin=railing`
+it will install both, plugin and marketplace with this only plugin
 
 ## Contents
 
