@@ -9,10 +9,15 @@ standard is not yet adopted by other vendors. Rules and agents live in `com.gith
 the only directory VS Code reads them from, so the plugin is VS Code first. Skills are plain
 `SKILL.md` files and travel to other agents more easily than rules do.
 
+To install railing plugin into VS Code use this link:
+`vscode://chat-plugin/install?source=SavenkovIgor/railing&plugin=railing`
+it will install both, plugin and marketplace with this only plugin
+
 ## Contents
 
 ```text
 ├── plugin.json                                  plugin name, version, description, Agent Plugins schema
+├── marketplace.json                             marketplace listing that lets VS Code install the plugin
 ├── com.github.copilot/                          the only directory where VS Code reads rules and agents
 │   ├── agents/
 │   │   └── gilfoyle.agent.md                    blunt code review and analysis
