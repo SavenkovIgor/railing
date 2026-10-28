@@ -11,8 +11,14 @@ the only directory VS Code reads them from, so the plugin is VS Code first. Skil
 
 ## Install in VS Code
 
-Add the repository as a plugin marketplace in your VS Code user settings, then install `railing`
-from the Agent Plugins view:
+Select a link to open VS Code. VS Code asks for confirmation before it changes anything.
+
+- [Install the plugin](vscode://chat-plugin/install?source=SavenkovIgor/railing&plugin=railing) adds the marketplace and installs `railing`.
+- [Add the marketplace only](vscode://chat-plugin/add-marketplace?ref=SavenkovIgor/railing) lets you browse the plugin in the Agent Customizations editor without installing it.
+
+To use VS Code Insiders, replace `vscode://` with `vscode-insiders://`. The links need VS Code 1.144 or later.
+
+To add the marketplace in settings instead, add the repository to `chat.plugins.marketplaces`:
 
 ```json
 {
