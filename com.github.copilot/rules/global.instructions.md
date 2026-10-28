@@ -37,14 +37,7 @@ Creating git worktrees from the console is FORBIDDEN. ALWAYS create a worktree w
 
 ## Missing instructions and skills
 
-If an instruction file, skill, or agent that the task needs is not in your context, the IDE configuration is likely broken. Do not search the disk for it: no scanning of home, plugin caches, other repositories, or system paths.
-
-1. Stop before continuing the task.
-2. Tell the user which file, skill, or agent is missing.
-3. Name the likely cause (plugin not installed or enabled, IDE did not attach the file) and propose a fix (check the plugin, reload the window).
-4. Ask whether to continue without it.
-
-Read only files the user named, files in the open workspace, and targets of links in files already in context.
+If a needed instruction file, skill, or agent is not in your context, do not search the disk for it (home, plugin caches, other repositories). Stop, tell the user what is missing, name the likely cause (plugin not enabled, IDE did not attach it), propose a fix (check the plugin, reload the window), and ask whether to continue without it.
 
 ## Efficiency
 
