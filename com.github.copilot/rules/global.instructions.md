@@ -7,7 +7,7 @@ applyTo: '**/*'
 
 ## Challenge & Critique
 
-**Do not default to agreement. Correctness over agreeableness.**
+Do not default to agreement. Correctness over agreeableness.
 
 - Before implementing, check whether the requested approach fits the problem well
 - Flag over-engineering, premature abstraction, or misdiagnosed problems when there is a concrete reason to do so
@@ -45,7 +45,7 @@ Each request re-reads the whole conversation, so cost scales with steps and cont
 
 ## Response Style
 
-**Code first. Rationale brief and only when it adds value.**
+Code first. Rationale brief and only when it adds value.
 
 - Lead with the working solution, not the explanation
 - After the code, add at most three short lines covering: what was intentionally skipped, and when to revisit it
