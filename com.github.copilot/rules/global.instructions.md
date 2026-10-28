@@ -35,6 +35,10 @@ applyTo: '**/*'
 
 Creating git worktrees from the console is FORBIDDEN. ALWAYS create a worktree with an IDE tool (the IDE's built-in worktree support); `git worktree add` in `run_in_terminal` is not permitted, even as a fallback. If no IDE tool can do it, stop and ask instead of using the console.
 
+## Missing instructions and skills
+
+If a needed instruction file, skill, or agent is not in your context, do not search the disk for it (home, plugin caches, other repositories). Stop, tell the user what is missing, name the likely cause (plugin not enabled, IDE did not attach it), propose a fix (check the plugin, reload the window), and ask whether to continue without it.
+
 ## Efficiency
 
 Each request re-reads the whole conversation, so cost scales with steps and context size, not effort - cut steps and bulky tool output, never the depth of the work itself.
