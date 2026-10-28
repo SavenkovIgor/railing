@@ -8,7 +8,10 @@ First read the best practice docs:
 - Line width - 100 characters
 - Avoid long paragraphs; use lists, tables, and formatting to break up content
 - The skill should only include content that truly requires model reasoning or understanding
-- Use paths from the skill root without `./` (`scripts/foo.sh`) for all skill resources
+- Use paths from the skill root without `./` (`scripts/foo.sh`) for all skill resources and for
+  links to files of the same skill
+  - ✔ `[docs.md](references/docs.md)`
+  - ✘ `[docs.md](./references/docs.md)`
 - Move supporting material to `references/` or `assets/` if needed
 - Move a template longer than 10 lines to `assets/` and link it from `SKILL.md`
 - `SKILL.md` under 50 lines is great; more than 250 lines is unmanageable and MUST be
