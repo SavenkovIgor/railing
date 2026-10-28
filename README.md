@@ -10,8 +10,10 @@ the only directory VS Code reads them from, so the plugin is VS Code first. Skil
 `SKILL.md` files and travel to other agents more easily than rules do.
 
 To install railing plugin into VS Code use this link:
+
 `vscode://chat-plugin/install?source=SavenkovIgor/railing&plugin=railing`
-it will install both, plugin and marketplace with this only plugin
+
+It will install both, plugin and marketplace (for autoupdate) with this plugin only
 
 ## Contents
 
