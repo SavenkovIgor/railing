@@ -1,0 +1,16 @@
+{
+    "name": "railing",
+    "owner": {
+        "name": "SavenkovIgor"
+    },
+    "metadata": {
+        "description": "Engineering guardrails that keep AI coding agents on track."
+    },
+    "plugins": [
+        {
+            "name": "railing",
+            "source": "./",
+            "description": "Engineering guardrails that keep AI coding agents on track."
+        }
+    ]
+}
