@@ -24,8 +24,7 @@ from the Agent Plugins view:
 
 ```text
 ├── plugin.json                                  plugin name, version, description, Agent Plugins schema
-├── .github/plugin/
-│   └── marketplace.json                         marketplace listing that lets VS Code install the plugin
+├── marketplace.json                             marketplace listing that lets VS Code install the plugin
 ├── com.github.copilot/                          the only directory where VS Code reads rules and agents
 │   ├── agents/
 │   │   └── gilfoyle.agent.md                    blunt code review and analysis
