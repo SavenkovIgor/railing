@@ -35,6 +35,17 @@ applyTo: '**/*'
 
 Creating git worktrees from the console is FORBIDDEN. ALWAYS create a worktree with an IDE tool (the IDE's built-in worktree support); `git worktree add` in `run_in_terminal` is not permitted, even as a fallback. If no IDE tool can do it, stop and ask instead of using the console.
 
+## Missing instructions and skills
+
+If an instruction file, skill, or agent that the task needs is not in your context, the IDE configuration is likely broken. Do not search the disk for it: no scanning of home, plugin caches, other repositories, or system paths.
+
+1. Stop before continuing the task.
+2. Tell the user which file, skill, or agent is missing.
+3. Name the likely cause (plugin not installed or enabled, IDE did not attach the file) and propose a fix (check the plugin, reload the window).
+4. Ask whether to continue without it.
+
+Read only files the user named, files in the open workspace, and targets of links in files already in context.
+
 ## Efficiency
 
 Each request re-reads the whole conversation, so cost scales with steps and context size, not effort - cut steps and bulky tool output, never the depth of the work itself.
