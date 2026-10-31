@@ -30,7 +30,8 @@ It will install both, plugin and marketplace (for autoupdate) with this plugin o
 │       ├── api-python.instructions.md           Python API development guidance
 │       ├── markdown.instructions.md             formatting checks for all *.md files
 │       ├── prose.instructions.md                how developer-facing prose reads, in all *.md files
-│       ├── reports.instructions.md              universal requirements for agent-written reports in reports/
+│       ├── notes.instructions.md                path, task ID, and language of agent-written notes in notes/
+│       ├── reports.instructions.md              content requirements for reports about existing code in notes/
 │       └── reports-overview.instructions.md     structure and checks for *.overview.md reports
 └── skills/
     ├── bp/                                      validate files against best-practice references
@@ -40,7 +41,7 @@ It will install both, plugin and marketplace (for autoupdate) with this plugin o
     ├── migration-skill-factory/                 create skills for codebase migrations
     ├── reflect/                                 propose context improvements after a task
     ├── report-review/                           clean up a report and verify it against the code
-    ├── report-write/                            write a technical report about existing code into reports/
+    ├── report-write/                            write a technical report about existing code into notes/
     ├── review/                                  review a change against its intent, report only
     └── to-issues/                               convert plans and discussions into tracker issues
 ```
@@ -59,6 +60,7 @@ flowchart TD
     end
 
     subgraph IN["Instructions"]
+        NT["instruction: notes"]
         REP["instruction: reports"]
         RO["instruction: reports-overview"]
         PR["instruction: prose"]
@@ -69,9 +71,11 @@ flowchart TD
     RV --> BP
     BP --> PR
     BP --> MD
+    RR --> NT
     RR --> REP
     RW --> RO
     RO -.-> REP
-    REP -.-> PR
-    REP -.-> MD
+    REP -.-> NT
+    NT -.-> PR
+    NT -.-> MD
 ```
