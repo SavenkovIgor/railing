@@ -1,20 +1,13 @@
 ---
 name: Report Requirements
-applyTo: 'reports/**/*.md'
+applyTo: 'notes/**/*.overview.md'
 ---
 
 # Report requirements
 
-Universal rules for agent-written technical reports in `reports/`.
+Universal rules for agent-written technical reports about existing code.
 Each report kind adds its own structure in `reports-<kind>.instructions.md`.
 Every rule is a pass/fail check; reviews cite rules by ID.
-
-## File naming
-
-- N1 Path is `reports/YYYY-MM-DD-<slug>.<kind>.md`
-- N2 `<slug>` is usually the ticket ID as written in the tracker (`PROJ-1234`).
-  Without a ticket, use lowercase kebab-case, 2-5 words naming the subject
-- N3 `<kind>` is a kind that has its own `reports-<kind>.instructions.md`
 
 ## Content
 
@@ -26,8 +19,3 @@ Every rule is a pass/fail check; reviews cite rules by ID.
   for anything longer, link to the code
 - R5 Define domain terms in the `Terminology` section
 - R6 No recommendations or design critique unless the profile asks for them
-
-## Language
-
-- L1 Write in the language of the request (Russian or English).
-  Keep code identifiers and established English technical terms as is
