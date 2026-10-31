@@ -2,16 +2,17 @@
 name: report-review
 description: >-
   You should use this skill when:
-  asked to clean up, review, or check a report in `reports/`,
+  asked to clean up, review, or check a report in `notes/`,
   asked to verify that a technical markdown document matches the code
 ---
 
 # Report review
 
-Clean up a report in `reports/` and check its claims against the code.
+Clean up a report in `notes/` and check its claims against the code.
 
 ## DependsOn
 
+- [notes.instructions.md](/com.github.copilot/rules/notes.instructions.md)
 - [reports.instructions.md](/com.github.copilot/rules/reports.instructions.md)
 
 ## Inputs
