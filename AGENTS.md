@@ -6,8 +6,9 @@ Instruction files for markdown nest by `applyTo`: the scope of each file equals 
 
 - [markdown.instructions.md](/com.github.copilot/rules/markdown.instructions.md) - `**/*.md`; checks (`MD*`) on the form of any markdown file
 - [prose.instructions.md](/com.github.copilot/rules/prose.instructions.md) - `**/*.md`; how the text reads
-- [reports.instructions.md](/com.github.copilot/rules/reports.instructions.md) - `reports/**/*.md`; extra checks for `reports/` only; drop a `F*` check once `MD*` covers it
-- `reports-<kind>.instructions.md` (in the same directory) - `reports/**/*.<kind>.md`; structure of one report kind
+- [notes.instructions.md](/com.github.copilot/rules/notes.instructions.md) - `notes/**/*.md`; path, task ID, and language of any note in `notes/`
+- [reports.instructions.md](/com.github.copilot/rules/reports.instructions.md) - `notes/**/*.overview.md`; content checks for notes about existing code
+- `reports-<kind>.instructions.md` (in the same directory) - `notes/**/*.<kind>.md`; structure of one report kind
 
 Nesting is a required property of this list. A new instruction file for markdown goes below the narrowest file whose scope contains its own. A file whose scope is not inside the scope of the file above it breaks the nesting.
 

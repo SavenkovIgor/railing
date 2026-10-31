@@ -1,6 +1,6 @@
 ---
 name: Overview Report Profile
-applyTo: 'reports/**/*.overview.md'
+applyTo: 'notes/**/*.overview.md'
 ---
 
 # Overview report profile

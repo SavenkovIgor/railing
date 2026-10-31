@@ -33,14 +33,14 @@ Choose only the references that match the file under review:
 | [cpp](references/cpp.md)                                     | C++ files: `*.{cpp,hpp,cppm,ipp,h,cc,C,H,c++,h++}`; file and directory naming          |
 | [devops](references/devops.md)                               | `*.tf`, `ansible*.yml`, provisioning and configuration management files                 |
 | [docker](references/docker.md)                               | `Dockerfile*`, `*.dockerfile`, `docker-compose*.yml`, `compose*.yml`                    |
-| [docs](references/docs.md)                                   | Documentation `*.md` files (README, guides, wikis), except `reports/**/*.md`            |
+| [docs](references/docs.md)                                   | Documentation `*.md` files (README, guides, wikis), except `notes/**/*.md`              |
 | [engineering-standards](references/engineering-standards.md) | Only when published standards (RFC, OWASP, ISO, style guides) are relevant or requested |
 | [instructions](references/instructions.md)                   | `*.instructions.md` files                                                               |
 | [python](references/python.md)                               | Any `*.py` file                                                                         |
 | [skill](references/skill.md)                                 | `SKILL.md` files                                                                        |
 | [system-design](references/system-design.md)                 | Design specs and proposals describing a system to be built or changed                   |
 | [vscode-tasks](references/vscode-tasks.md)                   | `.vscode/tasks.json`, `*.code-workspace` files with a `tasks` section                   |
-| [report-review](/skills/report-review/SKILL.md)              | Report files matching `reports/**/*.md`                                                 |
+| [report-review](/skills/report-review/SKILL.md)              | Report files matching `notes/**/*.overview.md`                                          |
 
 A single file may match multiple references.
 
