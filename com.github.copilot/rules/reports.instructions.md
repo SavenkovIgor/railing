@@ -15,7 +15,8 @@ Every rule is a pass/fail check; reviews cite rules by ID.
   `[Symbol](path/from/repo/root#L42)`
 - R2 State only what you read in the code. Prefix anything inferred with `Assumption:`
 - R3 Explain intent, contracts, and non-obvious behavior; do not retell code line by line
-- R4 A code block has at most 15 lines and only the lines the text discusses;
-  for anything longer, link to the code
+- R4 A block of source code has at most 15 lines and only the lines the text discusses;
+  for anything longer, link to the code. The limit applies to code only: a diagram,
+  such as Mermaid, is not code and has no line limit
 - R5 Define domain terms in the `Terminology` section
 - R6 No recommendations or design critique unless the profile asks for them

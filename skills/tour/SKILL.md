@@ -77,7 +77,7 @@ The drill has these `##` sections in this order, in at most 150 lines excluding 
 
 ## Diagrams
 
-- Write Mermaid in a `mermaid` fence. A diagram is not a code block for the line limit
+- Write Mermaid in a `mermaid` fence
 - Use `flowchart` for structure, `sequenceDiagram` for flows over time, `stateDiagram-v2` for
   lifecycle, and `classDiagram` only for an area built on inheritance
 - Keep a diagram to 10 nodes at most; split it instead of shortening labels
