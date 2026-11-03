@@ -43,7 +43,8 @@ It will install both, plugin and marketplace (for autoupdate) with this plugin o
     ├── report-review/                           clean up a report and verify it against the code
     ├── report-write/                            write a technical report about existing code into notes/
     ├── review/                                  review a change against its intent, report only
-    └── to-issues/                               convert plans and discussions into tracker issues
+    ├── to-issues/                               convert plans and discussions into tracker issues
+    └── tour/                                    explain a codebase: one-page map, then a drill into one area
 ```
 
 ## File links
@@ -57,6 +58,7 @@ flowchart TD
         RR["skill: report-review"]
         RW["skill: report-write"]
         RV["skill: review"]
+        TR["skill: tour"]
     end
 
     subgraph IN["Instructions"]
@@ -74,6 +76,7 @@ flowchart TD
     RR --> NT
     RR --> REP
     RW --> RO
+    TR --> REP
     RO -.-> REP
     REP -.-> NT
     NT -.-> PR
