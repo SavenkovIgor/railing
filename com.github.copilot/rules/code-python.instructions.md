@@ -188,6 +188,7 @@ class Document:
 #### Function Arguments
 
 - Use type hints for all parameters
+- Use built-in generics (`list[int]`) and `T | None` in type hints; import from `typing` only for constructs built-ins do not cover (`TypedDict`, `ClassVar`), or for projects that target Python older than 3.9 (3.10 for `|`)
 - Should be in the order of most common usage
 - For similar functions, the order of arguments should be consistent
 - Avoid more than 4-5 arguments in a function
@@ -470,42 +471,3 @@ class ConfigManager:
 # Usage: Simple and intuitive
 ConfigManager.instance().theme = "dark"
 ```
-
-## Quality Checklist
-
-### Before releasing any API
-
-- [ ] All names follow PEP 8 conventions and are descriptive
-- [ ] Type hints are provided for all public functions and methods
-- [ ] Error messages provide clear guidance to developers
-- [ ] Common programming tasks are straightforward
-- [ ] Destructive operations are protected or clearly marked
-- [ ] Successful usage is the obvious path
-- [ ] Function signatures follow Python conventions
-- [ ] CRUD operations available for main entities (where applicable)
-- [ ] Appropriate dunder methods implemented (`__str__`, `__repr__`, `__eq__`, etc.)
-- [ ] Properties used instead of getter/setter methods where appropriate
-- [ ] Context managers implemented for resource management when needed
-
-### Python-Specific Checklist
-
-- [ ] Uses `pathlib.Path` for file system operations
-- [ ] Implements `__enter__` and `__exit__` for context managers when appropriate
-- [ ] Uses `@property` and `@setter` decorators instead of getter/setter methods
-- [ ] Follows duck typing principles when appropriate
-- [ ] Uses built-in generics (`list[int]`) and `T | None` for type hints; imports from `typing` only for constructs built-ins do not cover (`TypedDict`, `ClassVar`), or for projects that target Python older than 3.9 (3.10 for `|`)
-- [ ] Implements appropriate comparison operators (`__eq__`, `__lt__`, etc.) when needed
-- [ ] Uses `dataclasses` or `NamedTuple` for data containers
-- [ ] Follows PEP 8 naming conventions strictly
-
-### Remember
-
-> "If developers are smart, motivated, have experience with Python, are willing
-   to read documentation, and want to succeed - yet they still fail to use
-   your API correctly, it's the API's fault, not theirs."
-
-### Goal
-
-Create APIs where developers accidentally do the right thing by default,
-requiring minimal thought or memorization to achieve their programming goals,
-while staying "Pythonic".

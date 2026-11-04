@@ -521,25 +521,3 @@ is the package. A package is a collection of related files (cohesive) and a
 specification of dependencies between them.
 - Dependency is a relationship between two components where one could
 not work/compile without the other.
-
-## Quality Checklist
-
-### Before releasing any API
-
-- [ ] All names are descriptive and unambiguous
-- [ ] Error messages provide clear guidance to developers
-- [ ] Common programming tasks are straightforward
-- [ ] Destructive operations are protected or clearly marked
-- [ ] Successful usage is the obvious path
-- [ ] CRUD operations available for main entities (where applicable)
-
-### Remember
-
-> "If developers are smart, motivated, have experience with programming, are willing
-   to read documentation, and want to succeed - yet they still fail to use
-   your API correctly, it's the API's fault, not theirs."
-
-### Goal
-
-Create APIs where developers accidentally do the right thing by default,
-requiring minimal thought or memorization to achieve their programming goals.
