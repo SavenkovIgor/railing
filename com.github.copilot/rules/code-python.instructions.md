@@ -355,7 +355,6 @@ class UserManager:
 - Follow PEP 8 style guidelines
 - Test with developer expectations in mind
 - Verify all names are descriptive and unambiguous
-- Check consistency with existing project APIs
 - Use `@property` for computed values and simple getters
 - Implement appropriate dunder methods (`__str__`, `__repr__`, `__eq__`, etc.)
 
@@ -482,7 +481,6 @@ ConfigManager.instance().theme = "dark"
 - [ ] Common programming tasks are straightforward
 - [ ] Destructive operations are protected or clearly marked
 - [ ] Successful usage is the obvious path
-- [ ] Consistency with existing project APIs
 - [ ] Function signatures follow Python conventions
 - [ ] CRUD operations available for main entities (where applicable)
 - [ ] Appropriate dunder methods implemented (`__str__`, `__repr__`, `__eq__`, etc.)
@@ -510,4 +508,4 @@ ConfigManager.instance().theme = "dark"
 
 Create APIs where developers accidentally do the right thing by default,
 requiring minimal thought or memorization to achieve their programming goals,
-while following Python's philosophy of being explicit, readable, and "Pythonic".
+while staying "Pythonic".

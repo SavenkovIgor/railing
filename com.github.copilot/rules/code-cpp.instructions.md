@@ -115,7 +115,6 @@ public:
 #### Function Names
 
 - Should be descriptive and concise
-- Should follow project conventions consistently
 - Function names should be consistent within their context (class, namespace, etc.)
 - Well known abbreviations should be camelCased like `setHtml` not capitalized like `setHTML`
 - For member accessors, use no prefix for cheap/view read access (e.g., `size()`, `title()`)
@@ -365,8 +364,6 @@ class UserManager {
 
 - Test with developer expectations in mind
 - Verify all names are descriptive and unambiguous
-- Check consistency with existing project APIs
-- Validate function signatures follow project conventions
 
 ```cpp
 // BAD: Inconsistent API patterns within the same class
@@ -534,8 +531,6 @@ not work/compile without the other.
 - [ ] Common programming tasks are straightforward
 - [ ] Destructive operations are protected or clearly marked
 - [ ] Successful usage is the obvious path
-- [ ] Consistency with existing project APIs
-- [ ] Function signatures follow project conventions
 - [ ] CRUD operations available for main entities (where applicable)
 
 ### Remember
