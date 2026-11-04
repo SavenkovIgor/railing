@@ -441,6 +441,10 @@ class FileHandler {
 };
 ```
 
+## Bitmasks
+
+Separate digit groups with `'`: `0b0111'0000`.
+
 ## Compile-time constants
 
 Let the compiler deduce the element type and size when the deduced type is the one you need:

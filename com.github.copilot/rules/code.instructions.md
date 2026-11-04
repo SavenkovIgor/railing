@@ -18,7 +18,7 @@ applyTo: '**/*.{h,hpp,cc,cpp,cppm,ipp,py,js,ts}'
 - Prefer idempotent operations: running the same operation multiple times should produce the same result as running it once
   - *Deviate when:* intentional side-effectful operations (financial transactions, hardware I/O)
 - Fail fast: detect and surface errors as close to their source as possible
-- Write bitmasks as binary literals with digit separators (`0b0111'0000` in C++, `0b0111_0000` in Python), not hex, when the bit layout matters
+- Write bitmasks as binary literals with digit separators, not hex, when the bit layout matters
 - Never cut corners on: input validation at trust boundaries, error handling that prevents data loss, security measures, accessibility basics, or anything explicitly requested
 
 ## 1. Think Before Coding
@@ -102,8 +102,6 @@ Don't silently blend conflicting patterns.
 ## 6. API design
 
 Make an API easy to use correctly and hard to use incorrectly. When a capable developer who read the documentation still misuses it, the API is at fault.
-
-Before you release an API, check it against every rule of this section.
 
 ### Least astonishment
 

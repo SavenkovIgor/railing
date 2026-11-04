@@ -12,6 +12,7 @@ applyTo: "**/*.py"
 - Use context managers (`@contextmanager`, or `__enter__` and `__exit__`) for resource management
 - Use `dataclasses` or `NamedTuple` for data containers
 - Follow duck typing principles when appropriate
+- Separate digit groups in a bitmask with `_`: `0b0111_0000`
 
 ## API design
 
