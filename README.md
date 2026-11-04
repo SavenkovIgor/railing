@@ -25,9 +25,9 @@ It will install both, plugin and marketplace (for autoupdate) with this plugin o
 │   │   └── gilfoyle.agent.md                    blunt code review and analysis
 │   └── rules/
 │       ├── global.instructions.md               general agent behavior and workflow guidance
-│       ├── global-code.instructions.md          shared coding principles for C++, Python, JavaScript, TypeScript
-│       ├── cpp-code.instructions.md             C++ coding style
-│       ├── python-code.instructions.md          Python coding style
+│       ├── code.instructions.md                 shared coding principles for C++, Python, JavaScript, TypeScript
+│       ├── code-cpp.instructions.md             C++ coding style
+│       ├── code-python.instructions.md          Python coding style
 │       ├── markdown.instructions.md             formatting checks for all *.md files
 │       ├── prose.instructions.md                how developer-facing prose reads, in all *.md files
 │       ├── notes.instructions.md                path, task ID, and language of agent-written notes in notes/

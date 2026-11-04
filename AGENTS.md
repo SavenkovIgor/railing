@@ -17,11 +17,11 @@ Scopes from the root down; each scope lists its files, then the scopes inside it
         - [reports.instructions.md](/com.github.copilot/rules/reports.instructions.md) - content checks for notes about existing code
         - [reports-overview.instructions.md](/com.github.copilot/rules/reports-overview.instructions.md) - structure of an overview report
   - `**/*.{h,hpp,cc,cpp,cppm,ipp,py,js,ts}`
-    - [global-code.instructions.md](/com.github.copilot/rules/global-code.instructions.md) - coding principles for any language
+    - [code.instructions.md](/com.github.copilot/rules/code.instructions.md) - coding principles for any language
     - `**/*.{cpp,hpp,cppm,ipp,h,cc}`
-      - [cpp-code.instructions.md](/com.github.copilot/rules/cpp-code.instructions.md) - coding style in C++
+      - [code-cpp.instructions.md](/com.github.copilot/rules/code-cpp.instructions.md) - coding style in C++
     - `**/*.py`
-      - [python-code.instructions.md](/com.github.copilot/rules/python-code.instructions.md) - coding style in Python
+      - [code-python.instructions.md](/com.github.copilot/rules/code-python.instructions.md) - coding style in Python
 
 Nesting is a required property of this tree. A new instruction file joins the scope equal to its own, or opens a new scope inside the narrowest scope that contains its own. A file whose scope partly overlaps another scope breaks the nesting.
 
