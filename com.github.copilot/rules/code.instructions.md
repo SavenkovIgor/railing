@@ -98,3 +98,58 @@ It means you have to have a clear definition of "done" and keep it in mind as yo
 If two patterns or paradigms are contradict, pick one and state it explicitly.
 Explain why. Flag the other for future cleanup directly in the code.
 Don't silently blend conflicting patterns.
+
+## 6. API design
+
+Make an API easy to use correctly and hard to use incorrectly. When a capable developer who read the documentation still misuses it, the API is at fault.
+
+Before you release an API, check it against every rule of this section.
+
+### Least astonishment
+
+- Guess what a developer expects from each function, class, and endpoint name, and check the name against that guess
+- Use the operators and protocols the language provides for an operation (arithmetic, indexing, equality, iteration, string conversion) instead of a named method
+- Make a custom type behave like a built-in type, and follow the naming of the standard library of the language
+
+### Names
+
+- Make each name descriptive and concise; shorten a word only to a well-known abbreviation
+- Keep names consistent within their context: a class, a namespace, a module
+- Write a well-known abbreviation as one word in the case style of the language: `Html`, not `HTML`
+- Leave the class name out of a method name: `Document.open`, not `Document.openDocument`
+- Leave the type out of an argument name when the type already says it
+- Name a cheap read of a member without a `get` prefix: `size`, not `getSize`
+- Name a path variable by what it holds:
+  - `dir` suffix for a directory
+  - `file` suffix for a full path to a file
+  - `filename` for a file name without a path
+  - `path` suffix when the variable may hold either a directory or a file
+
+### Arguments
+
+- Put the most common argument first
+- Keep the same argument order across similar functions
+- Take at most 4 arguments
+- Place two or more arguments of the same type side by side only in a well-known pair, such as width and height; otherwise group related arguments into a type
+
+### Operations
+
+- When you add or change an entity, check which create, read, update, and delete operations exist for it, and propose the missing ones instead of adding them
+- Protect a destructive operation, for example with a confirmation argument, or mark it clearly in its name
+- Make a common task one obvious step, with no setup call and no knowledge of internals
+
+### Errors
+
+- Make each error state say what went wrong and how to fix it
+- Make the successful path the obvious one
+- Give similar operations one return and error pattern
+
+## 7. Code organization
+
+- Make code modular; testability is a good proxy for modularity
+- Keep dependencies between modules acyclic
+
+Terms:
+- Component: the smallest unit of code that is cohesive both logically and physically
+- Package: the primary unit of code organization in a repository; a collection of related components and a specification of the dependencies between them
+- Dependency: a relation between two components where one cannot work or compile without the other

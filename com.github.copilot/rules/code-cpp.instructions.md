@@ -5,9 +5,7 @@ applyTo: "**/*.{cpp,hpp,cppm,ipp,h,cc}"
 
 # C++ coding style
 
-## Core Principles
-
-**Primary Goal:** Make APIs easy to use correctly and hard to use incorrectly
+## API design
 
 ```cpp
 // BAD: Easy to use incorrectly
@@ -52,14 +50,7 @@ public:
 };
 ```
 
-### Principle of Least Astonishment
-
-- Review all function names, class names, and API endpoints - try to guess
-  developer expectations and validate those names against them
-- Ensure error messages provide clear guidance for developers using your APIs
-- Use expected operators and patterns for each programming language
-- Follow standard library patterns and naming conventions for new types
-- Make custom classes behave like built-in types
+### Least astonishment
 
 ```cpp
 // BAD: Unexpected behavior and poor error messages
@@ -90,16 +81,16 @@ public:
         return Vector3{x * other.x, y * other.y, z * other.z};
     }
 
-    // Standard array-like access
+    // Standard array-like access - precondition: index < 3, no bounds check
     // size_t limits the index to >= 0 so we don't need to check
     // for negative indices - it is guaranteed by the type system
     float operator[](size_t index) const {
+        assert(index < 3);
         switch (index) {
             case 0: return x;
             case 1: return y;
             case 2: return z;
-            // Precondition: index must be 0, 1, or 2
-            default: std::unreachable();  // Clear indication of invalid index, no exceptions needed
+            default: std::unreachable();  // Excluded by the precondition above
         }
     }
 
@@ -108,19 +99,7 @@ public:
 };
 ```
 
-## Design Standards
-
-### Naming Conventions
-
-#### Function Names
-
-- Should be descriptive and concise
-- Function names should be consistent within their context (class, namespace, etc.)
-- Well known abbreviations should be camelCased like `setHtml` not capitalized like `setHTML`
-- For member accessors, use no prefix for cheap/view read access (e.g., `size()`, `title()`)
-- Reserve `get` prefix for explicit owning copies of non-trivial members (e.g., `getTitle()`), as defined in Member Accessor Naming
-- If it is a method, avoid repeating the class name in the method name
-- Same rules is applies to arguments and it's types - try to avoid repeating arg type in it's name if it is obvious
+### Names
 
 ```cpp
 // BAD: Non-descriptive and inconsistent naming
@@ -142,41 +121,7 @@ class Document {
 };
 ```
 
-#### Function Arguments
-
-- Should be in the order of most common usage
-- For similar functions, the order of arguments should be consistent
-- Avoid more than 4 arguments in a function
-- Using 2 or more identical argument types is allowed ONLY in well-known cases (e.g., `setSize(int width, int height)`)
-  in all other cases, it is better to use type aliases or structs to group arguments together
-- Prefer `std::string_view` over `const std::string&` for read-only string arguments - it accepts `std::string`, string literals, and substrings without allocation
-
-```cpp
-// BAD: Too many arguments and confusing order
-void createWindow(bool resizable, int x, int y, string title, int width, int height, bool visible) {
-    // Which size parameter is which?
-}
-
-// GOOD: Logical order, grouped parameters and default values
-struct WindowConfig {
-    string title;
-    int x, y;
-    int width, height;
-    bool resizable = true;
-    bool visible = true;
-};
-
-void createWindow(const WindowConfig& config) {
-    // Clear and extensible
-}
-
-// GOOD: For simple, well-known cases of arguments
-void setSize(int width, int height) {
-    // This is intuitive and expected
-}
-```
-
-#### Member Accessor Naming
+### Member accessor naming
 
 Standard naming pattern for class member accessors
 The general idea is to provide a cheap way to access the member value without
@@ -267,11 +212,46 @@ public:
 };
 ```
 
-#### Variable and Path Naming
+### Arguments
 
-- For variables containing paths, use `dir` suffix for directories and `file` suffix for full file paths
-- Use `filename` for just the file name without the path
-- If variable content is not obvious, use `path` suffix
+- Prefer `std::string_view` over `const std::string&` for read-only string arguments - it accepts `std::string`, string literals, and substrings without allocation
+
+```cpp
+// BAD: Too many arguments and confusing order
+void createWindow(bool resizable, int x, int y, string title, int width, int height, bool visible) {
+    // Which size parameter is which?
+}
+
+// GOOD: Logical order, grouped parameters and default values
+struct WindowConfig {
+    string title;
+    int x, y;
+    int width, height;
+    bool resizable = true;
+    bool visible = true;
+};
+
+void createWindow(const WindowConfig& config) {
+    // Clear and extensible
+}
+
+// GOOD: For simple, well-known cases of arguments
+void setSize(int width, int height) {
+    // This is intuitive and expected
+}
+```
+
+```cpp
+// BAD: Inconsistent argument order across similar functions
+void copyFile(string_view source, string_view destination, bool overwrite);
+void moveFile(bool overwrite, string_view destination, string_view source);
+
+// GOOD: Consistent argument order
+void copyFile(string_view source, string_view destination, bool overwrite = false);
+void moveFile(string_view source, string_view destination, bool overwrite = false);
+```
+
+### Paths
 
 ```cpp
 // BAD: Unclear path naming, bad type usage
@@ -286,26 +266,7 @@ std::filesystem::path configFilename = "config.json";
 std::filesystem::path cachePath = "/tmp/cache/";
 ```
 
-#### Argument Order and Consistency
-
-- Most important/common arguments should come first
-- Similar functions should have consistent argument order
-
-```cpp
-// BAD: Inconsistent argument order across similar functions
-void copyFile(string_view source, string_view destination, bool overwrite);
-void moveFile(bool overwrite, string_view destination, string_view source);
-
-// GOOD: Consistent argument order
-void copyFile(string_view source, string_view destination, bool overwrite = false);
-void moveFile(string_view source, string_view destination, bool overwrite = false);
-```
-
-### API Completeness
-
-- In most cases, API should contain all CRUD operations (Create, Read, Update, Delete) for its main entities
-- Ensure destructive operations are protected or clearly marked
-- Validate that common programming tasks are straightforward
+### Operations
 
 ```cpp
 // BAD: Incomplete API with unclear destructive operations
@@ -358,48 +319,48 @@ class UserManager {
 };
 ```
 
-## Implementation Guidelines
-
-### Development Process
-
-- Test with developer expectations in mind
-- Verify all names are descriptive and unambiguous
-
 ```cpp
-// BAD: Inconsistent API patterns within the same class
-class FileManager {
-    // Naming duplication between class and methods
-    // Non-specific argument types
-    bool openFile(string path);          // Returns bool
-    File* createFile(string path);       // Returns pointer
-    void deleteFile(string path);        // Returns void
-    int moveFile(string fromPath, string toPath); // Returns int (error code).
+// BAD: Complex setup for simple operations
+class ConfigManager {
+    void initialize(string_view configDir, string_view appName) {
+        // Complex initialization required before use
+    }
+    bool setConfigValue(string_view section, string_view key, string_view value) {
+        if (!isInitialized) return false;
+        // ...
+    }
+    string getConfigValue(string_view section, string_view key) {
+        if (!isInitialized) return "";
+        // ...
+    }
 };
 
-// GOOD: Consistent error handling and return patterns
-class FileHandler {
-  public:
-    enum class Result { Success, NotFound, PermissionDenied, AlreadyExists };
+// Usage: Complex and error-prone
+ConfigManager config;
+config.initialize("/etc/myapp", "MyApp");
+config.setConfigValue("ui", "theme", "dark");
 
-    Result create(const std::filesystem::path& path);
-    Result open(const std::filesystem::path& path);
-    Result move(const std::filesystem::path& from, const std::filesystem::path& to);
-    Result remove(const std::filesystem::path& path);
+// GOOD: Simple interface for common operations
+class ConfigManager {
+public:
+    ConfigManager(string_view configDir = "/etc/myapp", string_view appName = "MyApp") {}
 
-    Handler* fileHandler();
+    void setTheme(string_view theme) { /* ... */ }
+    string theme() const { /* ... */ }
 
-  private:
-    InternalHandler mFileHandler; // Internal handler for file operations
+    // Explicitly fix sections in the API
+    void setSectionValue(string_view key, string_view value) { /* ... */ }
+    string sectionValue(string_view key) const { /* ... */ }
 };
+
+// Usage: Simple and intuitive
+auto config = ConfigManager();
+config.setTheme("dark");
 ```
 
-### Error Handling
+### Errors
 
-- Ensure error states provide helpful guidance to developers
-- Confirm destructive operations are protected or clearly marked
-- Review that successful usage is the obvious path
-
-Also it is better to avoid exceptions in APIs, especially in C++.
+It is better to avoid exceptions in APIs, especially in C++.
 First because they break the flow of the program and make it harder to reason about.
 Second, because it is too easy to ignore them until it is too late.
 Instead, if possible use `std::expected` or `std::optional` if the
@@ -452,47 +413,32 @@ class Database {
 };
 ```
 
-### Testing Requirements
-
-- Validate that common programming tasks are straightforward
-
 ```cpp
-// BAD: Complex setup for simple operations
-class ConfigManager {
-    void initialize(string_view configDir, string_view appName) {
-        // Complex initialization required before use
-    }
-    bool setConfigValue(string_view section, string_view key, string_view value) {
-        if (!isInitialized) return false;
-        // ...
-    }
-    string getConfigValue(string_view section, string_view key) {
-        if (!isInitialized) return "";
-        // ...
-    }
+// BAD: Inconsistent API patterns within the same class
+class FileManager {
+    // Naming duplication between class and methods
+    // Non-specific argument types
+    bool openFile(string path);          // Returns bool
+    File* createFile(string path);       // Returns pointer
+    void deleteFile(string path);        // Returns void
+    int moveFile(string fromPath, string toPath); // Returns int (error code).
 };
 
-// Usage: Complex and error-prone
-ConfigManager config;
-config.initialize("/etc/myapp", "MyApp");
-config.setConfigValue("ui", "theme", "dark");
+// GOOD: Consistent error handling and return patterns
+class FileHandler {
+  public:
+    enum class Result { Success, NotFound, PermissionDenied, AlreadyExists };
 
-// GOOD: Simple interface for common operations
-class ConfigManager {
-public:
-    ConfigManager(string_view configDir = "/etc/myapp", string_view appName = "MyApp") {}
+    Result create(const std::filesystem::path& path);
+    Result open(const std::filesystem::path& path);
+    Result move(const std::filesystem::path& from, const std::filesystem::path& to);
+    Result remove(const std::filesystem::path& path);
 
-    void setTheme(string_view theme) { /* ... */ }
-    string theme() const { /* ... */ }
+    Handler* fileHandler();
 
-    // Explicitly fix sections in the API
-    void setSectionValue(string_view key, string_view value) { /* ... */ }
-    string sectionValue(string_view key) const { /* ... */ }
+  private:
+    InternalHandler mFileHandler; // Internal handler for file operations
 };
-
-// Usage: Simple and intuitive
-auto config = ConfigManager();
-config.setTheme("dark");
 ```
 
 ## Compile-time constants
@@ -508,38 +454,3 @@ constexpr auto values = std::array{1, 2, 3};
 ```
 
 When the needed type differs from the deduced one (e.g. `uint8_t` from integer literals), keep the explicit `std::array<T, N>`: casting every element to enable deduction defeats the purpose of brevity.
-
-## Code organization
-
-- Code should be modular (and testability is a good proxy for modularity)
-- Modules should have clear, intuitive APIs that are hard to misuse
-- Modules should not have cyclic dependencies
-
-- Component is a minimum unit of code cohesive both logically and physically
-- Package - the primary unit of code (components), organization in a repository
-is the package. A package is a collection of related files (cohesive) and a
-specification of dependencies between them.
-- Dependency is a relationship between two components where one could
-not work/compile without the other.
-
-## Quality Checklist
-
-### Before releasing any API
-
-- [ ] All names are descriptive and unambiguous
-- [ ] Error messages provide clear guidance to developers
-- [ ] Common programming tasks are straightforward
-- [ ] Destructive operations are protected or clearly marked
-- [ ] Successful usage is the obvious path
-- [ ] CRUD operations available for main entities (where applicable)
-
-### Remember
-
-> "If developers are smart, motivated, have experience with programming, are willing
-   to read documentation, and want to succeed - yet they still fail to use
-   your API correctly, it's the API's fault, not theirs."
-
-### Goal
-
-Create APIs where developers accidentally do the right thing by default,
-requiring minimal thought or memorization to achieve their programming goals.

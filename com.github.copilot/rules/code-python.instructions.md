@@ -5,9 +5,15 @@ applyTo: "**/*.py"
 
 # Python coding style
 
-## Core Principles
+- Follow PEP 8: `snake_case` for functions and variables
+- Write type hints for all parameters and return values; use built-in generics (`list[int]`) and `T | None`, and import from `typing` only for constructs built-ins do not cover (`TypedDict`, `ClassVar`), or for projects that target Python older than 3.9 (3.10 for `|`)
+- Use `@property` (with `@<name>.setter` when needed) for simple reads, computed values, and setters instead of `get_` and `set_` methods
+- Implement the dunder methods that make a class behave like a built-in type, where they apply: `__repr__`, `__str__`, `__eq__`, comparison operators (`__lt__`), `__len__`, `__getitem__`, arithmetic operators (`__mul__`)
+- Use context managers (`@contextmanager`, or `__enter__` and `__exit__`) for resource management
+- Use `dataclasses` or `NamedTuple` for data containers
+- Follow duck typing principles when appropriate
 
-**Primary Goal:** Make APIs easy to use correctly and hard to use incorrectly
+## API design
 
 ```python
 # BAD: Easy to use incorrectly
@@ -48,13 +54,7 @@ class Buffer:
         return self._data.copy()
 ```
 
-### Principle of Least Astonishment
-
-- **Review all function names, class names, and API endpoints** - try to guess developer expectations and validate those names against them
-- **Ensure error messages provide clear guidance** for developers using your APIs
-- Use Pythonic operators and patterns (dunder methods, properties, context managers)
-- Follow PEP 8 and standard library patterns for naming conventions
-- Make custom classes behave like built-in types
+### Least astonishment
 
 ```python
 # BAD: Unexpected behavior and poor error messages
@@ -92,56 +92,9 @@ class Vector3:
         return f"Vector3({self.x}, {self.y}, {self.z})"
 ```
 
-## Design Standards
+### Names
 
-### Error Handling and Return Types
-
-In Python, prefer using exceptions for error conditions as they are part of the language design.
-Use `T | None` when a function may legitimately return `None`.
-Use custom exception types to provide specific error information.
-Consider using union types (`A | B`) or `dataclasses` for complex return types.
-
-```python
-from dataclasses import dataclass
-
-# For functions that may return nothing legitimately
-def find_user(user_id: int) -> User | None:
-    """Returns user or None if not found."""
-    return database.get_user(user_id)
-
-# For operations that can fail with specific errors
-class DatabaseError(Exception):
-    pass
-
-class UserNotFoundError(DatabaseError):
-    def __init__(self, user_id: int):
-        super().__init__(f"User with ID {user_id} not found")
-        self.user_id = user_id
-
-def get_user(user_id: int) -> User:
-    """Returns user or raises UserNotFoundError."""
-    user = database.get_user(user_id)
-    if user is None:
-        raise UserNotFoundError(user_id)
-    return user
-
-# For complex results
-@dataclass
-class ProcessResult:
-    success: bool
-    message: str
-    data: dict | None = None
-```
-
-### Naming Conventions
-
-#### Function Names
-
-- Use `snake_case` for functions and variables (PEP 8)
-- Should be descriptive and concise
-- Well-known abbreviations should be lowercase like `set_html` not `set_HTML`
-- For properties use `@property` decorator, avoid `get` prefixes for getters
-- Avoid repeating the class name in method names
+- Write a well-known abbreviation in lowercase: `set_html`, not `set_HTML`
 
 ```python
 # BAD: Non-descriptive and inconsistent naming
@@ -185,18 +138,13 @@ class Document:
         pass
 ```
 
-#### Function Arguments
+### Arguments
 
-- Use type hints for all parameters
-- Should be in the order of most common usage
-- For similar functions, the order of arguments should be consistent
-- Avoid more than 4-5 arguments in a function
-- Use keyword-only arguments for clarity when needed
-- Use `dataclasses` or `TypedDict` for complex parameter groups
+- Use keyword-only arguments when the order might be confusing
+- Use `dataclasses` or `TypedDict` for groups of related arguments
 
 ```python
 from dataclasses import dataclass
-from typing import TypedDict
 
 # BAD: Too many arguments and confusing order
 def create_window(resizable: bool, x: int, y: int, title: str,
@@ -221,44 +169,7 @@ def create_window(config: WindowConfig):
 def set_size(*, width: int, height: int):
     """Use keyword-only to prevent confusion about order."""
     pass
-
-# GOOD: Using TypedDict for flexible configurations
-class WindowOptions(TypedDict, total=False):
-    resizable: bool
-    visible: bool
-    theme: str
-
-def create_window(title: str, width: int, height: int,
-                 *, x: int = 0, y: int = 0, **options: WindowOptions):
-    pass
 ```
-
-#### Variable and Path Naming
-
-- Always prefer to use `pathlib.Path` for any path handling
-- For variables containing paths, use `_dir` suffix for directories and `_file` or `_path` suffix for full paths
-- Use `_filename` for just the file name without the path
-
-```python
-from pathlib import Path
-
-# BAD: Unclear path naming
-data = "/home/user/documents"
-info = "config.json"
-location = "/tmp/cache/"
-
-# GOOD: Clear path naming with pathlib
-documents_dir = Path("/home/user/documents")
-config_file = Path("/home/user/config.json")
-config_filename = "config.json"
-cache_dir = Path("/tmp/cache")
-```
-
-#### Argument Order and Consistency
-
-- Most important/common arguments should come first
-- Similar functions should have consistent argument order
-- Use keyword-only arguments when order might be confusing
 
 ```python
 # BAD: Inconsistent argument order across similar functions
@@ -276,13 +187,26 @@ def move_file(source: Path, destination: Path, *, overwrite: bool = False):
     pass
 ```
 
-### API Completeness
+### Paths
 
-- APIs usually should contain all CRUD operations (Create, Read, Update, Delete)
-  for main entities
-- Use context managers for resource management
-- Ensure destructive operations are protected or clearly marked
-- Support both synchronous and asynchronous patterns when appropriate
+- Use `pathlib.Path` for any path handling
+
+```python
+from pathlib import Path
+
+# BAD: Unclear path naming
+data = "/home/user/documents"
+info = "config.json"
+location = "/tmp/cache/"
+
+# GOOD: Clear path naming with pathlib
+documents_dir = Path("/home/user/documents")
+config_file = Path("/home/user/config.json")
+config_filename = "config.json"
+cache_dir = Path("/tmp/cache")
+```
+
+### Operations
 
 ```python
 from collections.abc import Iterator
@@ -347,70 +271,6 @@ class UserManager:
             self._commit_batch()
 ```
 
-## Implementation Guidelines
-
-### Development Process
-
-- Use type hints consistently
-- Follow PEP 8 style guidelines
-- Test with developer expectations in mind
-- Verify all names are descriptive and unambiguous
-- Use `@property` for computed values and simple getters
-- Implement appropriate dunder methods (`__str__`, `__repr__`, `__eq__`, etc.)
-
-```python
-# BAD: Inconsistent API patterns within the same class
-class FileManager:
-    def open_file(self, path: str) -> bool:          # Returns bool
-        pass
-
-    def create_file(self, path: str) -> 'File':      # Returns object
-        pass
-
-    def delete_file(self, path: str) -> None:        # Returns None
-        pass
-
-    def move_file(self, from_path: str, to_path: str) -> int:  # Returns int
-        pass
-
-# GOOD: Consistent error handling and return patterns
-from enum import Enum
-from pathlib import Path
-
-class FileResult(Enum):
-    SUCCESS = "success"
-    NOT_FOUND = "not_found"
-    PERMISSION_DENIED = "permission_denied"
-    ALREADY_EXISTS = "already_exists"
-
-class FileHandler:
-    def create(self, path: Path) -> FileResult:
-        pass
-
-    def open(self, path: Path) -> FileResult:
-        pass
-
-    def move(self, from_path: Path, to_path: Path) -> FileResult:
-        pass
-
-    def remove(self, path: Path) -> FileResult:
-        pass
-
-    # Alternative: Use exceptions consistently
-    # def open_file(self, path: Path) -> File:  # raises FileError
-    # def create_file(self, path: Path) -> File:  # raises FileError
-
-    @property
-    def current_file(self) -> Path | None:
-        return self._current_file
-```
-
-### Testing Requirements
-
-- Validate that common programming tasks are straightforward
-- Use `pytest` for testing with clear test names
-- Test both success and failure cases
-
 ```python
 # BAD: Complex setup for simple operations
 class ConfigManager:
@@ -471,41 +331,93 @@ class ConfigManager:
 ConfigManager.instance().theme = "dark"
 ```
 
-## Quality Checklist
+### Errors
 
-### Before releasing any API
+In Python, prefer using exceptions for error conditions as they are part of the language design.
+Use `T | None` when a function may legitimately return `None`.
+Use custom exception types to provide specific error information.
+Consider using union types (`A | B`) or `dataclasses` for complex return types.
 
-- [ ] All names follow PEP 8 conventions and are descriptive
-- [ ] Type hints are provided for all public functions and methods
-- [ ] Error messages provide clear guidance to developers
-- [ ] Common programming tasks are straightforward
-- [ ] Destructive operations are protected or clearly marked
-- [ ] Successful usage is the obvious path
-- [ ] Function signatures follow Python conventions
-- [ ] CRUD operations available for main entities (where applicable)
-- [ ] Appropriate dunder methods implemented (`__str__`, `__repr__`, `__eq__`, etc.)
-- [ ] Properties used instead of getter/setter methods where appropriate
-- [ ] Context managers implemented for resource management when needed
+```python
+from dataclasses import dataclass
 
-### Python-Specific Checklist
+# For functions that may return nothing legitimately
+def find_user(user_id: int) -> User | None:
+    """Returns user or None if not found."""
+    return database.get_user(user_id)
 
-- [ ] Uses `pathlib.Path` for file system operations
-- [ ] Implements `__enter__` and `__exit__` for context managers when appropriate
-- [ ] Uses `@property` and `@setter` decorators instead of getter/setter methods
-- [ ] Follows duck typing principles when appropriate
-- [ ] Uses built-in generics (`list[int]`) and `T | None` for type hints; imports from `typing` only for constructs built-ins do not cover (`TypedDict`, `ClassVar`), or for projects that target Python older than 3.9 (3.10 for `|`)
-- [ ] Implements appropriate comparison operators (`__eq__`, `__lt__`, etc.) when needed
-- [ ] Uses `dataclasses` or `NamedTuple` for data containers
-- [ ] Follows PEP 8 naming conventions strictly
+# For operations that can fail with specific errors
+class DatabaseError(Exception):
+    pass
 
-### Remember
+class UserNotFoundError(DatabaseError):
+    def __init__(self, user_id: int):
+        super().__init__(f"User with ID {user_id} not found")
+        self.user_id = user_id
 
-> "If developers are smart, motivated, have experience with Python, are willing
-   to read documentation, and want to succeed - yet they still fail to use
-   your API correctly, it's the API's fault, not theirs."
+def get_user(user_id: int) -> User:
+    """Returns user or raises UserNotFoundError."""
+    user = database.get_user(user_id)
+    if user is None:
+        raise UserNotFoundError(user_id)
+    return user
 
-### Goal
+# For complex results
+@dataclass
+class ProcessResult:
+    success: bool
+    message: str
+    data: dict | None = None
+```
 
-Create APIs where developers accidentally do the right thing by default,
-requiring minimal thought or memorization to achieve their programming goals,
-while staying "Pythonic".
+```python
+# BAD: Inconsistent API patterns within the same class
+class FileManager:
+    def open_file(self, path: str) -> bool:          # Returns bool
+        pass
+
+    def create_file(self, path: str) -> 'File':      # Returns object
+        pass
+
+    def delete_file(self, path: str) -> None:        # Returns None
+        pass
+
+    def move_file(self, from_path: str, to_path: str) -> int:  # Returns int
+        pass
+
+# GOOD: Consistent error handling and return patterns
+from enum import Enum
+from pathlib import Path
+
+class FileResult(Enum):
+    SUCCESS = "success"
+    NOT_FOUND = "not_found"
+    PERMISSION_DENIED = "permission_denied"
+    ALREADY_EXISTS = "already_exists"
+
+class FileHandler:
+    def create(self, path: Path) -> FileResult:
+        pass
+
+    def open(self, path: Path) -> FileResult:
+        pass
+
+    def move(self, from_path: Path, to_path: Path) -> FileResult:
+        pass
+
+    def remove(self, path: Path) -> FileResult:
+        pass
+
+    # Alternative: Use exceptions consistently
+    # def open_file(self, path: Path) -> File:  # raises FileError
+    # def create_file(self, path: Path) -> File:  # raises FileError
+
+    @property
+    def current_file(self) -> Path | None:
+        return self._current_file
+```
+
+## Testing
+
+- Use `pytest` for testing with clear test names
+- Test both success and failure cases
