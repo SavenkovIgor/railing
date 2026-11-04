@@ -1,9 +1,9 @@
 ---
-name: C++ API Design
+name: C++ Coding Style
 applyTo: "**/*.{cpp,hpp,cppm,ipp,h,cc}"
 ---
 
-# Code and API Design Guidelines
+# C++ coding style
 
 ## Core Principles
 
