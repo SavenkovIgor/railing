@@ -1,18 +1,33 @@
 # Agent guide for this repository
 
-## Scopes of markdown instructions
+## Scopes of instructions
 
-Instruction files for markdown nest by `applyTo`: the scope of each file equals or lies inside the scope of the file above it. The files do not depend on each other. Broadest scope first:
+Instruction files nest by `applyTo`. Any two scopes either do not overlap, or one contains the other, so the scopes form one tree. One scope can hold several files on different topics; files in the same scope are siblings.
 
-- [markdown.instructions.md](/com.github.copilot/rules/markdown.instructions.md) - `**/*.md`; checks (`MD*`) on the form of any markdown file
-- [prose.instructions.md](/com.github.copilot/rules/prose.instructions.md) - `**/*.md`; how the text reads
-- [notes.instructions.md](/com.github.copilot/rules/notes.instructions.md) - `notes/**/*.md`; path, task ID, and language of any note in `notes/`
-- [reports.instructions.md](/com.github.copilot/rules/reports.instructions.md) - `notes/**/*.overview.md`; content checks for notes about existing code
-- `reports-<kind>.instructions.md` (in the same directory) - `notes/**/*.<kind>.md`; structure of one report kind
+Scopes from the root down; each scope lists its files, then the scopes inside it:
 
-Nesting is a required property of this list. A new instruction file for markdown goes below the narrowest file whose scope contains its own. A file whose scope is not inside the scope of the file above it breaks the nesting.
+- `**/*`
+  - [global.instructions.md](/com.github.copilot/rules/global.instructions.md) - how the agent works and answers on any task
+  - `**/*.md`
+    - [markdown.instructions.md](/com.github.copilot/rules/markdown.instructions.md) - checks (`MD*`) on the form of any markdown file
+    - [prose.instructions.md](/com.github.copilot/rules/prose.instructions.md) - how the text reads
+    - `notes/**/*.md`
+      - [notes.instructions.md](/com.github.copilot/rules/notes.instructions.md) - path, task ID, and language of any note in `notes/`
+      - `notes/**/*.overview.md`
+        - [reports.instructions.md](/com.github.copilot/rules/reports.instructions.md) - content checks for notes about existing code
+        - [reports-overview.instructions.md](/com.github.copilot/rules/reports-overview.instructions.md) - structure of an overview report
+  - `**/*.{h,hpp,cc,cpp,cppm,ipp,py,js,ts}`
+    - [code.instructions.md](/com.github.copilot/rules/code.instructions.md) - coding principles for any language
+    - `**/*.{cpp,hpp,cppm,ipp,h,cc}`
+      - [code-cpp.instructions.md](/com.github.copilot/rules/code-cpp.instructions.md) - coding style in C++
+    - `**/*.py`
+      - [code-python.instructions.md](/com.github.copilot/rules/code-python.instructions.md) - coding style in Python
 
-Files do not restate rules of files whose scope contains theirs.
+Nesting is a required property of this tree. A new instruction file joins the scope equal to its own, or opens a new scope inside the narrowest scope that contains its own. A file whose scope partly overlaps another scope breaks the nesting.
+
+A wider scope holds the shared base. A file holds only what differs from the files whose scope contains its own or adds to them, and does not restate their rules. An example in the language of the file may show how a rule of a wider scope looks there.
+
+Why: `applyTo` already gives the reader of a file every file whose scope contains its own, so the file needs only the difference.
 
 ## How rule files refer to each other
 
@@ -24,7 +39,7 @@ There are three kinds of dependencies. Each has its own place:
 
 Rules for links:
 
-- An instruction file never links to another instruction file or to a skill. `applyTo` nesting already applies the files above it, and the editor does this on its own; rely on that behavior.
+- An instruction file never links to another instruction file or to a skill. `applyTo` nesting already applies every file whose scope contains its own, and the editor does this on its own; rely on that behavior.
 - A skill links to every instruction file and skill it depends on, once, in a `## DependsOn` section directly after the goal paragraph. A skill applies each linked file as a whole.
 - A link in a routing table, where a skill picks one target by the input, is not a dependency and stays where it is.
 - Files must not form circular links: if A links to B, B must not link back to A, directly or through a chain of other files.

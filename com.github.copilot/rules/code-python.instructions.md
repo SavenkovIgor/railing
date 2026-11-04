@@ -1,8 +1,9 @@
 ---
+name: Python Coding Style
 applyTo: "**/*.py"
 ---
 
-# Python Code and API Design Guidelines
+# Python coding style
 
 ## Core Principles
 
