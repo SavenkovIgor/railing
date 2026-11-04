@@ -2,7 +2,7 @@
 
 ## Scopes of instructions
 
-Instruction files nest by `applyTo`: the scope of each file equals or lies inside the scope of its parent. The files do not depend on each other. Both trees below have one root:
+Instruction files nest by `applyTo`: the scope of each file equals or lies inside the scope of its parent. Both trees below have one root:
 
 - [global.instructions.md](/com.github.copilot/rules/global.instructions.md) - `**/*`; how the agent works and answers on any task
 
