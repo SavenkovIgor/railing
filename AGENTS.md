@@ -1,8 +1,12 @@
 # Agent guide for this repository
 
-## Scopes of markdown instructions
+## Scopes of instructions
 
-Instruction files for markdown nest by `applyTo`: the scope of each file equals or lies inside the scope of the file above it. The files do not depend on each other. Broadest scope first:
+Instruction files nest by `applyTo`: the scope of each file equals or lies inside the scope of its parent. The files do not depend on each other. Both trees below have one root:
+
+- [global.instructions.md](/com.github.copilot/rules/global.instructions.md) - `**/*`; how the agent works and answers on any task
+
+Markdown tree, broadest scope first; the parent of each file is the file above it, and the parent of the first file is the root:
 
 - [markdown.instructions.md](/com.github.copilot/rules/markdown.instructions.md) - `**/*.md`; checks (`MD*`) on the form of any markdown file
 - [prose.instructions.md](/com.github.copilot/rules/prose.instructions.md) - `**/*.md`; how the text reads
@@ -10,9 +14,17 @@ Instruction files for markdown nest by `applyTo`: the scope of each file equals 
 - [reports.instructions.md](/com.github.copilot/rules/reports.instructions.md) - `notes/**/*.overview.md`; content checks for notes about existing code
 - `reports-<kind>.instructions.md` (in the same directory) - `notes/**/*.<kind>.md`; structure of one report kind
 
-Nesting is a required property of this list. A new instruction file for markdown goes below the narrowest file whose scope contains its own. A file whose scope is not inside the scope of the file above it breaks the nesting.
+Code tree; the parent of a nested item is the item that contains it, and the parent of the top item is the root:
 
-Files do not restate rules of files whose scope contains theirs.
+- [global-code.instructions.md](/com.github.copilot/rules/global-code.instructions.md) - `**/*.{h,hpp,cc,cpp,cppm,ipp,py,js,ts}`; coding principles for any language
+  - [api-cpp.instructions.md](/com.github.copilot/rules/api-cpp.instructions.md) - `**/*.{cpp,hpp,cppm,ipp,h,cc}`; API design and naming in C++
+  - [api-python.instructions.md](/com.github.copilot/rules/api-python.instructions.md) - `**/*.py`; API design and naming in Python
+
+Nesting is a required property of both trees. A new instruction file goes below the narrowest file whose scope contains its own. A file whose scope is not inside the scope of its parent breaks the nesting.
+
+A parent holds the shared base. A nested file holds only what differs from the files whose scope contains its own or adds to them, and does not restate their rules. An example in the language of the nested file may show how a parent rule looks there.
+
+Why: `applyTo` already gives the reader of a nested file every file whose scope contains its own, so the nested file needs only the difference.
 
 ## How rule files refer to each other
 
@@ -24,7 +36,7 @@ There are three kinds of dependencies. Each has its own place:
 
 Rules for links:
 
-- An instruction file never links to another instruction file or to a skill. `applyTo` nesting already applies the files above it, and the editor does this on its own; rely on that behavior.
+- An instruction file never links to another instruction file or to a skill. `applyTo` nesting already applies every file whose scope contains its own, and the editor does this on its own; rely on that behavior.
 - A skill links to every instruction file and skill it depends on, once, in a `## DependsOn` section directly after the goal paragraph. A skill applies each linked file as a whole.
 - A link in a routing table, where a skill picks one target by the input, is not a dependency and stays where it is.
 - Files must not form circular links: if A links to B, B must not link back to A, directly or through a chain of other files.
