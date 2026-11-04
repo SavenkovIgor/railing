@@ -2,29 +2,32 @@
 
 ## Scopes of instructions
 
-Instruction files nest by `applyTo`: the scope of each file equals or lies inside the scope of its parent. Both trees below have one root:
+Instruction files nest by `applyTo`. Any two scopes either do not overlap, or one contains the other, so the scopes form one tree. One scope can hold several files on different topics; files in the same scope are siblings.
 
-- [global.instructions.md](/com.github.copilot/rules/global.instructions.md) - `**/*`; how the agent works and answers on any task
+Scopes from the root down; each scope lists its files, then the scopes inside it:
 
-Markdown tree, broadest scope first; the parent of each file is the file above it, and the parent of the first file is the root:
+- `**/*`
+  - [global.instructions.md](/com.github.copilot/rules/global.instructions.md) - how the agent works and answers on any task
+  - `**/*.md`
+    - [markdown.instructions.md](/com.github.copilot/rules/markdown.instructions.md) - checks (`MD*`) on the form of any markdown file
+    - [prose.instructions.md](/com.github.copilot/rules/prose.instructions.md) - how the text reads
+    - `notes/**/*.md`
+      - [notes.instructions.md](/com.github.copilot/rules/notes.instructions.md) - path, task ID, and language of any note in `notes/`
+      - `notes/**/*.overview.md`
+        - [reports.instructions.md](/com.github.copilot/rules/reports.instructions.md) - content checks for notes about existing code
+        - [reports-overview.instructions.md](/com.github.copilot/rules/reports-overview.instructions.md) - structure of an overview report
+  - `**/*.{h,hpp,cc,cpp,cppm,ipp,py,js,ts}`
+    - [global-code.instructions.md](/com.github.copilot/rules/global-code.instructions.md) - coding principles for any language
+    - `**/*.{cpp,hpp,cppm,ipp,h,cc}`
+      - [api-cpp.instructions.md](/com.github.copilot/rules/api-cpp.instructions.md) - API design and naming in C++
+    - `**/*.py`
+      - [api-python.instructions.md](/com.github.copilot/rules/api-python.instructions.md) - API design and naming in Python
 
-- [markdown.instructions.md](/com.github.copilot/rules/markdown.instructions.md) - `**/*.md`; checks (`MD*`) on the form of any markdown file
-- [prose.instructions.md](/com.github.copilot/rules/prose.instructions.md) - `**/*.md`; how the text reads
-- [notes.instructions.md](/com.github.copilot/rules/notes.instructions.md) - `notes/**/*.md`; path, task ID, and language of any note in `notes/`
-- [reports.instructions.md](/com.github.copilot/rules/reports.instructions.md) - `notes/**/*.overview.md`; content checks for notes about existing code
-- `reports-<kind>.instructions.md` (in the same directory) - `notes/**/*.<kind>.md`; structure of one report kind
+Nesting is a required property of this tree. A new instruction file joins the scope equal to its own, or opens a new scope inside the narrowest scope that contains its own. A file whose scope partly overlaps another scope breaks the nesting.
 
-Code tree; the parent of a nested item is the item that contains it, and the parent of the top item is the root:
+A wider scope holds the shared base. A file holds only what differs from the files whose scope contains its own or adds to them, and does not restate their rules. An example in the language of the file may show how a rule of a wider scope looks there.
 
-- [global-code.instructions.md](/com.github.copilot/rules/global-code.instructions.md) - `**/*.{h,hpp,cc,cpp,cppm,ipp,py,js,ts}`; coding principles for any language
-  - [api-cpp.instructions.md](/com.github.copilot/rules/api-cpp.instructions.md) - `**/*.{cpp,hpp,cppm,ipp,h,cc}`; API design and naming in C++
-  - [api-python.instructions.md](/com.github.copilot/rules/api-python.instructions.md) - `**/*.py`; API design and naming in Python
-
-Nesting is a required property of both trees. A new instruction file goes below the narrowest file whose scope contains its own. A file whose scope is not inside the scope of its parent breaks the nesting.
-
-A parent holds the shared base. A nested file holds only what differs from the files whose scope contains its own or adds to them, and does not restate their rules. An example in the language of the nested file may show how a parent rule looks there.
-
-Why: `applyTo` already gives the reader of a nested file every file whose scope contains its own, so the nested file needs only the difference.
+Why: `applyTo` already gives the reader of a file every file whose scope contains its own, so the file needs only the difference.
 
 ## How rule files refer to each other
 
