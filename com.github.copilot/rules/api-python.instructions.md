@@ -1,4 +1,5 @@
 ---
+name: Python API Design
 applyTo: "**/*.py"
 ---
 

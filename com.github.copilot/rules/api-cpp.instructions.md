@@ -1,4 +1,5 @@
 ---
+name: C++ API Design
 applyTo: "**/*.{cpp,hpp,cppm,ipp,h,cc}"
 ---
 
