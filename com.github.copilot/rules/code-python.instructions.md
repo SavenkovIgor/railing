@@ -134,7 +134,7 @@ class ProcessResult:
 
 #### Function Names
 
-- Use `snake_case` for functions and variables (PEP 8)
+- Use `snake_case` for functions and variables
 - Write a well-known abbreviation in lowercase like `set_html`, not `set_HTML`
 - Expose cheap reads with the `@property` decorator
 
@@ -334,8 +334,6 @@ class UserManager:
 ### Development Process
 
 - Use type hints consistently
-- Follow PEP 8 style guidelines
-- Use `@property` for computed values and simple getters
 - Implement appropriate dunder methods (`__str__`, `__repr__`, `__eq__`, etc.)
 
 ```python
