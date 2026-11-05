@@ -7,15 +7,7 @@ applyTo: "**/*.py"
 
 ## Core Principles
 
-**Primary Goal:** Make APIs easy to use correctly and hard to use incorrectly
-
-Create APIs where developers accidentally do the right thing by default,
-requiring minimal thought or memorization to achieve their programming goals,
-while staying "Pythonic".
-
-> If developers are smart, motivated, have experience with Python, are willing
-> to read documentation, and want to succeed - yet they still fail to use
-> your API correctly, it's the API's fault, not theirs.
+Keep the API Pythonic.
 
 ```python
 # BAD: Easy to use incorrectly

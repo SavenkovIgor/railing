@@ -98,3 +98,11 @@ It means you have to have a clear definition of "done" and keep it in mind as yo
 If two patterns or paradigms are contradict, pick one and state it explicitly.
 Explain why. Flag the other for future cleanup directly in the code.
 Don't silently blend conflicting patterns.
+
+## API design
+
+Make an API easy to use correctly and hard to use incorrectly.
+
+> If developers are smart, motivated, have experience with programming, are willing
+> to read documentation, and want to succeed - yet they still fail to use
+> your API correctly, it's the API's fault, not theirs.
