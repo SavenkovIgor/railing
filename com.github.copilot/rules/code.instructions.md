@@ -140,10 +140,10 @@ Make an API easy to use correctly and hard to use incorrectly: a developer does 
 - When you add or change an entity, check which CRUD operations (create, read, update, delete) its API has, and propose the missing ones instead of adding them
 - Protect destructive operations or mark them clearly
 
-### Error states and common tasks
+### Successful path and common tasks
 
-- Make the successful path the obvious one
-- Make a common task through the API straightforward
+- Check that the successful path is the obvious one
+- Check that a common task through the API is straightforward
 
 ## Code organization
 
