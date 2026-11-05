@@ -113,3 +113,12 @@ Make an API easy to use correctly and hard to use incorrectly.
 - Write error messages that tell the developer what to do next
 - Follow the naming of the standard library when naming new types
 - Make custom types behave like built-in types
+
+### Names
+
+- Name descriptively and concisely
+- Keep names consistent within their context (class, namespace, module)
+- Do not repeat the class name in a method name
+- Do not repeat the type of an argument in its name when the type is obvious
+- Write a well-known abbreviation as an ordinary word, not in capitals
+- Do not prefix a cheap read with `get`

@@ -107,13 +107,8 @@ public:
 
 #### Function Names
 
-- Should be descriptive and concise
-- Function names should be consistent within their context (class, namespace, etc.)
-- Well known abbreviations should be camelCased like `setHtml` not capitalized like `setHTML`
-- For member accessors, use no prefix for cheap/view read access (e.g., `size()`, `title()`)
-- Reserve `get` prefix for explicit owning copies of non-trivial members (e.g., `getTitle()`), as defined in Member Accessor Naming
-- If it is a method, avoid repeating the class name in the method name
-- Same rules is applies to arguments and it's types - try to avoid repeating arg type in it's name if it is obvious
+- Write a well-known abbreviation in camelCase like `setHtml`, not capitalized like `setHTML`
+- Reserve the `get` prefix for explicit owning copies of non-trivial members (e.g., `getTitle()`), as defined in Member Accessor Naming
 
 ```cpp
 // BAD: Non-descriptive and inconsistent naming

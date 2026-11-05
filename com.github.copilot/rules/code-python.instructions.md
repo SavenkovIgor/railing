@@ -135,10 +135,8 @@ class ProcessResult:
 #### Function Names
 
 - Use `snake_case` for functions and variables (PEP 8)
-- Should be descriptive and concise
-- Well-known abbreviations should be lowercase like `set_html` not `set_HTML`
-- For properties use `@property` decorator, avoid `get` prefixes for getters
-- Avoid repeating the class name in method names
+- Write a well-known abbreviation in lowercase like `set_html`, not `set_HTML`
+- Expose cheap reads with the `@property` decorator
 
 ```python
 # BAD: Non-descriptive and inconsistent naming
