@@ -472,16 +472,3 @@ constexpr auto values = std::array{1, 2, 3};
 ```
 
 When the needed type differs from the deduced one (e.g. `uint8_t` from integer literals), keep the explicit `std::array<T, N>`: casting every element to enable deduction defeats the purpose of brevity.
-
-## Code organization
-
-- Code should be modular (and testability is a good proxy for modularity)
-- Modules should have clear, intuitive APIs that are hard to misuse
-- Modules should not have cyclic dependencies
-
-- Component is a minimum unit of code cohesive both logically and physically
-- Package - the primary unit of code (components), organization in a repository
-is the package. A package is a collection of related files (cohesive) and a
-specification of dependencies between them.
-- Dependency is a relationship between two components where one could
-not work/compile without the other.

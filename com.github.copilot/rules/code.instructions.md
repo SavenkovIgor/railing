@@ -144,3 +144,16 @@ Make an API easy to use correctly and hard to use incorrectly.
 
 - Make the successful path the obvious one
 - Make a common task through the API straightforward
+
+## Code organization
+
+- Code should be modular (and testability is a good proxy for modularity)
+- Modules should have clear, intuitive APIs that are hard to misuse
+- Modules should not have cyclic dependencies
+
+- Component is a minimum unit of code cohesive both logically and physically
+- Package - the primary unit of code (components), organization in a repository
+is the package. A package is a collection of related files (cohesive) and a
+specification of dependencies between them.
+- Dependency is a relationship between two components where one could
+not work/compile without the other.
