@@ -7,15 +7,7 @@ applyTo: "**/*.py"
 
 ## Core Principles
 
-**Primary Goal:** Make APIs easy to use correctly and hard to use incorrectly
-
-Create APIs where developers accidentally do the right thing by default,
-requiring minimal thought or memorization to achieve their programming goals,
-while staying "Pythonic".
-
-> If developers are smart, motivated, have experience with Python, are willing
-> to read documentation, and want to succeed - yet they still fail to use
-> your API correctly, it's the API's fault, not theirs.
+Keep the API Pythonic.
 
 ```python
 # BAD: Easy to use incorrectly
@@ -58,11 +50,8 @@ class Buffer:
 
 ### Principle of Least Astonishment
 
-- **Review all function names, class names, and API endpoints** - try to guess developer expectations and validate those names against them
-- **Ensure error messages provide clear guidance** for developers using your APIs
-- Use Pythonic operators and patterns (dunder methods, properties, context managers)
-- Follow PEP 8 and standard library patterns for naming conventions
-- Make custom classes behave like built-in types
+- Use Pythonic operators and patterns (dunder methods, context managers)
+- Follow PEP 8 naming conventions
 
 ```python
 # BAD: Unexpected behavior and poor error messages
@@ -145,11 +134,9 @@ class ProcessResult:
 
 #### Function Names
 
-- Use `snake_case` for functions and variables (PEP 8)
-- Should be descriptive and concise
-- Well-known abbreviations should be lowercase like `set_html` not `set_HTML`
-- For properties use `@property` decorator, avoid `get` prefixes for getters
-- Avoid repeating the class name in method names
+- Use `snake_case` for functions and variables
+- Write a well-known abbreviation in lowercase like `set_html`, not `set_HTML`
+- Expose cheap reads with the `@property` decorator
 
 ```python
 # BAD: Non-descriptive and inconsistent naming
@@ -197,11 +184,8 @@ class Document:
 
 - Use type hints for all parameters
 - Use built-in generics (`list[int]`) and `T | None` in type hints; import from `typing` only for constructs built-ins do not cover (`TypedDict`, `ClassVar`), or for projects that target Python older than 3.9 (3.10 for `|`)
-- Should be in the order of most common usage
-- For similar functions, the order of arguments should be consistent
-- Avoid more than 4-5 arguments in a function
 - Use keyword-only arguments for clarity when needed
-- Use `dataclasses` or `TypedDict` for complex parameter groups
+- Group arguments with `dataclasses` or `TypedDict`
 
 ```python
 from dataclasses import dataclass
@@ -242,33 +226,6 @@ def create_window(title: str, width: int, height: int,
     pass
 ```
 
-#### Variable and Path Naming
-
-- Always prefer to use `pathlib.Path` for any path handling
-- For variables containing paths, use `_dir` suffix for directories and `_file` or `_path` suffix for full paths
-- Use `_filename` for just the file name without the path
-
-```python
-from pathlib import Path
-
-# BAD: Unclear path naming
-data = "/home/user/documents"
-info = "config.json"
-location = "/tmp/cache/"
-
-# GOOD: Clear path naming with pathlib
-documents_dir = Path("/home/user/documents")
-config_file = Path("/home/user/config.json")
-config_filename = "config.json"
-cache_dir = Path("/tmp/cache")
-```
-
-#### Argument Order and Consistency
-
-- Most important/common arguments should come first
-- Similar functions should have consistent argument order
-- Use keyword-only arguments when order might be confusing
-
 ```python
 # BAD: Inconsistent argument order across similar functions
 def copy_file(source: str, destination: str, overwrite: bool):
@@ -285,13 +242,29 @@ def move_file(source: Path, destination: Path, *, overwrite: bool = False):
     pass
 ```
 
+#### Variable and Path Naming
+
+- Always prefer to use `pathlib.Path` for any path handling
+- The `_path` suffix is allowed in place of `_file`
+
+```python
+from pathlib import Path
+
+# BAD: Unclear path naming
+data = "/home/user/documents"
+info = "config.json"
+location = "/tmp/cache/"
+
+# GOOD: Clear path naming with pathlib
+documents_dir = Path("/home/user/documents")
+config_file = Path("/home/user/config.json")
+config_filename = "config.json"
+cache_dir = Path("/tmp/cache")
+```
+
 ### API Completeness
 
-- APIs usually should contain all CRUD operations (Create, Read, Update, Delete)
-  for main entities
 - Use context managers for resource management
-- Ensure destructive operations are protected or clearly marked
-- Support both synchronous and asynchronous patterns when appropriate
 
 ```python
 from collections.abc import Iterator
@@ -361,10 +334,6 @@ class UserManager:
 ### Development Process
 
 - Use type hints consistently
-- Follow PEP 8 style guidelines
-- Test with developer expectations in mind
-- Verify all names are descriptive and unambiguous
-- Use `@property` for computed values and simple getters
 - Implement appropriate dunder methods (`__str__`, `__repr__`, `__eq__`, etc.)
 
 ```python
@@ -416,9 +385,10 @@ class FileHandler:
 
 ### Testing Requirements
 
-- Validate that common programming tasks are straightforward
 - Use `pytest` for testing with clear test names
 - Test both success and failure cases
+
+### Common Tasks
 
 ```python
 # BAD: Complex setup for simple operations

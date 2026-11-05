@@ -98,3 +98,62 @@ It means you have to have a clear definition of "done" and keep it in mind as yo
 If two patterns or paradigms are contradict, pick one and state it explicitly.
 Explain why. Flag the other for future cleanup directly in the code.
 Don't silently blend conflicting patterns.
+
+## API design
+
+Make an API easy to use correctly and hard to use incorrectly: a developer does the right thing by default, with minimal thought or memorization.
+
+> If developers are smart, motivated, have experience with programming, are willing
+> to read documentation, and want to succeed - yet they still fail to use
+> your API correctly, it's the API's fault, not theirs.
+
+### Least astonishment
+
+- Review the names of functions, classes, and endpoints: guess what a developer expects and compare the names with that guess
+- Write error messages that tell the developer what to do next
+- Follow the naming of the standard library when naming new types
+- Make custom types behave like built-in types
+
+### Names
+
+- Name descriptively and concisely
+- Keep names consistent within their context (class, namespace, module)
+- Do not repeat the class name in a method name
+- Do not repeat the type of an argument in its name when the type is obvious
+- Write a well-known abbreviation as an ordinary word, not in capitals
+- Do not prefix a cheap read with `get`
+
+### Arguments
+
+- Order arguments by how often they are used, most common first
+- Keep the argument order the same across similar functions
+- Group related arguments into one type
+- Use at most 4 arguments in a function
+- Use two or more arguments of the same type only in well-known cases such as width and height; otherwise give them distinct types or group them
+
+### Path variables
+
+- Name a variable that holds a directory with the suffix `dir`, a full path to a file with `file`, and a file name without a path with `filename`
+
+### API completeness
+
+- When you add or change an entity, check which CRUD operations (create, read, update, delete) its API has, and propose the missing ones instead of adding them
+- Protect destructive operations or mark them clearly
+
+### Successful path and common tasks
+
+- Check that the successful path is the obvious one
+- Check that a common task through the API is straightforward
+
+## Code organization
+
+- Code should be modular (and testability is a good proxy for modularity)
+- Modules should have clear, intuitive APIs that are hard to misuse
+- Modules should not have cyclic dependencies
+
+- Component is a minimum unit of code cohesive both logically and physically
+- Package - the primary unit of code (components), organization in a repository
+is the package. A package is a collection of related files (cohesive) and a
+specification of dependencies between them.
+- Dependency is a relationship between two components where one could
+not work/compile without the other.

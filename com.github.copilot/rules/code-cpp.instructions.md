@@ -7,15 +7,6 @@ applyTo: "**/*.{cpp,hpp,cppm,ipp,h,cc}"
 
 ## Core Principles
 
-**Primary Goal:** Make APIs easy to use correctly and hard to use incorrectly
-
-Create APIs where developers accidentally do the right thing by default,
-requiring minimal thought or memorization to achieve their programming goals.
-
-> If developers are smart, motivated, have experience with programming, are willing
-> to read documentation, and want to succeed - yet they still fail to use
-> your API correctly, it's the API's fault, not theirs.
-
 ```cpp
 // BAD: Easy to use incorrectly
 class Buffer {
@@ -61,12 +52,7 @@ public:
 
 ### Principle of Least Astonishment
 
-- Review all function names, class names, and API endpoints - try to guess
-  developer expectations and validate those names against them
-- Ensure error messages provide clear guidance for developers using your APIs
 - Use expected operators and patterns for each programming language
-- Follow standard library patterns and naming conventions for new types
-- Make custom classes behave like built-in types
 
 ```cpp
 // BAD: Unexpected behavior and poor error messages
@@ -121,13 +107,8 @@ public:
 
 #### Function Names
 
-- Should be descriptive and concise
-- Function names should be consistent within their context (class, namespace, etc.)
-- Well known abbreviations should be camelCased like `setHtml` not capitalized like `setHTML`
-- For member accessors, use no prefix for cheap/view read access (e.g., `size()`, `title()`)
-- Reserve `get` prefix for explicit owning copies of non-trivial members (e.g., `getTitle()`), as defined in Member Accessor Naming
-- If it is a method, avoid repeating the class name in the method name
-- Same rules is applies to arguments and it's types - try to avoid repeating arg type in it's name if it is obvious
+- Write a well-known abbreviation in camelCase like `setHtml`, not capitalized like `setHTML`
+- Reserve the `get` prefix for explicit owning copies of non-trivial members (e.g., `getTitle()`), as defined in Member Accessor Naming
 
 ```cpp
 // BAD: Non-descriptive and inconsistent naming
@@ -151,11 +132,7 @@ class Document {
 
 #### Function Arguments
 
-- Should be in the order of most common usage
-- For similar functions, the order of arguments should be consistent
-- Avoid more than 4 arguments in a function
-- Using 2 or more identical argument types is allowed ONLY in well-known cases (e.g., `setSize(int width, int height)`)
-  in all other cases, it is better to use type aliases or structs to group arguments together
+- Group arguments with type aliases or structs
 - Prefer `std::string_view` over `const std::string&` for read-only string arguments - it accepts `std::string`, string literals, and substrings without allocation
 
 ```cpp
@@ -181,6 +158,16 @@ void createWindow(const WindowConfig& config) {
 void setSize(int width, int height) {
     // This is intuitive and expected
 }
+```
+
+```cpp
+// BAD: Inconsistent argument order across similar functions
+void copyFile(string_view source, string_view destination, bool overwrite);
+void moveFile(bool overwrite, string_view destination, string_view source);
+
+// GOOD: Consistent argument order
+void copyFile(string_view source, string_view destination, bool overwrite = false);
+void moveFile(string_view source, string_view destination, bool overwrite = false);
 ```
 
 #### Member Accessor Naming
@@ -276,8 +263,6 @@ public:
 
 #### Variable and Path Naming
 
-- For variables containing paths, use `dir` suffix for directories and `file` suffix for full file paths
-- Use `filename` for just the file name without the path
 - If variable content is not obvious, use `path` suffix
 
 ```cpp
@@ -293,26 +278,7 @@ std::filesystem::path configFilename = "config.json";
 std::filesystem::path cachePath = "/tmp/cache/";
 ```
 
-#### Argument Order and Consistency
-
-- Most important/common arguments should come first
-- Similar functions should have consistent argument order
-
-```cpp
-// BAD: Inconsistent argument order across similar functions
-void copyFile(string_view source, string_view destination, bool overwrite);
-void moveFile(bool overwrite, string_view destination, string_view source);
-
-// GOOD: Consistent argument order
-void copyFile(string_view source, string_view destination, bool overwrite = false);
-void moveFile(string_view source, string_view destination, bool overwrite = false);
-```
-
 ### API Completeness
-
-- In most cases, API should contain all CRUD operations (Create, Read, Update, Delete) for its main entities
-- Ensure destructive operations are protected or clearly marked
-- Validate that common programming tasks are straightforward
 
 ```cpp
 // BAD: Incomplete API with unclear destructive operations
@@ -369,9 +335,6 @@ class UserManager {
 
 ### Development Process
 
-- Test with developer expectations in mind
-- Verify all names are descriptive and unambiguous
-
 ```cpp
 // BAD: Inconsistent API patterns within the same class
 class FileManager {
@@ -402,11 +365,7 @@ class FileHandler {
 
 ### Error Handling
 
-- Ensure error states provide helpful guidance to developers
-- Confirm destructive operations are protected or clearly marked
-- Review that successful usage is the obvious path
-
-Also it is better to avoid exceptions in APIs, especially in C++.
+It is better to avoid exceptions in APIs, especially in C++.
 First because they break the flow of the program and make it harder to reason about.
 Second, because it is too easy to ignore them until it is too late.
 Instead, if possible use `std::expected` or `std::optional` if the
@@ -459,9 +418,7 @@ class Database {
 };
 ```
 
-### Testing Requirements
-
-- Validate that common programming tasks are straightforward
+### Common Tasks
 
 ```cpp
 // BAD: Complex setup for simple operations
@@ -515,16 +472,3 @@ constexpr auto values = std::array{1, 2, 3};
 ```
 
 When the needed type differs from the deduced one (e.g. `uint8_t` from integer literals), keep the explicit `std::array<T, N>`: casting every element to enable deduction defeats the purpose of brevity.
-
-## Code organization
-
-- Code should be modular (and testability is a good proxy for modularity)
-- Modules should have clear, intuitive APIs that are hard to misuse
-- Modules should not have cyclic dependencies
-
-- Component is a minimum unit of code cohesive both logically and physically
-- Package - the primary unit of code (components), organization in a repository
-is the package. A package is a collection of related files (cohesive) and a
-specification of dependencies between them.
-- Dependency is a relationship between two components where one could
-not work/compile without the other.

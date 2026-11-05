@@ -15,6 +15,21 @@ Check for:
 - Side effects that compound on repeated execution
 - Missing deduplication or at-least-once delivery handling
 
+### Contract in code
+
+A practice is good when it removes the need to coordinate. It writes the contract into the code, so every user of the code sees the contract without asking the author or reading a separate document.
+
+Check for:
+
+- A rule that holds only by agreement (a wiki page, a chat message, a comment) when a type, a name, a signature, or a default could enforce it (important)
+- Parts of the system that must agree on an order, a format, or a value before either can change (important)
+- A convention that differs from the one the language, the standard library, or the project already uses, so users must learn it (style)
+
+```text
+✘ deleteAll()                    callers must remember to ask for confirmation first
+✔ deleteAll(confirmationToken)   the signature requires the confirmation
+```
+
 ### Distributed Systems
 
 Design distributed systems to be observable:
