@@ -132,11 +132,7 @@ class Document {
 
 #### Function Arguments
 
-- Should be in the order of most common usage
-- For similar functions, the order of arguments should be consistent
-- Avoid more than 4 arguments in a function
-- Using 2 or more identical argument types is allowed ONLY in well-known cases (e.g., `setSize(int width, int height)`)
-  in all other cases, it is better to use type aliases or structs to group arguments together
+- Group arguments with type aliases or structs
 - Prefer `std::string_view` over `const std::string&` for read-only string arguments - it accepts `std::string`, string literals, and substrings without allocation
 
 ```cpp
@@ -162,6 +158,16 @@ void createWindow(const WindowConfig& config) {
 void setSize(int width, int height) {
     // This is intuitive and expected
 }
+```
+
+```cpp
+// BAD: Inconsistent argument order across similar functions
+void copyFile(string_view source, string_view destination, bool overwrite);
+void moveFile(bool overwrite, string_view destination, string_view source);
+
+// GOOD: Consistent argument order
+void copyFile(string_view source, string_view destination, bool overwrite = false);
+void moveFile(string_view source, string_view destination, bool overwrite = false);
 ```
 
 #### Member Accessor Naming
@@ -272,21 +278,6 @@ std::filesystem::path documentsDir = "/home/user/documents";
 std::filesystem::path configFile = "/home/user/config.json";
 std::filesystem::path configFilename = "config.json";
 std::filesystem::path cachePath = "/tmp/cache/";
-```
-
-#### Argument Order and Consistency
-
-- Most important/common arguments should come first
-- Similar functions should have consistent argument order
-
-```cpp
-// BAD: Inconsistent argument order across similar functions
-void copyFile(string_view source, string_view destination, bool overwrite);
-void moveFile(bool overwrite, string_view destination, string_view source);
-
-// GOOD: Consistent argument order
-void copyFile(string_view source, string_view destination, bool overwrite = false);
-void moveFile(string_view source, string_view destination, bool overwrite = false);
 ```
 
 ### API Completeness

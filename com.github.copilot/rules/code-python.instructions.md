@@ -184,11 +184,8 @@ class Document:
 
 - Use type hints for all parameters
 - Use built-in generics (`list[int]`) and `T | None` in type hints; import from `typing` only for constructs built-ins do not cover (`TypedDict`, `ClassVar`), or for projects that target Python older than 3.9 (3.10 for `|`)
-- Should be in the order of most common usage
-- For similar functions, the order of arguments should be consistent
-- Avoid more than 4-5 arguments in a function
 - Use keyword-only arguments for clarity when needed
-- Use `dataclasses` or `TypedDict` for complex parameter groups
+- Group arguments with `dataclasses` or `TypedDict`
 
 ```python
 from dataclasses import dataclass
@@ -229,6 +226,22 @@ def create_window(title: str, width: int, height: int,
     pass
 ```
 
+```python
+# BAD: Inconsistent argument order across similar functions
+def copy_file(source: str, destination: str, overwrite: bool):
+    pass
+
+def move_file(overwrite: bool, destination: str, source: str):
+    pass
+
+# GOOD: Consistent argument order, defaults for less common options
+def copy_file(source: Path, destination: Path, *, overwrite: bool = False):
+    pass
+
+def move_file(source: Path, destination: Path, *, overwrite: bool = False):
+    pass
+```
+
 #### Variable and Path Naming
 
 - Always prefer to use `pathlib.Path` for any path handling
@@ -248,28 +261,6 @@ documents_dir = Path("/home/user/documents")
 config_file = Path("/home/user/config.json")
 config_filename = "config.json"
 cache_dir = Path("/tmp/cache")
-```
-
-#### Argument Order and Consistency
-
-- Most important/common arguments should come first
-- Similar functions should have consistent argument order
-- Use keyword-only arguments when order might be confusing
-
-```python
-# BAD: Inconsistent argument order across similar functions
-def copy_file(source: str, destination: str, overwrite: bool):
-    pass
-
-def move_file(overwrite: bool, destination: str, source: str):
-    pass
-
-# GOOD: Consistent argument order, defaults for less common options
-def copy_file(source: Path, destination: Path, *, overwrite: bool = False):
-    pass
-
-def move_file(source: Path, destination: Path, *, overwrite: bool = False):
-    pass
 ```
 
 ### API Completeness

@@ -122,3 +122,11 @@ Make an API easy to use correctly and hard to use incorrectly.
 - Do not repeat the type of an argument in its name when the type is obvious
 - Write a well-known abbreviation as an ordinary word, not in capitals
 - Do not prefix a cheap read with `get`
+
+### Arguments
+
+- Order arguments by how often they are used, most common first
+- Keep the argument order the same across similar functions
+- Group related arguments into one type
+- Use at most 4 arguments in a function
+- Use two or more arguments of the same type only in well-known cases such as width and height; otherwise give them distinct types or group them
