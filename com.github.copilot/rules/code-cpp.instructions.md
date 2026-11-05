@@ -280,8 +280,6 @@ std::filesystem::path cachePath = "/tmp/cache/";
 
 ### API Completeness
 
-- In most cases, API should contain all CRUD operations (Create, Read, Update, Delete) for its main entities
-- Ensure destructive operations are protected or clearly marked
 - Validate that common programming tasks are straightforward
 
 ```cpp

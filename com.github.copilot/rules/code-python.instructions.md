@@ -264,11 +264,7 @@ cache_dir = Path("/tmp/cache")
 
 ### API Completeness
 
-- APIs usually should contain all CRUD operations (Create, Read, Update, Delete)
-  for main entities
 - Use context managers for resource management
-- Ensure destructive operations are protected or clearly marked
-- Support both synchronous and asynchronous patterns when appropriate
 
 ```python
 from collections.abc import Iterator

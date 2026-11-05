@@ -134,3 +134,8 @@ Make an API easy to use correctly and hard to use incorrectly.
 ### Path variables
 
 - Name a variable that holds a directory with the suffix `dir`, a full path to a file with `file`, and a file name without a path with `filename`
+
+### API completeness
+
+- When you add or change an entity, check which of the create, read, update, and delete operations its API has, and propose the missing ones instead of adding them
+- Protect destructive operations or mark them clearly
