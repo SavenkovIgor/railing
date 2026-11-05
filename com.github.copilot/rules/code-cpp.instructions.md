@@ -52,12 +52,7 @@ public:
 
 ### Principle of Least Astonishment
 
-- Review all function names, class names, and API endpoints - try to guess
-  developer expectations and validate those names against them
-- Ensure error messages provide clear guidance for developers using your APIs
 - Use expected operators and patterns for each programming language
-- Follow standard library patterns and naming conventions for new types
-- Make custom classes behave like built-in types
 
 ```cpp
 // BAD: Unexpected behavior and poor error messages
@@ -359,9 +354,6 @@ class UserManager {
 ## Implementation Guidelines
 
 ### Development Process
-
-- Test with developer expectations in mind
-- Verify all names are descriptive and unambiguous
 
 ```cpp
 // BAD: Inconsistent API patterns within the same class

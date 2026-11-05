@@ -106,3 +106,10 @@ Make an API easy to use correctly and hard to use incorrectly.
 > If developers are smart, motivated, have experience with programming, are willing
 > to read documentation, and want to succeed - yet they still fail to use
 > your API correctly, it's the API's fault, not theirs.
+
+### Least astonishment
+
+- Review the names of functions, classes, and endpoints: guess what a developer expects and compare the names with that guess
+- Write error messages that tell the developer what to do next
+- Follow the naming of the standard library when naming new types
+- Make custom types behave like built-in types

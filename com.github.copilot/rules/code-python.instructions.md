@@ -50,11 +50,8 @@ class Buffer:
 
 ### Principle of Least Astonishment
 
-- **Review all function names, class names, and API endpoints** - try to guess developer expectations and validate those names against them
-- **Ensure error messages provide clear guidance** for developers using your APIs
-- Use Pythonic operators and patterns (dunder methods, properties, context managers)
-- Follow PEP 8 and standard library patterns for naming conventions
-- Make custom classes behave like built-in types
+- Use Pythonic operators and patterns (dunder methods, context managers)
+- Follow PEP 8 naming conventions
 
 ```python
 # BAD: Unexpected behavior and poor error messages
@@ -354,8 +351,6 @@ class UserManager:
 
 - Use type hints consistently
 - Follow PEP 8 style guidelines
-- Test with developer expectations in mind
-- Verify all names are descriptive and unambiguous
 - Use `@property` for computed values and simple getters
 - Implement appropriate dunder methods (`__str__`, `__repr__`, `__eq__`, etc.)
 
