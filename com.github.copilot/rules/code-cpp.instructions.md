@@ -280,8 +280,6 @@ std::filesystem::path cachePath = "/tmp/cache/";
 
 ### API Completeness
 
-- Validate that common programming tasks are straightforward
-
 ```cpp
 // BAD: Incomplete API with unclear destructive operations
 class UserManager {
@@ -367,11 +365,7 @@ class FileHandler {
 
 ### Error Handling
 
-- Ensure error states provide helpful guidance to developers
-- Confirm destructive operations are protected or clearly marked
-- Review that successful usage is the obvious path
-
-Also it is better to avoid exceptions in APIs, especially in C++.
+It is better to avoid exceptions in APIs, especially in C++.
 First because they break the flow of the program and make it harder to reason about.
 Second, because it is too easy to ignore them until it is too late.
 Instead, if possible use `std::expected` or `std::optional` if the
@@ -424,9 +418,7 @@ class Database {
 };
 ```
 
-### Testing Requirements
-
-- Validate that common programming tasks are straightforward
+### Common Tasks
 
 ```cpp
 // BAD: Complex setup for simple operations

@@ -387,9 +387,10 @@ class FileHandler:
 
 ### Testing Requirements
 
-- Validate that common programming tasks are straightforward
 - Use `pytest` for testing with clear test names
 - Test both success and failure cases
+
+### Common Tasks
 
 ```python
 # BAD: Complex setup for simple operations

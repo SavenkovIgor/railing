@@ -139,3 +139,8 @@ Make an API easy to use correctly and hard to use incorrectly.
 
 - When you add or change an entity, check which of the create, read, update, and delete operations its API has, and propose the missing ones instead of adding them
 - Protect destructive operations or mark them clearly
+
+### Error states and common tasks
+
+- Make the successful path the obvious one
+- Make a common task through the API straightforward
