@@ -245,8 +245,7 @@ def move_file(source: Path, destination: Path, *, overwrite: bool = False):
 #### Variable and Path Naming
 
 - Always prefer to use `pathlib.Path` for any path handling
-- For variables containing paths, use `_dir` suffix for directories and `_file` or `_path` suffix for full paths
-- Use `_filename` for just the file name without the path
+- The `_path` suffix is allowed in place of `_file`
 
 ```python
 from pathlib import Path

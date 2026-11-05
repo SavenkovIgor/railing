@@ -130,3 +130,7 @@ Make an API easy to use correctly and hard to use incorrectly.
 - Group related arguments into one type
 - Use at most 4 arguments in a function
 - Use two or more arguments of the same type only in well-known cases such as width and height; otherwise give them distinct types or group them
+
+### Path variables
+
+- Name a variable that holds a directory with the suffix `dir`, a full path to a file with `file`, and a file name without a path with `filename`

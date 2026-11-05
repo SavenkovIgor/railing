@@ -263,8 +263,6 @@ public:
 
 #### Variable and Path Naming
 
-- For variables containing paths, use `dir` suffix for directories and `file` suffix for full file paths
-- Use `filename` for just the file name without the path
 - If variable content is not obvious, use `path` suffix
 
 ```cpp
