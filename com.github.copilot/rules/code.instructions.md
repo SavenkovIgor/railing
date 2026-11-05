@@ -101,7 +101,7 @@ Don't silently blend conflicting patterns.
 
 ## API design
 
-Make an API easy to use correctly and hard to use incorrectly.
+Make an API easy to use correctly and hard to use incorrectly: a developer does the right thing by default, with minimal thought or memorization.
 
 > If developers are smart, motivated, have experience with programming, are willing
 > to read documentation, and want to succeed - yet they still fail to use
