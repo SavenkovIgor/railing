@@ -9,6 +9,10 @@ applyTo: "**/*.py"
 
 **Primary Goal:** Make APIs easy to use correctly and hard to use incorrectly
 
+> If developers are smart, motivated, have experience with Python, are willing
+> to read documentation, and want to succeed - yet they still fail to use
+> your API correctly, it's the API's fault, not theirs.
+
 ```python
 # BAD: Easy to use incorrectly
 class Buffer:
