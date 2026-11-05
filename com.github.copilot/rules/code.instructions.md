@@ -137,7 +137,7 @@ Make an API easy to use correctly and hard to use incorrectly: a developer does 
 
 ### API completeness
 
-- When you add or change an entity, check which of the create, read, update, and delete operations its API has, and propose the missing ones instead of adding them
+- When you add or change an entity, check which CRUD operations (create, read, update, delete) its API has, and propose the missing ones instead of adding them
 - Protect destructive operations or mark them clearly
 
 ### Error states and common tasks
