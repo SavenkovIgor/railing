@@ -554,3 +554,28 @@ assert(removed);
 [[maybe_unused]] const bool removed = ids.erase(id) == 1;
 assert(removed);
 ```
+
+### `switch` over a closed enum
+
+A `switch` over a closed enum (one whose values your code defines, not a value read from outside) lists every enumerator and has no `default:`, so adding an enumerator makes the compiler report every `switch` that misses it.
+
+Why: the compiler reports a missing `case` as a warning, and the rule only works when the build turns that warning into an error. Before you write such a `switch`, check the build flags:
+
+- GCC and Clang: `-Werror=switch`, or `-Wswitch` together with `-Werror`
+- MSVC: warning C4062 enabled and treated as an error (`/we4062`)
+
+If the build has no such flag, propose adding it in your answer instead of dropping `default:` silently.
+
+```cpp
+// BAD: a new State compiles and lands in default
+switch (state) {
+    case State::Idle: start(); break;
+    default: break;
+}
+
+// GOOD: a new State is a compile error until it gets a case
+switch (state) {
+    case State::Idle: start(); break;
+    case State::Running: break;
+}
+```
