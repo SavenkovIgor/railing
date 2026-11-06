@@ -534,3 +534,8 @@ auto total = sum(items);  // never reassigned
 size_t itemCount() const { return items_.size(); }
 const auto total = sum(items);
 ```
+
+### Namespaces
+
+- Put all internal helpers of a `.cpp` file into one anonymous namespace at the top, after the includes, so the reader finds them in one place.
+- Write a nested namespace as `namespace a::b {`, not as `namespace a { namespace b {`.
