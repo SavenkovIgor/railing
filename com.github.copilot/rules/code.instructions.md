@@ -16,6 +16,7 @@ applyTo: '**/*.{h,hpp,cc,cpp,cppm,ipp,py,js,ts}'
   - *Deviate when:* ML/AI training, fuzzing, generative features
 - Prefer stateless over stateful: functions and components should derive output purely from their inputs
   - *Deviate when:* caches (performance), sessions, streaming protocols
+  - A cache that grows from external input (requests, files, user data) has a size limit or an eviction policy. Without one, memory grows with the input until the process runs out of it
 - Prefer idempotent operations: running the same operation multiple times should produce the same result as running it once
   - *Deviate when:* intentional side-effectful operations (financial transactions, hardware I/O)
 - Fail fast: detect and surface errors as close to their source as possible
