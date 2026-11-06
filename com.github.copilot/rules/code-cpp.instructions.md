@@ -486,3 +486,19 @@ for (const auto& item : prices) std::println("{}: {}", item.first, item.second);
 // GOOD
 for (const auto& [product, price] : prices) std::println("{}: {}", product, price);
 ```
+
+### Absent enum values
+
+Express "not set" as `std::optional<Enum>`, not as an `Undefined` or `Unknown` enumerator. Keep `Unknown` only when it is a real value of the domain, such as a value received from an external system or stored in a database.
+
+Why: an enumerator that means "not set" passes for a valid value, so every function that takes the enum has to check for it.
+
+```cpp
+// BAD: every switch over Color has to handle a value that is not a color
+enum class Color { Undefined, Red, Green };
+Color color = Color::Undefined;
+
+// GOOD: absence is visible in the type
+enum class Color { Red, Green };
+std::optional<Color> color;
+```
