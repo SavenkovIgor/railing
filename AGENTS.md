@@ -91,6 +91,14 @@ In every pull request to this repository, the first commit contains only the ver
 
 Why: the bump then does not depend on the rest of the change, and a reviewer sees the new version at once.
 
+## Size of an issue and its pull request
+
+Keep the body of an issue within 50 lines. Plan each issue so that its pull request changes at most 50 lines: added plus removed lines in the diff, without the version bump. When a draft issue, a planned pull request, or a pull request in progress goes over the limit, suggest that the user split the issue into several issues, each with its own pull request.
+
+A pull request that only moves or deletes text may go over the limit. Splitting a move leaves the rule in two places, or in none, between the two merges.
+
+Why: a change in this repository edits rules in prose, not logic, and a reviewer reads each changed line as a rule. A short diff lets the reviewer check every rule it changes.
+
 ## Closing issues from a pull request
 
 Only when the user gives a GitHub issue in the conversation, the pull request description names that issue in a closing line. Put the line on its own, outside any list or quote:
