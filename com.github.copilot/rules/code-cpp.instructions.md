@@ -579,3 +579,30 @@ switch (state) {
     case State::Running: break;
 }
 ```
+
+### Special member functions
+
+The five special member functions are the destructor, the copy constructor, copy assignment, the move constructor, and move assignment. Pick the first step that fits:
+
+1. Rule of zero, the default: a class that does not manage a resource by hand declares none of the five.
+2. When one of them is needed for another reason, such as a `virtual ~Base()` or a move-only type, declare all five with `= default` or `= delete`. Why: declaring one of them removes the implicit move operations without a warning, and copies replace moves.
+3. Rule of five: a class that owns a resource by hand implements all five.
+
+```cpp
+// BAD: the destructor removes the implicit moves; copying a Shape slices it
+class Shape {
+public:
+    virtual ~Shape() = default;
+};
+
+// GOOD: all five are declared
+class Shape {
+public:
+    Shape() = default;
+    virtual ~Shape() = default;
+    Shape(const Shape&) = delete;
+    Shape& operator=(const Shape&) = delete;
+    Shape(Shape&&) = delete;
+    Shape& operator=(Shape&&) = delete;
+};
+```
