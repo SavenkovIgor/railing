@@ -539,3 +539,18 @@ const auto total = sum(items);
 
 - Put all internal helpers of a `.cpp` file into one anonymous namespace at the top, after the includes, so the reader finds them in one place.
 - Write a nested namespace as `namespace a::b {`, not as `namespace a { namespace b {`.
+
+### Unused values
+
+Mark a variable or a parameter that is unused in some builds with `[[maybe_unused]]`, not with `(void)x;`. Drop the name of a parameter that is never used.
+
+```cpp
+// BAD
+const bool removed = ids.erase(id) == 1;
+(void)removed;
+assert(removed);
+
+// GOOD: the declaration says the variable is unused in release builds
+[[maybe_unused]] const bool removed = ids.erase(id) == 1;
+assert(removed);
+```
