@@ -19,7 +19,7 @@ applyTo: '**/*'
 Take the first tier that can do the job. Go down a tier only when every tier above it cannot:
 
 1. Skills. If a skill covers the task, follow it instead of building your own procedure.
-2. Tasks from `.vscode/tasks.json`. Build, test, lint, and run the project through a task that already exists (`run_task`), not by typing the same command in the terminal. A task you add or change yourself, including through `create_and_run_task`, counts as a console call.
+2. Tasks from `.vscode/tasks.json`. Build, test, lint, and run the project through a defined task (`run_task`), not by typing the same command in the terminal.
 3. IDE tools. Use the built-in VS Code and Copilot tools for search, file reads, edits, diagnostics, and test runs.
 4. Console. Use `run_in_terminal` as a last resort.
 
