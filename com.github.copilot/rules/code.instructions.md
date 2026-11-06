@@ -159,3 +159,12 @@ is the package. A package is a collection of related files (cohesive) and a
 specification of dependencies between them.
 - Dependency is a relationship between two components where one could
 not work/compile without the other.
+
+## Domain modeling
+
+Make invalid states impossible to express in types: model a set of mutually exclusive states as one enum or variant, not as independent flags.
+
+```text
+✘ isLoading: bool, hasError: bool    isLoading and hasError can both be true
+✔ state: Loading | Failed | Ready    only the valid states exist
+```
