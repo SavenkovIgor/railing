@@ -173,6 +173,7 @@ Make invalid states impossible to express in types: model a set of mutually excl
 
 Choose the level of each log call by who reads the message and what they must do:
 
+- `fatal`: an error after which the application cannot continue and stops. For users and developers
 - `error`: an operation failed, and someone has to act to fix it. For users and developers
 - `warning`: something unexpected happened that can degrade a feature, but the application keeps working. For users and developers
 - `info`: a rare lifecycle event that users and developers care about: start, stop, a changed configuration
