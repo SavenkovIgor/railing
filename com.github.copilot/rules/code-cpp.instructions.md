@@ -519,3 +519,18 @@ void wait(int timeoutMs);
 auto seconds = std::chrono::round<std::chrono::seconds>(elapsed);
 void wait(std::chrono::milliseconds timeout);
 ```
+
+### Const correctness
+
+- Mark `const` every method that does not change the object, and every variable that is not reassigned. Leave a local non-`const` when it is moved from later: `std::move` of a `const` object copies it.
+- Fix a missing `const` where it is missing instead of hiding it with `mutable` or `const_cast`. `mutable` stays for members that are not part of the observable state, such as a mutex or a cache.
+
+```cpp
+// BAD
+size_t itemCount() { return items_.size(); }
+auto total = sum(items);  // never reassigned
+
+// GOOD
+size_t itemCount() const { return items_.size(); }
+const auto total = sum(items);
+```
