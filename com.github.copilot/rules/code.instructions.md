@@ -7,6 +7,7 @@ applyTo: '**/*.{h,hpp,cc,cpp,cppm,ipp,py,js,ts}'
 
 - Readability and maintainability are primary concerns
 - Code should always be self-documenting first; comments explain *why*, not *what*
+  - Delete a comment that retells the next line: ✘ `// increase the retry counter` above `++retries;`, ✔ `// the server drops the first request after a reconnect`
 - Prefer small, focused, pure functions - if a function needs a comment to explain what it does, consider splitting it
   - A check function verifies one condition on the inputs it owns and nothing out of its scope, so checks compose into a sequence of validators (e.g. when constructing a validated type) without repeating each other
 - Follow single responsibility principle in classes and functions
@@ -15,6 +16,7 @@ applyTo: '**/*.{h,hpp,cc,cpp,cppm,ipp,py,js,ts}'
   - *Deviate when:* ML/AI training, fuzzing, generative features
 - Prefer stateless over stateful: functions and components should derive output purely from their inputs
   - *Deviate when:* caches (performance), sessions, streaming protocols
+  - A cache that grows from external input (requests, files, user data) has a size limit or an eviction policy. Without one, memory grows with the input until the process runs out of it
 - Prefer idempotent operations: running the same operation multiple times should produce the same result as running it once
   - *Deviate when:* intentional side-effectful operations (financial transactions, hardware I/O)
 - Fail fast: detect and surface errors as close to their source as possible
@@ -157,3 +159,26 @@ is the package. A package is a collection of related files (cohesive) and a
 specification of dependencies between them.
 - Dependency is a relationship between two components where one could
 not work/compile without the other.
+
+## Domain modeling
+
+Make invalid states impossible to express in types: model a set of mutually exclusive states as one enum or variant, not as independent flags.
+
+```text
+✘ isLoading: bool, hasError: bool    isLoading and hasError can both be true
+✔ state: Loading | Failed | Ready    only the valid states exist
+```
+
+## Logging
+
+Choose the level of each log call by who reads the message and what they must do:
+
+- `error`: an operation failed, and someone has to act to fix it. For users and developers
+- `warning`: something unexpected happened that can degrade a feature, but the application keeps working. For users and developers
+- `info`: a rare lifecycle event that users and developers care about: start, stop, a changed configuration
+- `debug`: detail a developer needs to diagnose a problem
+- `trace`: the step-by-step flow of execution, for developers only
+
+An expected outcome that the code handles is not an error: ✘ `error: cache miss for key 42`, ✔ `debug: cache miss for key 42`
+
+On a hot path (a loop over items, a per-frame or per-packet handler), log at `debug` or `trace` only: ✘ `info: packet received` for each packet, ✔ `trace: packet received`

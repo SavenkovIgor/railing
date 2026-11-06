@@ -472,3 +472,152 @@ constexpr auto values = std::array{1, 2, 3};
 ```
 
 When the needed type differs from the deduced one (e.g. `uint8_t` from integer literals), keep the explicit `std::array<T, N>`: casting every element to enable deduction defeats the purpose of brevity.
+
+## Language usage
+
+### Structured bindings
+
+Name the parts of a pair or a tuple with a structured binding instead of `.first` and `.second`:
+
+```cpp
+// BAD: the reader has to remember what first and second hold
+for (const auto& item : prices) std::println("{}: {}", item.first, item.second);
+
+// GOOD
+for (const auto& [product, price] : prices) std::println("{}: {}", product, price);
+```
+
+### Absent enum values
+
+Express "not set" as `std::optional<Enum>`, not as an `Undefined` or `Unknown` enumerator. Keep `Unknown` only when it is a real value of the domain, such as a value received from an external system or stored in a database.
+
+Why: an enumerator that means "not set" passes for a valid value, so every function that takes the enum has to check for it.
+
+```cpp
+// BAD: every switch over Color has to handle a value that is not a color
+enum class Color { Undefined, Red, Green };
+Color color = Color::Undefined;
+
+// GOOD: absence is visible in the type
+enum class Color { Red, Green };
+std::optional<Color> color;
+```
+
+### Time
+
+- Measure intervals and timeouts with `std::chrono::steady_clock`; use `system_clock` for dates and wall-clock time. Why: `system_clock` jumps when the system time is changed, so an interval measured with it can come out negative.
+- Combine only time points of the same clock. Converting one clock to another through `time_since_epoch()` mixes different epochs.
+- Convert a duration to a coarser unit with `std::chrono::floor`, `ceil`, or `round`, so the rounding is explicit; `duration_cast` truncates silently.
+- Keep durations typed, and call `.count()` only at a boundary: logging, serialization, a C API.
+
+```cpp
+// BAD: 1999 ms silently becomes 1 s; the unit is lost in an int
+auto seconds = std::chrono::duration_cast<std::chrono::seconds>(elapsed);
+void wait(int timeoutMs);
+
+// GOOD
+auto seconds = std::chrono::round<std::chrono::seconds>(elapsed);
+void wait(std::chrono::milliseconds timeout);
+```
+
+### Const correctness
+
+- Mark `const` every method that does not change the object, and every variable that is not reassigned. Leave a local non-`const` when it is moved from later: `std::move` of a `const` object copies it.
+- Fix a missing `const` where it is missing instead of hiding it with `mutable` or `const_cast`. `mutable` stays for members that are not part of the observable state, such as a mutex or a cache.
+
+```cpp
+// BAD
+size_t itemCount() { return items_.size(); }
+auto total = sum(items);  // never reassigned
+
+// GOOD
+size_t itemCount() const { return items_.size(); }
+const auto total = sum(items);
+```
+
+### Namespaces
+
+- Put all internal helpers of a `.cpp` file into one anonymous namespace at the top, after the includes, so the reader finds them in one place.
+- Write a nested namespace as `namespace a::b {`, not as `namespace a { namespace b {`.
+
+### Unused values
+
+Mark a variable or a parameter that is unused in some builds with `[[maybe_unused]]`, not with `(void)x;`. Drop the name of a parameter that is never used.
+
+```cpp
+// BAD
+const bool removed = ids.erase(id) == 1;
+(void)removed;
+assert(removed);
+
+// GOOD: the declaration says the variable is unused in release builds
+[[maybe_unused]] const bool removed = ids.erase(id) == 1;
+assert(removed);
+```
+
+### `switch` over a closed enum
+
+A `switch` over a closed enum (one whose values your code defines, not a value read from outside) lists every enumerator and has no `default:`, so adding an enumerator makes the compiler report every `switch` that misses it.
+
+Why: the compiler reports a missing `case` as a warning, and the rule only works when the build turns that warning into an error. Before you write such a `switch`, check the build flags:
+
+- GCC and Clang: `-Werror=switch`, or `-Wswitch` together with `-Werror`
+- MSVC: warning C4062 enabled and treated as an error (`/we4062`)
+
+If the build has no such flag, propose adding it in your answer instead of dropping `default:` silently.
+
+```cpp
+// BAD: a new State compiles and lands in default
+switch (state) {
+    case State::Idle: start(); break;
+    default: break;
+}
+
+// GOOD: a new State is a compile error until it gets a case
+switch (state) {
+    case State::Idle: start(); break;
+    case State::Running: break;
+}
+```
+
+### Special member functions
+
+The five special member functions are the destructor, the copy constructor, copy assignment, the move constructor, and move assignment. Pick the first step that fits:
+
+1. Rule of zero, the default: a class that does not manage a resource by hand declares none of the five.
+2. When one of them is needed for another reason, such as a `virtual ~Base()` or a move-only type, declare all five with `= default` or `= delete`. Why: declaring one of them removes the implicit move operations without a warning, and copies replace moves.
+3. Rule of five: a class that owns a resource by hand implements all five.
+
+```cpp
+// BAD: the destructor removes the implicit moves; copying a Shape slices it
+class Shape {
+public:
+    virtual ~Shape() = default;
+};
+
+// GOOD: all five are declared
+class Shape {
+public:
+    Shape() = default;
+    virtual ~Shape() = default;
+    Shape(const Shape&) = delete;
+    Shape& operator=(const Shape&) = delete;
+    Shape(Shape&&) = delete;
+    Shape& operator=(Shape&&) = delete;
+};
+```
+
+### Include paths
+
+Write an `#include` path from an include directory, never with `../`: a header of another target through its public include directory, a private header of the same target by a path from the target directory.
+
+Why: a `../` path breaks when the including file moves, and it reaches into another component without linking to it, so the dependency is invisible in the build.
+
+```cpp
+// BAD
+#include "../../core/parser.hpp"
+
+// GOOD
+#include <core/parser.hpp>
+#include "detail/lexer.hpp"
+```
