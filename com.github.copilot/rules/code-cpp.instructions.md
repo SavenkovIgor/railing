@@ -172,7 +172,8 @@ void moveFile(string_view source, string_view destination, bool overwrite = fals
 
 #### Member Accessor Naming
 
-Standard naming pattern for class member accessors
+Standard naming pattern for class member accessors.
+A `setObj` row applies only to a member outside the class invariant.
 The general idea is to provide a cheap way to access the member value without
 forcing an allocation or copy, while still allowing for an explicit owning copy when needed.
 
@@ -474,6 +475,32 @@ constexpr auto values = std::array{1, 2, 3};
 When the needed type differs from the deduced one (e.g. `uint8_t` from integer literals), keep the explicit `std::array<T, N>`: casting every element to enable deduction defeats the purpose of brevity.
 
 ## Language usage
+
+### `struct` or `class`
+
+Pick the keyword by the invariant:
+
+- `struct` with public members and no accessors when the members vary independently
+- `class` with private members when the members have an invariant
+
+```cpp
+// BAD: x and y vary independently, so the accessors only add code
+class Point {
+    int x_ = 0;
+    int y_ = 0;
+public:
+    int x() const { return x_; }
+    void setX(int x) { x_ = x; }
+    int y() const { return y_; }
+    void setY(int y) { y_ = y; }
+};
+
+// GOOD
+struct Point {
+    int x = 0;
+    int y = 0;
+};
+```
 
 ### Structured bindings
 
