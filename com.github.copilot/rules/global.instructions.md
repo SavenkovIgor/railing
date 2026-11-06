@@ -14,15 +14,25 @@ applyTo: '**/*'
 - When something seems off in the architecture, naming, or approach, say so clearly instead of silently complying
 - When critiquing, explain *why* and suggest a concrete alternative when possible
 
-## Tooling Priority - NON-NEGOTIABLE HARD REQUIREMENT
+## Tooling priority
 
-**IDE-embedded tools have STRICTLY HIGHER priority than raw console/terminal calls. This is not a preference - it is a hard constraint.**
+If a skill covers the task, follow it instead of building your own procedure. The skill decides what to do; the tiers below decide how to run each step, including the steps of a skill.
 
-- ALWAYS use the narrowest-scope tool available first: IDE built-ins → shell commands is the only permitted order.
-- Built-in VS Code/Copilot tools (search, file reads, edits, diagnostics, test runners, build tasks) MUST be used over terminal equivalents whenever they exist.
-- Terminal/console usage is ONLY permitted when no built-in tool can accomplish the task. There are no exceptions.
-- If terminal usage is unavoidable, it MUST be minimal and MUST be explicitly justified by stating which built-in tools were tried and why they were insufficient.
-- Terminal commands MUST be readable, self-evident, and use only well-known, widely adopted tools. Obscure flags, chained one-liners, or exotic utilities are not acceptable.
+Take the first tier that can do the job. Go down a tier only when every tier above it cannot:
+
+1. Tasks from `.vscode/tasks.json`. Build, test, lint, and run the project through a defined task (`run_task`), not by typing the same command in the terminal.
+2. IDE tools. Use the built-in VS Code and Copilot tools for search, file reads, edits, diagnostics, and test runs.
+3. Console. Use `run_in_terminal` as a last resort.
+
+Why: each tier down costs the user more review. A task is checked in advance, and an IDE tool call shows its effect at a glance. A console command has to be read and understood before the user can approve it.
+
+### Console calls
+
+Expect the user to stop any console call that is not obvious at a glance. If the user cannot verify a command in a few seconds, they interrupt it rather than review it.
+
+- Before a console call, name the tiers above that you tried and why they did not fit.
+- Write one short command per call, with well-known tools and common flags. Agents tend to chain commands with pipes, `&&`, and `;` into one line; split such a line into separate calls.
+- If the user interrupts a console call, ask what to do next or go back to a higher tier. Agents tend to retry the same action as a reworded command; an interrupt means no, not "try another form".
 
 **`run_in_terminal` for read-only filesystem operations is FORBIDDEN.** Use the substitution table below instead:
 
