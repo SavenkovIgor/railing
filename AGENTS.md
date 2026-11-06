@@ -97,7 +97,9 @@ Keep the body of an issue within 50 lines. Plan each issue so that its pull requ
 
 A pull request that only moves or deletes text may go over the limit. Splitting a move leaves the rule in two places, or in none, between the two merges.
 
-Why: a change in this repository edits rules in prose, not logic, and a reviewer reads each changed line as a rule. A short diff lets the reviewer check every rule it changes.
+Ask the user for at most two decisions in one issue. Give each decision as numbered options, the recommended option first, each with a one-line trade-off. When an issue needs more decisions, split it.
+
+Why: the user works in slots of one or two minutes: take a couple of decisions, then approve the merge. A change in this repository edits rules in prose, not logic, and a reviewer reads each changed line as a rule. A short diff with few decisions fits one slot and lets the reviewer check every rule it changes.
 
 ## Closing issues from a pull request
 
