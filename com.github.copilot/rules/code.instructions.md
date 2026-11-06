@@ -168,3 +168,17 @@ Make invalid states impossible to express in types: model a set of mutually excl
 ✘ isLoading: bool, hasError: bool    isLoading and hasError can both be true
 ✔ state: Loading | Failed | Ready    only the valid states exist
 ```
+
+## Logging
+
+Choose the level of each log call by who reads the message and what they must do:
+
+- `error`: an operation failed, and someone has to act to fix it. For users and developers
+- `warning`: something unexpected happened that can degrade a feature, but the application keeps working. For users and developers
+- `info`: a rare lifecycle event that users and developers care about: start, stop, a changed configuration
+- `debug`: detail a developer needs to diagnose a problem
+- `trace`: the step-by-step flow of execution, for developers only
+
+An expected outcome that the code handles is not an error: ✘ `error: cache miss for key 42`, ✔ `debug: cache miss for key 42`
+
+On a hot path (a loop over items, a per-frame or per-packet handler), log at `debug` or `trace` only: ✘ `info: packet received` for each packet, ✔ `trace: packet received`
