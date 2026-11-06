@@ -19,7 +19,7 @@ applyTo: '**/*'
 Take the first tier that can do the job. Go down a tier only when every tier above it cannot:
 
 1. Skills. If a skill covers the task, follow it instead of building your own procedure.
-2. Tasks from `.vscode/tasks.json`. Build, test, lint, and run the project through a defined task (`run_task`), not by typing the same command in the terminal.
+2. Tasks from `.vscode/tasks.json`. Build, test, lint, and run the project through a task that already exists (`run_task`), not by typing the same command in the terminal. A task you add or change yourself, including through `create_and_run_task`, counts as a console call.
 3. IDE tools. Use the built-in VS Code and Copilot tools for search, file reads, edits, diagnostics, and test runs.
 4. Console. Use `run_in_terminal` as a last resort.
 
@@ -30,7 +30,7 @@ Why: each tier down costs the user more review. A skill and a task are checked i
 Expect the user to stop any console call that is not obvious at a glance. If the user cannot verify a command in a few seconds, they interrupt it rather than review it.
 
 - Before a console call, name the tiers above that you tried and why they did not fit.
-- Write one short command per call, with well-known tools and common flags. Agents tend to chain commands with pipes, `&&`, and `;` into one line; split such a line or move it into a task.
+- Write one short command per call, with well-known tools and common flags. Agents tend to chain commands with pipes, `&&`, and `;` into one line; split such a line into separate calls.
 - If the user interrupts a console call, ask what to do next or go back to a higher tier. Agents tend to retry the same action as a reworded command; an interrupt means no, not "try another form".
 
 **`run_in_terminal` for read-only filesystem operations is FORBIDDEN.** Use the substitution table below instead:
