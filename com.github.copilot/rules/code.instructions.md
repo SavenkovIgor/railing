@@ -7,6 +7,7 @@ applyTo: '**/*.{h,hpp,cc,cpp,cppm,ipp,py,js,ts}'
 
 - Readability and maintainability are primary concerns
 - Code should always be self-documenting first; comments explain *why*, not *what*
+  - Delete a comment that retells the next line: ✘ `// increase the retry counter` above `++retries;`, ✔ `// the server drops the first request after a reconnect`
 - Prefer small, focused, pure functions - if a function needs a comment to explain what it does, consider splitting it
   - A check function verifies one condition on the inputs it owns and nothing out of its scope, so checks compose into a sequence of validators (e.g. when constructing a validated type) without repeating each other
 - Follow single responsibility principle in classes and functions
