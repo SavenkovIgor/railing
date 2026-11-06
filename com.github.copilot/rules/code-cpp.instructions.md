@@ -606,3 +606,18 @@ public:
     Shape& operator=(Shape&&) = delete;
 };
 ```
+
+### Include paths
+
+Write an `#include` path from an include directory, never with `../`: a header of another target through its public include directory, a private header of the same target by a path from the target directory.
+
+Why: a `../` path breaks when the including file moves, and it reaches into another component without linking to it, so the dependency is invisible in the build.
+
+```cpp
+// BAD
+#include "../../core/parser.hpp"
+
+// GOOD
+#include <core/parser.hpp>
+#include "detail/lexer.hpp"
+```
