@@ -472,3 +472,17 @@ constexpr auto values = std::array{1, 2, 3};
 ```
 
 When the needed type differs from the deduced one (e.g. `uint8_t` from integer literals), keep the explicit `std::array<T, N>`: casting every element to enable deduction defeats the purpose of brevity.
+
+## Language usage
+
+### Structured bindings
+
+Name the parts of a pair or a tuple with a structured binding instead of `.first` and `.second`:
+
+```cpp
+// BAD: the reader has to remember what first and second hold
+for (const auto& item : prices) std::println("{}: {}", item.first, item.second);
+
+// GOOD
+for (const auto& [product, price] : prices) std::println("{}: {}", product, price);
+```
