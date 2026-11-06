@@ -16,14 +16,15 @@ applyTo: '**/*'
 
 ## Tooling priority
 
+If a skill covers the task, follow it instead of building your own procedure. The skill decides what to do; the tiers below decide how to run each step, including the steps of a skill.
+
 Take the first tier that can do the job. Go down a tier only when every tier above it cannot:
 
-1. Skills. If a skill covers the task, follow it instead of building your own procedure.
-2. Tasks from `.vscode/tasks.json`. Build, test, lint, and run the project through a defined task (`run_task`), not by typing the same command in the terminal.
-3. IDE tools. Use the built-in VS Code and Copilot tools for search, file reads, edits, diagnostics, and test runs.
-4. Console. Use `run_in_terminal` as a last resort.
+1. Tasks from `.vscode/tasks.json`. Build, test, lint, and run the project through a defined task (`run_task`), not by typing the same command in the terminal.
+2. IDE tools. Use the built-in VS Code and Copilot tools for search, file reads, edits, diagnostics, and test runs.
+3. Console. Use `run_in_terminal` as a last resort.
 
-Why: each tier down costs the user more review. A skill and a task are checked in advance, and an IDE tool call shows its effect at a glance. A console command has to be read and understood before the user can approve it.
+Why: each tier down costs the user more review. A task is checked in advance, and an IDE tool call shows its effect at a glance. A console command has to be read and understood before the user can approve it.
 
 ### Console calls
 
