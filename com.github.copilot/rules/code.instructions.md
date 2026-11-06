@@ -169,6 +169,18 @@ Make invalid states impossible to express in types: model a set of mutually excl
 ✔ state: Loading | Failed | Ready    only the valid states exist
 ```
 
+An invariant is a condition on the members of an object that every public member function relies on without checking it:
+
+- The constructor establishes the invariant; when it cannot, construction fails with an error. LLMs often add a separate `init()` or `isValid()` instead, and then every caller has to remember the call and every member function has to check the state
+- Every public member function keeps the invariant on each exit, an exit by exception included, so the invariant also holds on entry to the destructor
+- Inside a member function the invariant may break; restore it before the function calls a public member function of the same object, a callback, or a virtual function, since each of them can observe the object
+- A setter exists only for a member outside the invariant, or checks the invariant and rejects a value that breaks it
+
+```text
+✘ Range with setMin() and setMax()    setMin(10) while max is 5 breaks min <= max
+✔ Range with setBounds(min, max)      one call checks min <= max
+```
+
 ## Logging
 
 Choose the level of each log call by who reads the message and what they must do:
