@@ -502,3 +502,20 @@ Color color = Color::Undefined;
 enum class Color { Red, Green };
 std::optional<Color> color;
 ```
+
+### Time
+
+- Measure intervals and timeouts with `std::chrono::steady_clock`; use `system_clock` for dates and wall-clock time. Why: `system_clock` jumps when the system time is changed, so an interval measured with it can come out negative.
+- Combine only time points of the same clock. Converting one clock to another through `time_since_epoch()` mixes different epochs.
+- Convert a duration to a coarser unit with `std::chrono::floor`, `ceil`, or `round`, so the rounding is explicit; `duration_cast` truncates silently.
+- Keep durations typed, and call `.count()` only at a boundary: logging, serialization, a C API.
+
+```cpp
+// BAD: 1999 ms silently becomes 1 s; the unit is lost in an int
+auto seconds = std::chrono::duration_cast<std::chrono::seconds>(elapsed);
+void wait(int timeoutMs);
+
+// GOOD
+auto seconds = std::chrono::round<std::chrono::seconds>(elapsed);
+void wait(std::chrono::milliseconds timeout);
+```
