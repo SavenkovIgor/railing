@@ -1396,14 +1396,13 @@ diagnostic: `-Wnon-target-directive` on the command line, or
 `"warnings": { "nonTargetDirective": true }` in a configure preset
 (schema version 13).
 
-For CI, turn the diagnostic into an error with `-Werror=non-target-directive`
-or `"errors": { "nonTargetDirective": true }`. Add
-`-Werror=install-absolute-destination` (4.4+) for an absolute `install()`
-`DESTINATION`. List the two explicitly. Both belong to the group
-`CMD_STRICT` (`-Wstrict`, 4.5+, "allowed but disrecommended usage"), but
-the group may get new children, and `-Werror=strict` then breaks CI on a
-CMake upgrade with no change in the project. Use `-Wstrict` as a warning
-to see what is new.
+For CI, use the whole group `CMD_STRICT` ("allowed but disrecommended
+usage", 4.5+): `-Werror=strict` or `"errors": { "strict": true }`. It
+covers `CMD_NON_TARGET_DIRECTIVE` and `CMD_INSTALL_ABSOLUTE_DESTINATION`
+(an absolute `install()` `DESTINATION`, 4.4+) and every child a later
+CMake adds. A new check that fails after a CMake upgrade shows a real
+problem in the project, so the build should fail. Pin the CMake version
+in CI and upgrade it in a separate change.
 
 Diagnostic settings are inherited by every subdirectory, so the errors
 reach `FetchContent` dependencies too. Wrap the dependencies:
