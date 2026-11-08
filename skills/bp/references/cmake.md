@@ -1396,6 +1396,25 @@ diagnostic: `-Wnon-target-directive` on the command line, or
 `"warnings": { "nonTargetDirective": true }` in a configure preset
 (schema version 13).
 
+For CI, turn the diagnostic into an error with `-Werror=non-target-directive`
+or `"errors": { "nonTargetDirective": true }`. Add
+`-Werror=install-absolute-destination` (4.4+) for an absolute `install()`
+`DESTINATION`. List the two explicitly. Both belong to the group
+`CMD_STRICT` (`-Wstrict`, 4.5+, "allowed but disrecommended usage"), but
+the group may get new children, and `-Werror=strict` then breaks CI on a
+CMake upgrade with no change in the project. Use `-Wstrict` as a warning
+to see what is new.
+
+Diagnostic settings are inherited by every subdirectory, so the errors
+reach `FetchContent` dependencies too. Wrap the dependencies:
+
+```cmake
+block(SCOPE_FOR DIAGNOSTICS)
+  cmake_diagnostic(SET CMD_STRICT IGNORE RECURSE)
+  FetchContent_MakeAvailable(fmt)
+endblock()
+```
+
 ### Specifying compilers without a toolchain file for cross-compilation
 
 ```json
