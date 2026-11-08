@@ -921,9 +921,8 @@ Header units are not supported.
 
 ### `import std`
 
-CMake 4.5 (a release candidate on 2026-10-18) makes `import std`
-available in every target with C++20 or newer and module scanning
-enabled. Up to CMake 4.4 it required the
+CMake 4.5 makes `import std` available in every target with C++20 or
+newer and module scanning enabled. Up to CMake 4.4 it required the
 `CMAKE_EXPERIMENTAL_CXX_IMPORT_STD` gate, `CXX_MODULE_STD ON` on each
 target, and C++23.
 
@@ -1396,6 +1395,24 @@ CMake 4.5 reports these commands with the `CMD_NON_TARGET_DIRECTIVE`
 diagnostic: `-Wnon-target-directive` on the command line, or
 `"warnings": { "nonTargetDirective": true }` in a configure preset
 (schema version 13).
+
+For CI, use the whole group `CMD_STRICT` ("allowed but disrecommended
+usage", 4.5+): `-Werror=strict` or `"errors": { "strict": true }`. It
+covers `CMD_NON_TARGET_DIRECTIVE` and `CMD_INSTALL_ABSOLUTE_DESTINATION`
+(an absolute `install()` `DESTINATION`, 4.4+) and every child a later
+CMake adds. A new check that fails after a CMake upgrade shows a real
+problem in the project, so the build should fail. Pin the CMake version
+in CI and upgrade it in a separate change.
+
+Diagnostic settings are inherited by every subdirectory, so the errors
+reach `FetchContent` dependencies too. Wrap the dependencies:
+
+```cmake
+block(SCOPE_FOR DIAGNOSTICS)
+  cmake_diagnostic(SET CMD_STRICT IGNORE RECURSE)
+  FetchContent_MakeAvailable(fmt)
+endblock()
+```
 
 ### Specifying compilers without a toolchain file for cross-compilation
 
