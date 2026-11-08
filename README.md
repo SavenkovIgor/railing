@@ -22,6 +22,10 @@ It will install both, plugin and marketplace (for autoupdate) with this plugin o
 ├── marketplace.json                             marketplace listing that lets VS Code install the plugin
 ├── com.github.copilot/                          the only directory where VS Code reads rules and agents
 │   ├── agents/
+│   │   ├── controller.agent.md                  owns the task, runs planner, coder, and reviewer
+│   │   ├── planner.agent.md                     turns a brief into a plan
+│   │   ├── coder.agent.md                       implements a plan
+│   │   ├── reviewer.agent.md                    checks a change against its task
 │   │   └── gilfoyle.agent.md                    blunt code review and analysis
 │   └── rules/
 │       ├── global.instructions.md               general agent behavior and workflow guidance
