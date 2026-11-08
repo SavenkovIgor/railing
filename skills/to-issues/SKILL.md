@@ -13,6 +13,10 @@ description: >-
 Decompose the preceding plan, discussion, or proposal into discrete, actionable
 issues and file them in the project's issue tracker.
 
+## DependsOn
+
+- [issues.instructions.md](/com.github.copilot/rules/issues.instructions.md)
+
 ## Procedure
 
 ### 1. Identify the Tracker
@@ -35,7 +39,7 @@ create issues. Fall back to asking the user which tool to use if none is detecte
 For each distinct unit of work extract: Title (one action sentence),
 Body (context, acceptance criteria, links), Labels (bug/feat/chore),
 Size (flag if large enough for sub-tasks). Each issue must be independently
-completable; one concern per issue; preserve nuance from the discussion.
+completable; preserve nuance from the discussion.
 
 ### 3. Confirm Before Filing
 
