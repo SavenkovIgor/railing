@@ -27,6 +27,7 @@ Choose only the references that match the file under review:
 
 | Reference                                                    | When it applies                                                                         |
 |---                                                           |---                                                                                      |
+| [agent](references/agent.md)                                 | `*.agent.md` files                                                                      |
 | [chromium](references/chromium.md)                           | C++ files that include Chromium headers: `base/`, `content/`, `chrome/`, `components/`  |
 | [cicd](references/cicd.md)                                   | `.github/workflows/`, `.gitlab-ci.yml`, pipeline configs, build scripts, lock files     |
 | [cmake](references/cmake.md)                                 | `CMakeLists.txt`, `*.cmake` files; build configuration and dependency management        |
