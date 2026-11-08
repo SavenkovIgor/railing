@@ -8,6 +8,7 @@ Scopes from the root down; each scope lists its files, then the scopes inside it
 
 - `**/*`
   - [global.instructions.md](/com.github.copilot/rules/global.instructions.md) - how the agent works and answers on any task
+  - [issues.instructions.md](/com.github.copilot/rules/issues.instructions.md) - scope of one issue in any tracker
   - `**/*.md`
     - [markdown.instructions.md](/com.github.copilot/rules/markdown.instructions.md) - checks (`MD*`) on the form of any markdown file
     - [prose.instructions.md](/com.github.copilot/rules/prose.instructions.md) - how the text reads
