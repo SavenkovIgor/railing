@@ -921,9 +921,8 @@ Header units are not supported.
 
 ### `import std`
 
-CMake 4.5 (a release candidate on 2026-10-18) makes `import std`
-available in every target with C++20 or newer and module scanning
-enabled. Up to CMake 4.4 it required the
+CMake 4.5 makes `import std` available in every target with C++20 or
+newer and module scanning enabled. Up to CMake 4.4 it required the
 `CMAKE_EXPERIMENTAL_CXX_IMPORT_STD` gate, `CXX_MODULE_STD ON` on each
 target, and C++23.
 
