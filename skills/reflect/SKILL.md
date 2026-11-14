@@ -36,6 +36,10 @@ If found, propose how to trim or generalize that context.
 - By default, review every session of the last 24 hours, not only the current one.
   Find them through the session history tools, narrowing by date first,
   and read only the turns needed to understand a problem.
+- List sessions with `list_sessions` (`createdAfter` set to 24 hours ago), read each with
+  `get_session_context` at `detail: summary`, and open `digest` with a small
+  `transcriptLimit` only for turns that show a problem. Report sessions whose
+  transcript comes back empty as unreadable instead of skipping them silently.
 - Review only the current conversation when the user explicitly asks for it.
 - Skip sessions of this skill itself, so a review does not analyze earlier reviews.
 - A proposal cites the evidence, such as the session and the step, but not secrets,

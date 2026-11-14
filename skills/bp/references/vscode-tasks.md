@@ -129,6 +129,7 @@ Solution: Keep build and test as separate hidden tasks. Add a compound task with
 `dependsOn` listing both. Set `dependsOrder: "sequence"` when order matters;
 the default is parallel, and the order is not recursive.
 Reasoning: Each step stays reusable and keeps its own problem matcher.
+Avoid: `dependsOn` from a build task to a configure task; see Rule 21.
 
 ## Rule 11: Set `presentation` on purpose
 
@@ -240,3 +241,16 @@ Reasoning: Schema warnings usually mean VS Code silently ignores the property.
 Problem: `runOptions.runOn: "folderOpen"` runs a command as soon as the folder opens.
 Solution: Avoid it. If the task is a real need, document it and keep it side-effect free.
 Reasoning: A task that starts on open runs repository code before the contributor reads it.
+
+## Rule 21: Keep configure and build as separate tasks
+
+Problem: A build task with `dependsOn` to a configure task (such as `cmake --preset`)
+re-runs configure before every build. Configure is slow, and the build tool already
+re-runs it when its inputs change.
+Solution: Make configure and build two independent tasks without `dependsOn` between
+them. The contributor runs configure for initialization: the first run, a preset
+switch, a changed cache variable or toolchain, or a clean tree. Every other run
+is the build task alone. A single shell line that joins both commands is the same
+mistake; so is a single `cmake --workflow` task outside CI.
+Reasoning: Configure is an initialization step, not part of every build.
+Avoid: Hiding the configure task. The contributor runs it directly.
