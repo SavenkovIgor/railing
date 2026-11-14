@@ -54,7 +54,6 @@ If a needed instruction file, skill, or agent is not in your context, do not sea
 Each request re-reads the whole conversation, so cost scales with steps and context size, not effort - cut steps and bulky tool output, never the depth of the work itself.
 
 - Batch independent lookups (reads, searches, diagnostics) into one round of parallel tool calls. A second round is only for questions the first round's answers raised.
-- Read the minimal slice needed (targeted line ranges, narrow subagent queries). Read a file in full only when about to edit it or copy from it verbatim.
 - When manually rechecking a long-running command that has no auto notification on completion (e.g. `get_task_output`, re-running `get_errors` after a build), use exponential backoff - 2s, 4s, 8s, 16s, capped at 32s - instead of tight polling.
 
 ## Response Style
