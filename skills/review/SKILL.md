@@ -34,7 +34,17 @@ the project on the same target. Report only; do not edit files.
    - Scope (uncommitted and branch modes): every changed line traces to the intent; flag
      unrelated edits, unrequested abstractions, and unrequested options
    - Tests: a behavior change comes with a test that fails before it and passes after it
-   - Safety: public behavior changes, data loss, unvalidated input at trust boundaries, security
+   - Security, for the code the change touches
+     - Untrusted input that reaches a sink without validation or escaping: SQL, shell, file
+       paths, templates, format strings, deserialization, outbound URLs
+     - A permission check on each new entry point
+     - Secrets in code, configs, and logs
+     - Randomness for tokens and keys from a cryptographic source; crypto from a standard library
+     - Memory safety in C and C++: an index, a length, or pointer arithmetic outside its buffer;
+       an integer overflow or a signed and unsigned mix in a size; a pointer, a reference, a
+       `string_view`, a `span`, or an iterator that outlives its owner or a change of its
+       container; a read of uninitialized memory; a data race on shared state
+   - Safety: public behavior changes and data loss
 5. Run the local review skills after your own pass, so one report covers general and
    project-specific rules
    - Find them in the skills list of the current context and in the skill directories of the
