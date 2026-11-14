@@ -54,6 +54,12 @@ When the same rule appears in an instruction file and in a skill, remove it from
 
 Why: an instruction applies by default through `applyTo`, while a skill applies only when someone invokes it.
 
+## Where a new rule lives
+
+Put a rule in the narrowest place that always loads it: an instruction file when it applies to files by glob, a skill when it is a procedure run on demand, an agent when it needs its own context or tool limits. When a program can check the rule, write the check (a task, a linter, a hook) instead of prose.
+
+Why: a rule in a wider place than it needs costs context on every task, and a rule in a skill is not loaded unless someone invokes it.
+
 ## Link paths
 
 Two cases are specific to this plugin:
