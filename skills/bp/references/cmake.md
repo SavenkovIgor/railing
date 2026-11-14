@@ -1432,6 +1432,29 @@ file explicitly:
 
 The vendor's toolchain file knows all the required details.
 
+### Configure and build as one action
+
+```bash
+# BAD: every build repeats configure
+cmake --preset my_preset && cmake --build --preset my_preset
+
+# GOOD: configure once, then build as often as needed
+cmake --preset my_preset
+cmake --build --preset my_preset
+```
+
+`cmake --build` re-runs configure on its own when a `CMakeLists.txt` or
+`*.cmake` file changes, so a plain build covers day-to-day edits. Run
+configure explicitly only for initialization: the first run, a preset switch,
+a changed cache variable or toolchain file, `--fresh`, and a changed CI image.
+A script, a task, or a CI step that joins both commands into one project action
+hides the cost of configure and makes it run when nothing needs it.
+
+`cmake --workflow` and a preset of type `workflow` fall under the same rule.
+Use them only in CI, where each run starts from a clean tree and the
+configure step is needed anyway. A local build, test, or IDE task does not
+run through a workflow.
+
 ## Project checklist
 
 Project level (`CMakeLists.txt`):
@@ -1515,6 +1538,8 @@ Build and configure time:
       `OPTIMIZE_DEPENDENCIES` is enabled for chains of static libraries.
 - [ ] Expensive configure-time probing is behind cache variables, and
       configure does not use the network.
+- [ ] Configure and build are separate commands in every script and task;
+      `cmake --workflow` appears only in CI.
 
 C++20 modules:
 
