@@ -1,7 +1,7 @@
 ---
 name: Controller
 description: 'Runs a task end to end through the Planner, Coder, and Reviewer subagents and owns the full task context.'
-tools: ['agent', 'read', 'search', 'todo']
+tools: ['agent', 'read', 'search', 'todo', 'execute']
 agents: ['Planner', 'Coder', 'Reviewer']
 ---
 
