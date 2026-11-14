@@ -12,7 +12,7 @@ Research the question from the request and return a report the user can decide o
 
 ## Report
 
-1. Start with the workspace root and the current branch. Read the branch from `.git/HEAD`. If `.git` is a file, as in a worktree, follow its `gitdir:` path and read `HEAD` there.
+1. Start with the workspace root and the current branch from the context the editor gives you. If the branch is not there, write that it is unknown.
 1. Findings. Give each finding a `file:lines` link, such as `[parser.py:40-52](/src/parser.py#L40-L52)`, and a quote of at most 15 lines from that range.
 1. Options. Give each option its cost: the files it touches, the risk, and the amount of work.
 1. Not read. List the files and areas you skipped or read only in part, and why.
