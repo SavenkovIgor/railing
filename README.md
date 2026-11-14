@@ -26,6 +26,7 @@ It will install both, plugin and marketplace (for autoupdate) with this plugin o
 │   │   ├── planner.agent.md                     turns a brief into a plan
 │   │   ├── coder.agent.md                       implements a plan
 │   │   ├── reviewer.agent.md                    checks a change against its task
+│   │   ├── researcher.agent.md                  experimental, researches a question and reports options
 │   │   └── gilfoyle.agent.md                    blunt code review and analysis
 │   └── rules/
 │       ├── global.instructions.md               general agent behavior and workflow guidance
