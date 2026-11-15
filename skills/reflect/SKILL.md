@@ -33,11 +33,25 @@ If found, propose how to trim or generalize that context.
 
 ## Steps
 
-1. Select the sessions as [Scope of the review](#scope-of-the-review) describes.
-2. Look for problems in them: [Cases to look for](#cases-to-look-for),
+1. Read the journal as [Journal](#journal) describes.
+2. Select the sessions as [Scope of the review](#scope-of-the-review) describes.
+3. Look for problems in them: [Cases to look for](#cases-to-look-for),
    [Possible points to focus](#possible-points-to-focus), and
    [Context management](#context-management).
-3. Propose fixes as [Proposals](#proposals) describes.
+4. Propose fixes as [Proposals](#proposals) describes.
+5. Append the entry of this run to the journal.
+
+## Journal
+
+The journal keeps the results of earlier runs in
+`~/.local/state/railing/reflect/journal.jsonl` on every platform.
+Read and write it with the file tools; create the file if it is missing.
+
+- Append one JSON line per run, after the user has decided on every proposal:
+  `date`, `sessions` (the reviewed session IDs), and `proposals`
+  (each with `file`, `text`, and `decision`: `applied`, `skipped`, or `undecided`).
+- Do not propose again a fix that an earlier entry marks `skipped`,
+  unless a new session gives new evidence for it; then cite that session.
 
 ## Scope of the review
 
@@ -125,7 +139,8 @@ Notes for the proposals:
 - Show the proposals in the chat.
 - Then ask the user about each proposal through the dialog tool (`ask_user`)
   with options such as apply, edit, skip, or discuss. Apply only what the user accepts.
-- If the dialog tool is unavailable, print the proposals and stop without editing any file.
+- If the dialog tool is unavailable, print the proposals and stop without editing
+  any file except the journal; mark every proposal `undecided`.
 - At least one of the proposals improves this skill itself: a missing check,
   an unclear step, or a wasted step that the review run showed.
   Count it among the 3; if nothing real turns up, name the closest weak spot
