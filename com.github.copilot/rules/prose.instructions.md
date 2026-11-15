@@ -6,9 +6,11 @@ applyTo: '**/*.md'
 # Technical writing
 
 Write and review developer-facing prose using a concise, project-aware approach
-based on the [Google developer documentation style guide](https://developers.google.com/style).
+based on the [Google developer documentation style guide](https://developers.google.com/style)
+and the writing rules of [ASD Simplified Technical English](https://www.asd-ste100.org/)
+(STE). Use the STE writing rules, not its dictionary of approved words.
 These principles inform the writing; they do not require the result to be
-"Google-compatible."
+"Google-compatible" or STE-compliant.
 
 ## Editorial hierarchy
 
