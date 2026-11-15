@@ -1,0 +1,16 @@
+# {Project or context name}
+
+{One or two sentences: what this context is and why it exists.}
+
+## Language
+
+### {Cluster name}
+
+**{Term}**:
+{One or two sentences: what the concept is.}
+_Avoid_: {other words used for it}
+_Code_: `{identifier, only when it differs from the term}`
+
+## Flagged ambiguities
+
+- "{word}" is used for both **{Term A}** and **{Term B}**; {which to say in which case}
