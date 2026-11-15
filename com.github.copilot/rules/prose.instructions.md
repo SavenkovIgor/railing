@@ -5,11 +5,12 @@ applyTo: '**/*.md'
 
 # Technical writing
 
-Write and review developer-facing prose using a concise, project-aware approach
-based on the [Google developer documentation style guide](https://developers.google.com/style).
-These principles inform the writing; they do not require the result to be
-"Google-compatible." Follow project-specific conventions and choose what best
-serves the intended reader.
+Write and review developer-facing prose in a concise, project-aware way.
+Base it on the [Google developer documentation style guide](https://developers.google.com/style)
+and on the writing rules of [ASD Simplified Technical English](https://www.asd-ste100.org/)
+(STE). Use the STE writing rules, not its dictionary of approved words.
+These principles inform the writing. They do not require the result to be
+"Google-compatible" or STE-compliant.
 
 ## Editorial hierarchy
 
@@ -20,44 +21,53 @@ serves the intended reader.
 
 ## Decide the scope
 
-- Apply the full style guidance to README files, API references, runbooks,
-  procedures, release notes, onboarding docs, error messages, and code comments
-  intended for other developers.
+- Apply the full style guidance to READMEs, API references, runbooks,
+  procedures, release notes, onboarding docs, error messages, and code comments.
 - Apply structural guidance only to ADRs, design docs, RFCs, PR descriptions,
   commit messages, and technical articles. Preserve the argument, trade-offs,
   and appropriate voice these genres need.
 - Do not apply these rules to conversational answers, brainstorming, opinion
-  pieces, or a user-requested voice unless the user asks for a documentation-
-  style rewrite.
-
-Follow project-specific terminology and conventions first. Treat the Google
-guide as recommendations, not rigid rules. Depart from a recommendation when
-doing so improves clarity, and stay consistent in styling
-within the document and related documents.
+  pieces, or a user-requested voice. Apply them there only when the user asks
+  for a documentation-style rewrite.
 
 ## Write for the reader
 
-- Lead with the answer or action the reader needs; put background afterward.
+- Lead with the answer or action the reader needs. Put background after it.
 - Put conditions before instructions so readers can skip steps that do not
   apply.
+- Start a warning with the command, then give the reason: `Stop the service
+  before you edit the file. A running service overwrites the file.`
 - Use numbered lists for sequences and bullets for unordered items.
-- Keep one main idea per paragraph.
+- Keep one main idea per paragraph and at most six sentences.
 - Use headings to organize content and enable scanning. Make each heading
   self-contained.
 - Prefer active voice and present tense. Name the actor when it is known.
   Passive voice is fine when the actor is irrelevant or the object matters
   more, as in "The file is saved."
+- Use simple tenses: present, past, and future. Give every `-ing` phrase a
+  clear actor. Write `After you install it, the service restarts`, not
+  `After installing, the service restarts`.
 - Use real verbs instead of nominalizations.
 - Address the reader directly when the language supports it. Avoid ambiguous
   uses of "we."
-- Keep sentences short, with one idea per sentence.
-- Use one term per concept and keep it the same throughout the document.
+- Keep one idea per sentence. Limit a sentence to 20 words in an instruction
+  and to 25 words in a description.
+- Use one term per concept and one meaning per word throughout the document.
+  If `follow` means "come after", write `apply` or `obey` for rules.
+- Give each modal verb one meaning: `must` for a requirement, `should` for a
+  recommendation, `can` for ability or permission. Write `can` instead of `may`.
 - Be specific and avoid abstractions.
-- Cut filler, bureaucratic phrasing, and redundancy.
+- Use at most three nouns in a row: write `the flag that overrides the cache
+  path`, not `cache path override flag`.
+- Cut filler, bureaucratic phrasing, and redundancy. Keep articles and
+  conjunctions: write `Run the task and check the output`, not
+  `Run task, check output`.
 - Do not open with an intro that restates the title or close with a summary
   that repeats the sections.
 - Remove excessive claims, hedges, unexplained jargon, idioms, and
   pre-announcements.
+- Replace a phrasal verb with a one-word verb: write `configure`, not
+  `set up`, and `find`, not `find out`.
 - Use a conversational, friendly, respectful tone without slang or excessive
   formality.
 - Avoid anthropomorphism and culture-specific references. Expand abbreviations
@@ -69,11 +79,11 @@ within the document and related documents.
 1. Remove bureaucratic and verbose phrases
    ✘ "For the purpose of increasing the efficiency of the system, a process of
        optimization is currently being conducted."
-   ✔ "We are optimizing the system."
+   ✔ "The team optimizes the system for speed."
 
 2. Prefer active voice over passive voice
-   ✘ "The configuration file was modified to enable logging."
-   ✔ "Modify the configuration file to enable logging."
+   ✘ "Logging is enabled in the configuration file by the installer."
+   ✔ "The installer enables logging in the configuration file."
 
 3. Replace noun-based verbs with actual verbs
    ✘ "The execution of the installation can be performed by the administrator."
@@ -119,6 +129,7 @@ within the document and related documents.
 - Add alt text that describes what an image conveys.
 - Use `and`, not `&`, in English prose and headings.
 - Use a hyphen-minus `-`, not an em dash `—`.
+- Use two sentences or a list, not a semicolon `;`.
 
 ## Choose the language
 
@@ -127,7 +138,7 @@ within the document and related documents.
 
 ## Adapt for Russian
 
-Transfer the structural and clarity principles, but do not mechanically apply
+Transfer the structural and clarity principles. Do not mechanically apply
 English-specific rules such as second-person pronouns, sentence case, serial
 commas, contractions, or American spelling. Prefer a natural imperative or
 impersonal construction, such as `Чтобы удалить документ, нажмите Delete`.
@@ -137,9 +148,9 @@ Replace passive voice and nominalizations when the actor is known:
 
 ## Break the rules deliberately
 
-These are guidelines, not absolute rules. Depart from a recommendation when
-doing so improves clarity for the intended audience. Keep the choice
-consistent throughout the document and be able to explain why.
+Depart from a recommendation when the change makes the text clearer for the
+intended audience. Keep the choice consistent throughout the document and related
+documents, and be able to explain why.
 
 ## Example
 
@@ -155,6 +166,6 @@ After:
 > To use incremental builds, set `CACHE_DIR` to a writable path before the first
 > build. If `CACHE_DIR` is unset, every build starts from scratch.
 
-The rewrite puts the condition before the instruction, uses an explicit actor,
-removes unsupported claims and a roadmap announcement, and adds the consequence
-that matters to the reader.
+The rewrite puts the condition before the instruction and uses an explicit
+actor. It removes unsupported claims and a roadmap announcement, and adds the
+consequence that matters to the reader.
