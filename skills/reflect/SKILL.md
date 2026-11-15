@@ -50,7 +50,8 @@ Read and write it with the file tools; create the file if it is missing.
 
 - Append one JSON line per run, after the user has decided on every proposal:
   `date`, `sessions` (each with `id` and `failed`, the list of failed criteria),
-  `failures` (the number of sessions that failed each criterion), and `proposals`
+  `failures` (the number of sessions that failed each criterion),
+  `coverage` (the share of reviewed sessions where at least one skill was invoked), and `proposals`
   (each with `file`, `text`, and `decision`: `applied`, `skipped`, or `undecided`).
 - Do not propose again a fix that an earlier entry marks `skipped`,
   unless a new session gives new evidence for it; then cite that session.
