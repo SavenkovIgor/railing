@@ -9,7 +9,7 @@ Write and review developer-facing prose in a concise, project-aware way.
 Base it on the [Google developer documentation style guide](https://developers.google.com/style)
 and on the writing rules of [ASD Simplified Technical English](https://www.asd-ste100.org/)
 (STE). Use the STE writing rules, not its dictionary of approved words.
-These principles inform the writing; they do not require the result to be
+These principles inform the writing. They do not require the result to be
 "Google-compatible" or STE-compliant.
 
 ## Editorial hierarchy
@@ -32,7 +32,7 @@ These principles inform the writing; they do not require the result to be
 
 ## Write for the reader
 
-- Lead with the answer or action the reader needs; put background afterward.
+- Lead with the answer or action the reader needs. Put background after it.
 - Put conditions before instructions so readers can skip steps that do not
   apply.
 - Start a warning with the command, then give the reason: `Stop the service
@@ -129,6 +129,7 @@ These principles inform the writing; they do not require the result to be
 - Add alt text that describes what an image conveys.
 - Use `and`, not `&`, in English prose and headings.
 - Use a hyphen-minus `-`, not an em dash `—`.
+- Use two sentences or a list, not a semicolon `;`.
 
 ## Choose the language
 
