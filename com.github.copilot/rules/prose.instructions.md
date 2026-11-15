@@ -52,6 +52,8 @@ These principles inform the writing; they do not require the result to be
 - Give each modal verb one meaning: `must` for a requirement, `should` for a
   recommendation, `can` for ability or permission. Write `can` instead of `may`.
 - Be specific and avoid abstractions.
+- Use at most three nouns in a row: write `the flag that overrides the cache
+  path`, not `cache path override flag`.
 - Cut filler, bureaucratic phrasing, and redundancy.
 - Do not open with an intro that restates the title or close with a summary
   that repeats the sections.
