@@ -54,7 +54,9 @@ These principles inform the writing; they do not require the result to be
 - Be specific and avoid abstractions.
 - Use at most three nouns in a row: write `the flag that overrides the cache
   path`, not `cache path override flag`.
-- Cut filler, bureaucratic phrasing, and redundancy.
+- Cut filler, bureaucratic phrasing, and redundancy. Keep articles and
+  conjunctions: write `Run the task and check the output`, not
+  `Run task, check output`.
 - Do not open with an intro that restates the title or close with a summary
   that repeats the sections.
 - Remove excessive claims, hedges, unexplained jargon, idioms, and
