@@ -55,10 +55,11 @@ Read and write it with the file tools; create the file if it is missing.
 
 ## Scope of the review
 
-- By default, review every session of the last 24 hours, not only the current one.
+- By default, review every session of the last 48 hours that no journal entry lists,
+  not only the current one.
   Find them through the session history tools, narrowing by date first,
   and read only the turns needed to understand a problem.
-- List sessions with `list_sessions` (`createdAfter` set to 24 hours ago), read each with
+- List sessions with `list_sessions` (`createdAfter` set to 48 hours ago), read each with
   `get_session_context` at `detail: summary`, and open `digest` with a small
   `transcriptLimit` only for turns that show a problem. Report sessions whose
   transcript comes back empty as unreadable instead of skipping them silently.
