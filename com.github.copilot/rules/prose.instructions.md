@@ -42,6 +42,9 @@ These principles inform the writing; they do not require the result to be
 - Prefer active voice and present tense. Name the actor when it is known.
   Passive voice is fine when the actor is irrelevant or the object matters
   more, as in "The file is saved."
+- Use simple tenses: present, past, and future. Give every `-ing` phrase a
+  clear actor. Write `After you install it, the service restarts`, not
+  `After installing, the service restarts`.
 - Use real verbs instead of nominalizations.
 - Address the reader directly when the language supports it. Avoid ambiguous
   uses of "we."
@@ -142,8 +145,8 @@ Replace passive voice and nominalizations when the actor is known:
 
 ## Break the rules deliberately
 
-Depart from a recommendation when doing so improves clarity for the intended
-audience. Keep the choice consistent throughout the document and related
+Depart from a recommendation when the change makes the text clearer for the
+intended audience. Keep the choice consistent throughout the document and related
 documents, and be able to explain why.
 
 ## Example
