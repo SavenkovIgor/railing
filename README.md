@@ -46,6 +46,7 @@ It will install both, plugin and marketplace (for autoupdate) with this plugin o
     ├── design-system/                           create or audit design systems
     ├── engineering-maturity/                    rank missing engineering practices by return on effort
     ├── migration-skill-factory/                 create skills for codebase migrations
+    ├── project-glossary/                        merge tracker, docs, and code terms into GLOSSARY.md
     ├── reflect/                                 propose context improvements after a task
     ├── report-review/                           clean up a report and verify it against the code
     ├── report-write/                            write a technical report about existing code into notes/
