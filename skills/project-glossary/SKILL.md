@@ -24,6 +24,9 @@ skill, so that skill can maintain it afterward.
 - Access to the issue tracker through a Model Context Protocol (MCP) tool, a CLI, or an export
   from the user
 
+One run reads one batch of the tracker and fits in a few minutes. Run the skill again to read
+the next batch.
+
 ## Source priority
 
 1. Issue tracker: issue titles, descriptions, and comments, pull request descriptions, and
@@ -40,20 +43,23 @@ identifier under `_Code_` when it differs from the term.
 
 1. Find the tracker from the git remote, config files, and available tools. If no tool reaches
    it, ask the user for access or an export. Run without it only if the user agrees
-2. Read the last 200 issues and pull requests, open and closed, with comments. Favor items with
-   long discussions. Delegate the reading to subagents when it does not fit in one context
+2. Read the tracker comment at the end of `GLOSSARY.md` to find the items that earlier runs
+   read. Read 30 issues and pull requests with comments. Take items newer than the read range
+   first, then continue back in time. Without the comment, start from the newest item
 3. Note each candidate term with the words used for it and one link. A candidate is a domain
    noun, verb, or state that an outsider would not understand. A common word that the team uses
    in a narrower sense is also a candidate
-4. Read the docs, then the code, and match their names to the candidates. Add concepts that
-   appear only there
-5. Drop general programming terms such as timeout, retry, or DTO, and words seen only once
+4. Search the docs, then the code, for the words of each candidate. On the first run, also read
+   the README and the top-level module names, and add concepts that appear only there
+5. Drop general programming terms such as timeout, retry, or DTO. Drop words seen only once in
+   all sources
 6. Group the words into concepts and pick each canonical term by the source priority
 7. Collect the open cases: a tie between words, one word for two concepts, or a meaning in docs
    or code that contradicts the tracker. Ask the user about all of them in one batch. Put the
    recommended option first
 8. Write the file from [GLOSSARY.md.template](assets/GLOSSARY.md.template). For an area with
    its own words, write `GLOSSARY.md` inside the area and list it in a root `GLOSSARY-MAP.md`
+9. Update the tracker comment with the range of items read so far
 
 ## Glossary rules
 
@@ -71,4 +77,4 @@ Report in chat:
 2. A table of the added and changed terms: term, words under `_Avoid_`, and the sources that use
    it (tracker, docs, code)
 3. Rename candidates: code identifiers that differ from their canonical term
-4. Sources not read: tracker ranges, docs, and directories skipped
+4. Sources not read: docs and directories skipped, and the next tracker batch
