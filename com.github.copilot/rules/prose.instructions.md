@@ -5,9 +5,9 @@ applyTo: '**/*.md'
 
 # Technical writing
 
-Write and review developer-facing prose using a concise, project-aware approach
-based on the [Google developer documentation style guide](https://developers.google.com/style)
-and the writing rules of [ASD Simplified Technical English](https://www.asd-ste100.org/)
+Write and review developer-facing prose in a concise, project-aware way.
+Base it on the [Google developer documentation style guide](https://developers.google.com/style)
+and on the writing rules of [ASD Simplified Technical English](https://www.asd-ste100.org/)
 (STE). Use the STE writing rules, not its dictionary of approved words.
 These principles inform the writing; they do not require the result to be
 "Google-compatible" or STE-compliant.
@@ -21,15 +21,14 @@ These principles inform the writing; they do not require the result to be
 
 ## Decide the scope
 
-- Apply the full style guidance to README files, API references, runbooks,
-  procedures, release notes, onboarding docs, error messages, and code comments
-  intended for other developers.
+- Apply the full style guidance to READMEs, API references, runbooks,
+  procedures, release notes, onboarding docs, error messages, and code comments.
 - Apply structural guidance only to ADRs, design docs, RFCs, PR descriptions,
   commit messages, and technical articles. Preserve the argument, trade-offs,
   and appropriate voice these genres need.
 - Do not apply these rules to conversational answers, brainstorming, opinion
-  pieces, or a user-requested voice unless the user asks for a documentation-
-  style rewrite.
+  pieces, or a user-requested voice. Apply them there only when the user asks
+  for a documentation-style rewrite.
 
 ## Write for the reader
 
@@ -37,7 +36,7 @@ These principles inform the writing; they do not require the result to be
 - Put conditions before instructions so readers can skip steps that do not
   apply.
 - Use numbered lists for sequences and bullets for unordered items.
-- Keep one main idea per paragraph.
+- Keep one main idea per paragraph and at most six sentences.
 - Use headings to organize content and enable scanning. Make each heading
   self-contained.
 - Prefer active voice and present tense. Name the actor when it is known.
@@ -46,7 +45,8 @@ These principles inform the writing; they do not require the result to be
 - Use real verbs instead of nominalizations.
 - Address the reader directly when the language supports it. Avoid ambiguous
   uses of "we."
-- Keep sentences short, with one idea per sentence.
+- Keep one idea per sentence. Limit a sentence to 20 words in an instruction
+  and to 25 words in a description.
 - Use one term per concept and keep it the same throughout the document.
 - Be specific and avoid abstractions.
 - Cut filler, bureaucratic phrasing, and redundancy.
@@ -123,7 +123,7 @@ These principles inform the writing; they do not require the result to be
 
 ## Adapt for Russian
 
-Transfer the structural and clarity principles, but do not mechanically apply
+Transfer the structural and clarity principles. Do not mechanically apply
 English-specific rules such as second-person pronouns, sentence case, serial
 commas, contractions, or American spelling. Prefer a natural imperative or
 impersonal construction, such as `Чтобы удалить документ, нажмите Delete`.
@@ -151,6 +151,6 @@ After:
 > To use incremental builds, set `CACHE_DIR` to a writable path before the first
 > build. If `CACHE_DIR` is unset, every build starts from scratch.
 
-The rewrite puts the condition before the instruction, uses an explicit actor,
-removes unsupported claims and a roadmap announcement, and adds the consequence
-that matters to the reader.
+The rewrite puts the condition before the instruction and uses an explicit
+actor. It removes unsupported claims and a roadmap announcement, and adds the
+consequence that matters to the reader.
