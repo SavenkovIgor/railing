@@ -107,6 +107,12 @@ so keep approvals few and treat every unique console call with suspicion.
 - Propose the cheapest fix: a clearer instruction, a new task, a missing tool,
   or an auto-approve entry for a call that is generic but missing from the list.
 
+### Skills that did not fire
+
+When an installed skill covered the task of a failed session but the agent did not invoke it,
+the cause is usually its `description`. Compare the description with the user's request
+and propose a description change that would have matched it.
+
 ## Possible points to focus
 
 - It could be lack of documentation in some class and therefore you should
