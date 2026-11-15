@@ -7,8 +7,9 @@ description: >-
   the agent started repeating earlier steps,
   or more than half of the context window is used when a token counter is visible,
   or when a scheduled or manual review of recent agent sessions is requested,
-  to reflect on the sessions and propose the 3 most important improvements
-  to AI context files that would improve speed or quality next time
+  to reflect on the sessions, propose the 3 most important improvements
+  to AI context files that would improve speed or quality next time,
+  and record the run in a journal of reviewed sessions and decisions
 ---
 
 # Reflect
@@ -31,19 +32,58 @@ If found, propose how to trim or generalize that context.
 
 - [global.instructions.md](/com.github.copilot/rules/global.instructions.md)
 
+## Steps
+
+1. Read the journal as [Journal](#journal) describes.
+2. Select the sessions as [Scope of the review](#scope-of-the-review) describes.
+3. Assess each session as [Session assessment](#session-assessment) describes.
+4. Look for problems in the failed sessions only: [Cases to look for](#cases-to-look-for),
+   [Possible points to focus](#possible-points-to-focus), and
+   [Context management](#context-management).
+5. Propose fixes as [Proposals](#proposals) describes.
+6. Append the entry of this run to the journal.
+
+## Journal
+
+The journal keeps the results of earlier runs in
+`~/.local/state/railing/reflect/journal.jsonl` on every platform.
+Read and write it with the file tools; create the file if it is missing.
+
+- Append one JSON line per run, after the user has decided on every proposal:
+  `date`, `sessions` (each with `id` and `failed`, the list of failed criteria),
+  `failures` (the number of sessions that failed each criterion),
+  `coverage` (the share of reviewed sessions where at least one skill was invoked), and `proposals`
+  (each with `file`, `text`, and `decision`: `applied`, `skipped`, or `undecided`).
+- Do not propose again a fix that an earlier entry marks `skipped`,
+  unless a new session gives new evidence for it; then cite that session.
+
 ## Scope of the review
 
-- By default, review every session of the last 24 hours, not only the current one.
+- By default, review every session of the last 48 hours that no journal entry lists,
+  not only the current one.
   Find them through the session history tools, narrowing by date first,
   and read only the turns needed to understand a problem.
-- List sessions with `list_sessions` (`createdAfter` set to 24 hours ago), read each with
+- List sessions with `list_sessions` (`createdAfter` set to 48 hours ago), read each with
   `get_session_context` at `detail: summary`, and open `digest` with a small
   `transcriptLimit` only for turns that show a problem. Report sessions whose
   transcript comes back empty as unreadable instead of skipping them silently.
 - Review only the current conversation when the user explicitly asks for it.
+- Review at most 20 sessions per run, oldest first, so that older sessions are reviewed
+  before they leave the 48-hour window. The rest wait for the next run.
+- If no unreviewed session is left, tell the user so and stop.
 - Skip sessions of this skill itself, so a review does not analyze earlier reviews.
 - A proposal cites the evidence, such as the session and the step, but not secrets,
   credentials, or personal data from the sessions.
+
+## Session assessment
+
+Check each session against 4 criteria. A session fails when it fails at least one;
+give the reason in 1-3 sentences that name the failed criteria and the step.
+
+- Efficiency: the agent reached the result without extra steps, repeats, or unique console calls.
+- Instruction compliance: the agent followed the instructions and skills in its context.
+- Result quality: the user accepted the result without asking to redo it.
+- Verbosity: the answers and tool output were no longer than the task needed.
 
 ## Cases to look for
 
@@ -68,6 +108,12 @@ so keep approvals few and treat every unique console call with suspicion.
   in the console, or never searched for the task-running tool, flag it as a missed task.
 - Propose the cheapest fix: a clearer instruction, a new task, a missing tool,
   or an auto-approve entry for a call that is generic but missing from the list.
+
+### Skills that did not fire
+
+When an installed skill covered the task of a failed session but the agent did not invoke it,
+the cause is usually its `description`. Compare the description with the user's request
+and propose a description change that would have matched it.
 
 ## Possible points to focus
 
@@ -110,14 +156,20 @@ Notes for the proposals:
 
 ## Proposals
 
-- Propose exactly 3, ranked by importance.
+- Propose exactly 3, ranked by importance. Base each one on a failed session;
+  the proposal for this skill itself may rely on the current review run instead.
 - Each proposal names one concrete file and gives the exact new text.
   Keep it small: 1-3 sentences. A proposal can also move an instruction to
   another file or delete it.
+- A proposal can also create a new skill when no installed skill covers a task
+  that failed sessions repeat: give its `name` and `description`.
+- Before the proposals, print one summary line: the number of reviewed sessions,
+  the number of failed sessions with the count per criterion, and the skill coverage.
 - Show the proposals in the chat.
 - Then ask the user about each proposal through the dialog tool (`ask_user`)
   with options such as apply, edit, skip, or discuss. Apply only what the user accepts.
-- If the dialog tool is unavailable, print the proposals and stop without editing any file.
+- If the dialog tool is unavailable, print the proposals and stop without editing
+  any file except the journal; mark every proposal `undecided`.
 - At least one of the proposals improves this skill itself: a missing check,
   an unclear step, or a wasted step that the review run showed.
   Count it among the 3; if nothing real turns up, name the closest weak spot
