@@ -36,7 +36,7 @@ If found, propose how to trim or generalize that context.
 1. Read the journal as [Journal](#journal) describes.
 2. Select the sessions as [Scope of the review](#scope-of-the-review) describes.
 3. Assess each session as [Session assessment](#session-assessment) describes.
-4. Look for problems in them: [Cases to look for](#cases-to-look-for),
+4. Look for problems in the failed sessions only: [Cases to look for](#cases-to-look-for),
    [Possible points to focus](#possible-points-to-focus), and
    [Context management](#context-management).
 5. Propose fixes as [Proposals](#proposals) describes.
@@ -148,7 +148,8 @@ Notes for the proposals:
 
 ## Proposals
 
-- Propose exactly 3, ranked by importance.
+- Propose exactly 3, ranked by importance. Base each one on a failed session;
+  the proposal for this skill itself may rely on the current review run instead.
 - Each proposal names one concrete file and gives the exact new text.
   Keep it small: 1-3 sentences. A proposal can also move an instruction to
   another file or delete it.
