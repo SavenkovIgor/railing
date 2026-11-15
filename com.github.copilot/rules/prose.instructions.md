@@ -89,7 +89,7 @@ These principles inform the writing. They do not require the result to be
    ✘ "The execution of the installation can be performed by the administrator."
    ✔ "The administrator installs the software."
 
-4. Be specific, avoid abstractions
+4. Be specific and avoid abstractions
    ✘ "The system provides a wide range of options for the user."
    ✔ "The system lets you export data to CSV, JSON, or XML."
 
