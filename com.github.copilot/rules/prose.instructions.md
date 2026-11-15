@@ -8,8 +8,7 @@ applyTo: '**/*.md'
 Write and review developer-facing prose using a concise, project-aware approach
 based on the [Google developer documentation style guide](https://developers.google.com/style).
 These principles inform the writing; they do not require the result to be
-"Google-compatible." Follow project-specific conventions and choose what best
-serves the intended reader.
+"Google-compatible."
 
 ## Editorial hierarchy
 
@@ -29,11 +28,6 @@ serves the intended reader.
 - Do not apply these rules to conversational answers, brainstorming, opinion
   pieces, or a user-requested voice unless the user asks for a documentation-
   style rewrite.
-
-Follow project-specific terminology and conventions first. Treat the Google
-guide as recommendations, not rigid rules. Depart from a recommendation when
-doing so improves clarity, and stay consistent in styling
-within the document and related documents.
 
 ## Write for the reader
 
@@ -137,9 +131,9 @@ Replace passive voice and nominalizations when the actor is known:
 
 ## Break the rules deliberately
 
-These are guidelines, not absolute rules. Depart from a recommendation when
-doing so improves clarity for the intended audience. Keep the choice
-consistent throughout the document and be able to explain why.
+Depart from a recommendation when doing so improves clarity for the intended
+audience. Keep the choice consistent throughout the document and related
+documents, and be able to explain why.
 
 ## Example
 
