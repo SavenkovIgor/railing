@@ -35,6 +35,8 @@ These principles inform the writing; they do not require the result to be
 - Lead with the answer or action the reader needs; put background afterward.
 - Put conditions before instructions so readers can skip steps that do not
   apply.
+- Start a warning with the command, then give the reason: `Stop the service
+  before you edit the file. A running service overwrites the file.`
 - Use numbered lists for sequences and bullets for unordered items.
 - Keep one main idea per paragraph and at most six sentences.
 - Use headings to organize content and enable scanning. Make each heading
