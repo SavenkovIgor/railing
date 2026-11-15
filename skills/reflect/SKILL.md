@@ -66,6 +66,7 @@ Read and write it with the file tools; create the file if it is missing.
 - Review only the current conversation when the user explicitly asks for it.
 - Review at most 20 sessions per run, oldest first, so that older sessions are reviewed
   before they leave the 48-hour window. The rest wait for the next run.
+- If no unreviewed session is left, tell the user so and stop.
 - Skip sessions of this skill itself, so a review does not analyze earlier reviews.
 - A proposal cites the evidence, such as the session and the step, but not secrets,
   credentials, or personal data from the sessions.
