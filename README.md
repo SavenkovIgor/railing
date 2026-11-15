@@ -42,6 +42,7 @@ It will install both, plugin and marketplace (for autoupdate) with this plugin o
 └── skills/
     ├── bp/                                      validate files against best-practice references
     ├── debug-context-artifacts/                 inspect the initial AI context state
+    ├── decision-flow/                           walk through open decisions in short rounds of questions
     ├── design-system/                           create or audit design systems
     ├── engineering-maturity/                    rank missing engineering practices by return on effort
     ├── migration-skill-factory/                 create skills for codebase migrations
