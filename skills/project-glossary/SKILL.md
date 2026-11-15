@@ -10,15 +10,15 @@ argument-hint: Optional area or bounded context
 
 # Project glossary
 
-Collect the domain terms of a project from its issue tracker, docs, and code, and merge them into
-one `GLOSSARY.md` with one canonical word per concept. The file follows the glossary format of
+Collect the domain terms of a project from its issue tracker, docs, and code. Merge them into one
+`GLOSSARY.md` with one canonical word per concept. The file follows the glossary format of
 Matt Pocock's
 [domain-modeling](https://github.com/mattpocock/skills/tree/main/skills/engineering/domain-modeling)
 skill, so that skill can maintain it afterward.
 
 ## Inputs
 
-- An optional area or bounded context; without it, cover the whole project
+- An optional area or bounded context. Without it, cover the whole project
 - An existing `GLOSSARY.md` or `GLOSSARY-MAP.md`: update it and keep its decisions unless a
   source contradicts them
 - Access to the issue tracker through a Model Context Protocol (MCP) tool, a CLI, or an export
@@ -39,17 +39,19 @@ identifier under `_Code_` when it differs from the term.
 ## Procedure
 
 1. Find the tracker from the git remote, config files, and available tools. If no tool reaches
-   it, ask the user for access or an export, and run without it only if the user agrees
+   it, ask the user for access or an export. Run without it only if the user agrees
 2. Read the last 200 issues and pull requests, open and closed, with comments. Favor items with
    long discussions. Delegate the reading to subagents when it does not fit in one context
-3. Note each candidate term: a domain noun, verb, or state that an outsider would not understand,
-   or that the team uses in a narrower sense than usual. Keep the words used for it and one link
-4. Read the docs, then the code, and match their names to the candidates; add concepts that
+3. Note each candidate term with the words used for it and one link. A candidate is a domain
+   noun, verb, or state that an outsider would not understand. A common word that the team uses
+   in a narrower sense is also a candidate
+4. Read the docs, then the code, and match their names to the candidates. Add concepts that
    appear only there
 5. Drop general programming terms such as timeout, retry, or DTO, and words seen only once
 6. Group the words into concepts and pick each canonical term by the source priority
-7. Collect the open cases: a tie between words, one word for two concepts, a doc or code meaning
-   that contradicts the tracker. Ask the user about them in one batch, recommended option first
+7. Collect the open cases: a tie between words, one word for two concepts, or a meaning in docs
+   or code that contradicts the tracker. Ask the user about all of them in one batch. Put the
+   recommended option first
 8. Write the file from [GLOSSARY.md.template](assets/GLOSSARY.md.template). For an area with
    its own words, write `GLOSSARY.md` inside the area and list it in a root `GLOSSARY-MAP.md`
 
@@ -57,9 +59,9 @@ identifier under `_Code_` when it differs from the term.
 
 - Define what the concept is, in one or two sentences, without implementation details
 - Write terms in the language the team uses in the tracker, spelled as the team spells them
-- Group terms under `###` headings when clusters emerge; a flat list is fine otherwise
+- Group terms under `###` headings when clusters emerge. Otherwise, a flat list is fine
 - Put cases the user left open under `## Flagged ambiguities`
-- Change no code; report code identifiers that differ from their term as rename candidates
+- Change no code. Report code identifiers that differ from their term as rename candidates
 
 ## Output Format
 
