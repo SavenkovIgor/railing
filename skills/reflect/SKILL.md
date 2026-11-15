@@ -162,6 +162,8 @@ Notes for the proposals:
   another file or delete it.
 - A proposal can also create a new skill when no installed skill covers a task
   that failed sessions repeat: give its `name` and `description`.
+- Before the proposals, print one summary line: the number of reviewed sessions,
+  the number of failed sessions with the count per criterion, and the skill coverage.
 - Show the proposals in the chat.
 - Then ask the user about each proposal through the dialog tool (`ask_user`)
   with options such as apply, edit, skip, or discuss. Apply only what the user accepts.
