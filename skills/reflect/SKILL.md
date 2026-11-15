@@ -64,6 +64,8 @@ Read and write it with the file tools; create the file if it is missing.
   `transcriptLimit` only for turns that show a problem. Report sessions whose
   transcript comes back empty as unreadable instead of skipping them silently.
 - Review only the current conversation when the user explicitly asks for it.
+- Review at most 20 sessions per run, oldest first, so that older sessions are reviewed
+  before they leave the 48-hour window. The rest wait for the next run.
 - Skip sessions of this skill itself, so a review does not analyze earlier reviews.
 - A proposal cites the evidence, such as the session and the step, but not secrets,
   credentials, or personal data from the sessions.
