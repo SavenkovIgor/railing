@@ -7,8 +7,9 @@ description: >-
   the agent started repeating earlier steps,
   or more than half of the context window is used when a token counter is visible,
   or when a scheduled or manual review of recent agent sessions is requested,
-  to reflect on the sessions and propose the 3 most important improvements
-  to AI context files that would improve speed or quality next time
+  to reflect on the sessions, propose the 3 most important improvements
+  to AI context files that would improve speed or quality next time,
+  and record the run in a journal of reviewed sessions and decisions
 ---
 
 # Reflect
