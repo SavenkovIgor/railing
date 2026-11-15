@@ -160,6 +160,8 @@ Notes for the proposals:
 - Each proposal names one concrete file and gives the exact new text.
   Keep it small: 1-3 sentences. A proposal can also move an instruction to
   another file or delete it.
+- A proposal can also create a new skill when no installed skill covers a task
+  that failed sessions repeat: give its `name` and `description`.
 - Show the proposals in the chat.
 - Then ask the user about each proposal through the dialog tool (`ask_user`)
   with options such as apply, edit, skip, or discuss. Apply only what the user accepts.
