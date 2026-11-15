@@ -61,6 +61,8 @@ These principles inform the writing; they do not require the result to be
   that repeats the sections.
 - Remove excessive claims, hedges, unexplained jargon, idioms, and
   pre-announcements.
+- Replace a phrasal verb with a one-word verb: write `configure`, not
+  `set up`, and `find`, not `find out`.
 - Use a conversational, friendly, respectful tone without slang or excessive
   formality.
 - Avoid anthropomorphism and culture-specific references. Expand abbreviations
