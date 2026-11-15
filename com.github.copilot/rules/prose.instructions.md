@@ -49,6 +49,8 @@ These principles inform the writing; they do not require the result to be
   and to 25 words in a description.
 - Use one term per concept and one meaning per word throughout the document.
   If `follow` means "come after", write `apply` or `obey` for rules.
+- Give each modal verb one meaning: `must` for a requirement, `should` for a
+  recommendation, `can` for ability or permission. Write `can` instead of `may`.
 - Be specific and avoid abstractions.
 - Cut filler, bureaucratic phrasing, and redundancy.
 - Do not open with an intro that restates the title or close with a summary
