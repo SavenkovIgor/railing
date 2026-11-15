@@ -63,11 +63,11 @@ These principles inform the writing; they do not require the result to be
 1. Remove bureaucratic and verbose phrases
    ✘ "For the purpose of increasing the efficiency of the system, a process of
        optimization is currently being conducted."
-   ✔ "We are optimizing the system."
+   ✔ "The team optimizes the system for speed."
 
 2. Prefer active voice over passive voice
-   ✘ "The configuration file was modified to enable logging."
-   ✔ "Modify the configuration file to enable logging."
+   ✘ "Logging is enabled in the configuration file by the installer."
+   ✔ "The installer enables logging in the configuration file."
 
 3. Replace noun-based verbs with actual verbs
    ✘ "The execution of the installation can be performed by the administrator."
