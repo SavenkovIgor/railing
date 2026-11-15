@@ -35,11 +35,12 @@ If found, propose how to trim or generalize that context.
 
 1. Read the journal as [Journal](#journal) describes.
 2. Select the sessions as [Scope of the review](#scope-of-the-review) describes.
-3. Look for problems in them: [Cases to look for](#cases-to-look-for),
+3. Assess each session as [Session assessment](#session-assessment) describes.
+4. Look for problems in them: [Cases to look for](#cases-to-look-for),
    [Possible points to focus](#possible-points-to-focus), and
    [Context management](#context-management).
-4. Propose fixes as [Proposals](#proposals) describes.
-5. Append the entry of this run to the journal.
+5. Propose fixes as [Proposals](#proposals) describes.
+6. Append the entry of this run to the journal.
 
 ## Journal
 
@@ -48,7 +49,8 @@ The journal keeps the results of earlier runs in
 Read and write it with the file tools; create the file if it is missing.
 
 - Append one JSON line per run, after the user has decided on every proposal:
-  `date`, `sessions` (the reviewed session IDs), and `proposals`
+  `date`, `sessions` (each with `id` and `failed`, the list of failed criteria),
+  `failures` (the number of sessions that failed each criterion), and `proposals`
   (each with `file`, `text`, and `decision`: `applied`, `skipped`, or `undecided`).
 - Do not propose again a fix that an earlier entry marks `skipped`,
   unless a new session gives new evidence for it; then cite that session.
@@ -70,6 +72,16 @@ Read and write it with the file tools; create the file if it is missing.
 - Skip sessions of this skill itself, so a review does not analyze earlier reviews.
 - A proposal cites the evidence, such as the session and the step, but not secrets,
   credentials, or personal data from the sessions.
+
+## Session assessment
+
+Check each session against 4 criteria. A session fails when it fails at least one;
+give the reason in 1-3 sentences that name the failed criteria and the step.
+
+- Efficiency: the agent reached the result without extra steps, repeats, or unique console calls.
+- Instruction compliance: the agent followed the instructions and skills in its context.
+- Result quality: the user accepted the result without asking to redo it.
+- Verbosity: the answers and tool output were no longer than the task needed.
 
 ## Cases to look for
 
