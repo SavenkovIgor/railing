@@ -31,6 +31,14 @@ If found, propose how to trim or generalize that context.
 
 - [global.instructions.md](/com.github.copilot/rules/global.instructions.md)
 
+## Steps
+
+1. Select the sessions as [Scope of the review](#scope-of-the-review) describes.
+2. Look for problems in them: [Cases to look for](#cases-to-look-for),
+   [Possible points to focus](#possible-points-to-focus), and
+   [Context management](#context-management).
+3. Propose fixes as [Proposals](#proposals) describes.
+
 ## Scope of the review
 
 - By default, review every session of the last 24 hours, not only the current one.
