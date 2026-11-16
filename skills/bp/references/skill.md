@@ -5,7 +5,8 @@ First read the best practice docs:
 
 ## General Principles
 
-- Line width - 100 characters
+- Line width - 100 characters. Find longer lines with the IDE text search tool:
+  run it on the checked file with the regex `^.{101,}`. Each match is a line over the limit.
 - Avoid long paragraphs; use lists, tables, and formatting to break up content
 - The skill should only include content that truly requires model reasoning or understanding
 - Use paths from the skill root without `./` (`scripts/foo.sh`) for all skill resources and for

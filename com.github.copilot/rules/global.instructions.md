@@ -35,6 +35,10 @@ Expect the user to stop any console call that is not obvious at a glance. If the
 
 - Before a console call, name the narrower tools you tried and why they did not fit.
 - Write one short command per call, with well-known tools and common flags. Agents tend to chain commands with pipes, `&&`, and `;` into one line; split such a line into separate calls.
+
+  ✘ `git add plugin.json && git commit -m "..." && git rebase --continue`
+  ✔ three separate calls: `git add plugin.json`, `git commit -m "..."`, `git rebase --continue`
+
 - If the user interrupts a console call, ask what to do next or go back to a narrower tool. Agents tend to retry the same action as a reworded command; an interrupt means no, not "try another form".
 
 **`run_in_terminal` for read-only filesystem operations is FORBIDDEN.** Use the substitution table below instead:
