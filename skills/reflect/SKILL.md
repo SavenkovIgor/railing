@@ -32,6 +32,9 @@ If found, propose how to trim or generalize that context.
 
 - [global.instructions.md](/com.github.copilot/rules/global.instructions.md)
 
+The IDE usually attaches these files through `applyTo`.
+Open a link only when its file is missing from the context.
+
 ## Steps
 
 1. Read the journal as [Journal](#journal) describes.

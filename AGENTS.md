@@ -90,6 +90,11 @@ Why: the editor attaches these files by `applyTo`, but an agent that edits throu
 
 State each requirement positively: say what to do. Add a prohibition ("not here, not there") only when LLMs make that mistake in practice, and name the mistake.
 
+When an edit replaces one option with another, write only the new option. Agents tend to keep the old option as a contrast. The reader of the new text never saw the old option, and an old version of the text does not show a mistake in practice.
+
+✘ `Find longer lines with the IDE text search tool, not with awk in the console`
+✔ `Find longer lines with the IDE text search tool`
+
 Why: a prohibition for an error that never happens costs tokens and clutters the context of both the model and the human reader. Break the rule when a mistake is costly and likely enough to justify the extra line.
 
 ## Pull request workflow
