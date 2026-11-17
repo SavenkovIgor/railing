@@ -21,7 +21,7 @@ before the user typed anything.
 Print the following tables. If a category has no entries, still print the table header with
 a single row saying `- none detected -`.
 
-### Instructions & Rules
+### Instructions and Rules
 
 Artifacts that shape behavior globally or for specific file patterns
 (system prompts, CLAUDE.md, .cursorrules, custom instructions, etc.).
@@ -38,7 +38,7 @@ Columns:
 - Scope / applyTo - glob pattern, directory, or `global`
 - Content in Context? - `full` (text is in your context window) · `reference` (only path/name mentioned)
 
-### Commands & Prompts
+### Commands and Prompts
 
 User-invocable prompt templates (`.prompt.md`, slash commands
 that are simple prompt expansions without conditional activation logic).
@@ -71,7 +71,7 @@ Activation Trigger - keyword / model-detected relevance/ file-pattern / manual-o
 Active Now? - yes (content loaded and influencing behavior) / no (available but dormant) / n/a (environment has no concept of passive activation) / unknown
 Content in Context? - full / reference / not loaded
 
-### MCP Servers & Extensions
+### MCP Servers and Extensions
 
 External tool integrations - MCP servers, IDE extensions exposing tools, etc.
 
@@ -84,7 +84,7 @@ Columns:
 - Tools Exposed - list of tool names visible to you right now (truncate to first 5 + count if many)
 - Status - `connected` · `listed-only` · `unknown`
 
-### Tools & Capabilities
+### Tools and Capabilities
 
 All tools available in this session - native, deferred, and MCP-provided.
 
@@ -97,7 +97,7 @@ Columns:
 - Category - `file` · `terminal` · `search` · `web` · `browser` · `planning` · `memory` · `scheduling` · `ide` · `other`
 - Availability - `immediate` (callable right now) · `deferred` (requires fetch/activation first) · `unknown`
 
-### Persistent State & Memory
+### Persistent State and Memory
 
 File-based memory, conversation history, cached context, or any persistent
 state loaded into this session automatically.
@@ -111,7 +111,7 @@ Columns:
 - Type - `memory-index` · `memory-file` · `conversation-cache` · `settings` · `other`
 - Content in Context? - `full` · `reference` · `not loaded`
 
-### IDE & Workspace Context (if applicable)
+### IDE and Workspace Context (if applicable)
 
 Open files, active editor selection, terminal output, problems panel,
 git state, environment metadata, etc.
@@ -139,7 +139,7 @@ Columns:
 - Type / Group - `build` · `test` · `run` · `lint` · `deploy` · `other`
 - Content in Context? - `full` · `reference`
 
-### Environment & Isolation
+### Environment and Isolation
 
 Runtime environment details: platform, shell, working directory,
 isolation model (worktrees, sandboxes, containers), permission mode.
@@ -174,7 +174,7 @@ Used in the Location column of any table with a file path. Pick the *most specif
 | Value        | Meaning                                                   | Typical paths                                          |
 |--------------|-----------------------------------------------------------|--------------------------------------------------------|
 | `repo`       | Inside the current git workspace / project                | `./`, relative paths inside workspace                  |
-| `user`       | User home dir - personal config & dotfiles                | `~`, `%USERPROFILE%`, `AppData/Roaming` (user-level)   |
+| `user`       | User home dir - personal config and dotfiles              | `~`, `%USERPROFILE%`, `AppData/Roaming` (user-level)   |
 | `ide-ext`    | IDE extension installation directory                      | VS Code `extensions/`, Cursor extensions               |
 | `ide-config` | IDE user-level config / settings (non-extension)          | `Code/User/`, `.cursor/`, `.vscode/` outside repo      |
 | `agent`      | AI framework's own runtime storage                        | `/memories/`, session cache, Copilot workspace storage |

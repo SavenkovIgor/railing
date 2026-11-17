@@ -5,7 +5,7 @@
 ### Naming
 
 Name every C++ file and directory in lowercase `snake_case`, starting with a
-letter. Use only `a-z`, `0-9`, and `_`; module partition filenames may also
+letter. Use only `a-z`, `0-9`, and `_`; module partition filenames can also
 contain one hyphen as described below. A file name matches this pattern:
 
 ```text
@@ -28,8 +28,8 @@ text_tools/
   is the `snake_case` form of the module name (acronyms count as words):
   `Graph.GraphLayout` → `graph/graph_layout.cppm`.
 - Two module names must not differ only by case.
-- No Windows reserved stems: `con`, `prn`, `aux`, `nul`, `com1`–`com9`,
-  `lpt1`–`lpt9`.
+- No Windows reserved stems: `con`, `prn`, `aux`, `nul`, `com1`-`com9`,
+  `lpt1`-`lpt9`.
 
 Why:
 

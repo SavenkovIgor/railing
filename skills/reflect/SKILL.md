@@ -40,7 +40,7 @@ Open a link only when its file is missing from the context.
 1. Read the journal as [Journal](#journal) describes.
 2. Select the sessions as [Scope of the review](#scope-of-the-review) describes.
 3. Assess each session as [Session assessment](#session-assessment) describes.
-4. Look for problems in the failed sessions only: [Cases to look for](#cases-to-look-for),
+4. Find problems in the failed sessions only: [Cases to check](#cases-to-check),
    [Possible points to focus](#possible-points-to-focus), and
    [Context management](#context-management).
 5. Propose fixes as [Proposals](#proposals) describes.
@@ -88,11 +88,11 @@ give the reason in 1-3 sentences that name the failed criteria and the step.
 - Result quality: the user accepted the result without asking to redo it.
 - Verbosity: the answers and tool output were no longer than the task needed.
 
-## Cases to look for
+## Cases to check
 
 Pay most attention to cases where an agent did not do what was expected
 or did it inefficiently: ignored an instruction, took extra steps, repeated itself,
-or asked the user for something it could find out itself.
+or asked the user for something it could learn itself.
 
 ### Unique console calls
 
@@ -106,7 +106,7 @@ so keep approvals few and treat every unique console call with suspicion.
 - For each unique call, check it against the tooling priority: which narrower tool
   could have done the job, and why was it not used? Also flag a general tool used
   where a dedicated one exists, such as `curl` instead of web fetch.
-  Find out why the unique approach was needed and what would make it unnecessary.
+  Determine why the unique approach was needed and what would make it unnecessary.
 - If the project has `.vscode/tasks.json` and the agent typed the same command
   in the console, or never searched for the task-running tool, flag it as a missed task.
 - Propose the cheapest fix: a clearer instruction, a new task, a missing tool,
@@ -120,19 +120,18 @@ and propose a description change that would have matched it.
 
 ## Possible points to focus
 
-- It could be lack of documentation in some class and therefore you should
-  seek for external docs
-- It could be the prompt that lack some information and user should provide more details
-  that are really match to the prompt on abstraction level
-- It could be the missed info in feature documentation or missing feature completely
-- It could be too long search of necessary code in the codebase and the search
-  recommendations could be slightly improved
-- It could be excessive context in the task that adds noise but does not improve
+- A class has no documentation, so the agent had to search external docs
+- The prompt lacks information, and the user should add details at the
+  abstraction level of the prompt
+- The feature documentation misses information, or the feature itself is missing
+- The search for the necessary code took too long, and the search
+  recommendations need an improvement
+- The task has excessive context that adds noise but does not improve
   the quality of the solution
-- It could be context that is too detailed for one tiny part of the system and
-  unlikely to be broadly useful across similar tasks
-- What context instructions could instead be expressed as a validation code or with project validation tool to replace
-  context pollution with strict algorithmic checks
+- The context is too detailed for one small part of the system and
+  is unlikely to help with similar tasks
+- A context instruction can become validation code or a check in a project
+  validation tool, which replaces context pollution with a strict algorithmic check
 - Whether the run showed one of the context failure modes below
 
 ## Context management
@@ -160,7 +159,7 @@ Notes for the proposals:
 ## Proposals
 
 - Propose exactly 3, ranked by importance. Base each one on a failed session;
-  the proposal for this skill itself may rely on the current review run instead.
+  the proposal for this skill itself can rely on the current review run instead.
 - Each proposal names one concrete file and gives the exact new text.
   Keep it small: 1-3 sentences. A proposal can also move an instruction to
   another file or delete it.

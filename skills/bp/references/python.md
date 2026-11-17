@@ -1,7 +1,7 @@
 # Python Best Practices
 
-`Scripts` - python files that could be started directly from CLI
-`Modules` - python files that are imported by other python files, but cant be started directly
+- `Scripts` - Python files that can be started directly from the CLI
+- `Modules` - Python files that other Python files import, but cannot be started directly
 
 ## Style
 
@@ -16,7 +16,7 @@
 - If you have a family of related functions, you should consider joining them into a class
 - Use built-in types for type hints (`list`, `dict`, `tuple` instead of `List`, `Dict`, `Tuple` from `typing`) - since Python 3.9 built-ins support generics natively, so `typing` imports are redundant and add noise
 
-## Language core & Libraries
+## Language core and libraries
 
 - Use Python 3 syntax and features
 - Prefer standard library modules over third-party dependencies unless strictly necessary
@@ -31,9 +31,9 @@
 ## Strings
 
 - Prefer f-strings for string formatting
-- When constructing Path with string literals, use compact notation: `'a/b/c'` instead of `'a' / 'b' / 'c'`
+- When you construct a `Path` from string literals, use compact notation: `'a/b/c'` instead of `'a' / 'b' / 'c'`
 
-## Script structure & requirements
+## Script structure and requirements
 
 Scripts should be organized using the following pattern (exclude comments):
 
@@ -76,6 +76,6 @@ if __name__ == '__main__':
 Also ensure the script has executable permissions (`chmod +x`) at git repo level
 (Verify with `git ls-tree HEAD <path>` - should show `100755`)
 
-## Modules structure & requirements
+## Module structure and requirements
 
 - In modules if a main function exists, it is reserved for unit tests

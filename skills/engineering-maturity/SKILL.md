@@ -23,9 +23,9 @@ Ask: "How many engineers are on this team (including QA, DevOps, and embedded SR
 Classify as:
 
 - Small: ≤10
-- Medium: 11–50
-- Large: 51–150
-- >150: Note that the source research excluded these teams (sample too small). Recommendations will be extrapolated - state this explicitly.
+- Medium: 11-50
+- Large: 51-150
+- >150: The source research excluded these teams (sample too small). Recommendations are extrapolated - state this explicitly.
 
 ### Phase 1: Repo reconnaissance
 
@@ -89,15 +89,15 @@ Only include practices that are absent (✘ from recon or "no" from questions) a
 
 ### 4. Implementation Order
 
-Weeks 1–2 (ROI > 0.3 - do these first):
+Weeks 1-2 (ROI > 0.3 - do these first):
 
 - `<practice name>: <one-line implementation hint>`
 
-Weeks 3–5 (ROI 0.1–0.3):
+Weeks 3-5 (ROI 0.1-0.3):
 
 - ...
 
-Weeks 6–8+ (ROI < 0.1 - infrastructure investment):
+Weeks 6-8+ (ROI < 0.1 - infrastructure investment):
 
 - …
 
@@ -106,7 +106,7 @@ Weeks 6–8+ (ROI < 0.1 - infrastructure investment):
 - List assumptions made due to ? items
 - Flag any dimension already at ≥ 7.0 (diminishing returns apply)
 - Note if team size > 150 (data extrapolated)
-- Note role perception gap if relevant: in the research, developers consistently rate quality 0.6–0.9 points lower than team leads and CTOs on alerting, review, and engagement metrics. If the assessment came from a single role, actual gaps may differ.
+- Note role perception gap if relevant: in the research, developers consistently rate quality 0.6-0.9 points lower than team leads and CTOs on alerting, review, and engagement metrics. If the assessment came from a single role, actual gaps can differ.
 
 ## Quality Criteria
 

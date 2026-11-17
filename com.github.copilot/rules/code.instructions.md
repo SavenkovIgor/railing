@@ -27,7 +27,7 @@ applyTo: '**/*.{h,hpp,cc,cpp,cppm,ipp,py,js,ts}'
 
 Don't assume. Don't hide confusion. Surface tradeoffs.
 
-Before implementing:
+Before you implement a change:
 - State your assumptions explicitly. If uncertain, ask
 - If multiple interpretations exist, present them - don't pick silently
 - If a simpler approach exists, say so. Push back when warranted
@@ -40,7 +40,7 @@ Minimum code that solves the problem. Nothing speculative.
 
 Before writing any new code, walk the ladder in order - stop at the first step that works:
 
-1. Does this task actually need to exist? (YAGNI) → if not, skip it and say why
+1. Does this task need to exist? (YAGNI) → if not, skip it and say why
 2. Does the standard library solve it? → reach for stdlib before anything else
 3. Can a native platform feature handle it? → use the built-in instead of reimplementing
 4. Does an already-installed dependency cover it? → reuse it; don't add a new dependency
@@ -61,7 +61,7 @@ Ask yourself: "Would a senior engineer say this is overcomplicated?" If yes, sim
 
 Touch only what you must. Clean up only your own mess. Propose improvements when necessary.
 
-When editing existing code:
+When you edit existing code:
 - Don't "improve" adjacent code, comments, or formatting. But highlight it if below standards
 - Don't refactor things that aren't broken automatically. But propose refactors if see clear improvements
 - Match existing style, even if you'd do it differently. But remember that bad style is also a smell
@@ -91,13 +91,13 @@ For multi-step tasks, state a brief plan:
 3. [Step] → verify: [check]
 ```
 
-Strong success criteria let you loop independently
-It doesn't mean you can't ask questions or help you if stuck
-It means you have to have a clear definition of "done" and keep it in mind as you work
+Strong success criteria let you loop independently.
+You can still ask questions or ask for help when you are stuck.
+Keep a clear definition of "done" and check your work against it.
 
 ## 5. Surface approach conflicts, don't silently pick one
 
-If two patterns or paradigms are contradict, pick one and state it explicitly.
+If two patterns or paradigms contradict, pick one and state it explicitly.
 Explain why. Flag the other for future cleanup directly in the code.
 Don't silently blend conflicting patterns.
 
@@ -173,7 +173,7 @@ An invariant is a condition on the members of an object that every public member
 
 - The constructor establishes the invariant; when it cannot, construction fails with an error. LLMs often add a separate `init()` or `isValid()` instead, and then every caller has to remember the call and every member function has to check the state
 - Every public member function keeps the invariant on each exit, an exit by exception included, so the invariant also holds on entry to the destructor
-- Inside a member function the invariant may break; restore it before the function calls a public member function of the same object, a callback, or a virtual function, since each of them can observe the object
+- Inside a member function the invariant can break; restore it before the function calls a public member function of the same object, a callback, or a virtual function, since each of them can observe the object
 - A setter exists only for a member outside the invariant, or checks the invariant and rejects a value that breaks it
 
 ```text

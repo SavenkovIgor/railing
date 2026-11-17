@@ -26,7 +26,7 @@ Scopes from the root down; each scope lists its files, then the scopes inside it
 
 Nesting is a required property of this tree. A new instruction file joins the scope equal to its own, or opens a new scope inside the narrowest scope that contains its own. A file whose scope partly overlaps another scope breaks the nesting.
 
-A wider scope holds the shared base. A file holds only what differs from the files whose scope contains its own or adds to them, and does not restate their rules. An example in the language of the file may show how a rule of a wider scope looks there.
+A wider scope holds the shared base. A file holds only what differs from the files whose scope contains its own or adds to them, and does not restate their rules. An example in the language of the file can show how a rule of a wider scope looks there.
 
 Why: `applyTo` already gives the reader of a file every file whose scope contains its own, so the file needs only the difference.
 
@@ -46,7 +46,7 @@ Rules for links:
 - Files must not form circular links: if A links to B, B must not link back to A, directly or through a chain of other files.
 - A file never copies, summarizes, or cites single rules of another file, neither by text nor by ID, and never links to it later in the document.
 
-Why: a copied or cited rule drifts from its source, and a reader who follows a link to one rule skips the rest of that file. An instruction attaches by `applyTo` on its own, while a skill runs only when invoked, so an instruction that depends on a skill depends on something that may not be loaded. A skill can run before the file it works on is in the context, so `applyTo` has not attached anything yet; a link is the lesser evil there.
+Why: a copied or cited rule drifts from its source, and a reader who follows a link to one rule skips the rest of that file. An instruction attaches by `applyTo` on its own, while a skill runs only when invoked, so an instruction that depends on a skill depends on something that is not always loaded. A skill can run before the file it works on is in the context, so `applyTo` has not attached anything yet; a link is the lesser evil there.
 
 ## Where a duplicated rule stays
 
@@ -84,7 +84,7 @@ Why: a link check is a quick look, not a project. A script grows a list of excep
 
 An edit to any `SKILL.md`, to a markdown file inside a skill directory, or to this `AGENTS.md` requires a check of the edited file against [markdown.instructions.md](/com.github.copilot/rules/markdown.instructions.md) and [prose.instructions.md](/com.github.copilot/rules/prose.instructions.md), each as a whole. Do this before the commit, and fix every failure in the same pull request.
 
-Why: the editor attaches these files by `applyTo`, but an agent that edits through a shell or a sub-agent may not have them in context, and a failure found in review costs a round trip.
+Why: the editor attaches these files by `applyTo`, but an agent that edits through a shell or a sub-agent does not always have them in context, and a failure found in review costs a round trip.
 
 ## Phrasing of requirements
 
@@ -107,7 +107,7 @@ Why: the bump then does not depend on the rest of the change, and a reviewer see
 
 Keep the body of an issue within 50 lines. Plan each issue so that its pull request changes at most 50 lines: added plus removed lines in the diff, without the version bump. When a draft issue, a planned pull request, or a pull request in progress goes over the limit, suggest that the user split the issue into several issues, each with its own pull request.
 
-A pull request that only moves or deletes text may go over the limit. Splitting a move leaves the rule in two places, or in none, between the two merges.
+A pull request that only moves or deletes text can go over the limit. Splitting a move leaves the rule in two places, or in none, between the two merges.
 
 Ask the user for at most two decisions in one issue, with the recommended option first. When an issue needs more decisions, split it.
 

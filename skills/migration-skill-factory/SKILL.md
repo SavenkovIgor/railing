@@ -44,14 +44,14 @@ Create a set of migration skills from a version or API update, one skill per cha
      - evidence link
 
 3. Classify compatibility and safety.
-   - For each change, decide if it can be applied safely before switching runtime/API version.
+   - For each change, decide if it can be applied safely before the project switches the runtime/API version.
    - Set compatibility_mode:
      - pre-migration-compatible: safe to apply on current version and stays valid on target version.
      - target-version-only: should be applied only after runtime/API switch.
    - Set safety_label:
      - high-safe: deterministic, backwards-compatible, no behavior drift expected.
      - medium-safe: mostly mechanical but requires local verification.
-     - review-required: semantics may differ or tooling evidence is weak.
+     - review-required: semantics can differ or tooling evidence is weak.
    - Add explicit user notice to every generated skill:
      - when it can be run
      - when it must not be run

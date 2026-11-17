@@ -94,14 +94,14 @@ class Vector3:
 ### Error Handling and Return Types
 
 In Python, prefer using exceptions for error conditions as they are part of the language design.
-Use `T | None` when a function may legitimately return `None`.
+Use `T | None` when a function can legitimately return `None`.
 Use custom exception types to provide specific error information.
 Consider using union types (`A | B`) or `dataclasses` for complex return types.
 
 ```python
 from dataclasses import dataclass
 
-# For functions that may return nothing legitimately
+# For functions that can return nothing legitimately
 def find_user(user_id: int) -> User | None:
     """Returns user or None if not found."""
     return database.get_user(user_id)

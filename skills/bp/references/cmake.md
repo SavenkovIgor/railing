@@ -2,7 +2,7 @@
 
 This document describes how to distribute config across the layers
 of a CMake project so that the config is readable, extensible, and does not
-collapse into a pile of copy-paste when adding a new compiler or platform.
+collapse into a pile of copy-paste when you add a new compiler or platform.
 
 ## Config Layers
 
@@ -12,7 +12,7 @@ and unmaintainable build systems.
 
 ### CMakeLists.txt - project description
 
-Owner: project developer. In git, changes go through PRs.
+Owner: project developer. In git, every change comes in a PR.
 
 What the project is, what targets it has, which C++ standard it uses, what
 policies apply (warnings, optimizations, sanitizers as an option), what
@@ -21,7 +21,7 @@ who clones the repo.
 
 ### CMakePresets.json - shared invocation recipes
 
-Owner: project developer. In git, changes go through PRs.
+Owner: project developer. In git, every change comes in a PR.
 
 Composable recipes that make sense for everyone: hidden building-block presets
 (`clang_compiler`, `release_build`), named compositions for standard build
@@ -93,9 +93,9 @@ profile for dependencies usually differs from the profile for your code.
 
 | Question                                          | Where                    |
 | ------------------------------------------------- | ------------------------ |
-| What we build and by what rules                   | CMakeLists               |
-| With what and where we build (shared recipes)     | CMakePresets.json        |
-| With what and where we build (personal overrides) | CMakeUserPresets.json    |
+| What to build and by what rules                   | CMakeLists               |
+| How and where to build (shared recipes)           | CMakePresets.json        |
+| How and where to build (personal overrides)       | CMakeUserPresets.json    |
 | Where the toolchain is and how it works           | Toolchain file           |
 | Reusable logic, conditional branches              | In-project CMake modules |
 | Where things are installed on the user's machine  | Environment vars         |
@@ -126,7 +126,7 @@ same compiler but in a different folder?" If yes - plumbing. If no - policy.
 ## Reasoning: what should be possible without editing CMakeLists
 
 The goal of a well-structured config is that typical changes to
-"how we build" do not require editing "what we build".
+"how to build" do not require editing "what to build".
 A good config passes the following scenarios without changes to the
 committed build files (`CMakeLists.txt`, `CMakePresets.json`, and cmake modules):
 
@@ -169,7 +169,7 @@ parameterized. For example, warning flags hard-coded in CMakeLists for
 a specific compiler without conditional logic are a seam that will
 eventually require code edits when a new toolchain is added.
 
-CMakePresets as a contract. This is not just convenience - it is the
+CMakePresets as a contract. This is more than convenience - it is the
 interface between the project and tooling. IDEs (CLion, VS Code, Visual
 Studio) read `CMakePresets.json` and surface presets in their UI.
 CI scripts reference presets by name. When presets are meaningfully
@@ -215,10 +215,10 @@ target_link_libraries(my_app PRIVATE project_warnings)
 Why not globally via `CMAKE_CXX_FLAGS`:
 
 - `CMAKE_CXX_FLAGS` applies to everything compiled in the build tree,
-  including third-party code that Conan or `add_subdirectory` may build.
+  including third-party code that Conan or `add_subdirectory` can build.
   `-Werror` on someone else's code is a classic way to get random CI
-  failures after bumping a dependency that added a new deprecation warning.
-- `cacheVariables` in presets **does not compose**: when inheriting,
+  failures after you bump a dependency that added a new deprecation warning.
+- `cacheVariables` in presets **does not compose**: when a preset inherits,
   the last one to set a variable wins - no merging happens. Spreading
   warnings across compiler-presets leads to them drifting apart quickly.
 - An INTERFACE target gives explicit opt-in: tests or experimental targets
@@ -333,7 +333,7 @@ there are two possible ways to build them:
 2. Via CMake itself - `FetchContent_MakeAvailable()`,
    `ExternalProject_Add()`, `add_subdirectory(third_party/...)`.
 
-If Conan is already in the project - all external dependencies go through it.
+If the project already uses Conan, all external dependencies come from it.
 No exceptions in normal cases.
 
 Why:
@@ -350,7 +350,7 @@ Why:
 - Versioning: Conan has a lockfile; builds are reproducible.
 - Diamond resolution: if dependencies A and B both pull in
   different versions of zlib, Conan resolves that. A mix of
-  conan+FetchContent does not - you end up with two zlиbs in one binary.
+  conan+FetchContent does not - you get two zlibs in one binary.
 
 Typical workflow:
 
@@ -453,7 +453,7 @@ block()
 endblock()
 ```
 
-After exiting `block()`, `CMAKE_CXX_STANDARD` reverts to your value.
+After `block()` ends, `CMAKE_CXX_STANDARD` reverts to your value.
 
 ### Target-based alternative
 
@@ -588,7 +588,7 @@ Why colocation is the default:
 ### Where a test goes
 
 The granularity is the subject of the test - what it makes
-assertions about - not every class it touches. A unit test may use
+assertions about - not every class it touches. A unit test can use
 collaborators; that does not make it an integration test.
 
 | Subject of the test                   | Location                                 | List                         |
@@ -1128,7 +1128,7 @@ depends on the machine and the CI, so it is plumbing.
 - Do not make a project-level callback upload anything. A callback declared
   in `CMakeLists.txt` runs arbitrary commands on every build of every
   developer. Let it at most write a local summary into the build directory.
-- Collecting from developer machines (for example to find out whether five
+- Collecting from developer machines (for example to learn whether five
   minute links are everyone's problem or one laptop) needs the team's
   agreement. Tag each record with the preset, the compiler, the linker, the
   compiler cache state (`CUSTOM_CONTENT`), and the host (`staticSystemInformation`);
@@ -1193,13 +1193,13 @@ timings and compare only builds with a similar rate.
 
 ### Waiting for work that is not needed yet
 
-Open the trace and look for idle jobs while the build is not finished. The
+Open the trace and find idle jobs while the build is not finished. The
 cause is often not a slow command but an order that CMake enforces
-conservatively, because a target might need a file that an upstream target
+conservatively, because a target can need a file that an upstream target
 produces. Two fixes remove most of these waits.
 
 Declare the visibility of generated headers. Before policy CMP0154 (3.28),
-CMake assumes any generated file may be a public header of its target, so
+CMake assumes any generated file can be a public header of its target, so
 Ninja holds back the compilation of every consumer until the generating
 command finishes, even when the file is a private detail. With CMP0154 NEW
 (`cmake_minimum_required` 3.28 or newer), a generated file in a target that
@@ -1280,7 +1280,7 @@ and repeatable.
   when it differs from the cached value. `CMAKE_SYSTEM_ENVIRONMENT_ACTION=REFRESH`
   runs `--fresh` instead, which drops every cache variable that a configure
   preset or the command line does not set again.
-- Do not look for a way to reconfigure "only the changed target". Remove
+- Do not search for a way to reconfigure "only the changed target". Remove
   work from configure instead.
 
 ### Debugging CMake code
@@ -1380,7 +1380,7 @@ in CMakeLists (see "Warnings as errors").
 ### Old-style directory commands instead of targets
 
 ```cmake
-# BAD: Cuz applies globally to the directory
+# BAD: applies globally to the directory
 include_directories(${CMAKE_SOURCE_DIR}/include)  # bad
 add_definitions(-DFEATURE_X=1)                    # bad
 

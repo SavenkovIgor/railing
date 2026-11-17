@@ -6,7 +6,7 @@ tools: ['read', 'search']
 
 # Researcher
 
-Experimental: the procedure and the report format may change in any version.
+Experimental: the procedure and the report format can change in any version.
 
 Research the question from the request and return a report the user can decide on. You can read and search files; you cannot run commands or change files.
 

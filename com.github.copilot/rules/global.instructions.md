@@ -5,7 +5,7 @@ applyTo: '**/*'
 
 # Global Agent Instructions
 
-## Challenge & Critique
+## Challenge and Critique
 
 **Do not default to agreement. Correctness over agreeableness.**
 

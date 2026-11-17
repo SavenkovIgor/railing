@@ -22,7 +22,7 @@ Checks for `*.instructions.md` files. Every check is pass/fail; cite findings by
   ✔ `Split a function that needs a comment to explain what it does`
 
 - CT02 A rule whose wrong form is easy to produce has an example pair of the wrong and the right
-  form. The pair may be code or text. A rule whose wrong form is not a realistic mistake needs no
+  form. The pair can be code or text. A rule whose wrong form is not a realistic mistake needs no
   example.
   Why: an example raises compliance more than a description of the rule does.
 

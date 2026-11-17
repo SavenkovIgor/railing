@@ -41,7 +41,7 @@
 - [ ] Feature flag references in code (`featureFlag`, `feature_flag`, LaunchDarkly/Flagsmith/Unleash SDK imports)
 - [ ] Rollback procedure documented (runbook, release docs with "rollback" section)
 
-## Monitoring & Incidents
+## Monitoring and Incidents
 
 - [ ] SLO/SLI definitions (`slo.yml`, `slo/`, docs with "SLO" or "SLI" headings)
 - [ ] Alert rule files (`alerts/`, `*.alerts.yaml`, Prometheus recording/alerting rules)

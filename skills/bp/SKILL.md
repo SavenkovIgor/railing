@@ -43,7 +43,7 @@ Choose only the references that match the file under review:
 | [vscode-tasks](references/vscode-tasks.md)                   | `.vscode/tasks.json`, `*.code-workspace` files with a `tasks` section                   |
 | [report-review](/skills/report-review/SKILL.md)              | Report files matching `notes/**/*.overview.md`                                          |
 
-A single file may match multiple references.
+A single file can match multiple references.
 
 ### 3. Spawn one sub-agent per reference
 
@@ -84,5 +84,5 @@ For each issue found:
   - Fix: [the corrected version or recommended action]
 
 ### Priority Actions
-Numbered list of the 2–3 most important changes, in order of impact.
+Numbered list of the 2-3 most important changes, in order of impact.
 ```

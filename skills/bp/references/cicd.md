@@ -10,11 +10,11 @@ Audience: developers, DevOps engineers, tech leads - anyone who designs or impro
 
 ## Terms
 
-IaC - Infrastructure as Code
-DAG - directed acyclic graph
-Step - individual command or action executed sequentially within a job (e.g., "run tests", "compile code")
-Job - unit of work executed on a single runner and can be parallelized with other jobs
-Workflow - DAG with jobs as vertices, describing their execution sequence and dependencies
+- IaC - Infrastructure as Code
+- DAG - directed acyclic graph
+- Step - an individual command or action that runs sequentially within a job (e.g., "run tests", "compile code")
+- Job - a unit of work that runs on a single runner and can run in parallel with other jobs
+- Workflow - DAG with jobs as vertices, describing their execution sequence and dependencies
 
 ## General Best Practices
 
@@ -43,7 +43,7 @@ with high probability of failure early in the pipeline
 
 - Tests don't depend on execution order or external services (mock/stub). Randomizing order helps reveal hidden dependencies.
 - Follow Test Pyramid: many unit → fewer integration → few E2E.
-- Code coverage threshold (coverage gate) - 80–85%; higher doesn't make sense for most projects.
+- Code coverage threshold (coverage gate) - 80-85%; higher doesn't make sense for most projects.
 - Environment Parity - staging is as close as possible to prod in configuration, data, and infrastructure.
 
 ### Dependency Management
@@ -57,7 +57,7 @@ with high probability of failure early in the pipeline
 
 - Secrets only through secret manager (Vault, AWS Secrets Manager, GitHub Secrets). Never in code.
 - Branch protection - merge to `main`/`release/*` only through PR with mandatory CI passing.
-- No CI bypasses - hotfixes also go through the pipeline; speed comes from fast CI, not skipping it.
+- No CI bypasses - hotfixes also pass the pipeline; speed comes from fast CI, not skipping it.
 - SAST - on every PR.
 - Docker image scanning (Trivy, Grype) before publishing.
 - Least privilege - CI runner has minimal permissions; separate roles for staging and prod.
@@ -83,13 +83,13 @@ Here's an approximate schema of stages that can be in a CI/CD pipeline.
 They can be refined and parallelized within a specific stage, but the general structure is usually preserved:
 *Stages are already ordered by Fail Fast principle
 
-| Stage        | Question                               | Typical Tools                      | Cost    |
-|--------------|----------------------------------------|------------------------------------|---------|
-| Lint         | Is code valid? (syntax, style, types)  | lint, format, type check           | seconds |
-| Test         | Is code correct and secure?            | unit tests, integration, SAST, SCA | minutes |
-| Build        | Is artifact created and packaged?      | compile, docker build, bundle      | minutes |
-| Scan & Sign  | Does artifact contain CVE and signed?  | Trivy, Grype, Cosign, SBOM         | minutes |
-| Deliver      | Does it work in production?            | deploy → smoke → monitor           | hours   |
+| Stage         | Question                               | Typical Tools                      | Cost    |
+|---------------|----------------------------------------|------------------------------------|---------|
+| Lint          | Is code valid? (syntax, style, types)  | lint, format, type check           | seconds |
+| Test          | Is code correct and secure?            | unit tests, integration, SAST, SCA | minutes |
+| Build         | Is artifact created and packaged?      | compile, docker build, bundle      | minutes |
+| Scan and sign | Is artifact CVE-free and signed?       | Trivy, Grype, Cosign, SBOM         | minutes |
+| Deliver       | Does it work in production?            | deploy → smoke → monitor           | hours   |
 
 ```mermaid
 flowchart LR
@@ -97,7 +97,7 @@ flowchart LR
     LINT[Lint]
     TEST[Test]
     BUILD[Build]
-    SCAN[Scan & Sign]
+    SCAN[Scan and sign]
     DELIVER[Deliver]
 
     TRIGGER --> LINT
@@ -150,7 +150,7 @@ In `Scheduled / Bot trigger` and `Manual` there can be the most significant devi
 - Recreate - stops old version, then starts new. Simple, but causes downtime.
 - Rolling Update - gradually replaces old version instances with new ones (one at a time or in batches). No downtime, native in Kubernetes, but two versions simultaneously in prod - backward compatibility needed.
 - Blue-Green - keeps two identical environments (Blue = current prod, Green = new version), switching via router/LB change. Instant rollback, but double resources and complex DB synchronization.
-- Canary - new version receives small traffic portion (1–10%), portion grows with healthy metrics. Minimal blast radius, but harder to observe - smart metrics needed.
+- Canary - new version receives small traffic portion (1-10%), portion grows with healthy metrics. Minimal blast radius, but harder to observe - smart metrics needed.
 - Feature Flag - code is deployed, but feature is hidden behind flag, enabled without deployment. Separates deployment and release, but flags accumulate as technical debt.
 
 ### DORA Metrics
@@ -224,15 +224,15 @@ Version in URL - for REST. For GraphQL and gRPC - other mechanisms (field deprec
 
 ### Reproducible Build Definitions
 
-Source of truth - everything in the repo from which the build is uniquely reproduced: scripts, lock files, CI, pinned toolchain
-Generated artifact - IDE settings, generated project files. Useful, but not required for the build
-Local config - IDE settings, local config files, and other environment state that could affect the build locally but should not affect the main build path on other machines. Should never be committed
-Snowflake - a build that works only on one machine due to undocumented environment state
+- Source of truth - everything in the repo from which the build is uniquely reproduced: scripts, lock files, CI, pinned toolchain
+- Generated artifact - IDE settings, generated project files. Useful, but not required for the build
+- Local config - IDE settings, local config files, and other environment state that can affect the local build. It must not affect the main build path on other machines. Never commit it
+- Snowflake - a build that works only on one machine due to undocumented environment state
 
 ### Reproducible Build Practices
 
 - Keep everything that affects build output in the repo - otherwise the build can't be reproduced from a clean clone.
-- Don't commit generated files - commit the generator, not its output; artifacts may be stored for convenience, but must not be the only path to a working build.
+- Don't commit generated files - commit the generator, not its output; artifacts can be stored for convenience, but must not be the only path to a working build.
 - Pin toolchain and dependency versions - otherwise different machines produce different code and different binaries.
 - Don't rely on the IDE for build steps - the editor is optional for the build; all steps must work without it.
 - For long-lived or multi-person projects, use a hermetic environment (Nix, Docker, pinned container) - scripts declare reproducibility, a hermetic environment enforces it.
@@ -241,7 +241,7 @@ Snowflake - a build that works only on one machine due to undocumented environme
 
 ### Design Principles
 
-Main question: "What do we need to know at this stage, and how expensive is it to find out later?"
+Main question: "What must the team know at this stage, and how expensive is it to learn later?"
 
 Feature branch - experimental space. Developer should get fast feedback on code quality. Pipeline here serves as a developer tool, not an organizational control point. Therefore: only fast checks (< 10 min), high parallelism, no deployments to long-lived environments.
 
@@ -249,7 +249,7 @@ Release branch (or `main` after merge) - **trust point**. Code passed review and
 
 ### Feature Branch Pipeline (with PR)
 
-Goal: fast feedback to developer. Should complete in 5–15 minutes.
+Goal: fast feedback to developer. Should complete in 5-15 minutes.
 
 ```mermaid
 flowchart LR

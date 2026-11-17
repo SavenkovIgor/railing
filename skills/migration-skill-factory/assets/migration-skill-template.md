@@ -50,7 +50,7 @@ Applicability statement:
 ## Safety Rules
 
 - Preserve runtime behavior unless explicitly documented.
-- If behavior might change, switch to review-required mode.
+- If behavior can change, switch to review-required mode.
 - If confidence is low, run detect-only and request approval.
 
 ## Validation

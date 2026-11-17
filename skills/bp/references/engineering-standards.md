@@ -11,13 +11,13 @@ Analyzes the code in context and produces a prioritized report of applicable pub
 
 ## Standard Catalog
 
-### Coding Style & Language Standards
+### Coding Style and Language Standards
 
 | Standard                        | Trigger                              |
 |---                              |---                                   |
-| PEP 8 – Style Guide for Python  | Python files present                 |
-| PEP 257 – Docstring Conventions | Python files with functions/classes  |
-| PEP 484 – Type Hints            | Python files, esp. public APIs       |
+| PEP 8 - Style Guide for Python  | Python files present                 |
+| PEP 257 - Docstring Conventions | Python files with functions/classes  |
+| PEP 484 - Type Hints            | Python files, esp. public APIs       |
 | Google C++ Style Guide          | C/C++ files present                  |
 | MISRA C:2012                    | Embedded / safety-critical C code    |
 | CERT C Coding Standard          | C/C++ code with manual memory or I/O |
@@ -26,26 +26,26 @@ Analyzes the code in context and produces a prioritized report of applicable pub
 | ESLint Airbnb Style Guide       | JavaScript / TypeScript files        |
 | Google TypeScript Style Guide   | TypeScript files                     |
 
-### API & Protocol Standards
+### API and Protocol Standards
 
 | Standard                                 | Trigger                                |
 |---                                       |---                                     |
-| RFC 9110 – HTTP Semantics                | HTTP servers, clients, or middleware   |
-| RFC 9112 – HTTP/1.1                      | HTTP/1.1 wire format                   |
-| RFC 9113 – HTTP/2                        | HTTP/2 usage                           |
-| RFC 7807 – Problem Details for HTTP APIs | REST APIs returning errors             |
-| RFC 8259 – JSON                          | Any JSON serialization                 |
+| RFC 9110 - HTTP Semantics                | HTTP servers, clients, or middleware   |
+| RFC 9112 - HTTP/1.1                      | HTTP/1.1 wire format                   |
+| RFC 9113 - HTTP/2                        | HTTP/2 usage                           |
+| RFC 7807 - Problem Details for HTTP APIs | REST APIs returning errors             |
+| RFC 8259 - JSON                          | Any JSON serialization                 |
 | OpenAPI Specification 3.x                | REST API definitions                   |
-| RFC 6749 – OAuth 2.0                     | Authorization flows                    |
-| RFC 7519 – JWT                           | Token-based auth                       |
-| RFC 7517 – JWK                           | Key management in auth                 |
-| RFC 3986 – URI                           | URL construction or parsing            |
-| RFC 4122 – UUID                          | ID generation                          |
-| ISO 8601 – Date and Time                 | Date/time serialization                |
+| RFC 6749 - OAuth 2.0                     | Authorization flows                    |
+| RFC 7519 - JWT                           | Token-based auth                       |
+| RFC 7517 - JWK                           | Key management in auth                 |
+| RFC 3986 - URI                           | URL construction or parsing            |
+| RFC 4122 - UUID                          | ID generation                          |
+| ISO 8601 - Date and Time                 | Date/time serialization                |
 | gRPC / Protocol Buffers                  | gRPC services or .proto files          |
 | GraphQL Specification                    | GraphQL schemas or resolvers           |
 | WebSocket RFC 6455                       | WebSocket connections                  |
-| AMQP 1.0 – ISO/IEC 19464                 | Message queue usage                    |
+| AMQP 1.0 - ISO/IEC 19464                 | Message queue usage                    |
 | OpenTelemetry Specification              | Tracing, metrics, logs instrumentation |
 | Semantic Versioning 2.0.0                | Package/API versioning                 |
 | Keep a Changelog                         | Changelog files                        |
@@ -62,32 +62,32 @@ Analyzes the code in context and produces a prioritized report of applicable pub
 | NIST SP 800-53 Rev 5           | Federal/regulated systems                    |
 | NIST SP 800-190                | Container / Docker usage                     |
 | CWE Top 25                     | General vulnerability patterns               |
-| RFC 8446 – TLS 1.3             | TLS configuration                            |
-| RFC 7525 – TLS Recommendations | TLS cipher/cert setup                        |
+| RFC 8446 - TLS 1.3             | TLS configuration                            |
+| RFC 7525 - TLS Recommendations | TLS cipher/cert setup                        |
 | NIST SP 800-63B                | Authentication / password handling           |
 
-### Systems & Architecture Standards
+### Systems and Architecture Standards
 
 | Standard                               | Trigger                                                    |
 |--------------------------------------- |--------------------------------------                      |
 | 12-Factor App                          | Any server-side application                                |
 | POSIX.1-2017 (IEEE Std 1003.1-2017)    | POSIX system calls, shell scripts                          |
-| ISO/IEC 25010 – Software Quality Model | Architecture / quality attribute decisions                 |
-| IEEE 830 – SRS / Requirements          | Requirements or spec documents in repo                     |
+| ISO/IEC 25010 - Software Quality Model | Architecture / quality attribute decisions                 |
+| IEEE 830 - SRS / Requirements          | Requirements or spec documents in repo                     |
 | C4 Model (Simon Brown)                 | Architecture diagrams or docs                              |
 | Richardson Maturity Model              | REST API design level assessment                           |
 | CAP Theorem                            | Distributed system with consistency/availability tradeoffs |
 | The Reactive Manifesto                 | Async / reactive architecture                              |
 
-### Data & Persistence Standards
+### Data and Persistence Standards
 
 | Standard                           | Trigger                             |
 |---------------------------------   |-------------------------------------|
-| SQL:2016 – ISO/IEC 9075            | SQL queries or schema definitions   |
-| RFC 5321 – SMTP                    | Email sending logic                 |
-| RFC 5322 – Internet Message Format | Email header/body construction      |
-| RFC 4180 – CSV                     | CSV file parsing or generation      |
-| RFC 8785 – JSON Canonicalization   | Deterministic JSON for signing      |
+| SQL:2016 - ISO/IEC 9075            | SQL queries or schema definitions   |
+| RFC 5321 - SMTP                    | Email sending logic                 |
+| RFC 5322 - Internet Message Format | Email header/body construction      |
+| RFC 4180 - CSV                     | CSV file parsing or generation      |
+| RFC 8785 - JSON Canonicalization   | Deterministic JSON for signing      |
 | OpenID Connect 1.0                 | SSO / identity layer over OAuth 2.0 |
 
 ## Procedure

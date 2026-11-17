@@ -15,7 +15,7 @@ Example: `FROM python:3.11.4-slim`
 
 ## Rule 2: Never use `latest` tags
 
-Problem: `latest` is non-deterministic; same Dockerfile can produce different images cuz upstream moves.
+Problem: `latest` is non-deterministic; same Dockerfile can produce different images because the upstream tag moves.
 Solution: Pin exact tags for base images and toolchains.
 Reasoning: Reproducible builds make rollback/debug much easier.
 Avoid: `FROM python:latest`
@@ -23,7 +23,7 @@ Example: `FROM node:18.20.3-alpine3.20`
 
 ## Rule 3: Keep build context clean with `.dockerignore`
 
-Problem: Sending junk (`.git`, `node_modules`, `.env`) slows build and may leak secrets.
+Problem: Sending junk (`.git`, `node_modules`, `.env`) slows the build and can leak secrets.
 Solution: Exclude everything not needed for build.
 Reasoning: Smaller context = faster and safer builds.
 Example:
@@ -38,7 +38,7 @@ node_modules/
 
 Problem: If a top layer changes, all following layers rebuild.
 Solution: Put rarely changed stuff first (deps), frequently changed code last.
-Reasoning: Better cache locality cuts CI time hard cuz cache hits stay high.
+Reasoning: Better cache locality keeps cache hits high, which cuts CI time.
 Example:
 
 ```dockerfile
@@ -138,7 +138,7 @@ CMD ["node", "app.js"]
 
 ## Rule 12: Add `HEALTHCHECK`
 
-Problem: "Process alive" is not equal to "service healthy". Cuz app may be in deadlock, connect lost or smth.
+Problem: "Process alive" is not equal to "service healthy". The app can be in a deadlock or lose a connection.
 Solution: Probe a real health endpoint with timeout.
 Reasoning: Orchestrator can stop routing to broken containers sooner.
 Example:

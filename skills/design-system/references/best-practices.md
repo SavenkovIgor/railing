@@ -4,7 +4,7 @@
 
 1. 4-unit spacing grid - all paddings, gaps, margins, and sizes must be multiples of 4 (4, 8, 12, 16, 24, 32, 48, 64). No arbitrary values.
 2. Semantic color names - `color-surface`, `color-text-primary`, not `gray-100`. Raw literals in components break refactoring.
-3. Limit the palette - 2–3 background layers, 2–3 surface levels, one set of semantic role colors (error, warning, success, info, neutral), plus brand/accent.
+3. Limit the palette - 2-3 background layers, 2-3 surface levels, one set of semantic role colors (error, warning, success, info, neutral), plus brand/accent.
 4. Minimum interactive target - 48 units for touch, 24 units for pointer.
 
 ## Typography

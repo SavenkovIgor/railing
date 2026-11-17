@@ -203,7 +203,7 @@ Rules for always-present member (`T` always exists):
 | `setObj(view)`    | Sets or replaces the value                          |
 | `isFoo() -> bool` | `true` if the value satisfies property *Foo*        |
 
-Rules for optional member (`std::optional<T>`, may be absent):
+Rules for optional member (`std::optional<T>`, can be absent):
 
 | Method                             | Semantics                                                    |
 |------------------------------------|--------------------------------------------------------------|
@@ -217,7 +217,7 @@ Rules for optional member (`std::optional<T>`, may be absent):
 ```cpp
 class Document {
     std::string title_;                  // always exists
-    std::optional<Metadata> metadata_;   // may be absent
+    std::optional<Metadata> metadata_;   // can be absent
 
 public:
     // --- title (always present) ---
