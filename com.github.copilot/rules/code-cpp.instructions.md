@@ -198,7 +198,7 @@ Rules for always-present member (`T` always exists):
 
 | Method            | Semantics                                           |
 |-------------------|-----------------------------------------------------|
-| `obj() -> view`   | Zero-cost read access; returns a view of the member |
+| `obj() -> view`   | Zero-cost read access. Returns a view of the member |
 | `getObj() -> T`   | Explicit owning copy - signals allocation cost      |
 | `setObj(view)`    | Sets or replaces the value                          |
 | `isFoo() -> bool` | `true` if the value satisfies property *Foo*        |
@@ -208,10 +208,10 @@ Rules for optional member (`std::optional<T>`, can be absent):
 | Method                             | Semantics                                                    |
 |------------------------------------|--------------------------------------------------------------|
 | `hasObj() -> bool`                 | `true` if the value is present                               |
-| `obj() -> const std::optional<T>&` | View of the optional; caller decides how to handle absence   |
+| `obj() -> const std::optional<T>&` | View of the optional. Caller decides how to handle absence   |
 | `getObj() -> T`                    | Explicit owning copy - signals allocation cost               |
 | `setObj(view)`                     | Sets or replaces the value                                   |
-| `takeObj() -> T`                   | Moves out ownership; after the call `hasObj() == false`      |
+| `takeObj() -> T`                   | Moves out ownership. After the call `hasObj() == false`      |
 | `isFoo() -> bool`                  | `true` if present **and** the value satisfies property *Foo* |
 
 ```cpp
@@ -532,9 +532,9 @@ std::optional<Color> color;
 
 ### Time
 
-- Measure intervals and timeouts with `std::chrono::steady_clock`; use `system_clock` for dates and wall-clock time. Why: `system_clock` jumps when the system time is changed, so an interval measured with it can come out negative.
+- Measure intervals and timeouts with `std::chrono::steady_clock`. Use `system_clock` for dates and wall-clock time. Why: `system_clock` jumps when the system time is changed, so an interval measured with it can come out negative.
 - Combine only time points of the same clock. Converting one clock to another through `time_since_epoch()` mixes different epochs.
-- Convert a duration to a coarser unit with `std::chrono::floor`, `ceil`, or `round`, so the rounding is explicit; `duration_cast` truncates silently.
+- Convert a duration to a coarser unit with `std::chrono::floor`, `ceil`, or `round`, so the rounding is explicit. `duration_cast` truncates silently.
 - Keep durations typed, and call `.count()` only at a boundary: logging, serialization, a C API.
 
 ```cpp

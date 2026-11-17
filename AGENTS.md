@@ -2,9 +2,9 @@
 
 ## Scopes of instructions
 
-Instruction files nest by `applyTo`. Any two scopes either do not overlap, or one contains the other, so the scopes form one tree. One scope can hold several files on different topics; files in the same scope are siblings.
+Instruction files nest by `applyTo`. Any two scopes either do not overlap, or one contains the other, so the scopes form one tree. One scope can hold several files on different topics. Files in the same scope are siblings.
 
-Scopes from the root down; each scope lists its files, then the scopes inside it:
+Scopes from the root down. Each scope lists its files, then the scopes inside it:
 
 - `**/*`
   - [global.instructions.md](/com.github.copilot/rules/global.instructions.md) - how the agent works and answers on any task
@@ -40,13 +40,13 @@ There are three kinds of dependencies. Each has its own place:
 
 Rules for links:
 
-- An instruction file never links to another instruction file or to a skill. `applyTo` nesting already applies every file whose scope contains its own, and the editor does this on its own; rely on that behavior.
+- An instruction file never links to another instruction file or to a skill. `applyTo` nesting already applies every file whose scope contains its own, and the editor does this on its own. Rely on that behavior.
 - A skill links to every instruction file and skill it depends on, once, in a `## DependsOn` section directly after the goal paragraph. A skill applies each linked file as a whole.
 - A link in a routing table, where a skill picks one target by the input, is not a dependency and stays where it is.
 - Files must not form circular links: if A links to B, B must not link back to A, directly or through a chain of other files.
 - A file never copies, summarizes, or cites single rules of another file, neither by text nor by ID, and never links to it later in the document.
 
-Why: a copied or cited rule drifts from its source, and a reader who follows a link to one rule skips the rest of that file. An instruction attaches by `applyTo` on its own, while a skill runs only when invoked, so an instruction that depends on a skill depends on something that is not always loaded. A skill can run before the file it works on is in the context, so `applyTo` has not attached anything yet; a link is the lesser evil there.
+Why: a copied or cited rule drifts from its source, and a reader who follows a link to one rule skips the rest of that file. An instruction attaches by `applyTo` on its own, while a skill runs only when invoked, so an instruction that depends on a skill depends on something that is not always loaded. A skill can run before the file it works on is in the context, so `applyTo` has not attached anything yet. A link is the lesser evil there.
 
 ## Where a duplicated rule stays
 
@@ -64,19 +64,19 @@ Why: a rule in a wider place than it needs costs context on every task, and a ru
 
 Two cases are specific to this plugin:
 
-- A skill that links to another skill or to a plugin file with a leading `/` works only inside this plugin; it is not standalone.
+- A skill that links to another skill or to a plugin file with a leading `/` works only inside this plugin. It is not standalone.
 - A path in a manifest or `mcp.json` starts with `./` from the plugin root, as the Agent Plugins specification requires.
   ✔ `./skills/`
   ✘ `skills/`
 
-Why: a leading `/` resolves from the repository root on GitHub and from the workspace root in VS Code; how each agent reads it is not specified and not yet verified.
+Why: a leading `/` resolves from the repository root on GitHub and from the workspace root in VS Code. How each agent reads it is not specified and not yet verified.
 
 ## Checking links
 
 Check that a link works by looking at the file system inside the repository: the target file exists at the written path, and an anchor matches a heading in that file. Do this by hand, with file listing and reading tools.
 
 - Do not write a script, a tool, or a CI step for it.
-- Do not check external URLs; assume they work.
+- Do not check external URLs. Assume they work.
 
 Why: a link check is a quick look, not a project. A script grows a list of exceptions and costs more to maintain than the broken links it finds.
 

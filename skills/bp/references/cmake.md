@@ -83,8 +83,8 @@ SDK paths that depend on the user's machine (e.g. `ANDROID_NDK`, custom SDK root
 ### Dependency manager (Conan profiles)
 
 Owner: project developer for dependency manifest
-(`conanfile.py`/`conanfile.txt`, in git);
-end user for build profile (`~/.conan2/profiles/*`) on their machine or CI.
+(`conanfile.py`/`conanfile.txt`, in git).
+The end user owns the build profile (`~/.conan2/profiles/*`) on their machine or CI.
 
 A separate world that describes dependencies and how to build them. The
 profile for dependencies usually differs from the profile for your code.
@@ -239,7 +239,7 @@ run with `cmake --compile-no-warning-as-error` - no edits to git-tracked
 files.
 
 - It is not an `INTERFACE_*` property, so linking `project_warnings`
-  does not propagate it. Set the variable; keep the warning list in the
+  does not propagate it. Set the variable. Keep the warning list in the
   INTERFACE target.
 - Like other `CMAKE_*` defaults it leaks into `add_subdirectory` /
   `FetchContent` deps - set it after them or wrap them in `block()`.
@@ -259,7 +259,7 @@ does not reach the exported package (see "Target-based alternative").
 
 Set [`CMAKE_EXPORT_COMPILE_COMMANDS`](https://cmake.org/cmake/help/latest/variable/CMAKE_EXPORT_COMPILE_COMMANDS.html)
 to `ON` in `CMakeLists.txt` - needed always, not per-preset. clangd expects
-this file; without it IDE integration does not work.
+this file. Without it IDE integration does not work.
 
 ## Toolchain files: where they live and who writes them
 
@@ -291,7 +291,7 @@ Conan generates its own toolchain files when installing dependencies:
   Conan, flags from the profile, build_type selection.
 
 Owner: package manager. The project configures
-the manager (profiles, manifest); it does not write the file itself.
+the manager (profiles, manifest). It does not write the file itself.
 
 ### Combining toolchain files
 
@@ -302,7 +302,7 @@ several (e.g. vendor toolchain + Conan toolchain), options include:
   Conan 2 approach ([documentation](https://docs.conan.io/2/reference/tools/cmake/cmaketoolchain.html#using-a-custom-toolchain-file)).
   A list of external toolchain files that Conan includes via `include()`
   as the first block inside its `conan_toolchain.cmake`.
-  `CMAKE_TOOLCHAIN_FILE` points to `conan_toolchain.cmake`; the vendor
+  `CMAKE_TOOLCHAIN_FILE` points to `conan_toolchain.cmake`. The vendor
   toolchain is pulled in via Conan config:
 
   ```ini
@@ -347,7 +347,7 @@ Why:
 - Cross-compilation: Conan correctly knows that a cross-compiled build needs
   target dependencies and a host build needs host ones. CMake
   FetchContent requires manual logic for each dependency.
-- Versioning: Conan has a lockfile; builds are reproducible.
+- Versioning: Conan has a lockfile. Builds are reproducible.
 - Diamond resolution: if dependencies A and B both pull in
   different versions of zlib, Conan resolves that. A mix of
   conan+FetchContent does not - you get two zlibs in one binary.
@@ -402,7 +402,7 @@ Dependencies are typically built:
 Conan by default uses one profile (`host`) for everything, but you can
 explicitly split it via `--profile:host` and `--profile:build` or via
 custom settings in the profile. For most projects the default behavior
-is sufficient; what matters is not poisoning it with global flags from CMake.
+is sufficient. What matters is not poisoning it with global flags from CMake.
 
 In presets the integration looks like this:
 
@@ -427,11 +427,11 @@ directory-scoped defaults that are inherited by nested CMakeLists.
   it will break.
 - `FetchContent_MakeAvailable(...)` → same, uses `add_subdirectory`
   internally.
-- `find_package(...)` for already-built libs → no leak; the library
+- `find_package(...)` for already-built libs → no leak. The library
   is already compiled.
-- `ExternalProject_Add(...)` → no leak; launches CMake as a
+- `ExternalProject_Add(...)` → no leak. Launches CMake as a
   subprocess with a clean environment.
-- Conan-built deps → no leak; Conan builds them separately with its
+- Conan-built deps → no leak. Conan builds them separately with its
   own profile, before your CMake runs.
 
 So leaks are real for in-tree source deps. This is one more argument for
@@ -457,8 +457,8 @@ After `block()` ends, `CMAKE_CXX_STANDARD` reverts to your value.
 
 ### Target-based alternative
 
-Modern CMake suggests: don't set `CMAKE_CXX_STANDARD` globally at all;
-instead declare the requirement at the target level:
+Modern CMake suggests: don't set `CMAKE_CXX_STANDARD` globally at all.
+Instead declare the requirement at the target level:
 
 ```cmake
 add_library(my_lib ...)
@@ -494,7 +494,7 @@ Pragmatic compromise:
 
 ## Source tree mirrors the target graph
 
-Targets are the logical structure of the project; directories are the
+Targets are the logical structure of the project. Directories are the
 physical one. They must describe the same thing. A reader should be able
 to predict the list of targets from `tree`, and find any target's code
 without reading CMake. When the two diverge, every basic question -
@@ -589,7 +589,7 @@ Why colocation is the default:
 
 The granularity is the subject of the test - what it makes
 assertions about - not every class it touches. A unit test can use
-collaborators; that does not make it an integration test.
+collaborators. That does not make it an integration test.
 
 | Subject of the test                   | Location                                 | List                         |
 | ------------------------------------- | ---------------------------------------- | ---------------------------- |
@@ -663,7 +663,7 @@ gtest_discover_tests(integration_tests PROPERTIES LABELS integration)
 ```
 
 `ctest -L unit` then runs only unit tests. One runner per kind (or per
-component) keeps the number of link steps low; one executable per test
+component) keeps the number of link steps low. One executable per test
 file means dozens of slow C++ links.
 
 ### Pitfall: tests that silently disappear
@@ -673,7 +673,7 @@ nothing else references. Both of the following build without errors
 and produce a runner with zero tests:
 
 - `STATIC` test library. The linker pulls an object file out of a
-  static archive only to resolve a referenced symbol; test files have
+  static archive only to resolve a referenced symbol. Test files have
   none, so they are dropped. Use `OBJECT`, or link the archive with
   `$<LINK_LIBRARY:WHOLE_ARCHIVE,core_unit_tests>` (CMake 3.24+).
 - `OBJECT` library linked transitively. Its objects are added only
@@ -762,12 +762,12 @@ target_link_libraries(viewer PRIVATE Imaging::image)
 ```
 
 - Header file set over `target_include_directories`. A plain include
-  path into the source tree makes `install(EXPORT)` fail; the
+  path into the source tree makes `install(EXPORT)` fail. The
   workaround is a pair of `$<BUILD_INTERFACE:...>` and
   `$<INSTALL_INTERFACE:...>` expressions plus a separate
   `install(DIRECTORY)`. A `FILE_SET HEADERS` gives the right path in
   both trees and installs exactly the declared headers.
-- Namespace and `ALIAS`. The installed target is `Imaging::image`;
+- Namespace and `ALIAS`. The installed target is `Imaging::image`.
   `add_library(Imaging::image ALIAS image)` gives in-tree consumers the
   same name, so moving a consumer between the build tree and an installed
   package changes no `target_link_libraries` line. A name with `::`
@@ -783,8 +783,8 @@ target_link_libraries(viewer PRIVATE Imaging::image)
   dependency.
 - CPS (Common Package Specification) metadata is an addition, not a
   replacement. `install(PACKAGE_INFO <name> EXPORT <export>)` (CMake
-  4.3+) writes a JSON description that tools other than CMake can read;
-  keep the CMake config files for consumers that do not read CPS yet.
+  4.3+) writes a JSON description that tools other than CMake can read.
+  Keep the CMake config files for consumers that do not read CPS yet.
   See "CPS" below.
 
 ### CPS
@@ -802,14 +802,14 @@ export(PACKAGE_INFO zwrap EXPORT zwrap)    # build tree
 
 If `zwrap` links `zlib-ng::zlib`, the CPS file records `zlib-ng` in a
 `requires` entry. A consumer calls `find_package(zwrap REQUIRED)` and links
-`zwrap::zwrap`; it does not mention `zlib-ng`, and CMake still finds it.
+`zwrap::zwrap`. It does not mention `zlib-ng`, and CMake still finds it.
 
 - `find_package()` (4.3+) searches for and imports CPS packages the same
   way as CMake configs. The consumer's `CMakeLists.txt` does not change.
 - `export(PACKAGE_INFO <name> EXPORT <export>)` writes the CPS file into
   the `cps/<name>` subdirectory of the build tree, for consumers that use
   your build directory without installing. `install(PACKAGE_INFO ...)`
-  writes the install-tree file; the two files can differ.
+  writes the install-tree file. The two files can differ.
 - Header file sets are exported to CPS (4.5+), and `find_package()` imports
   CPS executable components.
 - Package metadata can come from `project()`: its `COMPAT_VERSION` and
@@ -832,7 +832,7 @@ If `zwrap` links `zlib-ng::zlib`, the CPS file records `zlib-ng` in a
 A software bill of materials lists what a binary is built from: packages,
 versions, relationships. `install(SBOM <name> EXPORTS <export>...)` (CMake
 4.5+) generates it at install time from the target graph, next to the
-installed exports; `export(SBOM)` does the same for the build tree. The
+installed exports. `export(SBOM)` does the same for the build tree. The
 default format is SPDX 3.0.1 in JSON-LD (`FORMAT`).
 
 A packager can switch SBOM generation on without editing the project:
@@ -900,10 +900,10 @@ Header units are not supported.
   internal partition, which must be in the `CXX_MODULES` file set.
 - Installing: `install(TARGETS)` needs an explicit `DESTINATION` for the
   `CXX_MODULES` file set, and `install(EXPORT)` needs
-  `CXX_MODULES_DIRECTORY`; without it, consumers cannot import the
+  `CXX_MODULES_DIRECTORY`. Without it, consumers cannot import the
   modules. The Visual Studio generators do not support exporting modules.
 - The toolchain must provide the module scanner. GCC and MSVC scan through
-  an option of the compiler itself; Clang uses a separate `clang-scan-deps`
+  an option of the compiler itself. Clang uses a separate `clang-scan-deps`
   program. Some packagings place it where CMake does not find it, and
   scanning then fails. Check that `clang-scan-deps` of the same LLVM
   installation is available next to the compiler.
@@ -912,7 +912,7 @@ Header units are not supported.
   importers becomes the long pole of the build. Keep interfaces small, move
   definitions into implementation units, and check the trace (see "Build
   time: measure, then optimize") for modules that block the build.
-- Macros still need `#include`; header units are not supported, so a
+- Macros still need `#include`. Header units are not supported, so a
   project that moves to `import` keeps a thin macro header.
 - A C++20 project that does not use modules yet: put
   `set(CMAKE_CXX_SCAN_FOR_MODULES 0)` near the top of the top-level
@@ -960,7 +960,7 @@ Classify each definition by how often it changes and what it affects:
 ### Volatile metadata: compilation firewall
 
 Declaration in a stable header, value in exactly one generated source.
-A new commit recompiles one file and relinks; nothing else changes.
+A new commit recompiles one file and relinks. Nothing else changes.
 
 ```cpp
 // libs/buildinfo/include/buildinfo/buildinfo.hpp - never changes
@@ -1028,7 +1028,7 @@ hurt caching.
 
 ### Compiler cache: a preset setting
 
-The rules above keep compile commands stable; a compiler cache turns that
+The rules above keep compile commands stable. A compiler cache turns that
 into reused results. Which cache to use, and whether to use one at all,
 depends on the machine and the CI, so it is plumbing: set it in a preset,
 not in `CMakeLists.txt`.
@@ -1088,7 +1088,7 @@ Visual Studio generators.
   entry point, so run the build through `cmake --build`, the tests through
   `ctest`, and the install through `cmake --install`. The `postBuild` hook
   runs its callback in the background, so the callback's console output is
-  lost; for a summary printed at the end of a developer's build use
+  lost. For a summary printed at the end of a developer's build use
   `postCMakeBuild`.
 - Indexing writes an index file that lists the snippets created since the
   previous indexing, runs every callback with the index path appended as the
@@ -1131,8 +1131,8 @@ depends on the machine and the CI, so it is plumbing.
 - Collecting from developer machines (for example to learn whether five
   minute links are everyone's problem or one laptop) needs the team's
   agreement. Tag each record with the preset, the compiler, the linker, the
-  compiler cache state (`CUSTOM_CONTENT`), and the host (`staticSystemInformation`);
-  without tags, laptop and CI numbers mix into noise.
+  compiler cache state (`CUSTOM_CONTENT`), and the host (`staticSystemInformation`).
+  Without tags, laptop and CI numbers mix into noise.
 
 ### Wiring it into CI
 
@@ -1183,11 +1183,11 @@ timings and compare only builds with a similar rate.
 | Idle cores in the trace while work is waiting | Unneeded build-order edges, see "Waiting for work that is not needed yet"                                  |
 | One target is a long pole, others wait for it | Get it prebuilt from the package manager                                                                   |
 | `install` takes minutes                       | Stripping and RPATH rewriting run at install time: parallel install, see below                              |
-| Tests run one after another                   | `ctest --parallel` (or `CTEST_PARALLEL_LEVEL`, or `jobs` in a test preset); `RESOURCE_LOCK` only for real conflicts |
+| Tests run one after another                   | `ctest --parallel` (or `CTEST_PARALLEL_LEVEL`, or `jobs` in a test preset). `RESOURCE_LOCK` only for real conflicts |
 | A few translation units dominate compile time | `compileTrace` (Clang, 4.4+): the per-file trace shows the headers and templates behind the time           |
 | CI builds everything to run one test          | `test_prep/<test-name>` and `install_prep/<component>` (on by default in 4.5+) build only what that step needs |
 | The same tests rerun though nothing changed   | `ctest --out-of-date` (4.5+), see below                                                                    |
-| Link time dominates                           | A faster linker (lld, mold) as preset plumbing; compare two presets in one trace                           |
+| Link time dominates                           | A faster linker (lld, mold) as preset plumbing. Compare two presets in one trace                           |
 | Compile time dominates, cache misses          | A volatile compile command, see "Preprocessor definitions: scope and volatility"                           |
 | Configure time dominates                      | See "Configure time"                                                                                       |
 
@@ -1237,7 +1237,7 @@ with the same `--parallel` value.
 `ctest --out-of-date` (4.5+) runs only the tests whose recorded build
 dependencies are newer than the last run of the test. The dependencies are
 the executables and targets in the `COMMAND`, plus the targets and files
-given in `BUILD_DEPENDS` of `add_test()` or `discover_tests()`;
+given in `BUILD_DEPENDS` of `add_test()` or `discover_tests()`.
 `gtest_discover_tests()` records the test executable itself. A test without
 known build dependencies is excluded whenever the option is given, so add
 `BUILD_DEPENDS` for tests that run scripts or read generated files.
@@ -1247,13 +1247,13 @@ Combine it with `test_prep/all` so that only the needed targets are built.
 
 A parallel install needs two steps. Enable the global property
 `INSTALL_PARALLEL` (3.30+) in the project, then run
-`cmake --install <build> --parallel <jobs>` (3.31+); the environment
+`cmake --install <build> --parallel <jobs>` (3.31+). The environment
 variable `CMAKE_INSTALL_PARALLEL_LEVEL` sets a default. Install rules of
 different directories then run in no fixed order. Do not enable it if an
 `install(CODE)` or `install(SCRIPT)` depends on files or variables from an
 earlier `install()` in another directory. Before 4.5, `cmake --install`
-reported success for a parallel install even when an install script failed;
-on older versions, check the installed files instead of the exit code.
+reported success for a parallel install even when an install script failed.
+On older versions, check the installed files instead of the exit code.
 
 ## Configure time
 
@@ -1269,10 +1269,10 @@ and repeatable.
   and open the file in Perfetto.
 - Put expensive probing behind a cache variable: `execute_process` that
   inspects the machine, `try_compile`, SDK discovery. CMake already caches
-  `try_compile` and platform checks; custom code does not get this for free.
+  `try_compile` and platform checks. Custom code does not get this for free.
 - Keep the network out of configure. A toolchain file or provider that
   queries a package manager on every run (some do) costs time on every
-  edit; report it upstream and ask for the result to be cached.
+  edit. Report it upstream and ask for the result to be cached.
 - Keep the build tree between CI runs on a dedicated agent. A clean tree
   repeats compiler detection and feature checks every time. A reused tree
   can go stale when the image changes: set the environment variable
@@ -1290,8 +1290,8 @@ and repeatable.
   client can set breakpoints, step through CMake code, and inspect
   variables. A failed configure in a supporting IDE offers the call stack.
 - `cmake_language(PRINT_VARIABLES)`, `PRINT_TARGETS`, and `PRINT_PROPERTIES`
-  (4.5+) print variables, existing targets, and properties in readable form;
-  they replace `cmake_print_variables()` and `cmake_print_properties()`.
+  (4.5+) print variables, existing targets, and properties in readable form.
+  They replace `cmake_print_variables()` and `cmake_print_properties()`.
 - `--trace-expand` on a big project writes gigabytes. Narrow it with
   `--trace-source=<file>`, or use the debugger.
 - Never expose the debug port to a network: the debugger runs any CMake
@@ -1308,12 +1308,12 @@ The generator is plumbing, so choose it in a preset, never in
 `CMakeLists.txt`.
 
 - Ninja is the default for local and CI builds. Module scanning works with
-  the Ninja generators and Visual Studio 2022+; `import std` only with
+  the Ninja generators and Visual Studio 2022+. `import std` only with
   Ninja.
 - The FASTBuild generator (4.2+) adds parallel and distributed builds with
   caching and little setup: set `CMAKE_FASTBUILD_CACHE_PATH` (or the
   `FASTBUILD_CACHE_PATH` environment variable) and build with
-  `cmake --build <dir> -- -cache`; FASTBuild's own `-dist` flag turns on
+  `cmake --build <dir> -- -cache`. FASTBuild's own `-dist` flag turns on
   distribution, and the target properties `FASTBUILD_CACHING` and
   `FASTBUILD_DISTRIBUTION` opt a single target out. It is not in the list
   of generators that scan C++ modules, so a project that uses modules stays
@@ -1459,7 +1459,7 @@ run through a workflow.
 
 Project level (`CMakeLists.txt`):
 
-- [ ] `cmake_minimum_required` is set; the version is not ancient.
+- [ ] `cmake_minimum_required` is set. The version is not ancient.
 - [ ] C++ standard is set in CMakeLists, not via flags.
 - [ ] Every installed or exported library declares
       `target_compile_features(<lib> PUBLIC cxx_std_NN)`.
@@ -1468,7 +1468,7 @@ Project level (`CMakeLists.txt`):
       hand-written `-Werror` / `/WX`.
 - [ ] `CMAKE_EXPORT_COMPILE_COMMANDS ON`.
 - [ ] Dependencies via `target_link_libraries` with explicit visibility.
-- [ ] Public headers via `FILE_SET HEADERS`; other include paths via
+- [ ] Public headers via `FILE_SET HEADERS`. Other include paths via
       `target_include_directories`, never directory-wide.
 - [ ] LTO/sanitizers - per-target and conditional, not via a global flag.
 - [ ] If `add_subdirectory` is used for in-tree source deps - wrapped
@@ -1480,13 +1480,13 @@ Source layout:
       named after the target (exceptions: `examples/`, `tools/`, top-level `tests/`).
 - [ ] No `../` paths or foreign-directory sources in target definitions.
 - [ ] No source file is compiled into more than one target.
-- [ ] Public headers in `<target>/include/<target>/`; no
+- [ ] Public headers in `<target>/include/<target>/`. No
       `target_include_directories` pointing into another target's tree.
 
 Tests:
 
-- [ ] Unit tests are `<stem>_test.cpp` next to `<stem>.cpp`; tests of
-      several classes are in `<target_dir>/tests/`; cross-target tests
+- [ ] Unit tests are `<stem>_test.cpp` next to `<stem>.cpp`. Tests of
+      several classes are in `<target_dir>/tests/`. Cross-target tests
       in top-level `tests/`. No mirrored test tree.
 - [ ] Each component exposes `<target>_unit_tests` and
       `<target>_integration_tests` as `OBJECT` libraries without `main()`,
@@ -1494,8 +1494,8 @@ Tests:
 - [ ] Test libraries reach runners directly or through `source_set()`
       (no `STATIC` without `WHOLE_ARCHIVE`, no plain `OBJECT` behind an
       `INTERFACE` aggregator).
-- [ ] `source_set()` only for test sets; shared test helpers are `STATIC`.
-- [ ] One runner per component or per kind, not per test file; tests
+- [ ] `source_set()` only for test sets. Shared test helpers are `STATIC`.
+- [ ] One runner per component or per kind, not per test file. Tests
       carry `unit` / `integration` labels.
 - [ ] CI fails on a runner that reports zero tests.
 
@@ -1504,7 +1504,7 @@ Preprocessor definitions:
 - [ ] No `add_definitions` / `add_compile_definitions` / `-D` in
       `CMAKE_CXX_FLAGS` for project-specific values.
 - [ ] Git hash, build number, version string are not passed via `-D` or
-      a widely included header; they live in one generated `.cpp`.
+      a widely included header. They live in one generated `.cpp`.
 - [ ] No `__DATE__` / `__TIME__`.
 - [ ] No per-source-file `COMPILE_DEFINITIONS`.
 - [ ] ABI-affecting definitions are identical across the project and
@@ -1526,11 +1526,11 @@ Build and configure time:
 - [ ] The CI job records instrumentation data (index, snippets, trace) as
       an artifact, copied by the callback before CMake deletes it, and
       tagged with the preset and the compiler cache hit rate.
-- [ ] A project-level instrumentation callback does not upload anything;
-      uploads happen only in CI or by a developer's own choice.
+- [ ] A project-level instrumentation callback does not upload anything.
+      Uploads happen only in CI or by a developer's own choice.
 - [ ] Regressions are checked against the last main-branch run as a
       percentage, not against a fixed number.
-- [ ] Tests run with `ctest --parallel`; when install shows up in the
+- [ ] Tests run with `ctest --parallel`. When install shows up in the
       trace, `INSTALL_PARALLEL` is enabled and `cmake --install --parallel`
       is used.
 - [ ] Idle jobs in the trace are explained: generated headers are in a
@@ -1538,18 +1538,18 @@ Build and configure time:
       `OPTIMIZE_DEPENDENCIES` is enabled for chains of static libraries.
 - [ ] Expensive configure-time probing is behind cache variables, and
       configure does not use the network.
-- [ ] Configure and build are separate commands in every script and task;
+- [ ] Configure and build are separate commands in every script and task.
       `cmake --workflow` appears only in CI.
 
 C++20 modules:
 
-- [ ] Module interface units are in a `CXX_MODULES` file set; `PRIVATE`
+- [ ] Module interface units are in a `CXX_MODULES` file set. `PRIVATE`
       modules are imported only from implementation units.
 - [ ] A C++20 project without modules sets
       `CMAKE_CXX_SCAN_FOR_MODULES 0` in the top-level `CMakeLists.txt`.
 - [ ] A Clang toolchain has `clang-scan-deps` of the same installation next
       to the compiler.
-- [ ] Generator is chosen in a preset; a project with modules uses Ninja.
+- [ ] Generator is chosen in a preset. A project with modules uses Ninja.
 
 Invocation level (`CMakePresets.json`):
 
@@ -1563,7 +1563,7 @@ Invocation level (`CMakePresets.json`):
 - [ ] `binaryDir` is unique per preset.
 - [ ] Compiler cache via `CMAKE_<LANG>_COMPILER_LAUNCHER` in a preset,
       not in `CMakeLists.txt`.
-- [ ] No personal paths in shared presets; everything via env vars
+- [ ] No personal paths in shared presets. Everything via env vars
       or UserPresets.
 
 Dependencies:

@@ -25,7 +25,7 @@
 
 ## Code organization
 
-- Add comments only for complex or non-obvious code; docstrings should be concise (one line max, or none if the function name and type hints are self-explanatory)
+- Add comments only for complex or non-obvious code. Docstrings should be concise (one line max, or none if the function name and type hints are self-explanatory)
 - Prefer explicit type | none semantic over exceptions for control flow (e.g., return None instead of raising an exception for expected cases). Exceptions should be reserved for truly exceptional cases, not for things that happen frequently
 
 ## Strings

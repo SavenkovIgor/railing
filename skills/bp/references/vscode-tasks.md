@@ -15,7 +15,7 @@ Sources, read them before validating:
 
 Problem: Tasks without icons are hard to tell apart in the Run Task list and the terminal tabs.
 Solution: Set `icon.id` to a codicon that names the action, not the tool.
-Reasoning: The icon is the fastest visual cue; a mismatched one misleads.
+Reasoning: The icon is the fastest visual cue. A mismatched one misleads.
 Example:
 
 | Purpose        | `icon.id`        |
@@ -45,7 +45,7 @@ setup `terminal.ansiMagenta`. A compound task takes the color of its main kind.
 Problem: Without a default, `Run Build Task` and `Run Test Task` show a picker every time.
 Solution: If the file has build tasks, exactly one has `group.isDefault: true` with
 `kind: "build"`. If it has test tasks, exactly one has `kind: "test"` with `isDefault: true`.
-Reasoning: Default tasks bind to the hotkeys; several defaults bring the picker back.
+Reasoning: Default tasks bind to the hotkeys. Several defaults bring the picker back.
 Avoid: A default task with `inputs`. It runs often, so a prompt on each run is friction.
 Example:
 
@@ -55,13 +55,13 @@ Example:
 
 ## Rule 4: Use `label` and `detail` consistently
 
-Problem: Labels mix `Build App`, `build-app`, and `buildApp`; some tasks have a `detail`
+Problem: Labels mix `Build App`, `build-app`, and `buildApp`. Some tasks have a `detail`
 and some do not. The Run Task list looks random.
 Solution:
 
 - `label`: pick one naming style (CamelCase, kebab-case, Title Case) and use it in every
   label
-- `detail`: either every task has one or none does; the text is free plain text
+- `detail`: either every task has one or none does. The text is free plain text
 
 Reasoning: Uniform names are predictable to type in the picker and to reference from
 `dependsOn` and `preLaunchTask`.
@@ -77,7 +77,7 @@ Avoid: Inputs in tasks that Rule 3 makes default, and in tasks that other tasks 
 ## Rule 6: Describe `pickString` options with label and value
 
 Problem: Raw option strings show cryptic values in the dropdown.
-Solution: An option is a string or an object with `label` and `value`; the dropdown
+Solution: An option is a string or an object with `label` and `value`. The dropdown
 shows `label: value`. Every input has `description`. Set `default` and make it one of
 the option `value` entries, not a label.
 Reasoning: A default keeps the common case to one keypress.
@@ -126,10 +126,10 @@ Avoid: Hiding a default task.
 
 Problem: A task that does "build, then test" in one shell line duplicates both tasks.
 Solution: Keep build and test as separate hidden tasks. Add a compound task with
-`dependsOn` listing both. Set `dependsOrder: "sequence"` when order matters;
-the default is parallel, and the order is not recursive.
+`dependsOn` listing both. Set `dependsOrder: "sequence"` when order matters.
+The default is parallel, and the order is not recursive.
 Reasoning: Each step stays reusable and keeps its own problem matcher.
-Avoid: `dependsOn` from a build task to a configure task; see Rule 21.
+Avoid: `dependsOn` from a build task to a configure task. See Rule 21.
 
 ## Rule 11: Set `presentation` on purpose
 
@@ -144,7 +144,7 @@ Solution: Choose the properties by task kind:
 | short helper       | `reveal: "never"`, `close: true`                          |
 
 Reasoning: `silent` keeps the terminal hidden unless the task exits nonzero or a matcher
-reports an error; `revealProblems` opens the Problems panel when a problem is found.
+reports an error. `revealProblems` opens the Problems panel when a problem is found.
 
 ## Rule 12: Make cross-platform tasks work on every platform
 
@@ -155,8 +155,8 @@ Solution: Choose per task:
 - Different command: a base `command` and an override in `windows`, `linux`, or `osx`
 - Different shell setup for a whole platform: a platform block at the top level
 
-Prefer `type: "process"` with `args` when no shell feature (pipe, `&&`, glob) is needed;
-there is no shell to differ and no quoting to get wrong.
+Prefer `type: "process"` with `args` when no shell feature (pipe, `&&`, glob) is needed.
+There is no shell to differ and no quoting to get wrong.
 Reasoning: Platform properties override task and global ones for that platform only.
 
 ## Rule 13: Write paths from the workspace root with `${/}`
@@ -167,14 +167,14 @@ Solution: Start every path with `${workspaceFolder}`, separate with `${/}`
 `${workspaceRoot}`.
 Example: `"${workspaceFolder}${/}scripts${/}build.sh"`
 Avoid: Using `${/}` where the shell on Windows is bash. It expands to `\`, which bash
-reads as an escape; use `/` there.
+reads as an escape. Use `/` there.
 
 ## Rule 14: Use platform variables only in platform blocks
 
 Problem: `${env:USERPROFILE}` on Linux and `${env:HOME}` on Windows resolve to nothing.
 Solution: In a cross-platform file, put variables that exist on one OS only inside that
 OS block.
-Reasoning: `options.env` values are visible to the started process only; they are not
+Reasoning: `options.env` values are visible to the started process only. They are not
 substituted into `command` or `args`. Read an existing variable with `${env:NAME}`.
 
 ## Rule 15: Fix the shell per platform in the file
@@ -185,8 +185,8 @@ Solution: Set `options.shell` in `tasks.json` (top level, overridden in platform
 blocks), not in user settings or `terminal.integrated.automationProfile.*`.
 Pick one shell per platform and use it in every task.
 Reasoning: The file carries its own contract and works without per-user setup.
-Avoid: `bash` as the Windows shell unless the repo documents Git Bash as a prerequisite;
-plain `bash` on Windows can resolve to WSL. A task also runs in a non-login,
+Avoid: `bash` as the Windows shell unless the repo documents Git Bash as a prerequisite.
+Plain `bash` on Windows can resolve to WSL. A task also runs in a non-login,
 non-interactive shell, so it must not rely on `.bashrc` or `nvm` setup.
 Example:
 
@@ -220,7 +220,7 @@ Reasoning: Everyone who opens the file must be able to run the task.
 
 ## Rule 18: Give problem-producing tasks a working problem matcher
 
-Problem: Build and lint output without a matcher gives no Problems panel entries; a wrong
+Problem: Build and lint output without a matcher gives no Problems panel entries. A wrong
 pattern gives false ones.
 Solution: Use a built-in matcher (`$gcc`, `$tsc`, `$eslint-stylish`) or a custom `pattern`
 that is tested against real output. Set `fileLocation` so paths resolve against
@@ -251,6 +251,6 @@ Solution: Make configure and build two independent tasks without `dependsOn` bet
 them. The contributor runs configure for initialization: the first run, a preset
 switch, a changed cache variable or toolchain, or a clean tree. Every other run
 is the build task alone. A single shell line that joins both commands is the same
-mistake; so is a single `cmake --workflow` task outside CI.
+mistake. So is a single `cmake --workflow` task outside CI.
 Reasoning: Configure is an initialization step, not part of every build.
 Avoid: Hiding the configure task. The contributor runs it directly.

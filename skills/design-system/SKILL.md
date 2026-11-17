@@ -49,7 +49,7 @@ Create, audit, or update a project's `DESIGN.md` and keep the UI code consistent
 ### Mode: Update `DESIGN.md`
 
 1. Identify changes: new component, added color, interaction pattern.
-2. Edit only affected sections; don't restructure.
+2. Edit only affected sections. Don't restructure.
 3. Additive changes are always safe.
 4. Mark breaking changes with `> ⚠️ Breaking:` and migration path.
 

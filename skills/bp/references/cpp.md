@@ -5,7 +5,7 @@
 ### Naming
 
 Name every C++ file and directory in lowercase `snake_case`, starting with a
-letter. Use only `a-z`, `0-9`, and `_`; module partition filenames can also
+letter. Use only `a-z`, `0-9`, and `_`. Module partition filenames can also
 contain one hyphen as described below. A file name matches this pattern:
 
 ```text
@@ -112,7 +112,7 @@ Why:
 ### Exceptions
 
 - The language or tool dictates the name: QML components start with an
-  uppercase letter; `CMakeLists.txt`, `README.md`.
+  uppercase letter, and so do `CMakeLists.txt` and `README.md`.
 - An existing codebase with one consistent convention keeps it. When
   reviewing, report only deviations from the project's own convention
   and case-only path collisions.

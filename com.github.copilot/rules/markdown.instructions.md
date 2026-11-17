@@ -5,11 +5,11 @@ applyTo: '**/*.md'
 
 # Markdown requirements
 
-Rules for all Markdown files. Every rule is a pass/fail check; reviews cite rules by ID.
+Rules for all Markdown files. Every rule is a pass/fail check. Reviews cite rules by ID.
 
 ## Code
 
-- MD1 Every code fence has a language tag; use `text` for plain output
+- MD1 Every code fence has a language tag. Use `text` for plain output
 
 ## Links
 
@@ -22,13 +22,13 @@ Rules for all Markdown files. Every rule is a pass/fail check; reviews cite rule
   ✔ `[doc-validation.md](references/doc-validation.md)`
   ✔ `[Documentation Validation](references/doc-validation.md)`
 
-- MD3 Every link uses the syntax `[text](url)`; no bare URLs outside code spans and code fences.
+- MD3 Every link uses the syntax `[text](url)`. No bare URLs outside code spans and code fences.
   Why: a bare URL gives the reader no context and renders inconsistently.
 
   ✘ `See https://example.com/docs`
   ✔ `See [the docs](https://example.com/docs)`
 
-- MD4 Prefer a link path written from the root of the repository, with a leading `/`, over a path with `..` segments. A `..` path is allowed; this is a preference, not a hard rule.
+- MD4 Prefer a link path written from the root of the repository, with a leading `/`, over a path with `..` segments. A `..` path is allowed. This is a preference, not a hard rule.
   Why: a root-based path survives a file move and needs no level counting.
 
   ✘ `[markdown.instructions.md](../../com.github.copilot/rules/markdown.instructions.md)`
@@ -56,13 +56,13 @@ Rules for all Markdown files. Every rule is a pass/fail check; reviews cite rule
 
 - MD8 `---` appears on its own line only as the delimiter of YAML frontmatter.
   Why: a divider adds no meaning, and headings already split the document.
-  Fix a failure by deleting every other `---` line; do not replace it with another divider.
+  Fix a failure by deleting every other `---` line. Do not replace it with another divider.
 
 ## Globs
 
-- MD9 A run of two or more file extensions is written as one brace glob in one code span; separate `*.ext` spans in a row fail.
+- MD9 A run of two or more file extensions is written as one brace glob in one code span. Separate `*.ext` spans in a row fail.
   Write each extension once, in its own case: `{c,C}` for two different extensions, never a case-folded form.
-  Start the glob with `**/` only where it is matched against paths, such as an `applyTo` value; a plain list of extensions that names file kinds starts with `*.`.
+  Start the glob with `**/` only where it is matched against paths, such as an `applyTo` value. A plain list of extensions that names file kinds starts with `*.`.
   Why: one glob is shorter, shows the whole set at a glance, and can be compared with an `applyTo` value without reordering or retyping.
 
   ✘ `*.cpp`, `*.hpp`, `*.cc`

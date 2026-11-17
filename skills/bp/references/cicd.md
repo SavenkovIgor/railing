@@ -43,7 +43,7 @@ with high probability of failure early in the pipeline
 
 - Tests don't depend on execution order or external services (mock/stub). Randomizing order helps reveal hidden dependencies.
 - Follow Test Pyramid: many unit → fewer integration → few E2E.
-- Code coverage threshold (coverage gate) - 80-85%; higher doesn't make sense for most projects.
+- Code coverage threshold (coverage gate) - 80-85%. Higher doesn't make sense for most projects.
 - Environment Parity - staging is as close as possible to prod in configuration, data, and infrastructure.
 
 ### Dependency Management
@@ -57,10 +57,10 @@ with high probability of failure early in the pipeline
 
 - Secrets only through secret manager (Vault, AWS Secrets Manager, GitHub Secrets). Never in code.
 - Branch protection - merge to `main`/`release/*` only through PR with mandatory CI passing.
-- No CI bypasses - hotfixes also pass the pipeline; speed comes from fast CI, not skipping it.
+- No CI bypasses - hotfixes also pass the pipeline. Speed comes from fast CI, not skipping it.
 - SAST - on every PR.
 - Docker image scanning (Trivy, Grype) before publishing.
-- Least privilege - CI runner has minimal permissions; separate roles for staging and prod.
+- Least privilege - CI runner has minimal permissions. Separate roles for staging and prod.
 - Artifact signing (Cosign, Sigstore).
 
 ### Deployment Reliability
@@ -75,7 +75,7 @@ with high probability of failure early in the pipeline
 
 - DORA metrics: Deployment Frequency, Lead Time, MTTR, Change Failure Rate.
 - Deployment version is visible in monitoring (Grafana annotations, Datadog deployment markers).
-- Notification routing - feature branch failures notify only the PR author; `main`/`release` failures notify the entire team.
+- Notification routing - feature branch failures notify only the PR author. `main`/`release` failures notify the entire team.
 
 ### Default Pipeline and Its Modifications
 
@@ -232,9 +232,9 @@ Version in URL - for REST. For GraphQL and gRPC - other mechanisms (field deprec
 ### Reproducible Build Practices
 
 - Keep everything that affects build output in the repo - otherwise the build can't be reproduced from a clean clone.
-- Don't commit generated files - commit the generator, not its output; artifacts can be stored for convenience, but must not be the only path to a working build.
+- Don't commit generated files - commit the generator, not its output. Artifacts can be stored for convenience, but must not be the only path to a working build.
 - Pin toolchain and dependency versions - otherwise different machines produce different code and different binaries.
-- Don't rely on the IDE for build steps - the editor is optional for the build; all steps must work without it.
+- Don't rely on the IDE for build steps - the editor is optional for the build. All steps must work without it.
 - For long-lived or multi-person projects, use a hermetic environment (Nix, Docker, pinned container) - scripts declare reproducibility, a hermetic environment enforces it.
 
 ## Feature Branch vs Release Branch Pipeline
@@ -283,7 +283,7 @@ Include:
 
 Don't Include:
 
-- Integration and E2E tests - they're slow; if needed, trigger by label (`/run-e2e` in comment)
+- Integration and E2E tests - they're slow. If needed, trigger by label (`/run-e2e` in comment)
 - DAST - doesn't make sense without stable deployed environment
 - Performance tests
 - Deploy to long-lived staging

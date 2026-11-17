@@ -118,7 +118,7 @@ Analyzes the code in context and produces a prioritized report of applicable pub
 4. Prioritize findings.
    - `blocking`: standard violation that introduces security risk, data loss risk, or protocol incompatibility with external systems.
    - `important`: deviation from the standard that reduces interoperability, maintainability, or correctness.
-   - `informational`: style or convention gap; low risk but worth tracking.
+   - `informational`: style or convention gap. Low risk but worth tracking.
 
 5. Build the checklist.
    - For each `violation` or `gap` with priority `blocking` or `important`:

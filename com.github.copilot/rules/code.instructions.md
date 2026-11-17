@@ -6,13 +6,13 @@ applyTo: '**/*.{h,hpp,cc,cpp,cppm,ipp,py,js,ts}'
 # Coding style
 
 - Readability and maintainability are primary concerns
-- Code should always be self-documenting first; comments explain *why*, not *what*
+- Code should always be self-documenting first. Comments explain *why*, not *what*
   - Delete a comment that retells the next line: ✘ `// increase the retry counter` above `++retries;`, ✔ `// the server drops the first request after a reconnect`
 - Prefer small, focused, pure functions - if a function needs a comment to explain what it does, consider splitting it
   - A check function verifies one condition on the inputs it owns and nothing out of its scope, so checks compose into a sequence of validators (e.g. when constructing a validated type) without repeating each other
 - Follow single responsibility principle in classes and functions
 - Prefer explicit over implicit: make dependencies, side effects, and control flow visible at the call site
-- Prefer deterministic over stochastic: avoid randomness unless the feature requires it; when needed, make it explicit and seedable
+- Prefer deterministic over stochastic: avoid randomness unless the feature requires it. When needed, make it explicit and seedable
   - *Deviate when:* ML/AI training, fuzzing, generative features
 - Prefer stateless over stateful: functions and components should derive output purely from their inputs
   - *Deviate when:* caches (performance), sessions, streaming protocols
@@ -43,7 +43,7 @@ Before writing any new code, walk the ladder in order - stop at the first step t
 1. Does this task need to exist? (YAGNI) → if not, skip it and say why
 2. Does the standard library solve it? → reach for stdlib before anything else
 3. Can a native platform feature handle it? → use the built-in instead of reimplementing
-4. Does an already-installed dependency cover it? → reuse it; don't add a new dependency
+4. Does an already-installed dependency cover it? → reuse it. Don't add a new dependency
 5. Can it be one line of code? → write the one-liner
 6. Only then: write a minimal working implementation → smallest version that passes
 
@@ -131,7 +131,7 @@ Make an API easy to use correctly and hard to use incorrectly: a developer does 
 - Keep the argument order the same across similar functions
 - Group related arguments into one type
 - Use at most 4 arguments in a function
-- Use two or more arguments of the same type only in well-known cases such as width and height; otherwise give them distinct types or group them
+- Use two or more arguments of the same type only in well-known cases such as width and height. Otherwise give them distinct types or group them
 
 ### Path variables
 
@@ -171,9 +171,9 @@ Make invalid states impossible to express in types: model a set of mutually excl
 
 An invariant is a condition on the members of an object that every public member function relies on without checking it:
 
-- The constructor establishes the invariant; when it cannot, construction fails with an error. LLMs often add a separate `init()` or `isValid()` instead, and then every caller has to remember the call and every member function has to check the state
+- The constructor establishes the invariant. When it cannot, construction fails with an error. LLMs often add a separate `init()` or `isValid()` instead, and then every caller has to remember the call and every member function has to check the state
 - Every public member function keeps the invariant on each exit, an exit by exception included, so the invariant also holds on entry to the destructor
-- Inside a member function the invariant can break; restore it before the function calls a public member function of the same object, a callback, or a virtual function, since each of them can observe the object
+- Inside a member function the invariant can break. Restore it before the function calls a public member function of the same object, a callback, or a virtual function, since each of them can observe the object
 - A setter exists only for a member outside the invariant, or checks the invariant and rejects a value that breaks it
 
 ```text

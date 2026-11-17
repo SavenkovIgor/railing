@@ -33,7 +33,7 @@ Artifacts that shape behavior globally or for specific file patterns
 Columns:
 
 - Name / File - display name or filename
-- Path - exact path as you know it (repo-relative or absolute); `injected` if embedded in system prompt with no file path
+- Path - exact path as you know it (repo-relative or absolute). `injected` if embedded in system prompt with no file path
 - Location - see *Path Location Taxonomy* in Notes
 - Scope / applyTo - glob pattern, directory, or `global`
 - Content in Context? - `full` (text is in your context window) · `reference` (only path/name mentioned)

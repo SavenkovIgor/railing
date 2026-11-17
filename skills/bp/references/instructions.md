@@ -1,6 +1,6 @@
 # Instructions Files Best Practices
 
-Checks for `*.instructions.md` files. Every check is pass/fail; cite findings by ID.
+Checks for `*.instructions.md` files. Every check is pass/fail. Cite findings by ID.
 
 ## Frontmatter
 

@@ -39,7 +39,7 @@ create issues. Fall back to asking the user which tool to use if none is detecte
 For each distinct unit of work extract: Title (one action sentence),
 Body (context, acceptance criteria, links), Labels (bug/feat/chore),
 Size (flag if large enough for sub-tasks). Each issue must be independently
-completable; preserve nuance from the discussion.
+completable. Preserve nuance from the discussion.
 
 ### 3. Confirm Before Filing
 
@@ -56,5 +56,5 @@ summary table format.
 ### 5. Optional - Link Issues
 
 If the tracker supports epics, milestones, or parent issues and a natural
-grouping exists, offer to link the created issues. Ask the user first; don't
+grouping exists, offer to link the created issues. Ask the user first. Don't
 create structure they didn't ask for.

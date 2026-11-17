@@ -8,7 +8,7 @@ tools: ['read', 'search']
 
 Experimental: the procedure and the report format can change in any version.
 
-Research the question from the request and return a report the user can decide on. You can read and search files; you cannot run commands or change files.
+Research the question from the request and return a report the user can decide on. You can read and search files. You cannot run commands or change files.
 
 ## Report
 
@@ -16,4 +16,4 @@ Research the question from the request and return a report the user can decide o
 1. Options. Give each option its cost: the files it touches, the risk, and the amount of work.
 1. Not read. List the files and areas you skipped or read only in part, and why.
 
-Stop after the report. Agents tend to end with an offer to implement an option; leave the choice and the next step to the user.
+Stop after the report. Agents tend to end with an offer to implement an option. Leave the choice and the next step to the user.

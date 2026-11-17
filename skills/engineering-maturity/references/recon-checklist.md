@@ -3,7 +3,7 @@
 ## Testing
 
 - [ ] Test files exist (any `*test*`, `*spec*` file patterns)
-- [ ] Managed test data - check **either**: separate directory (`fixtures/`, `__snapshots__/`, `testdata/`, `test/data/`) **or** inline patterns (`toMatchInlineSnapshot(`, `syrupy` imports, `conftest.py` with fixture functions). Both count; absence of the directory alone is not sufficient evidence of ✘.
+- [ ] Managed test data - check **either**: separate directory (`fixtures/`, `__snapshots__/`, `testdata/`, `test/data/`) **or** inline patterns (`toMatchInlineSnapshot(`, `syrupy` imports, `conftest.py` with fixture functions). Both count. Absence of the directory alone is not sufficient evidence of ✘.
 - [ ] Test coverage config (`.coveragerc`, `jest.config.*`, `pytest.ini`, `[tool.coverage]` in `pyproject.toml`)
 - [ ] E2E test directory (`e2e/`, `cypress/`, `playwright/`, `tests/e2e/`)
 - [ ] Flaky test handling config (pytest-rerunfailures, jest `--retries`, quarantine list)

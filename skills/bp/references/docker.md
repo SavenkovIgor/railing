@@ -15,7 +15,7 @@ Example: `FROM python:3.11.4-slim`
 
 ## Rule 2: Never use `latest` tags
 
-Problem: `latest` is non-deterministic; same Dockerfile can produce different images because the upstream tag moves.
+Problem: `latest` is non-deterministic. Same Dockerfile can produce different images because the upstream tag moves.
 Solution: Pin exact tags for base images and toolchains.
 Reasoning: Reproducible builds make rollback/debug much easier.
 Avoid: `FROM python:latest`
@@ -49,7 +49,7 @@ COPY . .
 
 ## Rule 5: Merge related `RUN` steps and clean in same layer
 
-Problem: Every `RUN` adds a layer; cleaning in another layer does not shrink previous one.
+Problem: Every `RUN` adds a layer. Cleaning in another layer does not shrink the previous one.
 Solution: Install + cleanup in one `RUN`.
 Reasoning: Fewer layers and no stale package cache.
 Example:
@@ -64,7 +64,7 @@ RUN apt-get update && \
 ## Rule 6: Prefer `COPY` over `ADD`
 
 Problem: `ADD` has magic behavior (URL download, auto-unpack), which is less predictable.
-Solution: Use `COPY` for files; use explicit `RUN curl|tar` when needed.
+Solution: Use `COPY` for files. Use explicit `RUN curl|tar` when needed.
 Reasoning: Explicit build logic is easier to cache, audit, and debug.
 Avoid: `ADD https://prostodevops.ru/file.tar.gz /app/`
 Example: `COPY local.txt /app/`
@@ -118,7 +118,7 @@ RUN --mount=type=secret,id=token \
 
 ## Rule 11: Handle PID 1 and signals correctly
 
-Problem: Shell wrappers often swallow `SIGTERM`; app gets `SIGKILL` from k8s later.
+Problem: Shell wrappers often swallow `SIGTERM`. App gets `SIGKILL` from k8s later.
 **Solution A:** Use `exec` in entrypoint script so app becomes PID 1.
 **Solution B:** Use `tini` as init/entrypoint to forward signals and reap zombies.
 Reasoning: Graceful shutdown protects in-flight requests and data integrity.

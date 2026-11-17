@@ -50,7 +50,7 @@ Open a link only when its file is missing from the context.
 
 The journal keeps the results of earlier runs in
 `~/.local/state/railing/reflect/journal.jsonl` on every platform.
-Read and write it with the file tools; create the file if it is missing.
+Read and write it with the file tools. Create the file if it is missing.
 
 - Append one JSON line per run, after the user has decided on every proposal:
   `date`, `sessions` (each with `id` and `failed`, the list of failed criteria),
@@ -58,7 +58,7 @@ Read and write it with the file tools; create the file if it is missing.
   `coverage` (the share of reviewed sessions where at least one skill was invoked), and `proposals`
   (each with `file`, `text`, and `decision`: `applied`, `skipped`, or `undecided`).
 - Do not propose again a fix that an earlier entry marks `skipped`,
-  unless a new session gives new evidence for it; then cite that session.
+  unless a new session gives new evidence for it. Then cite that session.
 
 ## Scope of the review
 
@@ -80,8 +80,8 @@ Read and write it with the file tools; create the file if it is missing.
 
 ## Session assessment
 
-Check each session against 4 criteria. A session fails when it fails at least one;
-give the reason in 1-3 sentences that name the failed criteria and the step.
+Check each session against 4 criteria. A session fails when it fails at least one.
+Give the reason in 1-3 sentences that name the failed criteria and the step.
 
 - Efficiency: the agent reached the result without extra steps, repeats, or unique console calls.
 - Instruction compliance: the agent followed the instructions and skills in its context.
@@ -144,22 +144,22 @@ Each fix works by removing information, so propose it as a rule that keeps the w
 | Failure mode | Symptom in the conversation | Fix | Candidate artifact change |
 |--------------|-----------------------------|-----|---------------------------|
 | Poisoning | A wrong conclusion was saved, then treated as fact | Validate | Require a real check, such as a test or a command, before a conclusion goes into notes or memory |
-| Distraction | A long history made the agent repeat old actions | Compact | Move long-lived state into files and pull it in on demand; summarize old steps |
-| Confusion | Too many tools or docs made the agent choose wrongly | Curate | Give each skill or agent only the tools its job needs; load the rest on request |
+| Distraction | A long history made the agent repeat old actions | Compact | Move long-lived state into files and pull it in on demand. Summarize old steps |
+| Confusion | Too many tools or docs made the agent choose wrongly | Curate | Give each skill or agent only the tools its job needs. Load the rest on request |
 | Clash | The window holds two versions of the same fact | Prune | Delete the superseded version, or restart the window from the corrected state |
 
 Notes for the proposals:
 
-- Compaction is lossy, and a summary of a summary drifts; prefer files over repeated summaries
+- Compaction is lossy, and a summary of a summary drifts. Prefer files over repeated summaries
 - Prefer a fresh window with a restated current state over patching a poisoned one
 - Tool definitions cost context even when unused, so also check the MCP and tool configuration
-- Large tool results, such as file dumps, test output, and schema dumps, usually fill the window;
-  propose narrower reads, filters, or output limits
+- Large tool results, such as file dumps, test output, and schema dumps, usually fill the window.
+  Propose narrower reads, filters, or output limits
 
 ## Proposals
 
-- Propose exactly 3, ranked by importance. Base each one on a failed session;
-  the proposal for this skill itself can rely on the current review run instead.
+- Propose exactly 3, ranked by importance. Base each one on a failed session.
+  The proposal for this skill itself can rely on the current review run instead.
 - Each proposal names one concrete file and gives the exact new text.
   Keep it small: 1-3 sentences. A proposal can also move an instruction to
   another file or delete it.
@@ -171,8 +171,8 @@ Notes for the proposals:
 - Then ask the user about each proposal through the dialog tool (`ask_user`)
   with options such as apply, edit, skip, or discuss. Apply only what the user accepts.
 - If the dialog tool is unavailable, print the proposals and stop without editing
-  any file except the journal; mark every proposal `undecided`.
+  any file except the journal. Mark every proposal `undecided`.
 - At least one of the proposals improves this skill itself: a missing check,
   an unclear step, or a wasted step that the review run showed.
-  Count it among the 3; if nothing real turns up, name the closest weak spot
+  Count it among the 3. If nothing real turns up, name the closest weak spot
   of the skill instead of skipping it.

@@ -11,7 +11,7 @@ description: >-
 
 Walk the user through the open decisions of the conversation in short rounds of 1-3 questions,
 with a summary after each round, until no decision is left open. The skill sets the format of
-the rounds; the decisions themselves come from the conversation.
+the rounds. The decisions themselves come from the conversation.
 
 ## Procedure
 
@@ -26,7 +26,7 @@ the rounds; the decisions themselves come from the conversation.
    - Mark the decisions of the current round with `(now)`
 3. Ask one round of 1-3 questions in one form of the question tool, with options to pick
    - Take decisions from the top of the tree first: their answers prune the branches below
-   - Put the recommended option first and make it the default; name the work in its label
+   - Put the recommended option first and make it the default. Name the work in its label
 4. After the answers, write a summary of 1-2 paragraphs: what the user chose, what it means for
    the work, and which branches dropped out
 5. Show the remaining tree with the decisions added by the answers, and start the next round

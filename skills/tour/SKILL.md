@@ -23,7 +23,7 @@ repository, and a drill into one area of it.
 - An optional area from the request: a module, directory, feature, or flow
 - No area: run the map level. With an area: run the drill level
 - Answer in the language of the request and keep code identifiers as they are
-- Answer in chat; the skill creates and changes no files
+- Answer in chat. The skill creates and changes no files
 
 ## Procedure
 
@@ -80,6 +80,6 @@ The drill has these `##` sections in this order, in at most 150 lines excluding 
 - Write Mermaid in a `mermaid` fence
 - Use `flowchart` for structure, `sequenceDiagram` for flows over time, `stateDiagram-v2` for
   lifecycle, and `classDiagram` only for an area built on inheritance
-- Keep a diagram to 10 nodes at most; split it instead of shortening labels
+- Keep a diagram to 10 nodes at most. Split it instead of shortening labels
 - Make each node a module, class, or file that the text links
 - Draw only the edges you read in the code, and label each edge with what passes along it

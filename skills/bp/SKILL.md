@@ -30,8 +30,8 @@ Choose only the references that match the file under review:
 | [agent](references/agent.md)                                 | `*.agent.md` files                                                                      |
 | [chromium](references/chromium.md)                           | C++ files that include Chromium headers: `base/`, `content/`, `chrome/`, `components/`  |
 | [cicd](references/cicd.md)                                   | `.github/workflows/`, `.gitlab-ci.yml`, pipeline configs, build scripts, lock files     |
-| [cmake](references/cmake.md)                                 | `CMakeLists.txt`, `*.cmake` files; build configuration and dependency management        |
-| [cpp](references/cpp.md)                                     | C++ files: `*.{cpp,hpp,cppm,ipp,h,cc,C,H,c++,h++}`; file and directory naming          |
+| [cmake](references/cmake.md)                                 | `CMakeLists.txt`, `*.cmake` files. Build configuration and dependency management        |
+| [cpp](references/cpp.md)                                     | C++ files: `*.{cpp,hpp,cppm,ipp,h,cc,C,H,c++,h++}`. File and directory naming          |
 | [devops](references/devops.md)                               | `*.tf`, `ansible*.yml`, provisioning and configuration management files                 |
 | [docker](references/docker.md)                               | `Dockerfile*`, `*.dockerfile`, `docker-compose*.yml`, `compose*.yml`                    |
 | [docs](references/docs.md)                                   | Documentation `*.md` files (README, guides, wikis), except `notes/**/*.md`              |
@@ -52,7 +52,7 @@ For each selected reference, launch a sub-agent and pass it exactly four things:
 1. The target file - full path and content
 2. The reference file - full path of the file linked in the table above
 3. The output format - the exact template defined in the "Output Format" section below
-4. The dependency files - full paths of the files in "DependsOn" whose parenthetical names this reference; none if no entry names it
+4. The dependency files - full paths of the files in "DependsOn" whose parenthetical names this reference. None if no entry names it
 
 Instruct each sub-agent to: read the target file, the reference file, and the dependency files, validate the file against every criterion in the reference and in the dependency files as a whole, and return findings using the provided format. Sub-agents work in parallel.
 

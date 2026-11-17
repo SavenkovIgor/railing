@@ -7,7 +7,7 @@ First read the best practice docs:
 
 - Line width - 100 characters. Find longer lines with the IDE text search tool:
   run it on the checked file with the regex `^.{101,}`. Each match is a line over the limit.
-- Avoid long paragraphs; use lists, tables, and formatting to break up content
+- Avoid long paragraphs. Use lists, tables, and formatting to break up content
 - The skill should only include content that truly requires model reasoning or understanding
 - Use paths from the skill root without `./` (`scripts/foo.sh`) for all skill resources and for
   links to files of the same skill
@@ -15,7 +15,7 @@ First read the best practice docs:
   - ✘ `[docs.md](./references/docs.md)`
 - Move supporting material to `references/` or `assets/` if needed
 - Move a template longer than 10 lines to `assets/` and link it from `SKILL.md`
-- `SKILL.md` under 50 lines is great; more than 250 lines is unmanageable and MUST be
+- `SKILL.md` under 50 lines is great. More than 250 lines is unmanageable and MUST be
   compressed, cut down, or split by moving content to `references/` or `assets/`
 - Move the rules of one use case to its own file in `references/` only when all of these hold:
   - `SKILL.md` exceeds 250 lines
@@ -31,7 +31,7 @@ First read the best practice docs:
 - `name` must match the folder name exactly (case-sensitive, lowercase-alphanumeric + hyphens)
 - `description` must be present, and brief
 
-`argument-hint` is allowed when the skill accepts arguments; at most 7 words.
+`argument-hint` is allowed when the skill accepts arguments. At most 7 words.
 
 Add no other fields (such as `user-invocable`): vendors support them unevenly and they add little.
 
@@ -69,7 +69,7 @@ Structure of the body, in this order:
 - `## Inputs` (optional): what the skill needs from the user or the context, when listing it
   makes the run simpler
 - `## Procedure`: the steps, if the skill has steps
-- `## Output Format`: the structure of the output; define it if a person or another tool reads
+- `## Output Format`: the structure of the output. Define it if a person or another tool reads
   it in a fixed form
 
 **NEVER include a `## When to Use` section (or equivalent).**
@@ -87,9 +87,9 @@ a body section.
 
 ## Scripts
 
-- Move a step to `scripts/` only when the environment that runs it is known; this is rare,
+- Move a step to `scripts/` only when the environment that runs it is known. This is rare,
   since a skill cannot assume a runtime or tools
 - A script replaces its step in `SKILL.md` and does not duplicate it
 - Default script format: Python with inline script metadata (PEP 723), a `# /// script` comment
-  block that declares `requires-python` and `dependencies`, run by `uv run`; this is a default,
+  block that declares `requires-python` and `dependencies`, run by `uv run`. This is a default,
   not the best choice for every project

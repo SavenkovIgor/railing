@@ -4,7 +4,7 @@
 > Data source: All Δ-effect sizes, ROI estimates, and baseline scores embedded in this file come from:
 > [Алексей Обыскалов, «Инженерная зрелость. Исследование практик и триггеров», Habr, Nov 2025](https://habr.com/ru/articles/963202/)
 > 106 teams surveyed (developers, team leads, tech leads, CTOs). Groups: ≤10 / 11-50 / 51-150 engineers.
-> **Limitations:** Self-assessed data; Russian-speaking team sample; correlation only - causality not established.
+> **Limitations:** Self-assessed data. Russian-speaking team sample. Correlation only - causality not established.
 
 ## Glossary
 
@@ -39,7 +39,7 @@ The skill recommends specific engineering practices that make delivery more pred
 ## Embedded practice database
 
 All Δ values passed Welch's t-test + BH-FDR (α=0.05). Practical significance threshold: **Δ ≥ 1.5**.
-Effort estimates are for an average team with no prior infrastructure; actual effort will vary.
+Effort estimates are for an average team with no prior infrastructure. Actual effort will vary.
 
 ### Master ROI Table (all strata combined, sorted by ROI descending)
 
@@ -81,7 +81,7 @@ Medium teams (11-50) - statistically significant effects:
 
 > Why so few significant effects at 11-50? This is a statistical artifact, not a content finding. Score variance is lower in this stratum (teams have stabilized), so the difference between "has practice" and "doesn't" becomes harder to detect with this sample size. The practices still matter - the signal is just below the detection threshold.
 
-Large teams (51-150): The research found only 1 significant correlation and 3 significant practices. Large teams have converged on similar practices; variance is minimal. Focus here shifts from *introducing* practices to *deepening* them: standards, mentoring, engineering culture.
+Large teams (51-150): The research found only 1 significant correlation and 3 significant practices. Large teams have converged on similar practices. Variance is minimal. Focus here shifts from *introducing* practices to *deepening* them: standards, mentoring, engineering culture.
 
 ### Baseline Maturity Scores by Stratum (from research)
 

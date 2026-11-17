@@ -6,12 +6,12 @@ applyTo: 'notes/**/*.overview.md'
 # Overview report profile
 
 Describes how a group of existing classes or modules works, to onboard onto it
-before changing it. Describe the code as it is; do not critique the design.
+before changing it. Describe the code as it is. Do not critique the design.
 
 ## Input
 
 - The classes, files, or modules named in the request
-- Read each of them fully; do not skim
+- Read each of them fully. Do not skim
 
 ## Structure
 

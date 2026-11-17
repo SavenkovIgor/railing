@@ -183,7 +183,7 @@ class Document:
 #### Function Arguments
 
 - Use type hints for all parameters
-- Use built-in generics (`list[int]`) and `T | None` in type hints; import from `typing` only for constructs built-ins do not cover (`TypedDict`, `ClassVar`), or for projects that target Python older than 3.9 (3.10 for `|`)
+- Use built-in generics (`list[int]`) and `T | None` in type hints. Import from `typing` only for constructs built-ins do not cover (`TypedDict`, `ClassVar`), or for projects that target Python older than 3.9 (3.10 for `|`)
 - Use keyword-only arguments for clarity when needed
 - Group arguments with `dataclasses` or `TypedDict`
 
