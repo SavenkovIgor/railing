@@ -70,6 +70,9 @@ Read and write it with the file tools; create the file if it is missing.
   `get_session_context` at `detail: summary`, and open `digest` with a small
   `transcriptLimit` only for turns that show a problem. Report sessions whose
   transcript comes back empty as unreadable instead of skipping them silently.
+- `digest` lists only tool names; to judge console calls, open `full` with
+  `transcriptLimit` of 2 or less only for turns whose digest shows `powershell`
+  or `run_in_terminal`.
 - Review only the current conversation when the user explicitly asks for it.
 - Review at most 20 sessions per run, oldest first, so that older sessions are reviewed
   before they leave the 48-hour window. The rest wait for the next run.

@@ -69,6 +69,7 @@ Expect the user to stop any console call that is not obvious at a glance. If the
 | `grep`, `rg` | `Explore` subagent with a targeted query |
 | `cat`, `head`, `tail` | `read_file` |
 | `wc`, `stat` | `Explore` subagent |
+| `Test-Path`, `Get-ChildItem`, `Get-Command` (is a tool or file present?) | `glob` over the known install or output folder |
 
 Creating git worktrees from the console is FORBIDDEN. ALWAYS create a worktree with an IDE tool (the IDE's built-in worktree support); `git worktree add` in `run_in_terminal` is not permitted, even as a fallback. If no IDE tool can do it, stop and ask instead of using the console.
 
