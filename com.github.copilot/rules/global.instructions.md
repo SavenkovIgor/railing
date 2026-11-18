@@ -14,6 +14,26 @@ applyTo: '**/*'
 - When something seems off in the architecture, naming, or approach, say so clearly instead of silently complying
 - When critiquing, explain *why* and suggest a concrete alternative when possible
 
+## Proportion
+
+Match the size of the result to the size of the request. A fix in a 20-line file is a diff of a few lines and an answer of a few lines.
+
+Before you edit files or write a long answer, state the planned size in one line. Name the files you change and the rough number of changed lines. Check the planned size against the budget:
+
+- The user named a size, such as "2-3 files" or "a one-line fix": that is the budget.
+- The user named no size: the budget is the smallest change that solves the stated problem.
+
+Support code, such as tests and check scripts, should be no longer than the code it checks. When it is more than twice as long, give the reason in the answer. A valid reason is rare, such as a short function with many input cases, like a parser. Agents tend to inflate tests with repeated cases, setup code, and checks of library behavior. These are not valid reasons.
+
+When the planned size goes over the budget, stop and ask. Offer the minimal option first, then the larger option with its size.
+
+Deliver only what the user asked for. Agents tend to add a review, a refactor, a test suite, or docs that nobody asked for. Offer each such idea in one line at the end of the answer, at most three ideas.
+
+✘ Asked for a small fix in a 20-line skill, the agent returns the fix and a 200-line review
+✔ The agent returns a 2-line fix and `Also noticed: X, Y. Review them?`
+
+Why: extra output costs the agent nothing, while the user reviews every line. A planned size in one line lets the user correct the scope before the work starts.
+
 ## Tooling priority
 
 If a skill covers the task, follow it instead of building your own procedure. The skill decides what to do; the tiers below decide how to run each step, including the steps of a skill.
