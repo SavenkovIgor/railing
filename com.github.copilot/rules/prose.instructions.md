@@ -70,8 +70,10 @@ These principles inform the writing. They do not require the result to be
   `set up`, and `find`, not `find out`.
 - Use a conversational, friendly, respectful tone without slang or excessive
   formality.
-- Avoid anthropomorphism and culture-specific references. Expand abbreviations
-  on first use.
+- Avoid anthropomorphism and culture-specific references.
+- Expand an abbreviation only at its first use in the document. Leave
+  abbreviations that are common in the industry unexpanded, such as `CI`,
+  `API`, or `LLM`.
 
 ### Prose style examples
 
