@@ -4,16 +4,17 @@ Engineering guardrails that keep AI coding agents on track.
 
 ## VS Code first
 
-The plugin follows the [Agent Plugins](https://agent-plugins.org) standard where it can, but the
-standard is not yet adopted by other vendors. Rules and agents live in `com.github.copilot/`,
+The plugin follows the [Agent Plugins](https://agent-plugins.org) standard where it can, but other
+vendors have not yet adopted the standard. Rules and agents live in `com.github.copilot/`,
 the only directory VS Code reads them from, so the plugin is VS Code first. Skills are plain
 `SKILL.md` files and travel to other agents more easily than rules do.
 
-To install railing plugin into VS Code use this link:
+To install the railing plugin in VS Code, open this URL:
 
 `vscode://chat-plugin/install?source=SavenkovIgor/railing&plugin=railing`
 
-It will install both, plugin and marketplace (for autoupdate) with this plugin only
+The URL installs the plugin and a marketplace that lists only this plugin. VS Code uses the
+marketplace to update the plugin automatically.
 
 ## Contents
 
@@ -57,7 +58,7 @@ It will install both, plugin and marketplace (for autoupdate) with this plugin o
 
 ## File links
 
-Which rule and skill files depend on which. A solid arrow means "links to". A dashed arrow means that the `applyTo` scope of the file lies inside the scope of the target, so both attach together.
+The diagram shows which rule and skill files depend on which. A solid arrow means "links to". A dashed arrow means that the `applyTo` scope of the file lies inside the scope of the target, so both attach together.
 
 ```mermaid
 flowchart TD
