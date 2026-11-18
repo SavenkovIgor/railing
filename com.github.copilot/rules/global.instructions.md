@@ -54,10 +54,13 @@ Why: a broader tool costs the user more review. A task is checked in advance, an
 Expect the user to stop any console call that is not obvious at a glance. If the user cannot verify a command in a few seconds, they interrupt it rather than review it.
 
 - Before a console call, name the narrower tools you tried and why they did not fit.
-- Write one short command per call, with well-known tools and common flags. Agents tend to chain commands with pipes, `&&`, and `;` into one line; split such a line into separate calls.
+- Write one short command per call, with well-known tools and common flags, in every shell, PowerShell included. Agents tend to join commands with pipes, `&&`, `;`, or line breaks into one call, often as a PowerShell script with variables; split it into separate calls, one command each.
 
   ✘ `git add plugin.json && git commit -m "..." && git rebase --continue`
   ✔ three separate calls: `git add plugin.json`, `git commit -m "..."`, `git rebase --continue`
+
+  ✘ `Set-Location build; cmake --build . | Select-String error`
+  ✔ one call: `cmake --build build`, then read its output
 
 - If the user interrupts a console call, ask what to do next or go back to a narrower tool. Agents tend to retry the same action as a reworded command; an interrupt means no, not "try another form".
 
