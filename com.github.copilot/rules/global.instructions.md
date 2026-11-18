@@ -23,7 +23,7 @@ Before you edit files or write a long answer, state the planned size in one line
 - The user named a size, such as "2-3 files" or "a one-line fix": that is the budget.
 - The user named no size: the budget is the smallest change that solves the stated problem.
 
-Keep support code, such as tests and check scripts, smaller than the code it checks.
+Support code, such as tests and check scripts, should be no longer than the code it checks. When it is more than twice as long, give the reason in the answer. A valid reason is rare, such as a short function with many input cases, like a parser. Agents tend to inflate tests with repeated cases, setup code, and checks of library behavior. These are not valid reasons.
 
 When the planned size goes over the budget, stop and ask. Offer the minimal option first, then the larger option with its size.
 
