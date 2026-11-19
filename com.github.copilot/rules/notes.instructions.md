@@ -11,7 +11,7 @@ Every rule is a pass/fail check; reviews cite rules by ID.
 
 ## File naming
 
-- N1 Path is `notes/<task_id>/YYYY-MM-DD-<slug>.<kind>.md`
+- N1 Path is `notes/<task_id>/<slug>.<kind>.md`
 - N2 `<task_id>` is the task identifier in the format of the project, such as the
   ticket ID as written in the tracker. Take it from the request or the branch
   name; if neither gives one, ask
