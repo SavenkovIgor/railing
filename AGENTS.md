@@ -17,6 +17,8 @@ The list starts at the root. Each scope lists its files, then the scopes inside 
       - `notes/**/*.overview.md`
         - [reports.instructions.md](/com.github.copilot/rules/reports.instructions.md) - content checks for notes about existing code
         - [reports-overview.instructions.md](/com.github.copilot/rules/reports-overview.instructions.md) - structure of an overview report
+      - `notes/**/*.plan.md`
+        - [plans.instructions.md](/com.github.copilot/rules/plans.instructions.md) - how a plan changes
   - `**/*.{h,hpp,cc,cpp,cppm,ipp,py,js,ts}`
     - [code.instructions.md](/com.github.copilot/rules/code.instructions.md) - coding principles for any language
     - `**/*.{cpp,hpp,cppm,ipp,h,cc}`
