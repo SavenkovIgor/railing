@@ -16,8 +16,7 @@ Every rule is a pass/fail check; reviews cite rules by ID.
   ticket ID as written in the tracker. Take it from the request or the branch
   name; if neither gives one, ask
 - N3 `<slug>` is lowercase kebab-case, 2-5 words naming the content of the file
-- N4 `<kind>` is `overview`, which has its own profile, or `plan`, which is
-  reserved and has no profile yet
+- N4 `<kind>` is `overview` or `plan`. Each kind has its own profile
 
 ## Language
 

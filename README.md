@@ -38,6 +38,7 @@ marketplace to update the plugin automatically.
 │       ├── markdown.instructions.md             formatting checks for all *.md files
 │       ├── prose.instructions.md                how developer-facing prose reads, in all *.md files
 │       ├── notes.instructions.md                path, task ID, and language of agent-written notes in notes/
+│       ├── plans.instructions.md                how a plan in notes/ changes: in place, with no history
 │       ├── reports.instructions.md              content requirements for reports about existing code in notes/
 │       └── reports-overview.instructions.md     structure and checks for *.overview.md reports
 └── skills/
