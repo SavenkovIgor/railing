@@ -76,6 +76,17 @@ Expect the user to stop any console call that is not obvious at a glance. If the
 
 Creating git worktrees from the console is FORBIDDEN. ALWAYS create a worktree with an IDE tool (the IDE's built-in worktree support); `git worktree add` in `run_in_terminal` is not permitted, even as a fallback. If no IDE tool can do it, stop and ask instead of using the console.
 
+## Artifacts and references
+
+Register at most three items of the conversation with the `add_artifact_or_reference` tool. The tool shows them next to the chat input. When the task has an issue in a tracker, the issue is always one of the three. Choose the other items by their importance in the context. Register an item as soon as you create it or it appears in the chat. Pick the kind by what you did with the item:
+
+- `artifact`: a file the user reopens, such as a report in `notes/`, a plan, or an exported result. A pull request or an issue that you create, fix, or unblock is also an artifact.
+- `reference`: a pull request, an issue, or a page that you only read.
+
+When a more important item appears, remove the least important registration. Remove a registration when the item is no longer relevant.
+
+Why: the user opens the key items in one click and does not search the conversation for a link. Three items fit in one glance.
+
 ## Missing instructions and skills
 
 If a needed instruction file, skill, or agent is not in your context, do not search the disk for it (home, plugin caches, other repositories). Stop, tell the user what is missing, name the likely cause (plugin not enabled, IDE did not attach it), propose a fix (check the plugin, reload the window), and ask whether to continue without it.
