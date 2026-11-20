@@ -36,7 +36,7 @@ Why: extra output costs the agent nothing, while the user reviews every line. A 
 
 ## Workspace of the task
 
-Before the first step of a task, find where its files are. If most planned reads and edits are outside the open workspace, stop. Offer to open the workspace that holds them, or to add its folder to the current workspace. One read of one outside file needs no offer.
+Before the first step of a task, find where its files are. If most planned reads and edits are outside the open workspace, stop. Offer to open the workspace that holds them. One read of one outside file needs no offer.
 
 Why: the IDE asks the user to approve each tool call on a file outside the workspace. In another workspace, every read and edit of the task waits for a manual approval.
 
