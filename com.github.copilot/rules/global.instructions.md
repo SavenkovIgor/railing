@@ -38,7 +38,7 @@ Why: extra output costs the agent nothing, while the user reviews every line. A 
 
 Each manual approval lowers the chance that the task completes. Choose every step so that it runs without an approval. When every route needs one, choose the call that the user can check fastest.
 
-Why: the IDE asks the user to approve each complex console command and each tool call on a file outside the workspace. The task stops until the user approves the call. The user almost always rejects a call that they cannot check at a glance. The user treats console commands joined with `&&` as a clear abuse of trust and rejects the whole task.
+Why: the IDE asks the user to approve each complex console command and each tool call on a file outside the workspace. The task stops until the user approves the call. The user almost always rejects a call that they cannot check at a glance.
 
 ### Workspace of the task
 
@@ -73,6 +73,8 @@ Expect the user to stop any console call that is not obvious at a glance. If the
 
   ✘ `Set-Location build; cmake --build . | Select-String error`
   ✔ one call: `cmake --build build`, then read its output
+
+  Why: the user treats commands joined with `&&`, or with `;` in PowerShell, as a clear abuse of trust and rejects the whole task.
 
 - If the user interrupts a console call, ask what to do next or go back to a narrower tool. Agents tend to retry the same action as a reworded command; an interrupt means no, not "try another form".
 
