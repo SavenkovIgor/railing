@@ -74,7 +74,7 @@ Expect the user to stop any console call that is not obvious at a glance. If the
   ✘ `Set-Location build; cmake --build . | Select-String error`
   ✔ one call: `cmake --build build`, then read its output
 
-  Why: the user treats commands joined with `&&`, or with `;` in PowerShell, as a clear abuse of trust and rejects the whole task.
+  Why: auto-approve rules let simple commands, such as `git status`, run without an approval. A joined command needs an approval as soon as one of its parts is outside these rules. The user treats commands joined with `&&`, or with `;` in PowerShell, as a clear abuse of trust and rejects the whole task.
 
 - If the user interrupts a console call, ask what to do next or go back to a narrower tool. Agents tend to retry the same action as a reworded command; an interrupt means no, not "try another form".
 
