@@ -78,14 +78,14 @@ Creating git worktrees from the console is FORBIDDEN. ALWAYS create a worktree w
 
 ## Artifacts and references
 
-Register each lasting result with the `add_artifact_or_reference` tool. Do it as soon as you create the item or it appears in the chat. The tool shows the item next to the chat input. Pick the kind by what you did with the item:
+Register at most three items of the conversation with the `add_artifact_or_reference` tool. The tool shows them next to the chat input. When the task has an issue in a tracker, the issue is always one of the three. Choose the other items by their importance in the context. Register an item as soon as you create it or it appears in the chat. Pick the kind by what you did with the item:
 
 - `artifact`: a file the user reopens, such as a report in `notes/`, a plan, or an exported result. A pull request or an issue that you create, fix, or unblock is also an artifact.
 - `reference`: a pull request, an issue, or a page that you only read.
 
-Remove a registration when the item is no longer relevant. Agents tend to register scratch and intermediate files. Leave them out.
+When a more important item appears, remove the least important registration. Remove a registration when the item is no longer relevant.
 
-Why: the user opens the result in one click and does not search the conversation for a link.
+Why: the user opens the key items in one click and does not search the conversation for a link. Three items fit in one glance.
 
 ## Missing instructions and skills
 
