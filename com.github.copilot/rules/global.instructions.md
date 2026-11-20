@@ -34,13 +34,19 @@ Deliver only what the user asked for. Agents tend to add a review, a refactor, a
 
 Why: extra output costs the agent nothing, while the user reviews every line. A planned size in one line lets the user correct the scope before the work starts.
 
-## Workspace of the task
+## Manual approvals
+
+Each manual approval lowers the chance that the task completes. Choose every step so that it runs without an approval. When every route needs one, choose the call that the user can check fastest.
+
+Why: the IDE asks the user to approve each complex console command and each tool call on a file outside the workspace. The task stops until the user approves the call. The user almost always rejects a call that they cannot check at a glance.
+
+### Workspace of the task
 
 Before the first step of a task, find where its files are. If most planned reads and edits are outside the open workspace, stop. Offer to open the workspace that holds them. One read of one outside file needs no offer.
 
-Why: the IDE asks the user to approve each tool call on a file outside the workspace. In another workspace, every read and edit of the task waits for a manual approval.
+Why: in another workspace, every read and edit of the task waits for a manual approval.
 
-## Tooling priority
+### Tooling priority
 
 If a skill covers the task, follow it instead of building your own procedure. The skill decides what to do; the tiers below decide how to run each step, including the steps of a skill.
 
@@ -55,18 +61,20 @@ Use the narrowest tool built for the action. Move to a broader tool only when th
 
 Why: a broader tool costs the user more review. A task is checked in advance, and a dedicated tool call shows its effect at a glance. A console command has to be read and understood before the user can approve it.
 
-### Console calls
+#### Console calls
 
 Expect the user to stop any console call that is not obvious at a glance. If the user cannot verify a command in a few seconds, they interrupt it rather than review it.
 
 - Before a console call, name the narrower tools you tried and why they did not fit.
-- Write one short command per call, with well-known tools and common flags, in every shell, PowerShell included. Agents tend to join commands with pipes, `&&`, `;`, or line breaks into one call, often as a PowerShell script with variables; split it into separate calls, one command each.
+- Write one short command per call, with well-known tools and common flags, in every shell, PowerShell included. Agents tend to join commands with pipes, `&&`, `;`, or line breaks into one call, often as a PowerShell script with variables; split it into separate calls, one command each. Make no exception, even when every joined command is on the auto-approve list.
 
   ✘ `git add plugin.json && git commit -m "..." && git rebase --continue`
   ✔ three separate calls: `git add plugin.json`, `git commit -m "..."`, `git rebase --continue`
 
   ✘ `Set-Location build; cmake --build . | Select-String error`
   ✔ one call: `cmake --build build`, then read its output
+
+  Why: auto-approve rules let simple commands, such as `git status`, run without an approval. When a joined command misses these rules, the user gets an approval request for a long chain that they cannot read. The user treats commands joined with `&&`, or with `;` in PowerShell, as a clear abuse of trust and rejects the whole task.
 
 - If the user interrupts a console call, ask what to do next or go back to a narrower tool. Agents tend to retry the same action as a reworded command; an interrupt means no, not "try another form".
 
@@ -79,8 +87,6 @@ Expect the user to stop any console call that is not obvious at a glance. If the
 | `cat`, `head`, `tail` | `read_file` |
 | `wc`, `stat` | `Explore` subagent |
 | `Test-Path`, `Get-ChildItem`, `Get-Command` (is a tool or file present?) | `glob` over the known install or output folder |
-
-Creating git worktrees from the console is FORBIDDEN. ALWAYS create a worktree with an IDE tool (the IDE's built-in worktree support); `git worktree add` in `run_in_terminal` is not permitted, even as a fallback. If no IDE tool can do it, stop and ask instead of using the console.
 
 ## Artifacts and references
 
