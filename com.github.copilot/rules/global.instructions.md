@@ -38,7 +38,7 @@ Why: extra output costs the agent nothing, while the user reviews every line. A 
 
 Each manual approval lowers the chance that the task completes. Choose every step so that it runs without an approval. When every route needs one, choose the call that the user can check fastest.
 
-Why: the IDE asks the user to approve each console command and each tool call on a file outside the workspace. The task stops until the user returns, and the user works in short slots. The user rejects a call that they cannot check at a glance.
+Why: the IDE asks the user to approve each complex console command and each tool call on a file outside the workspace. The task stops until the user approves the call. The user almost always rejects a call that they cannot check at a glance. The user treats console commands joined with `&&` as a clear abuse of trust and rejects the whole task.
 
 ### Workspace of the task
 
