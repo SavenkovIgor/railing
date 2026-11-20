@@ -34,6 +34,12 @@ Deliver only what the user asked for. Agents tend to add a review, a refactor, a
 
 Why: extra output costs the agent nothing, while the user reviews every line. A planned size in one line lets the user correct the scope before the work starts.
 
+## Workspace of the task
+
+Before the first step of a task, find where its files are. If most planned reads and edits are outside the open workspace, stop. Offer to open the workspace that holds them. One read of one outside file needs no offer.
+
+Why: the IDE asks the user to approve each tool call on a file outside the workspace. In another workspace, every read and edit of the task waits for a manual approval.
+
 ## Tooling priority
 
 If a skill covers the task, follow it instead of building your own procedure. The skill decides what to do; the tiers below decide how to run each step, including the steps of a skill.
