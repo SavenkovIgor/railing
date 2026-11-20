@@ -66,7 +66,7 @@ Why: a broader tool costs the user more review. A task is checked in advance, an
 Expect the user to stop any console call that is not obvious at a glance. If the user cannot verify a command in a few seconds, they interrupt it rather than review it.
 
 - Before a console call, name the narrower tools you tried and why they did not fit.
-- Write one short command per call, with well-known tools and common flags, in every shell, PowerShell included. Agents tend to join commands with pipes, `&&`, `;`, or line breaks into one call, often as a PowerShell script with variables; split it into separate calls, one command each.
+- Write one short command per call, with well-known tools and common flags, in every shell, PowerShell included. Agents tend to join commands with pipes, `&&`, `;`, or line breaks into one call, often as a PowerShell script with variables; split it into separate calls, one command each. Make no exception, even when every joined command is on the auto-approve list.
 
   ✘ `git add plugin.json && git commit -m "..." && git rebase --continue`
   ✔ three separate calls: `git add plugin.json`, `git commit -m "..."`, `git rebase --continue`
@@ -74,7 +74,7 @@ Expect the user to stop any console call that is not obvious at a glance. If the
   ✘ `Set-Location build; cmake --build . | Select-String error`
   ✔ one call: `cmake --build build`, then read its output
 
-  Why: auto-approve rules let simple commands, such as `git status`, run without an approval. A joined command needs an approval as soon as one of its parts is outside these rules. The user treats commands joined with `&&`, or with `;` in PowerShell, as a clear abuse of trust and rejects the whole task.
+  Why: auto-approve rules let simple commands, such as `git status`, run without an approval. When a joined command misses these rules, the user gets an approval request for a long chain that they cannot read. The user treats commands joined with `&&`, or with `;` in PowerShell, as a clear abuse of trust and rejects the whole task.
 
 - If the user interrupts a console call, ask what to do next or go back to a narrower tool. Agents tend to retry the same action as a reworded command; an interrupt means no, not "try another form".
 
