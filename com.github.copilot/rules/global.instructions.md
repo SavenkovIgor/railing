@@ -78,7 +78,7 @@ Creating git worktrees from the console is FORBIDDEN. ALWAYS create a worktree w
 
 ## Artifacts and references
 
-When a task ends, register each lasting result with the `add_artifact_or_reference` tool. The tool shows the item next to the chat input. Pick the kind by what you did with the item:
+Register each lasting result with the `add_artifact_or_reference` tool. Do it as soon as you create the item or it appears in the chat. The tool shows the item next to the chat input. Pick the kind by what you did with the item:
 
 - `artifact`: a file the user reopens, such as a report in `notes/`, a plan, or an exported result. A pull request or an issue that you create, fix, or unblock is also an artifact.
 - `reference`: a pull request, an issue, or a page that you only read.
