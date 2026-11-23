@@ -1,32 +1,30 @@
 ---
 name: reflect
 description: >-
-  You should use this skill when:
-  a task is completed,
-  a session is long: its context was compacted, it made dozens of tool calls,
-  the agent started repeating earlier steps,
-  or more than half of the context window is used when a token counter is visible,
-  or when a scheduled or manual review of recent agent sessions is requested,
-  to reflect on the sessions, propose the 3 most important improvements
-  to AI context files that would improve speed or quality next time,
-  and record the run in a journal of reviewed sessions and decisions
+  Use this skill after a task is completed, after a long session,
+  or when a scheduled or manual review of recent agent sessions is requested.
+  A session is long when its context was compacted or the agent made dozens of tool calls.
+  A session is also long when the agent repeated earlier steps
+  or a visible token counter shows that more than half of the context window is used.
+  The skill proposes the 3 most important improvements to AI context files
+  and records the run in a journal of reviewed sessions and decisions.
 ---
 
 # Reflect
 
-Review agent sessions and propose the 3 most important small fixes for the
-harness: AI context files such as instructions (`AGENTS.md`, `*.instructions.md`),
-skills via `SKILL.md`, agents via `*.agent.md`, MCP config like `mcp.json`,
-ignored-files rules like `.gitignore`/`.cursorignore`, feature-specific
-instruction hooks in settings, and the railing plugin itself.
-A fix should help reach the same result a little faster or with better quality.
-Focus only on improving AI context files and guidance quality.
-If a lack of information is relevant only to one specific case,
+Review agent sessions and propose the 3 most important small fixes for the harness.
+The harness consists of AI context files: instructions (`AGENTS.md`, `*.instructions.md`),
+skills (`SKILL.md`), agents (`*.agent.md`), MCP config (`mcp.json`),
+ignore rules (`.gitignore`, `.cursorignore`), instruction hooks in settings,
+and the railing plugin itself.
+A fix helps the agent reach the same result faster or with better quality.
+Improve only AI context files and guidance quality.
+If only one specific case needs the missing information,
 do not add it to shared context files.
 
-Also analyze whether the sessions included redundant context that did not help,
-or context that is too narrow and over-specific for reusable project-level guidance.
-If found, propose how to trim or generalize that context.
+Also check whether the sessions included redundant context that did not help,
+or context that is too narrow for reusable project-level guidance.
+If you find such context, propose how to trim or generalize it.
 
 ## DependsOn
 
