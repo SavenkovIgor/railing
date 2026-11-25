@@ -7,14 +7,14 @@ applyTo: 'notes/**/*.md'
 
 Universal rules for agent-written notes in `notes/`: reports, plans, and other working records of a task.
 A kind with a profile adds its own structure in a separate instruction file.
-Every rule is a pass/fail check; reviews cite rules by ID.
+Every rule is a pass/fail check. Reviews cite rules by ID.
 
 ## File naming
 
 - N1 Path is `notes/<task_id>/<slug>.<kind>.md`
 - N2 `<task_id>` is the task identifier in the format of the project, such as the
   ticket ID as written in the tracker. Take it from the request or the branch
-  name; if neither gives one, ask
+  name. If neither gives one, ask
 - N3 `<slug>` is lowercase kebab-case, 2-5 words naming the content of the file
 - N4 `<kind>` is `overview` or `plan`. Each kind has its own profile
 

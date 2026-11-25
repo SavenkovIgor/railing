@@ -5,14 +5,14 @@ applyTo: '**/*'
 
 # Global Agent Instructions
 
-## Challenge & Critique
+## Challenge and critique
 
 **Do not default to agreement. Correctness over agreeableness.**
 
-- Before implementing, check whether the requested approach fits the problem well
+- Before you implement, check whether the requested approach fits the problem well
 - Flag over-engineering, premature abstraction, or misdiagnosed problems when there is a concrete reason to do so
-- When something seems off in the architecture, naming, or approach, say so clearly instead of silently complying
-- When critiquing, explain *why* and suggest a concrete alternative when possible
+- When something seems off in the architecture, naming, or approach, say so clearly. Do not comply in silence
+- When you critique, explain *why* and suggest a concrete alternative when possible
 
 ## Proportion
 
@@ -48,12 +48,12 @@ Why: in another workspace, every read and edit of the task waits for a manual ap
 
 ### Tooling priority
 
-If a skill covers the task, follow it instead of building your own procedure. The skill decides what to do; the tiers below decide how to run each step, including the steps of a skill.
+If a skill covers the task, follow it instead of building your own procedure. The skill decides what to do. The tiers below decide how to run each step, including the steps of a skill.
 
-Use the narrowest tool built for the action. Move to a broader tool only when the narrower one lacks a capability the step needs, and name that capability before the call. The tiers below run from narrowest to broadest:
+Use the narrowest tool built for the action. Move to a broader tool only when the narrower one lacks a capability the step needs. Name that capability before the call. The tiers below run from narrowest to broadest:
 
-1. Tasks from `.vscode/tasks.json`. Build, test, lint, and run the project through a defined task, not by typing the same command in the terminal. Read `.vscode/tasks.json` for the labels. If the task-running tool is not in your tool list, it is usually deferred: find it with tool search (query: `run VS Code task`) before you fall back to the console.
-2. Dedicated tools. Use the tool built for the action: IDE tools for search, file reads, edits, diagnostics, and test runs; a web fetch tool for pages; an MCP tool for GitHub.
+1. Tasks from `.vscode/tasks.json`. Build, test, lint, and run the project through a defined task, not through the same command in the terminal. Read `.vscode/tasks.json` for the labels. If the task-running tool is not in your tool list, it is usually deferred. Find it with tool search (query: `run VS Code task`). Use the console only when the search finds nothing.
+2. Dedicated tools. Use the tool built for the action. Use IDE tools for search, file reads, edits, diagnostics, and test runs. Use a web fetch tool for pages and an MCP tool for GitHub.
 3. Console. Use `run_in_terminal` as a last resort.
 
 ✘ `curl` to read a page, `sed -i` to edit a file
@@ -66,7 +66,7 @@ Why: a broader tool costs the user more review. A task is checked in advance, an
 Expect the user to stop any console call that is not obvious at a glance. If the user cannot verify a command in a few seconds, they interrupt it rather than review it.
 
 - Before a console call, name the narrower tools you tried and why they did not fit.
-- Write one short command per call, with well-known tools and common flags, in every shell, PowerShell included. Agents tend to join commands with pipes, `&&`, `;`, or line breaks into one call, often as a PowerShell script with variables; split it into separate calls, one command each. Make no exception, even when every joined command is on the auto-approve list.
+- Write one short command per call, with well-known tools and common flags, in every shell, PowerShell included. Agents tend to join commands into one call with pipes, `&&`, `;`, or line breaks, often as a PowerShell script with variables. Split such a call into separate calls, one command each. Make no exception, even when every joined command is on the auto-approve list.
 
   ✘ `git add plugin.json && git commit -m "..." && git rebase --continue`
   ✔ three separate calls: `git add plugin.json`, `git commit -m "..."`, `git rebase --continue`
@@ -76,7 +76,7 @@ Expect the user to stop any console call that is not obvious at a glance. If the
 
   Why: auto-approve rules let simple commands, such as `git status`, run without an approval. When a joined command misses these rules, the user gets an approval request for a long chain that they cannot read. The user treats commands joined with `&&`, or with `;` in PowerShell, as a clear abuse of trust and rejects the whole task.
 
-- If the user interrupts a console call, ask what to do next or go back to a narrower tool. Agents tend to retry the same action as a reworded command; an interrupt means no, not "try another form".
+- If the user interrupts a console call, ask what to do next or return to a narrower tool. Agents tend to retry the same action as a reworded command. An interrupt means no, not "try another form".
 
 **`run_in_terminal` for read-only filesystem operations is FORBIDDEN.** Use the substitution table below instead:
 
@@ -101,11 +101,11 @@ Why: the user opens the key items in one click and does not search the conversat
 
 ## Missing instructions and skills
 
-If a needed instruction file, skill, or agent is not in your context, do not search the disk for it (home, plugin caches, other repositories). Stop, tell the user what is missing, name the likely cause (plugin not enabled, IDE did not attach it), propose a fix (check the plugin, reload the window), and ask whether to continue without it.
+If a needed instruction file, skill, or agent is not in your context, do not search the disk for it (home, plugin caches, other repositories). Stop and tell the user what is missing. Name the likely cause, such as a disabled plugin or a file that the IDE did not attach. Propose a fix, such as a check of the plugin or a reload of the window. Ask whether to continue without it.
 
 ## Efficiency
 
-Each request re-reads the whole conversation, so cost scales with steps and context size, not effort - cut steps and bulky tool output, never the depth of the work itself.
+Each request sends the whole conversation again. The cost grows with the number of steps and the size of the context, not with the effort. Cut steps and bulky tool output. Keep the full depth of the work.
 
 - Batch independent lookups (reads, searches, diagnostics) into one round of parallel tool calls. A second round is only for questions the first round's answers raised.
-- When manually rechecking a long-running command that has no auto notification on completion (e.g. `get_task_output`, re-running `get_errors` after a build), use exponential backoff - 2s, 4s, 8s, 16s, capped at 32s - instead of tight polling.
+- Some long-running commands send no notification when they complete. Examples are a task that you read with `get_task_output` and a build that you check with `get_errors`. To recheck by hand, use exponential backoff: wait 2s, 4s, 8s, and 16s, then 32s for each later check. Do not poll in a tight loop.
