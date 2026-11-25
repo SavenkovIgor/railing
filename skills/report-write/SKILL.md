@@ -9,7 +9,8 @@ description: >-
 
 # Report write
 
-Write a technical report about existing code into `notes/<task_id>/`, following the profile for its kind.
+Write a technical report about existing code into `notes/<task_id>/`. Follow the profile for the
+kind of the report.
 
 ## Pick the profile
 
@@ -17,7 +18,7 @@ Write a technical report about existing code into `notes/<task_id>/`, following 
 |---|---|---|
 | `overview` | Understand classes, a subsystem, or a flow | [overview](/com.github.copilot/rules/reports-overview.instructions.md) |
 
-If no profile matches the request, stop and ask. Do not invent a structure.
+If no profile matches the request, stop and ask the user. Do not invent a structure.
 
 ## Procedure
 
@@ -31,5 +32,5 @@ If no profile matches the request, stop and ask. Do not invent a structure.
 6. Check the formatting rules of the core requirements and fix violations
 7. Reply with the report path and offer `report-review`
 
-Do not verify your own claims beyond the links. `report-review` checks them in
-a clean context, so they are not confirmed by the same assumptions that produced them.
+Limit your own check of the claims to their links. `report-review` checks the claims in a
+clean context, free of the assumptions that produced them.
