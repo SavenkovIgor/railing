@@ -31,15 +31,15 @@ Inspect project context to determine where issues go:
 | `.gitlab-ci.yml`, `gitlab` remote | GitLab Issues |
 | No clear signal | Ask the user before proceeding |
 
-Use available tools (GitHub MCP, `gh` CLI, REST API, Linear SDK, etc.) to
-create issues. Fall back to asking the user which tool to use if none is detected.
+Create issues with an available tool, such as GitHub MCP, the `gh` CLI, or a REST API.
+If you find no tool, ask the user which one to use.
 
 ### 2. Extract Issues from Context
 
-For each distinct unit of work extract: Title (one action sentence),
-Body (context, acceptance criteria, links), Labels (bug/feat/chore),
-Size (flag if large enough for sub-tasks). Each issue must be independently
-completable; preserve nuance from the discussion.
+For each distinct unit of work, extract a title (one action sentence), a body
+(context, acceptance criteria, links), labels (bug, feat, chore), and a size.
+Flag an issue that is large enough for sub-tasks. Each issue must be
+independently completable. Keep the nuance of the discussion.
 
 ### 3. Confirm Before Filing
 
@@ -55,6 +55,5 @@ summary table format.
 
 ### 5. Optional - Link Issues
 
-If the tracker supports epics, milestones, or parent issues and a natural
-grouping exists, offer to link the created issues. Ask the user first; don't
-create structure they didn't ask for.
+If the tracker supports epics, milestones, or parent issues, and the created
+issues form a natural group, offer to link them. Link them only after the user agrees.

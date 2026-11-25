@@ -10,8 +10,8 @@ argument-hint: "File path, uncommitted, or branch"
 
 # Review
 
-Review a file or a change against its intent, then run the local review skills of the user and
-the project on the same target. Report only; do not edit files.
+Review a file or a change against its intent. Then run the local review skills of the user and
+the project on the same target. Report the findings and leave every file unchanged.
 
 ## DependsOn
 
@@ -31,7 +31,7 @@ the project on the same target. Report only; do not edit files.
 3. Read the changed code with its surroundings: callers, tests, and types it touches
 4. Check the change against these criteria
    - Correctness: the change does what the intent says, including empty input, errors, and limits
-   - Scope (uncommitted and branch modes): every changed line traces to the intent; flag
+   - Scope (uncommitted and branch modes): every changed line traces to the intent. Flag
      unrelated edits, unrequested abstractions, and unrequested options
    - Tests: a behavior change comes with a test that fails before it and passes after it
    - Security, for the code the change touches
@@ -39,11 +39,15 @@ the project on the same target. Report only; do not edit files.
        paths, templates, format strings, deserialization, outbound URLs
      - A permission check on each new entry point
      - Secrets in code, configs, and logs
-     - Randomness for tokens and keys from a cryptographic source; crypto from a standard library
-     - Memory safety in C and C++: an index, a length, or pointer arithmetic outside its buffer;
-       an integer overflow or a signed and unsigned mix in a size; a pointer, a reference, a
-       `string_view`, a `span`, or an iterator that outlives its owner or a change of its
-       container; a read of uninitialized memory; a data race on shared state
+     - Randomness for tokens and keys from a cryptographic source, and crypto from a standard
+       library
+     - Memory safety in C and C++
+       - An index, a length, or pointer arithmetic outside its buffer
+       - An integer overflow or a signed and unsigned mix in a size
+       - A pointer, a reference, a `string_view`, a `span`, or an iterator that outlives its
+         owner or a change of its container
+       - A read of uninitialized memory
+       - A data race on shared state
    - Safety: public behavior changes and data loss
 5. Run the local review skills after your own pass, so one report covers general and
    project-specific rules
