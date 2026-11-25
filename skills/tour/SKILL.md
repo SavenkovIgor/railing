@@ -78,8 +78,12 @@ The drill has these `##` sections in this order, in at most 150 lines excluding 
 ## Diagrams
 
 - Write Mermaid in a `mermaid` fence
-- Use `flowchart` for structure, `sequenceDiagram` for flows over time, `stateDiagram-v2` for
-  lifecycle, and `classDiagram` only for an area built on inheritance
+- Use `flowchart` for structure, `sequenceDiagram` for flows over time, and `stateDiagram-v2`
+  for lifecycle
+- Use `classDiagram` in a drill whose structure comes from types: inheritance, composition, or
+  ownership. Draw ownership as `*--` and a reference without ownership as `-->`
+- In a class, show only the members that the text discusses
 - Keep a diagram to 10 nodes at most. Split it instead of shortening labels
 - Make each node a module, class, or file that the text links
-- Draw only the edges you read in the code, and label each edge with what passes along it
+- Draw only the edges you read in the code. Label a flow edge with what passes along it. Label
+  a class edge with the role or the multiplicity
