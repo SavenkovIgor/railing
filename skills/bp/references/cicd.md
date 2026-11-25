@@ -2,42 +2,46 @@
 
 ## About This Guide
 
-This guide is not tool documentation or a collection of ready-made configs.
-It's about CI/CD pipeline design principles: why they're structured this way,
-how to adapt verification depth to context, and how to avoid security theater instead of real protection.
+This guide explains the design principles of a CI/CD pipeline. It does not document tools or give ready-made configs.
+It shows why a pipeline has its structure and how to adapt the depth of checks to the context.
+It also shows how to tell real protection from checks that only look like protection.
 
-Audience: developers, DevOps engineers, tech leads - anyone who designs or improves pipelines.
+Audience: developers, DevOps engineers, and tech leads who design or improve pipelines.
 
 ## Terms
 
-IaC - Infrastructure as Code
-DAG - directed acyclic graph
-Step - individual command or action executed sequentially within a job (e.g., "run tests", "compile code")
-Job - unit of work executed on a single runner and can be parallelized with other jobs
-Workflow - DAG with jobs as vertices, describing their execution sequence and dependencies
+- IaC - Infrastructure as Code.
+- DAG - directed acyclic graph.
+- Pipeline - the jobs that one trigger starts, with the dependencies between them. The jobs and dependencies form a DAG.
+- Stage - a logical phase of the pipeline, such as Lint, Test, or Build. A stage holds one or more jobs.
+- Job - a unit of work that runs on one runner. Independent jobs can run in parallel.
+
+In GitLab, the `stages` keyword declares the stages. In GitHub Actions, a pipeline is a workflow run.
+GitHub Actions has no stage keyword, so a stage there is a group of jobs that list the jobs of the previous stage in `needs`.
 
 ## General Best Practices
 
 ### Pipeline Speed
 
-Since a pipeline can fail at any stage, it's important to put the fastest checks
-with high probability of failure early in the pipeline
+A pipeline can fail at any stage. Put the fast checks that fail most often at the start of the pipeline.
 
-- Fail Fast - if dependencies allow, fast checks come first in the pipeline, then slower ones
-- Parallelism - independent stages with comparable execution time should run in parallel
-- Timeouts - each stage has a hard timeout. A hung job shouldn't block the pipeline for hours
+- Fail Fast - if the dependencies allow it, fast checks run first and slow checks run after them.
+- Parallelism - independent stages with similar run times run in parallel.
+- Timeouts - each job has a hard timeout, so a hung job cannot block the pipeline for hours.
 
 ### Stability and Reproducibility
 
-- Pipeline as Code - pipeline is stored and versioned in the same repository as code
-- Idempotency - re-running a pipeline should produce the same result.
-- Hermetic builds - build is *reliably* isolated, not just pinned. Check for unpinned deps, timestamps in artifacts, env variables affecting build output, network calls during build
-- Caching - dependencies are cached by key (lock file hash). Invalidation on any dependency change.
-- No Snowflake runners - all runners are identical and deployed via IaC, no manual tweaks.
-- Immutable infrastructure - infrastructure (staging/prod) are not modified manually, all changes through code and pipeline.
-- Forbid manual changes - if a manual change of infrastructure found, it should be alerted and reverted to IaC state automatically.
-- Reproducible artifacts - bit-identical invariant at the CI level: building from the same commit always produces the same artifact. This exact artifact is deployed to staging/prod without rebuilding or modifications. This is the foundation of deployment trust.
-- Env isolated artifacts - changes to the build environment should not affect the artifact
+- Pipeline as Code - the pipeline is stored and versioned in the same repository as the code.
+- Idempotency - a rerun of the pipeline gives the same result.
+- Hermetic builds - the build is *reliably* isolated, not just pinned.
+  Look for unpinned dependencies, timestamps in artifacts, environment variables that change the output, and network calls during the build.
+- Caching - the cache key for dependencies is the hash of the lock file, so any change of a dependency invalidates the cache.
+- No Snowflake runners - all runners are identical, IaC deploys them, and nobody changes them by hand.
+- Immutable infrastructure - nobody changes staging or prod by hand. All changes go through code and the pipeline.
+- Forbid manual changes - a manual change of the infrastructure raises an alert, and automation reverts it to the IaC state.
+- Reproducible artifacts - CI guarantees that a build from the same commit always gives a bit-identical artifact.
+  Staging and prod get this exact artifact, with no rebuild or changes. This is why a deployment can trust the artifact.
+- Environment-isolated artifacts - a change in the build environment does not change the artifact.
 
 ### Testing
 
