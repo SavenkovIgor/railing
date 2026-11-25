@@ -19,8 +19,8 @@ Clean up a report in `notes/` and check its claims against the code.
 
 A report path. Take the kind from the `.<kind>.md` suffix and read the
 core requirements and the matching
-`/com.github.copilot/rules/reports-<kind>.instructions.md`. If the kind is unknown, apply the core
-only and say so.
+`/com.github.copilot/rules/reports-<kind>.instructions.md`. If the kind is unknown, apply only the
+core requirements and say so.
 
 ## Procedure
 
@@ -34,12 +34,12 @@ only and say so.
 ### 2. Verify against code: report only
 
 Run this step in a subagent. Pass it only the report path and the instructions
-below, not this conversation, so it does not inherit the author's assumptions.
+below. Without this conversation, the subagent does not share the author's assumptions.
 If no subagent tool is available, do it yourself and re-read the code for every claim.
 
 Subagent instructions:
 
-- Check every code link: the file exists, the line is inside the named symbol
+- Check every code link: the file exists and the line is inside the named symbol
 - Pick the key claims: ownership, lifecycle, threading, call order, data flow,
   error handling. Verify each one by reading the code
 - Return each claim as: report location, claim, verdict
@@ -60,5 +60,5 @@ Findings:
    Fix: <proposed change>
 ```
 
-List only `wrong` and `unverifiable` claims, not confirmed ones. Do not apply
-findings until the user picks them (for example, "fix 1, 3").
+List only `wrong` and `unverifiable` claims. Apply a finding only after the user
+picks it, for example with "fix 1, 3".

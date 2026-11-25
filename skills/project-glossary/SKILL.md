@@ -33,7 +33,7 @@ the next batch.
    review comments. Here the team writes to each other, so these are the words people use
 2. Docs: README, `docs/`, wiki, architecture decision records (ADRs), onboarding notes
 3. Code: names of modules, types, functions, enum values, config keys, and API routes. Code
-   shows what exists, but its names lag behind renames and carry implementation words
+   shows what exists. Its names can be older than a rename and can contain implementation words
 
 The canonical term for a concept comes from the highest source that names it. Within one source,
 take the word used more often in the last year. Put the other words under `_Avoid_`, and the code
@@ -65,7 +65,7 @@ identifier under `_Code_` when it differs from the term.
 
 - Define what the concept is, in one or two sentences, without implementation details
 - Write terms in the language the team uses in the tracker, spelled as the team spells them
-- Group terms under `###` headings when clusters emerge. Otherwise, a flat list is fine
+- If several terms form a cluster, group them under a `###` heading. Otherwise, keep a flat list
 - Put cases the user left open under `## Flagged ambiguities`
 - Change no code. Report code identifiers that differ from their term as rename candidates
 
