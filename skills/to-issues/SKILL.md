@@ -31,8 +31,8 @@ Inspect project context to determine where issues go:
 | `.gitlab-ci.yml`, `gitlab` remote | GitLab Issues |
 | No clear signal | Ask the user before proceeding |
 
-Create issues with an available tool, such as GitHub MCP, the `gh` CLI, a REST API,
-or the Linear SDK. If you find no tool, ask the user which one to use.
+Create issues with an available tool, such as GitHub MCP, the `gh` CLI, or a REST API.
+If you find no tool, ask the user which one to use.
 
 ### 2. Extract Issues from Context
 
