@@ -4,7 +4,7 @@ description: >-
     You should use this skill when: breaking down a plan into tasks,
     converting a discussion into actionable issues, splitting a proposal
     into tickets, creating issues from meeting notes or design decisions.
-    Works with any issue tracker - infers GitHub Issues, Jira, Linear,
+    Works with any issue tracker - infers GitHub Issues, Jira,
     GitLab, etc. from project context.
 ---
 
@@ -27,7 +27,6 @@ Inspect project context to determine where issues go:
 |--------|---------|
 | `.github/` folder, `gh` CLI available | GitHub Issues |
 | `JIRA_URL` env var, `jira` in config | Jira |
-| `linear` in deps or `.linear/` config | Linear |
 | `.gitlab-ci.yml`, `gitlab` remote | GitLab Issues |
 | No clear signal | Ask the user before proceeding |
 
