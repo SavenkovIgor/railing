@@ -20,7 +20,7 @@ Why: an issue with two reasons grows in scope during the work, and its pull requ
 
 ## Size of the body
 
-Keep the body of an issue no longer than the diff it plans, with a minimum of three lines: the problem, the place, and the expected fix. Agents tend to add background, alternatives, risks, and acceptance criteria to a small fix. Add these parts only when the change needs a decision from the user.
+Keep the body of an issue no longer than the diff it plans. The minimum is three lines: the problem, the place, and the expected fix. Agents tend to add background, alternatives, risks, and acceptance criteria to a small fix. Add these parts only when the change needs a decision from the user.
 
 ✘ A 15-line issue with background and acceptance criteria for a 2-line fix
 ✔ Three lines: `Problem: the link to prose.instructions.md is broken`, `Place: AGENTS.md, line 12`, `Fix: add the leading /`

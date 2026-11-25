@@ -5,13 +5,14 @@ applyTo: 'notes/**/*.overview.md'
 
 # Overview report profile
 
-Describes how a group of existing classes or modules works, to onboard onto it
-before changing it. Describe the code as it is; do not critique the design.
+Describes how a group of existing classes or modules works, so that a reader
+learns the code before they change it. Describe the code as it is. Do not
+critique the design.
 
 ## Input
 
 - The classes, files, or modules named in the request
-- Read each of them fully; do not skim
+- Read each of them fully. Do not skim
 
 ## Structure
 
@@ -26,10 +27,13 @@ Use these `##` sections in this order:
 5. `Relationships`: inheritance, composition, dependencies
 6. `Lifecycle and ownership`: which objects are long-lived and which are
    short-lived, and who creates, owns, and destroys each
-7. `Framework patterns`: for each class, check whether it follows a known
-   pattern (service, repository, factory), works across threads or processes,
-   uses IPC, has observers, listeners, or event subscriptions, or has
-   non-obvious build or dependency constraints. Omit the section if none apply
+7. `Framework patterns`: for each class, check whether it:
+   - follows a known pattern, such as a service, a repository, or a factory
+   - works across threads or processes, or uses IPC
+   - has observers, listeners, or event subscriptions
+   - has non-obvious build or dependency constraints
+
+   If none apply, omit the section
 
 ## Checks
 
