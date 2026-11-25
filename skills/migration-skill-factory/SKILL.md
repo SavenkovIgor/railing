@@ -1,9 +1,10 @@
 ---
 name: migration-skill-factory
 description: >-
-  You should use this skill when: a language, framework, or SDK version was upgraded,
-  an API changed or was deprecated, old usage must be refactored across a codebase,
-  or migration work should be split into focused skills.
+  Use this skill after an upgrade of a language, framework, or SDK version,
+  or after an API changed or became deprecated.
+  Also use it when old usage needs a refactor across a codebase,
+  or when migration work needs a split into focused skills.
 argument-hint: "What changed, versions, and repo scope"
 ---
 
@@ -13,159 +14,157 @@ Create a set of migration skills from a version or API update, one skill per cha
 
 ## Inputs
 
-- Subject of migration: language/API/product and target versions.
-- Source of truth links or files:
-  - Preferred: official release notes, migration guides, changelogs.
-  - Fallback: old/new source code and docs snapshots.
-- Target codebase scope: full repo or selected folders.
-- Risk tolerance: strict safe mode or aggressive replacement mode.
-- Runtime versions:
-  - current version in production/dev
-  - target version after migration
+- The subject of the migration: the language, API, or product and the target versions.
+- Links or files that are the source of truth:
+  - Preferred: official release notes, migration guides, and changelogs.
+  - Fallback: snapshots of the old and new source code and docs.
+- The scope in the target codebase: the full repository or selected folders.
+- The risk tolerance: strict safe mode or aggressive replacement mode.
+- The runtime versions:
+  - the current version in production or development
+  - the target version after the migration
 
 ## Procedure
 
-1. Build migration context.
-   - Confirm old state and new state.
-   - Identify compatibility surface: syntax, signatures, runtime behavior, tooling.
-   - Define scope boundaries and exclusions.
+1. Build the migration context.
+   - Confirm the old state and the new state.
+   - Find what the change affects: syntax, signatures, runtime behavior, and tooling.
+   - Define the scope boundaries and the exclusions.
 
-2. Collect authoritative changes.
-   - Parse release notes first.
-   - If notes are incomplete, inspect source/API diff to fill gaps.
+2. Collect the authoritative changes.
+   - Parse the release notes first.
+   - If the notes are incomplete, inspect the source or API diff to fill the gaps.
    - Normalize every change into one record:
-     - change_id
-     - category (syntax, API, behavior, config, tooling, deprecation, removal)
-     - old_pattern
-     - new_pattern
-     - caveats
-     - confidence (high/medium/low)
-     - compatibility_mode (pre-migration-compatible | target-version-only)
-     - evidence link
+     - `change_id`
+     - `category` (syntax, API, behavior, config, tooling, deprecation, removal)
+     - `old_pattern`
+     - `new_pattern`
+     - `caveats`
+     - `confidence` (high, medium, low)
+     - `compatibility_mode` (`pre-migration-compatible` | `target-version-only`)
+     - a link to the evidence
 
 3. Classify compatibility and safety.
-   - For each change, decide if it can be applied safely before switching runtime/API version.
-   - Set compatibility_mode:
-     - pre-migration-compatible: safe to apply on current version and stays valid on target version.
-     - target-version-only: should be applied only after runtime/API switch.
-   - Set safety_label:
-     - high-safe: deterministic, backwards-compatible, no behavior drift expected.
-     - medium-safe: mostly mechanical but requires local verification.
-     - review-required: semantics may differ or tooling evidence is weak.
-   - Add explicit user notice to every generated skill:
-     - when it can be run
-     - when it must not be run
+   - For each change, decide whether you can apply it safely before you switch the runtime or API version.
+   - Set `compatibility_mode`:
+     - `pre-migration-compatible`: you can apply it safely on the current version, and it stays valid on the target version.
+     - `target-version-only`: apply it only after the runtime or API switch.
+   - Set `safety_label`:
+     - `high-safe`: the change is deterministic and backward-compatible. No behavior change is expected.
+     - `medium-safe`: the change is mostly mechanical but needs a local check.
+     - `review-required`: the semantics can differ, or the tooling evidence is weak.
+   - Add an explicit notice for the user to every generated skill. The notice says:
+     - when the user can run the skill
+     - when the user must not run the skill
      - why
 
-4. Prioritize changes.
-   - Score each change by impact and migration complexity.
-   - Mark blocking changes first (compile/runtime breakage).
+4. Prioritize the changes.
+   - Score each change by its impact and by the complexity of its migration.
+   - Put blocking changes first: changes that break the build or the runtime.
    - Group related records into migration units.
 
 5. Generate one migration skill per migration unit.
-   - Ask the user where to place the new skill (e.g., `.copilot/skills/` or `.github/skills/`) before creating any files.
-   - Create folder `<chosen-path>/<unit-name>/`.
-   - Start from [migration skill template](assets/migration-skill-template.md).
-   - Create SKILL.md with:
-     - precise trigger description (keywords from old API and new API)
-     - compatibility and applicability section
-     - exact detection strategy for old usage
-     - replacement strategy with safety checks
+   - Before you create any files, ask the user where to put the new skill, for example `.copilot/skills/` or `.github/skills/`.
+   - Create the folder `<chosen-path>/<unit-name>/`.
+   - Start from the [migration skill template](assets/migration-skill-template.md).
+   - Create `SKILL.md` with these parts:
+     - a precise trigger description with keywords from the old API and the new API
+     - a section on compatibility and applicability
+     - an exact strategy to detect the old usage
+     - a replacement strategy with safety checks
      - validation steps and rollback criteria
-   - Keep each generated skill narrowly scoped to one migration unit.
+   - Limit each generated skill to one migration unit.
 
-6. Define detection strategy for each generated skill.
-   - Search patterns:
+6. Define the detection strategy for each generated skill.
+   - Search for these patterns:
      - symbol names
      - call signatures
      - config keys
-     - imports/modules
-   - Add false-positive guards.
-   - Note context-dependent cases requiring manual review.
+     - imports and modules
+   - Add guards against false positives.
+   - List the cases that depend on context and need a manual review.
 
-7. Define replacement strategy for each generated skill.
+7. Define the replacement strategy for each generated skill.
    - Prefer mechanical, deterministic replacements.
-   - If behavior changed, include transformation logic and guardrails.
+   - If the behavior changed, include the transformation logic and guardrails.
    - Preserve semantics before style.
-   - For risky edits, require preview and staged rollout.
+   - For risky edits, require a preview and a staged rollout.
 
-8. Define validation for each generated skill.
-   - Static checks: lint/type/build.
-   - Behavior checks: tests, snapshots, selected runtime checks.
-   - Migration acceptance criteria:
-     - zero known old-pattern matches in scoped paths
-     - no new build or test regressions attributable to migration
+8. Define the validation for each generated skill.
+   - Static checks: lint, type checks, and the build.
+   - Behavior checks: tests, snapshots, and selected runtime checks.
+   - The migration is accepted when both conditions are true:
+     - The scoped paths contain zero known matches of the old pattern.
+     - The migration causes no new build or test failures.
 
-9. Package delivery.
-   - Produce migration matrix table:
-     - change_id
-     - generated skill name
-     - compatibility_mode
-     - safety_label
+9. Deliver the results.
+   - Build a migration matrix with these columns:
+     - `change_id`
+     - the name of the generated skill
+     - `compatibility_mode`
+     - `safety_label`
      - detection done
      - replacement done
      - validation status
-   - Flag unresolved low-confidence items for manual triage.
+   - Flag the unresolved low-confidence items for manual triage.
 
 ## Branching Logic
 
-- If release notes and source diff disagree:
-  - Trust official migration guide first, then changelog, then code inspection.
-  - Mark conflicting items as manual-review-required.
+- If the release notes and the source diff disagree:
+  - Trust the official migration guide first, then the changelog, then the code.
+  - Mark the conflicting items as `manual-review-required`.
 
-- If old usage has multiple valid replacements:
-  - Split into separate generated skills by scenario.
+- If the old usage has more than one valid replacement:
+  - Split it into separate generated skills, one per scenario.
   - Add explicit applicability rules for each scenario.
 
-- If replacement is not semantics-preserving:
-  - Do not auto-replace blindly.
+- If the replacement changes the semantics:
+  - Do not replace the code automatically without a review.
   - Generate a review-first skill with decision checkpoints.
 
-- If change is pre-migration-compatible:
-  - Mark generated skill as high-safe by default unless evidence suggests otherwise.
-  - Explicitly inform user it can be applied now on current version.
+- If the change is `pre-migration-compatible`:
+  - Mark the generated skill as `high-safe` by default, unless the evidence shows otherwise.
+  - Tell the user that they can apply it now, on the current version.
 
-- If change is target-version-only:
-  - Block automatic edit mode until target runtime/API is active.
-  - Explicitly warn user the skill is post-upgrade-only.
+- If the change is `target-version-only`:
+  - Block automatic edits until the target runtime or API is active.
+  - Warn the user that the skill can run only after the upgrade.
 
-- If confidence is low:
-  - Restrict to detection/report mode only.
-  - Require human approval before edits.
+- If the confidence is low:
+  - Allow only detection and reports.
+  - Require a human approval before any edit.
 
 ## Quality Gates
 
-Generated migration skills are complete only if all are true:
-- Description is specific and keyword-rich.
-- Old/new patterns are concrete and testable.
-- Compatibility mode is explicitly declared.
-- Preconditions and forbidden-conditions are explicit.
-- Detection and replacement steps are reproducible.
-- Validation commands and expected outcomes are explicit.
-- Safety limits and manual-review cases are documented.
+A generated migration skill is complete only when all of these conditions are true:
+
+- The description is specific and contains the relevant keywords.
+- The old and new patterns are concrete and testable.
+- The skill declares its compatibility mode explicitly.
+- The preconditions and the forbidden conditions are explicit.
+- The detection and replacement steps give the same result on every run.
+- The validation commands and their expected results are explicit.
+- The skill documents its safety limits and the cases for manual review.
 
 ## Output Format
 
-When invoked, return:
-1. Change inventory (normalized).
-2. Proposed generated-skill list with rationale.
-3. For each generated skill:
-   - name
-   - trigger description
-   - compatibility_mode and applicability statement
-   - safety_label and justification
-   - detection plan
-   - replacement plan
-   - validation plan
-   - risk level
-4. Migration matrix and open questions.
+When the user invokes this skill, return:
 
-## Example Invocation Ideas
+1. The normalized inventory of changes.
+2. The list of proposed skills, with the reason for each.
+3. For each generated skill:
+   - the name
+   - the trigger description
+   - `compatibility_mode` and the applicability statement
+   - `safety_label` and its justification
+   - the detection plan
+   - the replacement plan
+   - the validation plan
+   - the risk level
+4. The migration matrix and the open questions.
+
+## Example Invocations
 
 - "Create migration skills for Python 3.12 -> 3.13 breaking and deprecated changes used in this repo."
 - "Analyze API v1 -> v2 changes and generate one migration skill per endpoint/signature family."
 - "From framework release notes 4.x -> 5.x, produce migration skills in safe mode for this codebase."
-
-## Asset Reference
-
-- Child skill template: [migration skill template](assets/migration-skill-template.md)
