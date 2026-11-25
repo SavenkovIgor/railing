@@ -49,9 +49,9 @@ Applicability statement:
 
 ## Safety Rules
 
-- Preserve runtime behavior unless explicitly documented.
-- If behavior might change, switch to review-required mode.
-- If confidence is low, run detect-only and request approval.
+- Preserve the runtime behavior, unless the source evidence documents a change.
+- If the behavior can change, switch to the `review-required` mode.
+- If the confidence is low, run in detect-only mode and ask for approval.
 
 ## Validation
 
@@ -60,8 +60,8 @@ Applicability statement:
 - Behavioral checks:
   - [tests/smoke checks]
 - Acceptance criteria:
-  - No remaining supported old_pattern matches in scope.
-  - No migration-introduced regressions.
+  - The scope contains no supported matches of `old_pattern`.
+  - The migration causes no regressions.
 
 ## Rollback
 
