@@ -6,8 +6,10 @@ applyTo: '**/*.{h,hpp,cc,cpp,cppm,ipp,py,js,ts}'
 # Coding style
 
 - Readability and maintainability are primary concerns
-- Code should always be self-documenting first; comments explain *why*, not *what*
-  - Delete a comment that retells the next line: ✘ `// increase the retry counter` above `++retries;`, ✔ `// the server drops the first request after a reconnect`
+- Write a comment in code only for a fact that names, types, assertions, or tests cannot express
+  - Treat every comment as code that failed to be concise. A reviewer reads it against its author and first tries to replace it with code
+  - ✘ `// increase the retry counter` above `++retries;`, ✔ `// the server drops the first request after a reconnect`
+  - Tool directives such as `# noqa` or `// NOLINT` are not comments for this rule. LLMs delete them under a ban on comments
 - Prefer small, focused, pure functions - if a function needs a comment to explain what it does, consider splitting it
   - A check function verifies one condition on the inputs it owns and nothing out of its scope, so checks compose into a sequence of validators (e.g. when constructing a validated type) without repeating each other
 - Follow single responsibility principle in classes and functions
