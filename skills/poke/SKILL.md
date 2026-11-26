@@ -1,9 +1,7 @@
 ---
 name: poke
-description: >-
-  Manual-only. Invoke ONLY when the user runs /poke.
-  The user's reprimand for console abuse: joined commands,
-  read-only work in the console, or unfocused disk searches.
+description: A manual command of the user.
+disable-model-invocation: true
 ---
 
 # /poke
