@@ -32,7 +32,7 @@ marketplace to update the plugin automatically.
 │   └── rules/
 │       ├── global.instructions.md               general agent behavior and workflow guidance
 │       ├── issues.instructions.md               scope of one issue in any tracker
-│       ├── system-layout.instructions.md        default places of skills, plugins, and state files
+│       ├── system-layout.instructions.md        default places of skills, instructions, and plugins
 │       ├── code.instructions.md                 shared coding principles for C++, Python, JavaScript, TypeScript
 │       ├── code-cpp.instructions.md             C++ coding style
 │       ├── code-python.instructions.md          Python coding style

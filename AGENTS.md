@@ -9,7 +9,7 @@ The list starts at the root. Each scope lists its files, then the scopes inside 
 - `**/*`
   - [global.instructions.md](/com.github.copilot/rules/global.instructions.md) - how the agent works and answers on any task
   - [issues.instructions.md](/com.github.copilot/rules/issues.instructions.md) - scope of one issue in any tracker
-  - [system-layout.instructions.md](/com.github.copilot/rules/system-layout.instructions.md) - default places of skills, plugins, and state files on the user's system
+  - [system-layout.instructions.md](/com.github.copilot/rules/system-layout.instructions.md) - default places of skills, instructions, and plugins on the user's system
   - `**/*.md`
     - [markdown.instructions.md](/com.github.copilot/rules/markdown.instructions.md) - checks (`MD*`) on the form of any markdown file
     - [prose.instructions.md](/com.github.copilot/rules/prose.instructions.md) - how the text reads
