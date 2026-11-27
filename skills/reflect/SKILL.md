@@ -6,13 +6,13 @@ description: >-
   A session is long when its context was compacted or the agent made dozens of tool calls.
   A session is also long when the agent repeated earlier steps
   or a visible token counter shows that more than half of the context window is used.
-  The skill proposes the 3 most important improvements to AI context files
+  The skill proposes the 4 most important improvements to AI context files
   and records the run in a journal of reviewed sessions and decisions.
 ---
 
 # Reflect
 
-Review agent sessions and propose the 3 most important small fixes for the harness.
+Review agent sessions and propose the 4 most important small fixes for the harness.
 The harness consists of AI context files: instructions (`AGENTS.md`, `*.instructions.md`),
 skills (`SKILL.md`), agents (`*.agent.md`), MCP config (`mcp.json`),
 ignore rules (`.gitignore`, `.cursorignore`), instruction hooks in settings,
@@ -159,8 +159,11 @@ Notes for the proposals:
 
 ## Proposals
 
-- Propose exactly 3 fixes, ranked by importance. Base each one on a failed session.
-  The proposal for this skill can rely on the current review run instead.
+- Propose 4 fixes, ranked by importance. Base each one on a failed session.
+- At least one proposal changes a skill (`SKILL.md`),
+  and at least one changes an instruction file (`*.instructions.md`, `AGENTS.md`).
+- When the failed sessions give no evidence for one of these two kinds,
+  propose fewer fixes and say which kind had no evidence.
 - Each proposal names one concrete file and gives the exact new text.
   Keep it small: 1-3 sentences. A proposal can also move an instruction to
   another file or delete it.
@@ -173,7 +176,3 @@ Notes for the proposals:
   with options such as apply, edit, skip, or discuss. Apply only what the user accepts.
 - If the dialog tool is unavailable, print the proposals and edit no file except the journal.
   Mark every proposal `undecided`.
-- At least one proposal improves this skill: a missing check,
-  an unclear step, or a wasted step that the review run showed.
-  Count it among the 3. If nothing real turns up, name the closest weak spot
-  of the skill.
