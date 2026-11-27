@@ -36,6 +36,7 @@ marketplace to update the plugin automatically.
 │       ├── code.instructions.md                 shared coding principles for C++, Python, JavaScript, TypeScript
 │       ├── code-cpp.instructions.md             C++ coding style
 │       ├── code-python.instructions.md          Python coding style
+│       ├── context-files.instructions.md        where a rule lives and how context files link and phrase it
 │       ├── markdown.instructions.md             formatting checks for all *.md files
 │       ├── prose.instructions.md                how developer-facing prose reads, in all *.md files
 │       ├── notes.instructions.md                path, task ID, and language of agent-written notes in notes/
