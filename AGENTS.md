@@ -110,8 +110,6 @@ Why: the bump then does not depend on the rest of the change, and a reviewer see
 
 Keep the body of an issue within 50 lines. Plan each commit to change at most 50 lines and each pull request at most 200 lines. Count added plus removed lines in the diff, without the version bump. When a draft issue, a planned pull request, or a pull request in progress goes over a limit, suggest a split to the user. Each part of a split pull request becomes its own issue with its own pull request.
 
-Each commit covers one topic, such as one section of one file or one kind of change across files. Before the first edit, plan the commits: name the topic and the rough changed lines of each. Commit each topic when it is done.
-
 A commit or a pull request that only moves or deletes text can go over its limit. If you split a move, the rule stays in two places, or in none, between the two merges.
 
 Ask the user for at most two decisions in one issue, with the recommended option first. When an issue needs more decisions, split it.
