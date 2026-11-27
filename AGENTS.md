@@ -106,15 +106,17 @@ In every pull request to this repository, the first commit contains only the ver
 
 Why: the bump then does not depend on the rest of the change, and a reviewer sees the new version at once.
 
-## Size of an issue and its pull request
+## Size of an issue, a commit, and a pull request
 
-Keep the body of an issue within 50 lines. Plan each issue so that its pull request changes at most 50 lines. Count added plus removed lines in the diff, without the version bump. When a draft issue, a planned pull request, or a pull request in progress goes over the limit, suggest a split to the user. Each part becomes its own issue with its own pull request.
+Keep the body of an issue within 50 lines. Plan each commit to change at most 50 lines and each pull request at most 200 lines. Count added plus removed lines in the diff, without the version bump. When a draft issue, a planned pull request, or a pull request in progress goes over a limit, suggest a split to the user. Each part of a split pull request becomes its own issue with its own pull request.
 
-A pull request that only moves or deletes text can go over the limit. If you split a move, the rule stays in two places, or in none, between the two merges.
+Each commit covers one topic, such as one section of one file or one kind of change across files. Before the first edit, plan the commits: name the topic and the rough changed lines of each. Commit each topic when it is done.
+
+A commit or a pull request that only moves or deletes text can go over its limit. If you split a move, the rule stays in two places, or in none, between the two merges.
 
 Ask the user for at most two decisions in one issue, with the recommended option first. When an issue needs more decisions, split it.
 
-Why: the user works in slots of one or two minutes. In one slot, the user makes one or two decisions and then approves the merge. A change in this repository edits rules in prose, not logic, and a reviewer reads each changed line as a rule. A short diff with few decisions fits one slot and lets the reviewer check every rule it changes.
+Why: the user works in slots of one or two minutes. In one slot, the user makes one or two decisions and reviews one commit. A change in this repository edits rules in prose, not logic, and a reviewer reads each changed line as a rule. A commit of one topic fits one slot. A pull request of up to four such commits stays reviewable commit by commit.
 
 ## Closing issues from a pull request
 
