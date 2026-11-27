@@ -49,6 +49,7 @@ marketplace to update the plugin automatically.
     ├── engineering-maturity/                    rank missing engineering practices by return on effort
     ├── migration-skill-factory/                 create skills for codebase migrations
     ├── poke/                                    reprimand for console abuse, redo the step by the rules
+    ├── pr-comments/                             sort unanswered pull request comments, draft replies in the chat
     ├── project-glossary/                        merge tracker, docs, and code terms into GLOSSARY.md
     ├── reflect/                                 propose context improvements after a task
     ├── report-review/                           clean up a report and verify it against the code
