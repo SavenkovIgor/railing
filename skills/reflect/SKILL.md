@@ -50,13 +50,18 @@ The journal keeps the results of earlier runs in
 `~/.local/state/railing/reflect/journal.jsonl` on every platform.
 Read and write it only through [journal.py](scripts/journal.py) of this skill.
 Type each command line as written, so that one auto-approve entry covers all of them.
-`<script>` is the full path of `journal.py`.
+The quoted `$HOME` path works in bash and in PowerShell, and with spaces in the user name.
+When this skill runs from another directory, use the path of `journal.py` next to this `SKILL.md`.
 
-- `python <script> reviewed` prints the IDs of the sessions that earlier entries list.
-- `python <script> skipped` prints the proposals marked `skipped`, with `file` and `text`.
-- `python <script> append '<entry>'` validates the entry and appends it as one line.
+- `python "$HOME/.copilot/installed-plugins/railing/railing/skills/reflect/scripts/journal.py" reviewed`
+  prints the IDs of the sessions that earlier entries list.
+- `python "$HOME/.copilot/installed-plugins/railing/railing/skills/reflect/scripts/journal.py" skipped`
+  prints the proposals marked `skipped`, with `file` and `text`.
+- `python "$HOME/.copilot/installed-plugins/railing/railing/skills/reflect/scripts/journal.py" append '<entry>'`
+  validates the entry and appends it as one line.
   It runs `prune` first and creates the file if it is missing.
-- `python <script> prune` deletes every entry older than 4 weeks.
+- `python "$HOME/.copilot/installed-plugins/railing/railing/skills/reflect/scripts/journal.py" prune`
+  deletes every entry older than 4 weeks.
   A skipped proposal can then come back for a fresh assessment.
 - After the user decides on every proposal, append one entry per run.
   The entry is one JSON object with these fields:
