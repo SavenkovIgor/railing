@@ -34,6 +34,12 @@ Deliver only what the user asked for. Agents tend to add a review, a refactor, a
 
 Why: extra output costs the agent nothing, while the user reviews every line. A planned size in one line lets the user correct the scope before the work starts.
 
+## Commits
+
+Each commit covers one topic, such as one section of one file or one kind of change across files. Before the first edit, plan the commits: name the topic and the rough changed lines of each. Commit each topic when it is done.
+
+Why: a reviewer checks one topic at a time. A commit that mixes topics cannot be reviewed, reverted, or cherry-picked by topic.
+
 ## Manual approvals
 
 Each manual approval lowers the chance that the task completes. Choose every step so that it runs without an approval. When every route needs one, choose the call that the user can check fastest.
