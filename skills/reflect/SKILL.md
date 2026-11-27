@@ -29,6 +29,7 @@ If you find such context, propose how to trim or generalize it.
 ## DependsOn
 
 - [global.instructions.md](/com.github.copilot/rules/global.instructions.md)
+- [context-files.instructions.md](/com.github.copilot/rules/context-files.instructions.md)
 
 The IDE usually attaches these files through `applyTo`.
 Open a link only when its file is missing from the context.
