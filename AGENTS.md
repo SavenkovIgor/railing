@@ -14,7 +14,7 @@ The list starts at the root. Each scope lists its files, then the scopes inside 
     - [markdown.instructions.md](/com.github.copilot/rules/markdown.instructions.md) - checks (`MD*`) on the form of any markdown file
     - [prose.instructions.md](/com.github.copilot/rules/prose.instructions.md) - how the text reads
     - `**/{AGENTS.md,SKILL.md,*.instructions.md,*.agent.md}`
-      - [context-files.instructions.md](/com.github.copilot/rules/context-files.instructions.md) - how context files link to each other, where a rule lives, and how a requirement reads
+      - [context-files.instructions.md](/com.github.copilot/rules/context-files.instructions.md) - how context files link to each other, where a rule lives or stays, and how a requirement reads
     - `notes/**/*.md`
       - [notes.instructions.md](/com.github.copilot/rules/notes.instructions.md) - path, task ID, and language of any note in `notes/`
       - `notes/**/*.overview.md`
@@ -34,12 +34,6 @@ Nesting is a required property of this tree. A new instruction file joins the sc
 A wider scope holds the shared base. A file holds only what differs from the files whose scope contains its own, or what adds to them. It does not restate their rules. An example in the language of the file can show how a rule of a wider scope looks there.
 
 Why: `applyTo` already gives the reader of a file every file whose scope contains its own, so the file needs only the difference.
-
-## Where a duplicated rule stays
-
-When the same rule appears in an instruction file and in a skill, keep it in the instruction. By default, remove it from the skill.
-
-Why: an instruction applies by default through `applyTo`, while a skill applies only when someone invokes it.
 
 ## Link paths
 

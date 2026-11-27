@@ -25,6 +25,12 @@ Rules for links:
 
 Why: a copied or cited rule drifts from its source. A reader who follows a link to one rule skips the rest of that file. An instruction attaches by `applyTo` on its own, while a skill runs only when someone invokes it. So an instruction that depends on a skill depends on something that is not always loaded. A skill can run before the file it works on is in the context, and then `applyTo` has not attached anything yet. There, a link costs less than a missing rule.
 
+## Where a duplicated rule stays
+
+When the same rule appears in an instruction file and in a skill, keep it in the instruction. By default, remove it from the skill.
+
+Why: an instruction applies by default through `applyTo`, while a skill applies only when someone invokes it.
+
 ## Where a new rule lives
 
 Put a rule in the narrowest place that always loads it. A rule that applies to files by glob goes in an instruction file. A procedure that runs on demand goes in a skill. A rule that needs its own context or tool limits goes in an agent. When a program can check the rule, write the check (a task, a linter, a hook) instead of prose.
