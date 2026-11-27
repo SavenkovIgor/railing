@@ -35,28 +35,37 @@ Open a link only when its file is missing from the context.
 
 ## Steps
 
-1. Read the journal as [Journal](#journal) describes.
+1. Get the reviewed sessions and the skipped proposals as [Journal](#journal) describes.
 2. Select the sessions as [Scope of the review](#scope-of-the-review) describes.
 3. Assess each session as [Session assessment](#session-assessment) describes.
 4. Look for problems in the failed sessions only: [Cases to look for](#cases-to-look-for),
    [Possible points to focus](#possible-points-to-focus), and
    [Context management](#context-management).
 5. Propose fixes as [Proposals](#proposals) describes.
-6. Append the entry of this run to the journal.
+6. Append the entry of this run as [Journal](#journal) describes.
 
 ## Journal
 
 The journal keeps the results of earlier runs in
 `~/.local/state/railing/reflect/journal.jsonl` on every platform.
-Read and write it with the file tools. If the file is missing, create it.
+Read and write it only through [journal.py](scripts/journal.py) of this skill.
+Type each command line as written, so that one auto-approve entry covers all of them.
+`<script>` is the full path of `journal.py`.
 
-- After the user decides on every proposal, append one JSON line per run with these fields:
-  - `date`
+- `python <script> reviewed` prints the IDs of the sessions that earlier entries list.
+- `python <script> skipped` prints the proposals marked `skipped`, with `file` and `text`.
+- `python <script> append '<entry>'` validates the entry and appends it as one line.
+  It runs `prune` first and creates the file if it is missing.
+- `python <script> prune` deletes every entry older than 4 weeks.
+  A skipped proposal can then come back for a fresh assessment.
+- After the user decides on every proposal, append one entry per run.
+  The entry is one JSON object with these fields:
+  - `date`: in the form `YYYY-MM-DD`
   - `sessions`: each with `id` and `failed`, the list of failed criteria
   - `failures`: the number of sessions that failed each criterion
   - `coverage`: the share of reviewed sessions that invoked at least one skill
   - `proposals`: each with `file`, `text`, and `decision` (`applied`, `skipped`, or `undecided`)
-- Do not propose a fix again when an earlier entry marks it `skipped`.
+- Do not propose a fix again when `skipped` prints it.
   If a new session gives new evidence, propose it and cite that session.
 
 ## Scope of the review
