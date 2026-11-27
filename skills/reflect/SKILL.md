@@ -164,7 +164,6 @@ Notes for the proposals:
   and at least one changes an instruction file (`*.instructions.md`, `AGENTS.md`).
 - When the failed sessions give no evidence for one of these two kinds,
   propose fewer fixes and say which kind had no evidence.
-  Agents tend to fill the count with an invented proposal. Propose only what a session shows.
 - Each proposal names one concrete file and gives the exact new text.
   Keep it small: 1-3 sentences. A proposal can also move an instruction to
   another file or delete it.
