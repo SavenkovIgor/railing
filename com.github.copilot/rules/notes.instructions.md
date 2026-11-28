@@ -13,7 +13,7 @@ Every rule is a pass/fail check. Reviews cite rules by ID.
 
 - N1 Path is `notes/<task_id>/<slug>.<kind>.md`
 - N2 `<task_id>` is the task identifier in the format of the project, such as the
-  ticket ID as written in the tracker. Take it from the request or the branch
+  issue ID as written in the tracker. Take it from the request or the branch
   name. If neither gives one, ask
 - N3 `<slug>` is lowercase kebab-case, 2-5 words naming the content of the file
 - N4 `<kind>` is `overview` or `plan`. Each kind has its own profile

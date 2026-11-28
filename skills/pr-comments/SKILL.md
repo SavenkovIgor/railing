@@ -5,7 +5,7 @@ description: >-
     asked to handle or answer the comments on a pull request,
     asked which review comments are still open,
     asked to sort the feedback of reviewers or AI bots on a pull request
-argument-hint: "Pull request, ticket, or nothing for the current branch"
+argument-hint: "Pull request, issue, or nothing for the current branch"
 ---
 
 # PR comments
@@ -21,11 +21,11 @@ the replies.
 ## Procedure
 
 1. Find the pull requests
-   - Take the pull requests or the ticket that the user names
+   - Take the pull requests or the issue that the user names
    - If the user names nothing, start from the current branch. Find the pull request of the
-     branch and the ticket that the code implements, by the branch name, the pull request
-     description, and the commit messages. Read the ticket
-   - When the ticket links to more than one pull request, take all of them
+     branch and the issue that the code implements, by the branch name, the pull request
+     description, and the commit messages. Read the issue
+   - When the issue links to more than one pull request, take all of them
 2. Read all review threads and all general comments of each pull request with the tools of its
    platform. Put the comments of all pull requests into one queue and handle them in turn
 3. Keep the unanswered comments

@@ -100,6 +100,15 @@ When an edit replaces one option with another, write only the new option. Agents
 
 Why: a prohibition for an error that never happens costs tokens and clutters the context of both the model and the human reader. Break the rule when a mistake is costly and likely enough to justify the extra line.
 
+## Naming platforms
+
+When you add or edit text in a skill or an instruction file, describe a platform by its role: the code host, the issue tracker, the CI system. Name a specific platform only in two cases:
+
+- VS Code and the Copilot harness, the targets of this plugin.
+- An agent does the task worse without the name. Name the mistake.
+
+Why: the agent finds the platform of the project from the context. A named platform makes a rule read as specific to that platform, and the agent copies its formats into other platforms.
+
 ## Pull request workflow
 
 In every pull request to this repository, the first commit contains only the version bump in [plugin.json](/plugin.json). Make all other changes in later commits.

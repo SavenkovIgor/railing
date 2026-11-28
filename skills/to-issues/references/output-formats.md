@@ -12,17 +12,11 @@ Issues to create (7):
 Proceed? (yes / edit / cancel)
 ```
 
-## GitHub Issue Creation (Step 4)
-
-```bash
-gh issue create --title "..." --body "..." --label "..."
-```
-
 ## Filing Summary (Step 4)
 
 ```text
 Created 7 issues:
-  #42  Add retry logic to HTTP client       https://github.com/...
-  #43  Expose retry config via env vars      https://github.com/...
+  <ID>  Add retry logic to HTTP client       <URL>
+  <ID>  Expose retry config via env vars     <URL>
   ...
 ```
