@@ -4,8 +4,7 @@ description: >-
     You should use this skill when: breaking down a plan into tasks,
     converting a discussion into actionable issues, splitting a proposal
     into tickets, creating issues from meeting notes or design decisions.
-    Works with any issue tracker - infers GitHub Issues, Jira,
-    GitLab, etc. from project context.
+    Works with any issue tracker.
 ---
 
 # To issues
@@ -21,17 +20,8 @@ issues and file them in the project's issue tracker.
 
 ### 1. Identify the Tracker
 
-Inspect project context to determine where issues go. Check the rows from the top. The first match wins:
-
-| Signal | Tracker |
-|--------|---------|
-| `JIRA_URL` env var, `jira` in config | Jira |
-| `.gitlab-ci.yml`, `gitlab` remote | GitLab Issues |
-| `github.com` remote | GitHub Issues |
-| No clear signal | Ask the user before proceeding |
-
-Create issues with a tool of the tracker, such as its MCP server, its CLI, or its REST API.
-If you find no tool, ask the user which one to use.
+Find the issue tracker of the project from the context, and a tool that files issues in it.
+If either is unclear, ask the user before proceeding.
 
 ### 2. Extract Issues from Context
 

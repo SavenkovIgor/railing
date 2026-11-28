@@ -14,8 +14,6 @@ Proceed? (yes / edit / cancel)
 
 ## Filing Summary (Step 4)
 
-Take each ID and URL from the tracker, such as `#42` in GitHub or `PROJ-42` in Jira.
-
 ```text
 Created 7 issues:
   <ID>  Add retry logic to HTTP client       <URL>
