@@ -1,5 +1,5 @@
 ---
-name: project-glossary
+name: glossary
 description: >-
     You should use this skill when:
     asked to build or update a glossary, dictionary, or ubiquitous language of a project,
@@ -8,7 +8,7 @@ description: >-
 argument-hint: Optional area or bounded context
 ---
 
-# Project glossary
+# Glossary
 
 Collect the domain terms of a project from its issue tracker, docs, and code. Merge them into one
 `GLOSSARY.md` with one canonical word per concept. The file follows the glossary format of

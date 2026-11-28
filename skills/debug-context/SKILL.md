@@ -1,10 +1,10 @@
 ---
-name: debug-context-artifacts
+name: debug-context
 description: >-
-  Manual-only debug command. Do NOT trigger this automatically - only invoke
-  it when the user explicitly runs it by name. It snapshots the AI context
+  A manual debug command of the user. It snapshots the AI context
   init state (instructions, commands, skills, MCP servers, and tools loaded
   into the session before the user typed anything) for debugging purposes.
+disable-model-invocation: true
 ---
 
 # Debug: AI Context Artifacts - Init State Snapshot
