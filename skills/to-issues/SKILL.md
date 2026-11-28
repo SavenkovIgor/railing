@@ -21,16 +21,16 @@ issues and file them in the project's issue tracker.
 
 ### 1. Identify the Tracker
 
-Inspect project context to determine where issues go:
+Inspect project context to determine where issues go. Check the rows from the top. The first match wins:
 
 | Signal | Tracker |
 |--------|---------|
-| `.github/` folder, `gh` CLI available | GitHub Issues |
 | `JIRA_URL` env var, `jira` in config | Jira |
 | `.gitlab-ci.yml`, `gitlab` remote | GitLab Issues |
+| `github.com` remote | GitHub Issues |
 | No clear signal | Ask the user before proceeding |
 
-Create issues with an available tool, such as GitHub MCP, the `gh` CLI, or a REST API.
+Create issues with a tool of the tracker, such as its MCP server, its CLI, or its REST API.
 If you find no tool, ask the user which one to use.
 
 ### 2. Extract Issues from Context
@@ -49,8 +49,7 @@ If the user asks to edit, adjust and confirm again.
 ### 4. Create the Issues
 
 File each issue using the appropriate tool. Prefer batch APIs when available.
-See [output formats](references/output-formats.md) for the `gh` command and
-summary table format.
+See [output formats](references/output-formats.md) for the summary table format.
 
 ### 5. Optional - Link Issues
 
