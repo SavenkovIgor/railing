@@ -59,7 +59,7 @@ If a skill covers the task, follow it instead of building your own procedure. Th
 Use the narrowest tool built for the action. Move to a broader tool only when the narrower one lacks a capability the step needs. Name that capability before the call. The tiers below run from narrowest to broadest:
 
 1. Tasks from `.vscode/tasks.json`. Build, test, lint, and run the project through a defined task, not through the same command in the terminal. Read `.vscode/tasks.json` for the labels. If the task-running tool is not in your tool list, it is usually deferred. Find it with tool search (query: `run VS Code task`). Use the console only when the search finds nothing.
-2. Dedicated tools. Use the tool built for the action. Use IDE tools for search, file reads, edits, diagnostics, and test runs. Use a web fetch tool for pages and an MCP tool for GitHub.
+2. Dedicated tools. Use the tool built for the action. Use IDE tools for search, file reads, edits, diagnostics, and test runs. Use a web fetch tool for pages and an MCP tool for the code host and the issue tracker.
 3. Console. Use `run_in_terminal` as a last resort.
 
 ✘ `curl` to read a page, `sed -i` to edit a file
