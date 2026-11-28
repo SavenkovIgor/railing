@@ -1,5 +1,5 @@
 ---
-name: migration-skill-factory
+name: migration-skills
 description: >-
   Use this skill after an upgrade of a language, framework, or SDK version,
   or after an API changed or became deprecated.
@@ -8,7 +8,7 @@ description: >-
 argument-hint: "What changed, versions, and repo scope"
 ---
 
-# Migration Skill Factory
+# Migration skills
 
 Create a set of migration skills from a version or API update, one skill per change type.
 

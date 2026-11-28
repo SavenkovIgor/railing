@@ -15,7 +15,7 @@ the project on the same target. Report the findings and leave every file unchang
 
 ## DependsOn
 
-- [bp](/skills/bp/SKILL.md)
+- [best-practices](/skills/best-practices/SKILL.md)
 
 ## Procedure
 
@@ -61,7 +61,7 @@ the project on the same target. Report the findings and leave every file unchang
    - Merge its findings into yours: drop a duplicate and keep the higher severity. Prefix each
      finding from a local skill with its name
    - If a skill fails or cannot be loaded, list it under `Not checked`. Do not retry it
-6. Run `bp` on the changed files only when the user asks for a standards check, and append its
+6. Run `best-practices` on the changed files only when the user asks for a standards check, and append its
    report as a separate section
 
 ## Findings

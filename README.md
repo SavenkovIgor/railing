@@ -43,15 +43,15 @@ marketplace to update the plugin automatically.
 │       ├── reports.instructions.md              content requirements for reports about existing code in notes/
 │       └── reports-overview.instructions.md     structure and checks for *.overview.md reports
 └── skills/
-    ├── bp/                                      validate files against best-practice references
-    ├── debug-context-artifacts/                 inspect the initial AI context state
+    ├── best-practices/                          validate files against best-practice references
+    ├── debug-context/                           inspect the initial AI context state
     ├── decision-flow/                           walk through open decisions in short rounds of questions
     ├── design-system/                           create or audit design systems
     ├── engineering-maturity/                    rank missing engineering practices by return on effort
-    ├── migration-skill-factory/                 create skills for codebase migrations
+    ├── glossary/                                merge tracker, docs, and code terms into GLOSSARY.md
+    ├── migration-skills/                        create skills for codebase migrations
     ├── poke/                                    reprimand for console abuse, redo the step by the rules
     ├── pr-comments/                             sort unanswered pull request comments, draft replies in the chat
-    ├── project-glossary/                        merge tracker, docs, and code terms into GLOSSARY.md
     ├── reflect/                                 propose context improvements after a task
     ├── report-review/                           clean up a report and verify it against the code
     ├── report-write/                            write a technical report about existing code into notes/
@@ -67,7 +67,7 @@ The diagram shows which rule and skill files depend on which. A solid arrow mean
 ```mermaid
 flowchart TD
     subgraph SK["Skills"]
-        BP["skill: bp"]
+        BP["skill: best-practices"]
         RR["skill: report-review"]
         RW["skill: report-write"]
         RV["skill: review"]
